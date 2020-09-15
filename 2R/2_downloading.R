@@ -3,11 +3,11 @@ library(tidyverse)
 library(httr)
 
 #year: a vector of years whose climatic information you need
-#tile: a vector of tiles expaning the extent you need
+#tile: a vector of tiles expaning the extent you need. It can be obtained with tile_selection
 #var: variables to be downloaded (Prcp, Tmax, Tmin)
 #path: path to save the data (within the working directory) 
 
-download.daily.climate <- function (year, tile, var, path) {
+download_daily_climate <- function (year, tile, var, path) {
   
   info <- expand.grid(var, tile)
   
@@ -15,13 +15,14 @@ download.daily.climate <- function (year, tile, var, path) {
         paste("ftp://palantir.boku.ac.at/Public/ClimateData/TiledClimateData/",
               gsub("_", "/", tile),"/", var,y,"_",tile,".tif", sep="")}
   url_v2 <- function (var, y) {
-    paste("ftp://palantir.boku.ac.at/Public/ClimateData/v2/AllDataRasters/Downscaled",
-          var,y,".tif", sep="")}
+    var2 <- ifelse(var=="Tmin","tmin", ifelse(var=="Tmax", "tmax", ifelse(var=="Prcp","prec",NA)))
+    paste("ftp://palantir.boku.ac.at/Public/ClimateData/v2/AllDataRasters/",var2,
+          "/Downscaled", var,y,".tif", sep="")}
   
   out <- function (var, tile, y, path) {
-    paste(getwd(), "/", path, "/", var, y, "_", tile, ".tif", sep="")}
+    paste(path, "/", var, y, "_", tile, ".tif", sep="")}
   out_v2 <- function (var, y, path) {
-    paste(getwd(), "/", path, "/", var, y, ".tif", sep="")}
+    paste(path, "/", var, y, ".tif", sep="")}
   
   for (y in year) {
     
@@ -43,7 +44,6 @@ download.daily.climate <- function (year, tile, var, path) {
           userout <- mapply(out_v2, info[,1], y, path)
           for (i in 1:length(userurl)){
             try(GET(userurl[i], authenticate('guest', ""), write_disk(userout[i], overwrite = TRUE)))
-            try(GET(gsub(".tif", ".aux.xml", userurl[i]), authenticate('guest', ""), write_disk(gsub(".tif", ".aux.xml", userout[i]), overwrite = TRUE)))
           }
         }}}
 }
@@ -69,13 +69,11 @@ plot(mypoints)
 mypoints_t <-spTransform(mypoints,CRS("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"))
 plot(mypoints_t)
 
-path <- "1raw/daily"
-tile <- c("A_8", "A_9", "A_10",
-          "B_8", "B_9", "B_10",
-          "C_8", "C_9", "C_10") #España peninsular 
+path <- "E:/easyclimate/1raw/daily"
+tile <- unique(tile_selection(mypoints_t))
+tile <- c("D_8","D_9") #TAREA:Descargar estos tiles y todos los que se han bajado mal
 var <- c("Tmin", "Tmax", "Prcp")
-year <- seq(from=min(mypoints$year2-11), to=2012, by=1) #to=max(mypoints$year4)
-
-
-download.daily.climate(year, tile, var, path)
+year <- seq(from=min(mypoints$year2-11), to=max(mypoints$year4), by=1) 
+year <- 1970:2012
+download_daily_climate(year, tile, var, path)
 

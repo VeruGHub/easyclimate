@@ -50,12 +50,17 @@ Perdiodic Tavg and Prcp were calculated for points with coverage of greater than
 
 ##2. Functions
 
-###2.1. tile.selection (POR HACER)
+###2.1. tile_selection (POR TERMINAR)
 
 Queria hacer una funcion que con las coordenadas de tus puntos, te diera el tile que te tienes que bajar, pero la imagen de los tiles (WithGrids.tif) no esta georregerenciada. 
 Habría que o bien georreferenciar la imagen y dibujar la cuadricula en GIS o bien descargar alguna información de cada tile y comprobar la extención.
 
-###2.2. download.daily.data
+Currently almost finished done for Spain.
+The extension of the tiles encompassing Spain has been calculated in 1raw/tileextent.RData. Then, a function assingn a tile for each coordinates pair given.
+
+-coords: a spatial point object
+
+###2.2. download_daily_data
 
 As a function of: 
 -year: a vector of years whose climatic information you need
@@ -64,10 +69,21 @@ As a function of:
 -path: path to save the data (within the working directory) 
 
 Para mejorar:
--que se pueda poner cualquier path y no solo uno cuya raiz sea el working directory
 -que primero chequee si ya tienes el archivo y no lo vuelva a bajar en vez de sobreescribirlo
+-habria que cargar el paquete httr dentro de la funcion
 
-###2.3. Extract.daily.data (POR HACER)
+###2.3. extract_from_coords 
+
+It extracts climatic informacion for a given SpatialPoint object as a function of:
+-coords: points where we wish to have climatic data, with an ID field
+-climate_stack: raster stack with the climatic information. It could be a raw data stack (via 1) or a processed data stack (via 2)
+-start_year: for each survey and point, the first year when the climatic data is needeed
+-end_year: for each survey and point, the last year when the climatic data is needeed. It could be equal to start year
+-path: path where the raster are located
+
+Para mejorar:
+-Tarda mucho en extraer y se podría optimizar
+-Que para cada punto extraiga información de los años de interés que varían entre puntos
 
 
 ###2.4. Climatic variables (POR HACER)

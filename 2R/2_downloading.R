@@ -1,6 +1,7 @@
 
 library(tidyverse)
 library(httr)
+library(raster)
 
 #year: a vector of years whose climatic information you need
 #tile: a vector of tiles expaning the extent you need. It can be obtained with tile_selection
@@ -34,7 +35,7 @@ download_daily_climate <- function (year, tile, var, path) {
       userout <- mapply(out, info[,1], info[,2], y, path)
       for (i in 1:length(userurl)){
         try(GET(userurl[i], authenticate('guest', ""), write_disk(userout[i], overwrite = TRUE)))
-        try(GET(gsub(".tif", ".hdr", userurl[i]), authenticate('guest', ""), write_disk(gsub(".tif", ".hdr", userout[i]), overwrite = TRUE)))
+        # try(GET(gsub(".tif", ".hdr", userurl[i]), authenticate('guest', ""), write_disk(gsub(".tif", ".hdr", userout[i]), overwrite = TRUE)))
         # try(GET(gsub(".tif", ".aux.xml", userurl[i]), authenticate('guest', ""), write_disk(gsub(".tif", ".tif.aux.xml", userout[i]), overwrite = TRUE)))
       } 
        
@@ -70,10 +71,12 @@ mypoints_t <-spTransform(mypoints,CRS("+proj=longlat +datum=WGS84 +no_defs +ellp
 plot(mypoints_t)
 
 path <- "E:/easyclimate/1raw/daily"
-tile <- unique(tile_selection(mypoints_t))
-tile <- c("D_8","D_9") #TAREA:Descargar estos tiles y todos los que se han bajado mal
-var <- c("Tmin", "Tmax", "Prcp")
-year <- seq(from=min(mypoints$year2-11), to=max(mypoints$year4), by=1) 
-year <- 1970:2012
+# tile <- unique(tile_selection(mypoints_t)) #Cargar funcion
+tile <- c("C_10") 
+var <- c("Prcp")
+# year <- seq(from=min(mypoints$year2-11), to=max(mypoints$year4), by=1) 
+year <- 2015
 download_daily_climate(year, tile, var, path)
+beep()
 
+library(beepr)

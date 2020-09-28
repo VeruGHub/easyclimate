@@ -48,8 +48,8 @@ for (i in 1:length(spaintiles)) {
   tileextent <- rbind(tileextent,e)
 }
 
-write.table(tileextent, "1raw/tileextent.txt", row.names = FALSE)
-save(list = c("tileextent"), file = "1raw/tileextent.RData")
+write.table(tileextent, "Oaux/tileextent.txt", row.names = FALSE)
+save(list = c("tileextent"), file = "0aux/tileextent.RData")
 
 
 #coords: data frame where first colum is long and second column is lat

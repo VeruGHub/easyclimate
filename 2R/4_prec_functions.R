@@ -49,7 +49,8 @@ anualifn <- anualifn1 %>%
   left_join(anualifn6) %>% 
   left_join(anualifn7) %>% 
   rowwise() %>%  
-  mutate(manual=mean(c_across(`1951`:`2017`), na.rm=TRUE))
+  mutate(manual=mean(c_across(`1951`:`2017`), na.rm=TRUE),
+         manual_gonz=mean(c_across(`1970`:`2000`), na.rm=TRUE))
 
 write_csv(anualifn, "3results/anual_prec.csv")
 
@@ -57,7 +58,7 @@ write_csv(anualifn, "3results/anual_prec.csv")
 mypoints <- read_csv(file = "1raw/example_plot_clima_pedroTFM.csv", col_names = TRUE)
 
 anualifn %>% 
-  dplyr::select(ID, manual) %>% 
+  dplyr::select(ID, manual_gonz) %>% 
   left_join(dplyr::select(mypoints, Plotcode, PREC_ANUAL, Provincia3), by=c("ID"="Plotcode")) %>%
   mutate(CA=ifelse(Provincia3 %in% c(1,20,48), "Pais Vasco",
                    ifelse(Provincia3 %in% c(6,10), "Extremadura", 
@@ -66,7 +67,7 @@ anualifn %>%
                                         ifelse(Provincia3==28, "Madrid",
                                                ifelse(Provincia3==30, "Murcia", "La Rioja"))))))) %>% 
   ggplot() +
-  geom_point(aes(x=PREC_ANUAL, y=manual, color=factor(CA)), size=0.5) +
+  geom_point(aes(x=PREC_ANUAL, y=manual_gonz, color=factor(CA)), size=0.5) +
   geom_abline(slope=1, intercept=0) +
   ylab("Moreno") + xlab("Gonzalo")
   

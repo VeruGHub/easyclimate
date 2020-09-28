@@ -112,6 +112,13 @@ A function of:
 -years: period to calculate anual precipitation
 -mean=TRUE: it calculates the mean anual precipitation for each location
 
+###2.4.1. month_prec
+Month precipitation from daily values. The output is a data.frame with points and months in rows and years in columns. 
+A function of:
+-raw: a data.frame with the days in columns and the locations in rows (output of extract_from_coords)
+-years: period to calculate monthly precipitation
+-months: a numeric vector including values from 1 to 12
+
 
 ```{r cars}
 summary(cars)

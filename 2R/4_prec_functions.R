@@ -2,6 +2,8 @@
 
 library(tidyverse)
 
+####1-ANUAL PRECIPITATION####
+
 anual_prec <- function (raw, years, mean) {
   
   raw[raw<0] <- NA
@@ -71,7 +73,56 @@ anualifn %>%
   geom_abline(slope=1, intercept=0) +
   ylab("Moreno") + xlab("Gonzalo")
   
+
+####2-MONTH PRECIPITATION####
+
+library(lubridate)
+
+month_prec <- function (raw, years, months) {
   
+  ds <- data.frame(ndays=days_in_month(month(1:12))) %>% 
+    add_row(ndays=0, .before = 1) %>% 
+    mutate(startday=cumsum(ndays)+1,
+           finday=c(startday[-1],365)-1) %>% 
+    select(startday, finday) %>% 
+    slice(months[1],months[length(months)])
 
+  raw[raw<0] <- NA
+  colnames(raw)[1:365] <- 1:365
+  
+  p <- raw %>%  
+    filter(year %in% years) %>% 
+    select(ID, year, as.character(ds[1,1]:ds[2,2])) %>% 
+    pivot_longer(as.character(ds[1,1]:ds[2,2]), names_to = "day", values_to = "prec") %>% 
+    mutate(month=month(as.Date(paste(year, day), '%Y %j'))) %>% 
+    group_by(ID, year, month) %>% 
+    summarise(monthly=ifelse(is.null(sum(prec)),NA, sum(prec))) %>%
+    mutate(monthly=monthly/100) %>% 
+    arrange(year) %>% 
+    pivot_wider(names_from = year, values_from = monthly)
+  
+  return(p)
+  
+}
 
+#Ejemplo con datos del IFN
+monthifn1 <- month_prec(prec_final, 1951:1960, 1:12)
+monthifn2 <- month_prec(prec_final, 1961:1970, 1:12)
+monthifn3 <- month_prec(prec_final, 1971:1980, 1:12)
+monthifn4 <- month_prec(prec_final, 1981:1990, 1:12)
+monthifn5 <- month_prec(prec_final, 1991:2000, 1:12)
+monthifn6 <- month_prec(prec_final, 2001:2010, 1:12)
+monthifn7 <- month_prec(prec_final, 2011:2017, 1:12)
+
+monthifn <- monthifn1 %>% 
+  left_join(monthifn2) %>% 
+  left_join(monthifn3) %>% 
+  left_join(monthifn4) %>% 
+  left_join(monthifn5) %>% 
+  left_join(monthifn6) %>% 
+  left_join(monthifn7) %>% 
+  rowwise() %>%  
+  mutate(mmonth=mean(c_across(`1951`:`2017`), na.rm=TRUE))
+
+write_csv(monthifn, "3results/month_prec.csv")
 

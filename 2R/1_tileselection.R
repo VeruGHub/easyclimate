@@ -64,7 +64,7 @@ tile_selection <- function(coords) {
       x[2] < y[,"ymax"] & x[2] > y[,"ymin"],
        y[,"tile"], NA) }
   
-  load("1raw/tileextent.RData")
+  load("0aux/tileextent.RData")
   tile <- rep(NA, length(coords))
   
   for (i in 1:nrow(tileextent)) {

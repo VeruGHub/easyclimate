@@ -2,11 +2,15 @@
 library(tidyverse)
 library(httr)
 library(raster)
+library(beepr)
 
 #year: a vector of years whose climatic information you need
 #tile: a vector of tiles expaning the extent you need. It can be obtained with tile_selection
 #var: variables to be downloaded (Prcp, Tmax, Tmin)
 #path: path to save the data (within the working directory) 
+
+
+#####1. DAILY CLIMATE######
 
 download_daily_climate <- function (year, tile, var, path) {
   
@@ -71,12 +75,12 @@ mypoints_t <-spTransform(mypoints,CRS("+proj=longlat +datum=WGS84 +no_defs +ellp
 plot(mypoints_t)
 
 path <- "E:/easyclimate/1raw/daily"
-# tile <- unique(tile_selection(mypoints_t)) #Cargar funcion
-tile <- c("C_10") 
-var <- c("Prcp")
-# year <- seq(from=min(mypoints$year2-11), to=max(mypoints$year4), by=1) 
-year <- 2015
+tile <- unique(tile_selection(mypoints_t)) #Cargar funcion
+var <- c("Tmax")
+year <- 1951:1973
 download_daily_climate(year, tile, var, path)
 beep()
 
-library(beepr)
+
+
+

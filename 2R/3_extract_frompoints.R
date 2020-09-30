@@ -46,7 +46,7 @@ extract_from_coords <- function(coords,
     
     climate_extract_tile$tile <- ti
     
-    save(climate_extract_tile, file=paste0(var,"_",tile,".RData")) #Saving all years per tile
+    save(climate_extract_tile, file=paste0(var,"_",ti,".RData")) #Saving all years per tile
     climate_extract <- rbind(climate_extract, climate_extract_tile)
     
   }

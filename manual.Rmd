@@ -15,10 +15,11 @@ The "Downscaled European Climate Data" (Moreno & Hasenauer 2015) includes daily 
 It covers Europe and the most northern part of Africa. 
 Initially, it spanned from 1950 to 2012 but in 2018 it was updated to 2017 (v2). 
 The first release included tif files with:
-- all data, i.e. daily climatic data expaning the whole spatial and temporal extension ("AllDataRasters").
-- tiled data, i.e. daily climatic data by spatial tiles expaning the complete temporal extension ("TiledClimateData")
-- yearly data, i.e. yearly climatic data expaning the whole spatial and temporal extension ("YearlyAvgs/AnnualDataRasters")
+- all data, i.e. daily climatic data spanning the whole spatial and temporal extension ("AllDataRasters").
+- tiled data, i.e. daily climatic data by spatial tiles spanning the complete temporal extension ("TiledClimateData")
+- yearly data, i.e. yearly climatic data spanning the whole spatial and temporal extension ("YearlyAvgs/AnnualDataRasters"). For the precipitation the sum and the daily mean has been calculated.
 - periodic data, i.e. mean climatic data for two periods (1951-1980 and 1981-2010) ("PeriodicDataRasters")
+- seasonal averages ("SeasonalAvgs"), i.e. mean climatic data per season. There is one raster per year spanning all extension
 
 The v1 resease does not include the periodic data. 
 The v2 resease does not include the tiled data. This implies that to use the daily data from 2013 to 2017 we will need to download huge files covering the whole spatial extent.
@@ -60,6 +61,7 @@ The extension of the tiles encompassing Spain has been calculated in 1raw/tileex
 
 Para mejorar:
 -hacerlo para toda Europa
+-hay que ver como llamar al archivo tileextent.RData para que se pueda cargar desde cualquier ordenador. Ahora mismo solo funciona si está trabajando en el proyecto easyclimate
 
 ###2.2. download_daily_data
 

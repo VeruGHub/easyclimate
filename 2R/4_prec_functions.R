@@ -4,9 +4,9 @@ library(tidyverse)
 
 ####1-ANUAL PRECIPITATION####
 
-anual_prec <- function (raw, years, mean) {
+annual_prec <- function (raw, years, mean) {
   
-  raw[raw<0] <- NA
+  raw[,1:365][raw[,1:365]<0] <- NA
   p <- raw %>%  
     filter(year %in% years) %>% 
     rowwise() %>% 
@@ -87,7 +87,7 @@ month_prec <- function (raw, years, months) {
     select(startday, finday) %>% 
     slice(months[1],months[length(months)])
 
-  raw[raw<0] <- NA
+  raw[,1:365][raw[,1:365]<0] <- NA
   colnames(raw)[1:365] <- 1:365
   
   p <- raw %>%  

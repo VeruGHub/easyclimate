@@ -21,14 +21,14 @@ The first release included tif files with:
 - periodic data, i.e. mean climatic data for two periods (1951-1980 and 1981-2010) ("PeriodicDataRasters")
 - seasonal averages ("SeasonalAvgs"), i.e. mean climatic data per season. There is one raster per year spanning all extension
 
-The v1 resease does not include the periodic data. 
-The v2 resease does not include the tiled data. This implies that to use the daily data from 2013 to 2017 we will need to download huge files covering the whole spatial extent.
-In all cases temperatures are given as celsius * 100 and precipitation is given as mm * 100.
+The v1 release does not include the periodic data. 
+The v2 release does not include the tiled data. This implies that to use the daily data from 2013 to 2017 we will need to download huge files covering the whole spatial extent.
+In all cases temperatures are given as Celsius * 100 and precipitation is given as mm * 100.
 
 ###1.1. All data
 
 Includes individual folders for Tmin, Tmax, and Prcp.  
-Within those folders there are raster datasets for each year. Each year has 365 bands, even if it is a leap year. Each band is a day starting on Jan 1. Each map is large (~17 Gb for temperatures; 4-7.5 Gb for precipitation) and will take time to download.
+Within those folders there are raster data sets for each year. Each year has 365 bands, even if it is a leap year. Each band is a day starting on Jan 1. Each map is large (~17 GB for temperatures; 4-7.5 GB for precipitation) and will take time to download.
 
 ###1.2. Tiled data
 
@@ -46,8 +46,8 @@ In both versions there is a file per year and climatic variable, but v1 includes
 
 ###1.4. Periodic averages
 
-In v2, there are also periodic data rasters (1951-1980 and 1981-2010), where each band represents the mean climate (Tavg and Prcp) of each year.
-Perdiodic Tavg and Prcp were calculated for points with coverage of greater than 95%, coverage being the number of years with non-NA data within the respective period. Periodic mean for both variables (Tavg and Prcp) was calculated by dividing the sum of the annual data by the number of years with non-NA data.
+In v2, there are also periodic data raster (1951-1980 and 1981-2010), where each band represents the mean climate (Tavg and Prcp) of each year.
+Periodic Tavg and Prcp were calculated for points with coverage of greater than 95%, coverage being the number of years with non-NA data within the respective period. Periodic mean for both variables (Tavg and Prcp) was calculated by dividing the sum of the annual data by the number of years with non-NA data.
 
 
 ##2. Functions
@@ -55,7 +55,7 @@ Perdiodic Tavg and Prcp were calculated for points with coverage of greater than
 ###2.1. tile_selection
 
 Currently finished for Spain.
-The extension of the tiles encompassing Spain has been calculated in 1raw/tileextent.RData. Then, a function assingn a tile for each coordinates pair given.
+The extension of the tiles encompassing Spain has been calculated in 1raw/tileextent.RData. Then, a function assign a tile for each coordinates pair given.
 
 -coords: a spatial point object
 
@@ -67,7 +67,7 @@ Para mejorar:
 
 As a function of: 
 -year: a vector of years whose climatic information you need
--tile: a vector of tiles expaning the extent you need
+-tile: a vector of tiles spanning the extent you need
 -var: variables to be downloaded (Prcp, Tmax, Tmin)
 -path: path to save the data (within the working directory) 
 
@@ -81,10 +81,10 @@ Para mejorar:
 
 ###2.3.1. extract_from_coords 
 
-It extracts climatic informacion for a given SpatialPoint object as a function of:
+It extracts climatic information for a given SpatialPoint object as a function of:
 -coords: points where we wish to have climatic data, with an ID field
--start_year: the first year when the climatic data is needeed
--end_year: the last year when the climatic data is needeed. It could be equal to start year
+-start_year: the first year when the climatic data is needed
+-end_year: the last year when the climatic data is needed. It could be equal to start year
 -path: path where the raw raster are located
 
 NA value 1951-2012 = -9999
@@ -97,8 +97,9 @@ Para mejorar:
 -Llamar a los paquetes necesarios dentro de la funcion
 -Generalizar para englobar 2.3.2?
 -Sophie añadia un bucle para seleccionar la media de los valores de alrededor cuando habia un NA. No lo he incluido aun, creo que ralentizaría aún más la funcion. Pero hay puntos que quedan fuera de los pixeles de los raster...
+-Poner que te guarde o no los archivos parciales?
 
-###2.3.2. extract from not raw rasters (POR HACER)
+###2.3.2. extract from not-raw raster (POR HACER)
 
 
 ###2.4. Climatic variables (POR HACER)
@@ -107,19 +108,45 @@ Para mejorar:
 -Olas de calor
 -Frecuencia de sequias
 
-###2.4.1. anual_prec
-Anual precipitation from daily values. The output is a data.frame with points in rows and years in columns. Optionally the mean precipitation could be calculated for each location.
+###2.4.1. annual_prec
+Annual precipitation from daily values. The output is a data.frame with points in rows and years in columns. Optionally the mean precipitation could be calculated for each location.
 A function of:
 -raw: a data.frame with the days in columns and the locations in rows (output of extract_from_coords)
--years: period to calculate anual precipitation
--mean=TRUE: it calculates the mean anual precipitation for each location
+-years: period to calculate annual precipitation
+-mean=TRUE: it calculates the mean annual precipitation for each location
 
-###2.4.1. month_prec
+###2.4.2. month_prec
 Month precipitation from daily values. The output is a data.frame with points and months in rows and years in columns. 
 A function of:
 -raw: a data.frame with the days in columns and the locations in rows (output of extract_from_coords)
 -years: period to calculate monthly precipitation
 -months: a numeric vector including values from 1 to 12
+
+###2.4.3. average_temp
+This function calculates average mean, maximum and minimum temperatures for each year or across years if mean=TRUE. 
+A function of:
+-raw_min: a data.frame of minimum temperatures with the days in columns and the locations in rows (output of extract_from_coords)
+-raw_max: a data.frame of maximum temperatures with the days in columns and the locations in rows (output of extract_from_coords)
+-years: period to calculate annual precipitation
+-mean=TRUE: it calculates the mean temperature for each location
+-vars: a vector with the variables to be calculated (min, max, mean)
+
+Para mejorar:
+-Sería sencillo aprovechar esta función para obtener las temperaturas máximas y mínimas absolutas para cada año, la media de estos valores a lo largo de los años y/o la mínima y máxima absolutas de toda la serie temporal
+
+###2.4.4.month_temp
+
+This function calculates average mean temperatures per month, year and location. The output is a data.frame with points and months in rows and years in columns.
+
+A function of:
+-raw_min: a data.frame of minimum temperatures with the days in columns and the locations in rows (output of extract_from_coords)
+-raw_max: a data.frame of maximum temperatures with the days in columns and the locations in rows (output of extract_from_coords)
+-years: period to calculate month temperatures
+-months: a numeric vector including values from 1 to 12
+
+Para mejorar:
+-Se podría incluir en esta u otra función las medias de las temperaturas máximas y mínimas o los mínimos y máximos absolutos para cada mes.
+-Se puede incluir un mean=TRUE para que haga la media de temperaturas para cada mes en cada localización como hacemos con las temperaturas anuales.
 
 
 ```{r cars}

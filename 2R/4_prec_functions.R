@@ -10,7 +10,8 @@ annual_prec <- function (raw, years, mean) {
   p <- raw %>%  
     filter(year %in% years) %>% 
     rowwise() %>% 
-    mutate(anual=ifelse(is.null(sum(c_across(d1:d365))),NA, sum(c_across(d1:d365)))) %>%
+    mutate(anual=ifelse(is.null(sum(c_across(d1:d365))),NA, sum(c_across(d1:d365), na.rm=TRUE)),
+           nas=sum(is.na(c_across(d1:d365)))) %>%
     mutate(anual=anual/100) %>% 
     arrange(year) %>% 
     select(ID, year, anual) %>% 
@@ -35,13 +36,13 @@ ggplot(data = map_data("world", region = c("Spain","Portugal"))) +
 
 
 #No me lo hace de una vez porque no tengo memoria ram suficiente
-anualifn1 <- anual_prec(prec_final, 1951:1960, mean=FALSE)
-anualifn2 <- anual_prec(prec_final, 1961:1970, mean=FALSE)
-anualifn3 <- anual_prec(prec_final, 1971:1980, mean=FALSE)
-anualifn4 <- anual_prec(prec_final, 1981:1990, mean=FALSE)
-anualifn5 <- anual_prec(prec_final, 1991:2000, mean=FALSE)
-anualifn6 <- anual_prec(prec_final, 2001:2010, mean=FALSE)
-anualifn7 <- anual_prec(prec_final, 2011:2017, mean=FALSE)
+anualifn1 <- annual_prec(prec_final, 1951:1960, mean=FALSE)
+anualifn2 <- annual_prec(prec_final, 1961:1970, mean=FALSE)
+anualifn3 <- annual_prec(prec_final, 1971:1980, mean=FALSE)
+anualifn4 <- annual_prec(prec_final, 1981:1990, mean=FALSE)
+anualifn5 <- annual_prec(prec_final, 1991:2000, mean=FALSE)
+anualifn6 <- annual_prec(prec_final, 2001:2010, mean=FALSE)
+anualifn7 <- annual_prec(prec_final, 2011:2017, mean=FALSE)
 
 anualifn <- anualifn1 %>% 
   left_join(anualifn2) %>% 
@@ -96,10 +97,11 @@ month_prec <- function (raw, years, months) {
     pivot_longer(as.character(ds[1,1]:ds[2,2]), names_to = "day", values_to = "prec") %>% 
     mutate(month=month(as.Date(paste(year, day), '%Y %j'))) %>% 
     group_by(ID, year, month) %>% 
-    summarise(monthly=ifelse(is.null(sum(prec)),NA, sum(prec))) %>%
-    mutate(monthly=monthly/100) %>% 
-    arrange(year) %>% 
-    pivot_wider(names_from = year, values_from = monthly)
+    summarise(monthly=ifelse(is.null(sum(prec)),NA, sum(prec, na.rm=TRUE)),
+              nas=sum(is.na(prec))) %>%
+    mutate(monthly=monthly/100) 
+    # arrange(year) %>% 
+    # pivot_wider(names_from = year, values_from = monthly)
   
   return(p)
   
@@ -115,14 +117,14 @@ monthifn6 <- month_prec(prec_final, 2001:2010, 1:12)
 monthifn7 <- month_prec(prec_final, 2011:2017, 1:12)
 
 monthifn <- monthifn1 %>% 
-  left_join(monthifn2) %>% 
-  left_join(monthifn3) %>% 
-  left_join(monthifn4) %>% 
-  left_join(monthifn5) %>% 
-  left_join(monthifn6) %>% 
-  left_join(monthifn7) %>% 
-  rowwise() %>%  
-  mutate(mmonth=mean(c_across(`1951`:`2017`), na.rm=TRUE))
+  rbind(monthifn2) %>% 
+  rbind(monthifn3) %>% 
+  rbind(monthifn4) %>% 
+  rbind(monthifn5) %>% 
+  rbind(monthifn6) %>% 
+  rbind(monthifn7) %>% 
+  group_by(ID, month) %>% 
+  mutate(mmonth=mean(monthly, na.rm=TRUE))
 
 write_csv(monthifn, "3results/month_prec.csv")
 

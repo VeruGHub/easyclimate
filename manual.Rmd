@@ -109,7 +109,7 @@ Para mejorar:
 -Frecuencia de sequias
 
 ###2.4.1. annual_prec
-Annual precipitation from daily values. The output is a data.frame with points in rows and years in columns. Optionally the mean precipitation could be calculated for each location.
+Annual precipitation from daily values. The output is a data.frame with a row per points and year with the annual precipitation and the number of daily NAs. Optionally the mean precipitation could be calculated for each location using the selected years.
 A function of:
 -raw: a data.frame with the days in columns and the locations in rows (output of extract_from_coords)
 -years: period to calculate annual precipitation

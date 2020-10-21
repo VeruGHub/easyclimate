@@ -10,15 +10,15 @@ annual_prec <- function (raw, years, mean) {
   p <- raw %>%  
     filter(year %in% years) %>% 
     rowwise() %>% 
-    mutate(anual=ifelse(is.null(sum(c_across(d1:d365))),NA, sum(c_across(d1:d365), na.rm=TRUE)),
+    mutate(anual=sum(c_across(d1:d365), na.rm=TRUE),
            nas=sum(is.na(c_across(d1:d365)))) %>%
     mutate(anual=anual/100) %>% 
     arrange(year) %>% 
-    select(ID, year, anual) %>% 
-    pivot_wider(names_from = year, values_from = anual)
+    select(ID, year, anual, nas) 
+    # pivot_wider(names_from = year, values_from = anual)
   
   if (mean==TRUE) {
-    return( p %>% rowwise() %>%  mutate(manual=mean(c_across(as.character(years)), na.rm=TRUE)))
+    return( p %>% group_by(ID) %>%  mutate(manual=mean(anual, na.rm=TRUE)))
   } else {return(p)}
 
 }
@@ -45,15 +45,11 @@ anualifn6 <- annual_prec(prec_final, 2001:2010, mean=FALSE)
 anualifn7 <- annual_prec(prec_final, 2011:2017, mean=FALSE)
 
 anualifn <- anualifn1 %>% 
-  left_join(anualifn2) %>% 
-  left_join(anualifn3) %>% 
-  left_join(anualifn4) %>% 
-  left_join(anualifn5) %>% 
-  left_join(anualifn6) %>% 
-  left_join(anualifn7) %>% 
-  rowwise() %>%  
-  mutate(manual=mean(c_across(`1951`:`2017`), na.rm=TRUE),
-         manual_gonz=mean(c_across(`1970`:`2000`), na.rm=TRUE))
+  bind_rows(anualifn2, anualifn3, anualifn4, anualifn5,
+            anualifn6, anualifn7) %>% 
+  group_by(ID) %>% 
+  mutate(manual=mean(anual, na.rm=TRUE),
+         manual_gonz= mean(filter(., year %in% 1970:2000)$anual, na.rm=TRUE))
 
 write_csv(anualifn, "3results/anual_prec.csv")
 
@@ -62,6 +58,8 @@ mypoints <- read_csv(file = "1raw/example_plot_clima_pedroTFM.csv", col_names = 
 
 anualifn %>% 
   dplyr::select(ID, manual_gonz) %>% 
+  group_by(ID) %>% 
+  slice(1) %>% 
   left_join(dplyr::select(mypoints, Plotcode, PREC_ANUAL, Provincia3), by=c("ID"="Plotcode")) %>%
   mutate(CA=ifelse(Provincia3 %in% c(1,20,48), "Pais Vasco",
                    ifelse(Provincia3 %in% c(6,10), "Extremadura", 

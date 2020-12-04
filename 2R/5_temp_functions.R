@@ -23,14 +23,15 @@ average_temp <- function (raw_min, raw_max, years, mean, vars) {
     tmin <- raw_min %>% #En tmin puede haber NAs en dias concretos para un punto dado -- hay que poner na.rm=TRUE
       filter(year %in% years) %>% 
       rowwise() %>%
-      mutate(anual=ifelse(is.null(mean(c_across(d1:d365))),NA, mean(c_across(d1:d365), na.rm=TRUE))) %>%
+      mutate(anual=ifelse(is.null(mean(c_across(d1:d365))),NA, mean(c_across(d1:d365), na.rm=TRUE)),
+             nas=sum(is.na(c_across(d1:d365)))) %>%
       mutate(anual=anual/100) %>% 
       arrange(year) %>% 
-      select(ID, year, anual) %>% 
-      pivot_wider(names_from = year, values_from = anual)
+      select(ID, year, anual, nas) 
+      # pivot_wider(names_from = year, values_from = anual)
     
     if (mean==TRUE) {
-      tmin <- tmin %>% rowwise() %>%  mutate(manual=mean(c_across(as.character(years)), na.rm=TRUE))
+      tmin <- tmin %>% group_by(ID) %>%  mutate(manual=mean(anual, na.rm=TRUE))
     }
     
     }else{ tmin <- NA
@@ -42,14 +43,15 @@ average_temp <- function (raw_min, raw_max, years, mean, vars) {
     tmax <- raw_max %>% 
       filter(year %in% years) %>% 
       rowwise() %>%
-      mutate(anual=ifelse(is.null(mean(c_across(d1:d365))),NA, mean(c_across(d1:d365), na.rm=TRUE))) %>%
+      mutate(anual=ifelse(is.null(mean(c_across(d1:d365))),NA, mean(c_across(d1:d365), na.rm=TRUE)),
+             nas=sum(is.na(c_across(d1:d365)))) %>%
       mutate(anual=anual/100) %>% 
       arrange(year) %>% 
-      select(ID, year, anual) %>% 
-      pivot_wider(names_from = year, values_from = anual)
+      select(ID, year, anual, nas) 
+      # pivot_wider(names_from = year, values_from = anual)
     
     if (mean==TRUE) {
-      tmax <- tmax %>% rowwise() %>%  mutate(manual=mean(c_across(as.character(years)), na.rm=TRUE))
+      tmax <- tmax %>% group_by(ID) %>%  mutate(manual=mean(anual, na.rm=TRUE))
     }
     
   }else{ tmax <- NA
@@ -64,14 +66,15 @@ average_temp <- function (raw_min, raw_max, years, mean, vars) {
     tmean <- raw_mean %>% 
       filter(year %in% years) %>% 
       rowwise() %>%
-      mutate(anual=ifelse(is.null(mean(c_across(d1:d365))),NA, mean(c_across(d1:d365)))) %>%
+      mutate(anual=ifelse(is.null(mean(c_across(d1:d365))),NA, mean(c_across(d1:d365), na.rm=TRUE)),
+             nas=sum(is.na(c_across(d1:d365)))) %>%
       mutate(anual=anual/100) %>% 
       arrange(year) %>% 
-      select(ID, year, anual) %>% 
-      pivot_wider(names_from = year, values_from = anual)
+      select(ID, year, anual, nas) 
+      # pivot_wider(names_from = year, values_from = anual)
     
     if (mean==TRUE) {
-      tmean <- tmean %>% rowwise() %>%  mutate(manual=mean(c_across(as.character(years)), na.rm=TRUE))
+      tmean <- tmean %>% group_by(ID) %>%  mutate(manual=mean(anual, na.rm=TRUE))
     }
     
   }else{ tmean <- NA
@@ -146,10 +149,11 @@ month_temp <- function (raw_min, raw_max, years, months) {
     pivot_longer(as.character(ds[1,1]:ds[2,2]), names_to = "day", values_to = "tmean") %>% 
     mutate(month=month(as.Date(paste(year, day), '%Y %j'))) %>% 
     group_by(ID, year, month) %>% 
-    summarise(monthly=ifelse(is.null(mean(tmean, na.rm=TRUE)),NA, mean(tmean, na.rm=TRUE))) %>%
-    mutate(monthly=monthly/100) %>% 
-    arrange(year) %>% 
-    pivot_wider(names_from = year, values_from = monthly)
+    summarise(monthly=ifelse(is.null(mean(tmean, na.rm=TRUE)),NA, mean(tmean, na.rm=TRUE)),
+              nas=sum(is.na(tmean))) %>%
+    mutate(monthly=monthly/100) 
+    # arrange(year) %>% 
+    # pivot_wider(names_from = year, values_from = monthly)
   
   return(tmean)
   
@@ -175,14 +179,9 @@ tmonth7 <- month_temp(raw_min=tmin_final, raw_max=tmax_final,
                       years=2011:2017, months=1:12)
 
 tmonth <- tmonth1 %>% 
-  left_join(tmonth2) %>% 
-  left_join(tmonth3) %>% 
-  left_join(tmonth4) %>% 
-  left_join(tmonth5) %>% 
-  left_join(tmonth6) %>% 
-  left_join(tmonth7) %>% 
-  rowwise() %>%  
-  mutate(mmonth=mean(c_across(`1951`:`2017`), na.rm=TRUE))
+  bind_rows(tmonth2, tmonth3, tmonth4, tmonth5, tmonth6, tmonth7) %>% 
+  group_by(ID, month) %>% 
+  mutate(mmonth=mean(monthly, na.rm=TRUE))
 
 write_csv(tmonth, "3results/month_meantemp.csv")
 

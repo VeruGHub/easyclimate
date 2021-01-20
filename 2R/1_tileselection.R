@@ -2,14 +2,21 @@
 library(tidyverse)
 library(raster)
 library(rgdal)
+library(magick)
 
+#The objective of this script is to find the best way to assign a tile to each spatial point 
+#where we want to download the climatic data
 
-grid <- raster("docs/WithGrids.tif")
-
+grid <- raster("docs/WithGrids.tif") #Tiles
 plot(grid)
-summary(values(grid))
 
+grid <- image_read("docs/WithGrids.tif") #Tiles
+plot(grid)
 
+#IMPORTANT
+#To run this script is needed to download one tif in each tile and load it as follows.
+#To use the rest of scripts you only need to run tile_selection function which is the 
+#final product of this script
 
 A_8 <- stack(paste("E:/easyclimate/1raw/daily/Prcp",1970,"_","A_8.tif",sep=""))
 A_9 <- stack(paste("E:/easyclimate/1raw/daily/Prcp",1970,"_","A_9.tif",sep=""))
@@ -29,7 +36,7 @@ spaintiles <- list("A_8"=A_8, "A_9"=A_9, "A_10"=A_10,
                    "D_8"=D_8, "D_9"=D_9)
 
 #Option 1: loading everytime a raster in each tile
-tile <- rep(NA, length(mypoints_t))
+tile <- rep(NA, length(mypoints_t)) #It works with any spatial points data.frame. To use this one load first the data of the example below
 for (i in 1:length(spaintiles)) {
   a <- cellFromXY(object = spaintiles[[i]], mypoints_t)
   tile <- ifelse(!is.na(a), names(spaintiles)[i], tile)
@@ -52,7 +59,7 @@ write.table(tileextent, "Oaux/tileextent.txt", row.names = FALSE)
 save(list = c("tileextent"), file = "0aux/tileextent.RData")
 
 
-#coords: data frame where first colum is long and second column is lat
+#coords: data frame where first column is long and second column is lat
 
 tile_selection <- function(coords) {
 
@@ -66,13 +73,13 @@ tile_selection <- function(coords) {
   
   load("0aux/tileextent.RData")
   tile <- rep(NA, length(coords))
-  
+
   for (i in 1:nrow(tileextent)) {
     tilei <- tileextent[i,]
     a <- apply(coords1, 1, contain, y=tilei)
     tile <- ifelse(!is.na(a), a, tile)
   }
-  
+
   return(tile)
   
 }

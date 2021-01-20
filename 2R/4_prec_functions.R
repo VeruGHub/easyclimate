@@ -4,7 +4,12 @@ library(tidyverse)
 
 ####1-ANUAL PRECIPITATION####
 
-annual_prec <- function (raw, years, mean) {
+# raw: a data.frame with the days in columns and the locations in rows (output of extract_from_coords)
+# years: period to calculate annual precipitation
+# mean=TRUE: it calculates the mean annual precipitation for each location for the selected years
+# reference: period of reference (years) to calculate deviations
+
+annual_prec <- function (raw, years, mean=FALSE, reference=NA) {
   
   raw[,1:365][raw[,1:365]<0] <- NA
   p <- raw %>%  
@@ -18,10 +23,24 @@ annual_prec <- function (raw, years, mean) {
     # pivot_wider(names_from = year, values_from = anual)
   
   if (mean==TRUE) {
-    return( p %>% group_by(ID) %>%  mutate(manual=mean(anual, na.rm=TRUE)))
-  } else {return(p)}
+    p <- p %>% group_by(ID) %>%  mutate(manual=mean(anual, na.rm=TRUE))
+  } 
+  
+  if (!is.na(reference[1])) {
+    ref_p <- raw %>% 
+      filter(year %in% reference) %>% 
+      rowwise() %>%
+      mutate(anual=ifelse(is.null(sum(c_across(d1:d365))),NA, sum(c_across(d1:d365), na.rm=TRUE))) %>%
+      group_by(ID) %>%  
+      mutate(ref=mean(anual, na.rm=TRUE)) %>% 
+      mutate(ref=ref/100) %>% 
+      select(ID, ref) 
+    p <- p %>% left_join(ref_p) %>% mutate(dev=anual-ref) 
+   
+    } else {}
 
-}
+  return(p)
+  }
 
 #Ejemplo con datos del IFN
 load("C:/Users/veruk/Desktop/Disco/easyclimate/3results/prcp_IFN234.RData")
@@ -77,13 +96,17 @@ anualifn %>%
 
 library(lubridate)
 
+# raw: a data.frame with the days in columns and the locations in rows (output of extract_from_coords)
+# years: period to calculate monthly precipitation
+# months: a numeric vector including values from 1 to 12
+
 month_prec <- function (raw, years, months) {
   
-  ds <- data.frame(ndays=days_in_month(month(1:12))) %>% 
+  ds <- data.frame(ndays=days_in_month(month(1:12))) %>% #Day limits for the selected months
     add_row(ndays=0, .before = 1) %>% 
     mutate(startday=cumsum(ndays)+1,
            finday=c(startday[-1],365)-1) %>% 
-    select(startday, finday) %>% 
+    dplyr::select(startday, finday) %>% 
     slice(months[1],months[length(months)])
 
   raw[,1:365][raw[,1:365]<0] <- NA
@@ -125,4 +148,37 @@ monthifn <- monthifn1 %>%
   mutate(mmonth=mean(monthly, na.rm=TRUE))
 
 write_csv(monthifn, "3results/month_prec.csv")
+
+####3-NO RAIN DAYS####
+
+# raw: a data.frame with the days in columns and the locations in rows (output of extract_from_coords)
+# years: period to calculate length of no-rain period
+# threshold: threshold to count extreme long events of no-rain 
+
+norain <- function (raw, years, threshold) {
+  
+  raw[,1:365][raw[,1:365]<0] <- NA
+  colnames(raw)[1:365] <- 1:365
+  
+  p <- raw %>%  
+    filter(year %in% years) %>% 
+    pivot_longer(1:365, names_to = "day", values_to = "prec") %>% 
+    mutate(event = ifelse(prec==0, 1, 0), #NAs will be 0 
+           start = c(1, diff(event) != 0)) %>% 
+    group_by(ID, year) %>% 
+    mutate(run = cumsum(start),
+           nas=sum(is.na(prec))) %>% 
+    filter(event == 1) %>% 
+    group_by(ID, year, nas, run) %>% 
+    summarise(length=n()) %>% 
+    group_by(ID, year, nas) %>% 
+    summarise(max_norain=max(length),
+              mean_norain=mean(length),
+              nevents=sum(length>threshold))
+  
+  return(p)
+  
+}
+
+
 

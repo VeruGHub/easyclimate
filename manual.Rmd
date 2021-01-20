@@ -9,11 +9,11 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-##1. General description
+#1. General description
 
 The "Downscaled European Climate Data" (Moreno & Hasenauer 2015) includes daily climatic data (precipitation, minimum and maximum temperature) with a spatial resolution of 0083x0083 degrees (~1 km2).
 It covers Europe and the most northern part of Africa. 
-Initially, it spanned from 1950 to 2012 but in 2018 it was updated to 2017 (v2). 
+Initially, it spanned from 1951 to 2012 but in 2018 it was updated to 2017 (v2). 
 The first release included tif files with:
 - all data, i.e. daily climatic data spanning the whole spatial and temporal extension ("AllDataRasters").
 - tiled data, i.e. daily climatic data by spatial tiles spanning the complete temporal extension ("TiledClimateData")
@@ -22,66 +22,69 @@ The first release included tif files with:
 - seasonal averages ("SeasonalAvgs"), i.e. mean climatic data per season. There is one raster per year spanning all extension
 
 The v1 release does not include the periodic data. 
-The v2 release does not include the tiled data. This implies that to use the daily data from 2013 to 2017 we will need to download huge files covering the whole spatial extent.
+The v2 release does not include the tiled data. This implies that to use the daily data from 2013 to 2017 we will need to download huge files covering the whole spatial extent (i.e. Europe).
 In all cases temperatures are given as Celsius * 100 and precipitation is given as mm * 100.
 
-###1.1. All data
+##1.1. All data
 
 Includes individual folders for Tmin, Tmax, and Prcp.  
-Within those folders there are raster data sets for each year. Each year has 365 bands, even if it is a leap year. Each band is a day starting on Jan 1. Each map is large (~17 GB for temperatures; 4-7.5 GB for precipitation) and will take time to download.
+Within those folders there are raster data sets for each year. Each year has 365 bands, even if it is a leap year. Each band is a day, starting on Jan 1. Each map is large (~17 GB for temperatures; 4-7.5 GB for precipitation) and will take time to download.
 
-###1.2. Tiled data
+##1.2. Tiled data
 
-If you want to only focus on a particular area in Europe this is a good option.  Within this folder you will find the image that lays out the tiles. Letters correspond to the x-axis of the tiles and numbers to the y-axis of the tiles. In each letter/number folder will be all climate data for that tile. Again every map has 365 bands.
+If you want to only focus on a particular area in Europe this is a good option.  Within this folder you will find the image that lays out the tiles. Letters correspond to the x-axis of the tiles and numbers to the y-axis of the tiles. In each letter/number folder there will be all climate data for that tile. Again every map has 365 bands.
 Tiles are defined in docs/WithGrids.tif
 
 REVISAR: que son los archivos _v2 de la primera base de datos??
 2016 tiene 366 bandas y fue bisiesto. Creo que no lo han corregido :S
 
-###1.3. Yearly averages
+##1.3. Yearly averages
 
 Mean temperatures and annual total precipitation were calculated for points with coverage greater than >95%, coverage being the number of days with non-NA data for the respective year. Mean temperatures were calculated by dividing the sum of daily temperatures by the number of days with valid data (non-NA). Annual total Prcp was calculated by adding up the daily precipitation data for the respective year.
 In both versions there is a file per year and climatic variable, but v1 includes Tmin, Tmax and Prcp, and v2 includes Tavg and Prec. Average temperature Tavg is taken as the mean of minimum temperature (Tmin) and maximum temperature (Tmax).
 
 
-###1.4. Periodic averages
+##1.4. Periodic averages
 
 In v2, there are also periodic data raster (1951-1980 and 1981-2010), where each band represents the mean climate (Tavg and Prcp) of each year.
 Periodic Tavg and Prcp were calculated for points with coverage of greater than 95%, coverage being the number of years with non-NA data within the respective period. Periodic mean for both variables (Tavg and Prcp) was calculated by dividing the sum of the annual data by the number of years with non-NA data.
 
 
-##2. Functions
+#2. Functions
 
-###2.1. tile_selection
+##2.1. tile_selection
 
 Currently finished for Spain.
-The extension of the tiles encompassing Spain has been calculated in 1raw/tileextent.RData. Then, a function assign a tile for each coordinates pair given.
+The extension of the tiles encompassing Spain has been calculated in 1raw/tileextent.RData. Then, a function assign a tile for each pair of coordinates given.
 
+**Attributes**
 -coords: a spatial point object
 
-Para mejorar:
+*Para mejorar:*
 -hacerlo para toda Europa
--hay que ver como llamar al archivo tileextent.RData para que se pueda cargar desde cualquier ordenador. Ahora mismo solo funciona si está trabajando en el proyecto easyclimate
+-hay que ver como leer al archivo tileextent.RData para que se pueda cargar desde cualquier ordenador. Ahora mismo solo funciona si se está trabajando en el proyecto easyclimate
 
 ###2.2. download_daily_data
 
-As a function of: 
+**Attributes** 
 -year: a vector of years whose climatic information you need
 -tile: a vector of tiles spanning the extent you need
 -var: variables to be downloaded (Prcp, Tmax, Tmin)
 -path: path to save the data (within the working directory) 
 
-Para mejorar:
+*Para mejorar:*
 -poner un print (year, tile, var) para ver por donde va descargando 
 -que primero chequee si ya tienes el archivo y no lo vuelva a bajar en vez de sobreescribirlo
 -habria que cargar el paquete httr dentro de la funcion
 -quizas se puede hacer una funcion mas generica segun si quieres datos diarios o anuales
 
-###2.3. extract
+##2.3. extract
 
 ###2.3.1. extract_from_coords 
 
-It extracts climatic information for a given SpatialPoint object as a function of:
+It extracts climatic information for a given SpatialPoint object.
+
+**Attributes**
 -coords: points where we wish to have climatic data, with an ID field
 -start_year: the first year when the climatic data is needed
 -end_year: the last year when the climatic data is needed. It could be equal to start year
@@ -90,7 +93,7 @@ It extracts climatic information for a given SpatialPoint object as a function o
 NA value 1951-2012 = -9999
 NA value 2013-2017 = -32768 (I guess)
 
-Para mejorar:
+*Para mejorar:*
 -Tarda mucho en extraer. se podría optimizar?
 -Que para cada punto extraiga información de los años de interés que varíen entre puntos
 -No guarda un RData para cada tile y no se por qué
@@ -99,54 +102,111 @@ Para mejorar:
 -Sophie añadia un bucle para seleccionar la media de los valores de alrededor cuando habia un NA. No lo he incluido aun, creo que ralentizaría aún más la funcion. Pero hay puntos que quedan fuera de los pixeles de los raster...
 -Poner que te guarde o no los archivos parciales?
 
-###2.3.2. extract from not-raw raster (POR HACER)
+###2.3.2. extract from not-raw raster (to do)
 
+If first we create a raster where we calculate secondary climatic variables it can be interesting to create a generic function to extract data from that raster. Extract_from_coords is limited to use the given names for the raw data.
 
-###2.4. Climatic variables (POR HACER)
+##2.4. Climatic variables (to complete)
 
--Número de heladas en primavera
--Olas de calor
--Frecuencia de sequias
+-Balances hídricos (combinando con paquete spei spei)
+-Número de dias con periodo de crecimiento
+
 
 ###2.4.1. annual_prec
-Annual precipitation from daily values. The output is a data.frame with a row per points and year with the annual precipitation and the number of daily NAs. Optionally the mean precipitation could be calculated for each location using the selected years.
-A function of:
+Annual precipitation from daily values. The output is a data.frame with a row per point and year with the annual precipitation and the number of daily NAs. Optionally the mean precipitation could be calculated for each location using the selected years. If a reference period is given (in years) the reference precipitation and the deviation of selected years from reference is given
+
+**Attributes**
 -raw: a data.frame with the days in columns and the locations in rows (output of extract_from_coords)
 -years: period to calculate annual precipitation
 -mean=TRUE: it calculates the mean annual precipitation for each location
+-reference: period of reference (years) to calculate deviations
+
 
 ###2.4.2. month_prec
 Month precipitation from daily values. The output is a data.frame with a row per point, year and month. 
-A function of:
+
+**Attributes**
 -raw: a data.frame with the days in columns and the locations in rows (output of extract_from_coords)
 -years: period to calculate monthly precipitation
 -months: a numeric vector including values from 1 to 12
 
-###2.4.3. average_temp
-This function calculates average mean, maximum and minimum temperatures for each year or across years if mean=TRUE. 
-A function of:
+*Para mejorar*
+-Ahora mismo solo funciona con meses consecutivos, pero si quieres datos de julio y de septiembre extraerá julio, agosto, septiembre.
+-En las funciones de precipitación se puede incluir desviación de ese mes respecto a la media de todo el periodo para ese mes
+
+###2.4.3. norain
+The function identifies the number of consecutive days without rain and summarises it as the maximum and mean number of days by point and year, and number of events longer than a threshold selected by the user.
+
+**Attributes**
+-raw: a data.frame with the days in columns and the locations in rows (output of extract_from_coords)
+-years: period to calculate length of no-rain period
+-threshold: threshold (number of days) to consider and count extreme long events of no-rain 
+
+
+###2.4.4. average_temp
+This function calculates average mean, maximum and minimum temperatures for each year or across years if mean=TRUE. Additionally, it calculates the deviation of mean temperatures from a reference period if a reference period (years) is given.
+
+**Attributes**
 -raw_min: a data.frame of minimum temperatures with the days in columns and the locations in rows (output of extract_from_coords)
 -raw_max: a data.frame of maximum temperatures with the days in columns and the locations in rows (output of extract_from_coords)
 -years: period to calculate annual precipitation
 -mean=TRUE: it calculates the mean temperature for each location
 -vars: a vector with the variables to be calculated (min, max, mean)
+-reference: period of reference (years) to calculate deviations
 
-Para mejorar:
+*Para mejorar:*
 -Sería sencillo aprovechar esta función para obtener las temperaturas máximas y mínimas absolutas para cada año, la media de estos valores a lo largo de los años y/o la mínima y máxima absolutas de toda la serie temporal
+-El output en forma de lista es un poco incómodo
 
-###2.4.4.month_temp
+###2.4.5. month_temp
 
 This function calculates average mean temperatures per month, year and location. The output is a data.frame with points and months in rows and years in columns.
 
-A function of:
+**Attributes**
 -raw_min: a data.frame of minimum temperatures with the days in columns and the locations in rows (output of extract_from_coords)
 -raw_max: a data.frame of maximum temperatures with the days in columns and the locations in rows (output of extract_from_coords)
 -years: period to calculate month temperatures
 -months: a numeric vector including values from 1 to 12
 
-Para mejorar:
+*Para mejorar:*
 -Se podría incluir en esta u otra función las medias de las temperaturas máximas y mínimas o los mínimos y máximos absolutos para cada mes.
 -Se puede incluir un mean=TRUE para que haga la media de temperaturas para cada mes en cada localización como hacemos con las temperaturas anuales.
+-Ahora mismo solo funciona con meses consecutivos, pero si quieres datos de julio y de septiembre extraerá julio, agosto, septiembre.
+-En las funciones de temperatura se puede incluir desviación de ese mes respecto a la media de todo el periodo para ese mes
+
+###2.4.6. heat_waves
+
+This function calculates for each point and year, the length of the maximum heat wave (no. of days), the average length and the no. of these events along the year. A heat wave is consider as consecutive days with maximum temperature above a threshold defined by the user.
+
+**Attributes**
+-raw_max: a data.frame of maximum temperatures with the days in columns and the locations in rows (output of extract_from_coords)
+-years: period to calculate heat waves
+-threshold: threshold of temperature to consider a day as part of a heat wave (ºC)
+
+###2.4.7. late_frosts
+
+This function calculates the number of days with minimum temperatures below zero in late spring (defined as certain months by the user) by point and year. Additionally, it gives the average temperature of late frost days.
+
+**Attributes**
+-raw_min: a data.frame of minimum temperatures with the days in columns and the locations in rows (output of extract_from_coords)
+-years: period to calculate spring frost
+-late_spring: months considered as late spring
+
+###2.4.8. degree_days
+
+This function calculates the number of degree days by point and year. The output is a data.frame with a row per point and year, the number of daily NAs and the number of degree days.
+
+**Attributes**
+-raw_min: a data.frame of minimum temperatures with the days in columns and the locations in rows (output of extract_from_coords)
+-raw_max: a data.frame of minimum temperatures with the days in columns and the locations in rows (output of extract_from_coords)
+-years: period to calculate spring frost
+-threshold: temperature (ºC) above which a day will be considered a degree day
+
+
+
+
+
+
 
 
 ```{r cars}

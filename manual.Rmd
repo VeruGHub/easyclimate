@@ -204,7 +204,16 @@ This function calculates the number of degree days by point and year. The output
 
 
 
+####TAREAS REUNION
 
+-cambiar el path para que sea más reproducible
+-crear un set de datos de ejemplo para el paquete (varios tiles)
+-Se puede descargar el archivo con el paquete? si no: foreco u otra web
+-Implementar tileselection en download_dayly_climate para que en esta ultima solo metas las coordenadas. Tal como está ahora hay que correr primero tileselection y luego la otra.
+-llamar con source a las funciones dentro de los demás scripts
+-Comprobar que la bd empieza en 1951 y cambiar en downloading
+-Optimizar funcion extract_frompoints
+-Como usuario final seria mejor hacer el extract_from points dentro de las funciones climáticas y poner todas las funciones dentro de la misma 
 
 
 

@@ -1,6 +1,8 @@
 
 library(tidyverse)
+library(sf)
 
+#Basado en parcelas del IFN
 mypoints <- read_csv(file = "1raw/example_plot_clima_pedroTFM.csv", col_names = TRUE)
 
 summary(mypoints)
@@ -19,6 +21,28 @@ subset <- subset1 %>%
 
 write_delim(x = subset, file = "0aux/example.csv", delim = ";")
 
-#Actualizar con cambios que ha hecho Paloma
+#Cleaning de Paloma/Julen
+
+mypoints <- read.csv(file = "0aux/example.csv", sep = ";")
+
+mypoints <- st_as_sf(x = mypoints,
+                     coords = c("CX", "CY"),
+                     crs = "+proj=utm +zone=30 +ellps=intl +units=m +no_defs")
+
+mypoints_t <- st_transform(mypoints, 
+                           "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0") %>% 
+  mutate(CX = unlist(map(geometry, 1)),
+         CY = unlist(map(geometry, 2))) %>% 
+  as_tibble() %>% 
+  dplyr::select(-c(Region, geometry))
+
+mypoints_t$tile <- tile_selection(mypoints_t) #Correr tile_selection
+
+example <- mypoints_t %>% 
+  filter(tile %in% c("A_8","C_10")) %>% 
+  select(-tile)
+
+write_csv(x = example,file = "0aux/example.csv")
+
 
 

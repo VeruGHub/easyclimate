@@ -2,5 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
-1raw
-3results
+1raw/*
+!1raw/.gitkeep

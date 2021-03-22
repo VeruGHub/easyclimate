@@ -1,0 +1,21 @@
+Package: easyclimate
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: c(
+    person("Verónica", "Cruz-Alonso", role = c("aut", "cre"), 
+            email = "veronica.cral@gmail.com", 
+            comment = c(ORCID = "")),
+    person("Francisco","Rodriguez-Sanchez", role = c("aut"), comment = c(ORCID = "0000-0002-7981-1599"))
+    )
+Description: What the package does (one paragraph).
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+URL: https://github.com/VeruGHub/easyclimate
+BugReports: https://github.com/VeruGHub/easyclimate/issues
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

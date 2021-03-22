@@ -1,0 +1,146 @@
+---
+title: "Manual"
+author: "Verónica Cruz"
+date: "26/8/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#1. General description
+
+The "Downscaled European Climate Data" (Moreno & Hasenauer 2015) includes daily climatic data (precipitation, minimum and maximum temperature) with a spatial resolution of 0083x0083 degrees (~1 km2).
+It covers Europe and the most northern part of Africa. 
+Initially, it spanned from 1951 to 2012 but in 2018 it was updated to 2017 (v2). 
+The first release included tif files with:
+- all data, i.e. daily climatic data spanning the whole spatial and temporal extension ("AllDataRasters").
+- tiled data, i.e. daily climatic data by spatial tiles spanning the complete temporal extension ("TiledClimateData")
+- yearly data, i.e. yearly climatic data spanning the whole spatial and temporal extension ("YearlyAvgs/AnnualDataRasters"). For the precipitation the sum and the daily mean has been calculated.
+- periodic data, i.e. mean climatic data for two periods (1951-1980 and 1981-2010) ("PeriodicDataRasters")
+- seasonal averages ("SeasonalAvgs"), i.e. mean climatic data per season. There is one raster per year spanning all extension
+
+The v1 release does not include the periodic data. 
+The v2 release does not include the tiled data. This implies that to use the daily data from 2013 to 2017 we will need to download huge files covering the whole spatial extent (i.e. Europe).
+In all cases temperatures are given as Celsius * 100 and precipitation is given as mm * 100.
+
+##1.1. All data
+
+Includes individual folders for Tmin, Tmax, and Prcp.  
+Within those folders there are raster data sets for each year. Each year has 365 bands, even if it is a leap year. Each band is a day, starting on Jan 1. Each map is large (~17 GB for temperatures; 4-7.5 GB for precipitation) and will take time to download.
+
+##1.2. Tiled data
+
+If you want to only focus on a particular area in Europe this is a good option.  Within this folder you will find the image that lays out the tiles. Letters correspond to the x-axis of the tiles and numbers to the y-axis of the tiles. In each letter/number folder there will be all climate data for that tile. Again every map has 365 bands.
+Tiles are defined in docs/WithGrids.tif
+
+REVISAR: que son los archivos _v2 de la primera base de datos??
+2016 tiene 366 bandas y fue bisiesto. Creo que no lo han corregido :S
+
+##1.3. Yearly averages
+
+Mean temperatures and annual total precipitation were calculated for points with coverage greater than >95%, coverage being the number of days with non-NA data for the respective year. Mean temperatures were calculated by dividing the sum of daily temperatures by the number of days with valid data (non-NA). Annual total Prcp was calculated by adding up the daily precipitation data for the respective year.
+In both versions there is a file per year and climatic variable, but v1 includes Tmin, Tmax and Prcp, and v2 includes Tavg and Prec. Average temperature Tavg is taken as the mean of minimum temperature (Tmin) and maximum temperature (Tmax).
+
+
+##1.4. Periodic averages
+
+In v2, there are also periodic data raster (1951-1980 and 1981-2010), where each band represents the mean climate (Tavg and Prcp) of each year.
+Periodic Tavg and Prcp were calculated for points with coverage of greater than 95%, coverage being the number of years with non-NA data within the respective period. Periodic mean for both variables (Tavg and Prcp) was calculated by dividing the sum of the annual data by the number of years with non-NA data.
+
+
+#2. Functions
+
+##2.1. select_tiles
+
+Currently finished for Spain (1_select_tiles_grid.R)
+The extension of the tiles encompassing Spain has been calculated in 1raw/tileextent.RData. Then, a function assign a tile for each pair of coordinates given.
+
+*Para mejorar:*
+-hacerlo para toda Europa
+-hay que ver como leer al archivo tileextent.RData para que se pueda cargar desde cualquier ordenador. Ahora mismo solo funciona si se está trabajando en el proyecto easyclimate
+
+###2.2. download_daily_data
+
+*Para mejorar:*
+-que primero chequee si ya tienes el archivo y no lo vuelva a bajar en vez de sobreescribirlo
+-quizas se puede hacer una funcion mas generica segun si quieres datos diarios o anuales
+
+##2.3. extract
+
+###2.3.1. extract_from_coords 
+
+NA value 1951-2012 = -9999
+NA value 2013-2017 = -32768 (I guess)
+
+*Para mejorar:*
+-Tarda mucho en extraer. se podría optimizar?
+-Que para cada punto extraiga información de los años de interés que varíen entre puntos
+-Generalizar para englobar 2.3.2?
+
+###2.3.2. extract from not-raw raster (to do)
+
+If first we create a raster where we calculate secondary climatic variables it can be interesting to create a generic function to extract data from that raster. Extract_from_coords is limited to use the given names for the raw data.
+
+##2.4. Climatic variables (to complete)
+
+-To do: Balances hídricos (combinando con paquete spei)
+
+
+###2.4.1. annual_prec
+
+
+###2.4.2. monthly_prec
+
+*Para mejorar*
+-Ahora mismo solo funciona con meses consecutivos, pero si quieres datos de julio y de septiembre extraerá julio, agosto, septiembre.
+-En las funciones de precipitación se puede incluir desviación de ese mes respecto a la media de todo el periodo para ese mes
+
+###2.4.3. annual_dry_waves
+
+
+###2.4.4. annual_temp
+
+*Para mejorar:*
+-Sería sencillo aprovechar esta función para obtener las temperaturas máximas y mínimas absolutas para cada año, la media de estos valores a lo largo de los años y/o la mínima y máxima absolutas de toda la serie temporal
+-El output en forma de lista es un poco incómodo
+
+###2.4.5. monthly_temp
+
+*Para mejorar:*
+-Se podría incluir en esta u otra función las medias de las temperaturas máximas y mínimas o los mínimos y máximos absolutos para cada mes.
+-Se puede incluir un mean=TRUE para que haga la media de temperaturas para cada mes en cada localización como hacemos con las temperaturas anuales.
+-Ahora mismo solo funciona con meses consecutivos, pero si quieres datos de julio y de septiembre extraerá julio, agosto, septiembre.
+-En las funciones de temperatura se puede incluir desviación de ese mes respecto a la media de todo el periodo para ese mes
+
+
+###2.4.6. annual_heat_waves
+
+
+###2.4.7. annual_late_frosts
+
+
+###2.4.8. annual_degree_days
+
+*Para mejorar*
+-Revisar como gestionar el tema de los días consecutivos si hay unos pocos días de temperatura por debajo del umbral entre periodos de crecimiento
+
+
+####TAREAS REUNION
+
+-Se puede descargar el archivo tileextent con el paquete? si no: foreco u otra web
+-Implementar select_tiles en download_daily_climate para que en esta ultima solo metas las coordenadas? Tiene sus ventajas e inconvenientes
+-Optimizar funcion extract_frompoints
+-Como usuario final seria mejor hacer el extract_from points dentro de las funciones climáticas y poner todas las funciones dentro de la misma?
+
+
+
+
+```{r cars}
+summary(cars)
+```
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```

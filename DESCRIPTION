@@ -11,7 +11,7 @@ Authors@R: c(
     person("Julen","Astigarraga", role = c("aut"), comment = c(ORCID = "0000-0001-9520-3713"))
     )
 Description: Facilitate the use of the European climatic database ftp://palantir.boku.ac.at/Public/ClimateData/
-License: `use_gpl3_license()` 
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

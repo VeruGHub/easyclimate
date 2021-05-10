@@ -53,7 +53,7 @@ extract_from_coords <- function(coords,
 
     row.names(climate_extract3) <- paste(y, climate_extract3$ID, sep = "_")
 
-    climate_extract[y] <- list(climate_extract3)
+    climate_extract[y-1950] <- list(climate_extract3)
 
   }
 

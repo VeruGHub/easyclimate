@@ -1,7 +1,7 @@
 
-#' Extract form coordinates
+#' Get climate data for a given set of coordinates
 #'
-#' @description extract climatic information for given coordinates from the downloaded files
+#' Extract climatic information for given coordinates from the downloaded files
 #'
 #' @param coords data frame with coordinates of sites to extract the climatic data, where first column is long and second column is lat
 #' @param climatic_var the climatic variable to extract (Prcp, Tmax, Tmin)
@@ -19,7 +19,6 @@ extract_from_coords <- function(coords,
                                 climatic_var,
                                 years) {
 
-  source("R/2_url.R")
 
   names(coords) <- c("long", "lat")
   ids <- 1:nrow(coords)
@@ -29,7 +28,7 @@ extract_from_coords <- function(coords,
 
     print(y)
 
-    cog_url <- url(climatic_var = climatic_var,
+    cog_url <- build_url(climatic_var = climatic_var,
                     year = y)
 
     rawclimate <- terra::rast(cog_url)

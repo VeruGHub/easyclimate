@@ -24,5 +24,6 @@ Imports:
     terra
 Suggests: 
     testthat (>= 3.0.0),
-    RCurl
+    RCurl,
+    covr
 Config/testthat/edition: 3

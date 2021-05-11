@@ -6,3 +6,4 @@ other
 R/draft_funs
 vignettes
 ^\.github$
+^codecov\.yml$

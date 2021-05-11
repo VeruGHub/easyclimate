@@ -8,7 +8,6 @@
 #'
 #' @return text string with the url
 #'
-#' @examples
 #' @author Veronica Cruz-Alonso, Sophia Ratcliffe, Francisco Rodríguez-Sánchez
 
 build_url <- function(climatic_var,

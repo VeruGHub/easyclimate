@@ -23,8 +23,9 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Sophia Ratcliffe (\href{https://orcid.org/0000-0001-9284-7900}{ORCID})
   \item Francisco Rodriguez-Sanchez (\href{https://orcid.org/0000-0002-7981-1599}{ORCID})
+  \item Christoph Pucher (\href{https://orcid.org/0000-0002-9269-1907}{ORCID})
+  \item Sophia Ratcliffe (\href{https://orcid.org/0000-0001-9284-7900}{ORCID})
   \item Paloma Ruiz-Benito (\href{https://orcid.org/0000-0002-2781-5870}{ORCID})
   \item Julen Astigarraga (\href{https://orcid.org/0000-0001-9520-3713}{ORCID})
 }

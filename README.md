@@ -16,8 +16,8 @@ coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.s
 The goal of easyclimate is to …
 
 Facilitate the use of European climatic database
+
 <ftp://palantir.boku.ac.at/Public/ClimateData/>
-<ftp://palantir.boku.ac.at/Public/ClimateData/Moreno_et_al-2015-International_Journal_of_Climatology.pdf>
 
 ## Installation
 

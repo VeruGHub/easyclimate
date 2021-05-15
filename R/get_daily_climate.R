@@ -12,7 +12,9 @@
 #' @param climatic_var Character. Climatic variable to be downloaded. One of 'Tmax', 'Tmin' or 'Prcp'.
 #' @param period Either a single number (representing a year between 1950 and 2017),
 #' a date in "YYYY-MM-DD" format (to obtain data for a single day),
-#' or a vector of length 2 specifying the starting and ending dates.
+#' or a vector with the format "start:end".
+#' Various elements can be concatenated in the vector
+#' (e.g. c(2000:2005, 2010:2015, 2017), c("2000-01-01:2000-01-15", "2000-02-01"))
 #' @param output Character. Either "df", which returns a dataframe with daily climatic values
 #' for each point/polygon, or "raster", which returns a [terra::SpatRaster()] object.
 #' @param ... further arguments for [terra::extract()]. Note you could use this to
@@ -58,9 +60,9 @@
 #' # Calculate min across polygon
 #' ex <- get_daily_climate(coords, period = "2008-09-27", fun = "min")
 #'
-#'
-#' # easily convert sf to SpatVector
+#'# easily convert sf to SpatVector
 #' # coords <- vect(poly.sf)
+#'
 #' }
 #'
 #' @author Veronica Cruz-Alonso, Sophia Ratcliffe, Francisco Rodríguez-Sánchez
@@ -92,12 +94,13 @@ get_daily_climate <- function(coords = NULL,
     stopifnot("lat" %in% names(coords))
   }
 
+###V: Stop para raster + un punto -- no tiene sentido. Probar antes a actualiar paquete
 
   #### Convert matrix, data.frame, sf to SpatVector ####
   if (!inherits(coords, "SpatVector")) {
     # coords <- coords[!duplicated(coords), ]
-    coords.spatvec <- terra::vect(coords)
-    coords.spatvec <- terra::unique(coords.spatvec)  # remove duplicates
+    coords.spatvec0 <- terra::vect(coords)
+    coords.spatvec <- terra::unique(coords.spatvec0)  # remove duplicates
   } else {
     coords.spatvec <- coords
   }
@@ -128,7 +131,6 @@ get_daily_climate <- function(coords = NULL,
   urls.vsicurl <- paste0("/vsicurl/", urls)
 
 
-
   #### Connect and combine all required rasters ####
 
   ras.list <- lapply(urls.vsicurl, terra::rast)
@@ -157,6 +159,11 @@ get_daily_climate <- function(coords = NULL,
   if (output == "df") {
     out <- terra::extract(rasters.sub, coords.spatvec, xy = TRUE, ...)
 
+    ## Same rows than original data #In progress
+    # out2 <- terra::merge(coords.spatvec0, out, all.x = TRUE,
+    #                      by.x = c("lon", "lat"), by.y = c("x", "y"))
+    #Se duplican row.names
+
     ## Reshape to long format
     if ("y" %in% names(out)) {
       out <- reshape_terra_extract(out, fun = FALSE, climvar = climatic_var)
@@ -164,11 +171,12 @@ get_daily_climate <- function(coords = NULL,
       out <- reshape_terra_extract(out, fun = TRUE, climvar = climatic_var)
     }
 
+
   }
 
 
-
   ## If output == "raster", return a cropped raster
+  #V: con una sola coordenada el output no puede ser raster porque no hace el crop
   if (output == "raster") {
     out <- terra::crop(rasters.sub, coords.spatvec)
   }
@@ -182,22 +190,25 @@ get_daily_climate <- function(coords = NULL,
 
 period_to_days <- function(period) {
 
-  stopifnot(length(period) <= 2)
+  stopifnot(length(period) >= 1)
 
   ## period as a number
+
   if (is.numeric(period)) {
 
-    if (length(period) == 1) { # e.g. 2005
-      days <- seq.Date(from = as.Date(paste0(period, "-01-01")),
-                       to = as.Date(paste0(period, "-12-31")),
-                       by = 1)
+    ini <- period[c(TRUE, diff(period)!=1)]
+    fin <- period[c(diff(period)!=1, TRUE)]
+    days <- as.Date(NULL)
+
+    for (i in 1:length(ini)) {
+
+      days0 <- seq.Date(from = as.Date(paste0(ini[i], "-01-01")),
+                        to = as.Date(paste0(fin[i], "-12-31")),
+                        by = 1)
+
+      days <- c(days, days0)
     }
 
-    if (length(period) == 2) {  # e.g. c(2005, 2006)
-      days <- seq.Date(from = as.Date(paste0(period[1], "-01-01")),
-                       to = as.Date(paste0(period[2], "-12-31")),
-                       by = 1)
-    }
   }
 
   ## period as character, e.g. "2005-01-06"
@@ -210,15 +221,24 @@ period_to_days <- function(period) {
 
   if (is.character(period)) {
 
-    if (length(period) == 1) { # e.g. "2005-01-06"
-      days <- as.Date(period)
+    ini <- do.call(rbind, strsplit(period, split = ":"))[,1]
+
+    if (ncol(do.call(rbind, strsplit(period, split = ":"))) == 2) {
+      fin <- do.call(rbind, strsplit(period, split = ":"))[,2]
+    } else {
+      fin <- ini
     }
 
-    if (length(period) == 2) {  # e.g. c("2005-06-02", "2007-05-08")
-      days <- seq.Date(from = as.Date(period[1]),
-                       to = as.Date(period[2]),
-                       by = 1)
+    days <- as.Date(NULL)
+
+    for (i in 1:length(ini)) {
+
+      days0 <- seq.Date(from = as.Date(ini[i]),
+                        to = as.Date(fin[i]),
+                        by = 1)
+      days <- c(days, days0)
     }
+
   }
 
   invisible(days)
@@ -242,7 +262,8 @@ reshape_terra_extract <- function(df.wide, fun = FALSE, climvar) {
       df.long <- stats::reshape(df.wide, direction = "long",
                             idvar = c("ID", "x", "y"),
                             varying = names(df.wide)[!names(df.wide) %in% c("ID", "x", "y")],
-                            timevar = "date")
+                            timevar = "date",
+                            new.row.names = NULL)
 
   } else {# Reshaping output of terra::extract when fun has been used
 

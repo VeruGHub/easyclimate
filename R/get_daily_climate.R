@@ -1,27 +1,35 @@
 
 #' Get daily climate data
 #'
-#' Extract daily climate data for a given set of points or polygons.
+#' Extract daily climate data for a given set of points or polygons within Europe.
+#'
 #'
 #' @param coords A matrix, dataframe, [sf::sf()], or [terra::SpatVector()] object
-#' containing point or polygon coordinates (in lonlat/geographic format).
+#' containing point or polygon coordinates in decimal degrees (lonlat/geographic format).
+#' Longitude must fall between -40.5 and 75.5 degrees, and latitude between 25.5 and 75.5 degrees.
 #' If `coords` is a matrix, it must have only two columns: the first with longitude
 #' and the second with latitude data.
-#' If `coords` is a data.frame, it must contain just two columns called `lon` and `lat`
+#' If `coords` is a data.frame, it must contain at least two columns called `lon` and `lat`
 #' with longitude and latitude coordinates, respectively.
 #' @param climatic_var Character. Climatic variable to be downloaded. One of 'Tmax', 'Tmin' or 'Prcp'.
-#' @param period Either a single number (representing a year between 1950 and 2017),
-#' a date in "YYYY-MM-DD" format (to obtain data for a single day),
-#' or a vector with the format "start:end".
+#' @param period Either numbers (representing years between 1950 and 2017),
+#' or dates in "YYYY-MM-DD" format (to obtain data for specific days).
+#' To specify a sequence of years or dates use the format 'start:end' (e.g. YYYY:YYYY or "YYYY-MM-DD:YYYY-MM-DD", see examples).
 #' Various elements can be concatenated in the vector
 #' (e.g. c(2000:2005, 2010:2015, 2017), c("2000-01-01:2000-01-15", "2000-02-01"))
 #' @param output Character. Either "df", which returns a dataframe with daily climatic values
 #' for each point/polygon, or "raster", which returns a [terra::SpatRaster()] object.
 #' @param ... further arguments for [terra::extract()]. Note you could use this to
-#' directly calculate summary statistics (e.g. mean) for each polygon.
+#' directly calculate summary statistics (e.g. mean) for each polygon (see examples)`.
 #'
 #' @return A data.frame or a [terra::SpatRaster()] object (if output = "raster").
+#' Note temperature values are in ºC\*100, and precipitation values in mm\*100, to avoid floating values.
 #' @export
+#'
+#' @references
+#' Werner Rammer, Christoph Pucher, Mathias Neumann. 2018.
+#' Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2.
+#' ftp://palantir.boku.ac.at/Public/ClimateData/
 #'
 #' @examples
 #' \dontrun{
@@ -29,42 +37,48 @@
 #'
 #' # Coords as matrix
 #' coords <- matrix(c(-5.36, 37.40), ncol = 2)
-#' ex <- get_daily_climate(coords, period = "2008-09-27")  # single day
+#' ex <- get_daily_climate(coords, period = "2001-01-01")  # single day
+#' ex <- get_daily_climate(coords, period = c("2001-01-01", "2001-01-03"))  # 1st AND 3rd Jan 2001
+#' ex <- get_daily_climate(coords, period = "2001-01-01:2001-01-03")  # 1st TO 3rd Jan 2001
 #' ex <- get_daily_climate(coords, period = 2008)  # entire year
-#' ex <- get_daily_climate(coords, period = c(2008, 2010))  # several years
-#' ex <- get_daily_climate(coords, period = c("2008-09-27", "2008-09-30"))  # specific period
+#' ex <- get_daily_climate(coords, period = c(2008, 2010))  # 2008 AND 2010
+#' ex <- get_daily_climate(coords, period = 2008:2010)  # 2008 TO 2010
 #'
-#' ex <- get_daily_climate(coords, period = "2008-09-27", climatic_var = "Tmin")
+#' ex <- get_daily_climate(coords, period = "2001-01-01", climatic_var = "Tmin")
 #'
 #' # Coords as data.frame
 #' coords <- as.data.frame(coords)
 #' names(coords) <- c("lon", "lat")  # must have these columns
-#' ex <- get_daily_climate(coords, period = "2008-09-27")  # single day
+#' ex <- get_daily_climate(coords, period = "2001-01-01")  # single day
 #'
 #' # Coords as sf
 #' coords <- sf::st_as_sf(coords, coords = c("lon", "lat"))
-#' ex <- get_daily_climate(coords, period = "2008-09-27")  # single day
+#' ex <- get_daily_climate(coords, period = "2001-01-01")  # single day
 #'
 #' # Several points
 #' coords <- matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
-#' ex <- get_daily_climate(coords, period = "2008-09-27", output = "raster")  # raster output
+#' ex <- get_daily_climate(coords, period = "2001-01-01", output = "raster")  # raster output
 #'
 #' ## Polygons
 #' coords <- terra::vect("POLYGON ((-5 38, -5 37.5, -4.5 37.5, -4.5 38, -5 38))")
 #'
 #' # Return raster
-#' ex <- get_daily_climate(coords, period = "2008-09-27", output = "raster")
+#' ex <- get_daily_climate(coords, period = "2001-01-01", output = "raster")
 #'
 #' # Calculate average across polygon
-#' ex <- get_daily_climate(coords, period = "2008-09-27", fun = "mean")
+#' ex <- get_daily_climate(coords, period = "2001-01-01", fun = "mean")
 #' # Calculate min across polygon
 #' ex <- get_daily_climate(coords, period = "2008-09-27", fun = "min")
 #'
-#'# easily convert sf to SpatVector
-#' # coords <- vect(poly.sf)
 #'
 #' }
 #'
+#'
+#' coords <- matrix(c(-5.36, 37.40, -5.36, 37.40, 4.05, 38.10), ncol = 2, byrow = TRUE)
+#' coords <- data.frame(lon = c(-5.36123456, -5.36123456, -5.36123456, 4.05123456),
+#' lat = c(37.40123456, 37.40123456, 37.40123456, 38.10123456),
+#' dat = c(1,2,2, 3), dat2 = c(4,5,5,6))
+#' ex <- get_daily_climate(coords, period = "2001-01-01")  # single day
 #' @author Veronica Cruz-Alonso, Francisco Rodriguez-Sanchez, Sophia Ratcliffe
 
 
@@ -79,6 +93,14 @@ get_daily_climate <- function(coords = NULL,
   ## climatic_var
   if (!climatic_var %in% c("Tmax", "Tmin", "Prcp"))
     stop("climatic_var must be one of 'Tmax', 'Tmin' or 'Prcp'")
+
+  if (climatic_var %in% names(coords)) {
+    stop("coords cannot have a column with the same name as ", climatic_var, ". Please change it.")
+  }
+
+  # if ("ID_coords" %in% names(coords)) {
+  #   stop("There cannot be a variable called 'ID_coords'. Please rename it")
+  # }
 
 
   ## coords
@@ -96,12 +118,34 @@ get_daily_climate <- function(coords = NULL,
 
   #### Convert matrix, data.frame, sf to SpatVector ####
   if (!inherits(coords, "SpatVector")) {
-    # coords <- coords[!duplicated(coords), ]
-    coords.spatvec.ori <- terra::vect(coords)
-    coords.spatvec <- terra::unique(coords.spatvec.ori)  # remove duplicates
+    coords.spatvec <- terra::vect(coords)
+    # coords.spatvec <- terra::unique(coords.spatvec)  # remove duplicates
   } else {
     coords.spatvec <- coords
   }
+
+  # Add ID variable
+  coords.spatvec$ID_coords <- 1:nrow(coords.spatvec)
+
+
+  ## Warn (or stop) if asking data for too many points or too large area
+  # so as not to saturate FTP server
+  if (nrow(coords.spatvec) > 10000) {  # change limits if needed
+    warning("Asking for climate data for >10000 sites.
+            Please check there are no duplicates in 'coords',
+            and consider downloading original rasters so as not to saturate the server")
+  }
+
+  if (terra::geomtype(coords.spatvec) == "polygons") {
+
+    if (sum(suppressWarnings(terra::expanse(coords.spatvec, unit = "km"))) > 10000) {  # change limits if needed
+      warning("Asking for climate data for too large area.
+            Please consider downloading original rasters so as not to saturate the server")
+    }
+
+  }
+
+
 
   ## Check that SpatVector extent is within bounds
   if (terra::ext(coords.spatvec)$xmin < -40.5 |
@@ -155,34 +199,32 @@ get_daily_climate <- function(coords = NULL,
 
   ## Extract!
   if (output == "df") {
+
     out <- terra::extract(rasters.sub, coords.spatvec, xy = TRUE, ...)
 
-    if ("y" %in% names(out)) {
-
-    # Same rows than original data
-      if (exists("coords.spatvec.ori")) {
-        if (nrow(terra::geom(coords.spatvec.ori)) != nrow(terra::geom(coords.spatvec))) {
-          out.ori <- merge(terra::geom(coords.spatvec.ori)[,c("x","y")], out, all.x = TRUE)
-        }
-      } else {
-            out.ori <- out
-            }
-
     ## Reshape to long format
-      out.ori <- reshape_terra_extract(out.ori, fun = FALSE, climvar = climatic_var)
+    if ("y" %in% names(out)) {
+      out <- reshape_terra_extract(out, fun = FALSE, climvar = climatic_var)
     } else {
-      out.ori <- reshape_terra_extract(out.ori, fun = TRUE, climvar = climatic_var)
+      out <- reshape_terra_extract(out, fun = TRUE, climvar = climatic_var)
     }
 
+    ## Merge with original coords data
+    coords.spatvec.df <- terra::as.data.frame(coords.spatvec)
+    out <- merge(coords.spatvec.df, out, by.x =  "ID_coords", by.y = "ID", all = TRUE)
+
+    ## Rasters codify NA as very negative values (-32768).
+    # So, if value <-10000, it is NA
+    out[, climatic_var] <- ifelse(out[, climatic_var] < -10000, NA, out[, climatic_var])
 
   }
 
   ## If output == "raster", return a cropped raster
   if (output == "raster") {
-    out.ori <- terra::crop(rasters.sub, coords.spatvec)
+    out <- terra::crop(rasters.sub, coords.spatvec)
   }
 
-  invisible(out.ori)
+  invisible(out)
 
 }
 
@@ -260,15 +302,9 @@ reshape_terra_extract <- function(df.wide, fun = FALSE, climvar) {
       names(df.wide)[!names(df.wide) %in% c("ID", "x", "y")] <-
         paste0(climvar, ".", names(df.wide)[!names(df.wide) %in% c("ID", "x", "y")])
 
-      df.wide$ID2 <- stats::ave(df.wide$ID, df.wide$ID,
-                           FUN = function (x) { if (length(x) > 1) {
-                             paste(x, 1:length(x), sep = ".")
-                           } else { x }
-                             })
-
       df.long <- stats::reshape(df.wide, direction = "long",
-                            idvar = c("ID", "ID2", "x", "y"),
-                            varying = names(df.wide)[!names(df.wide) %in% c("ID", "ID2", "x", "y")],
+                            idvar = c("ID", "x", "y"),
+                            varying = names(df.wide)[!names(df.wide) %in% c("ID", "x", "y")],
                             timevar = "date")
 
   } else {# Reshaping output of terra::extract when fun has been used

@@ -41,4 +41,8 @@ build_url <- function(climatic_var,
 
 
 
+# check_url_status <- function(url) {
+#   RCurl::url.exists(url)
+# }
+
 

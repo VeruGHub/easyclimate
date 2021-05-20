@@ -7,7 +7,7 @@
 #' containing point or polygon coordinates (in lonlat/geographic format).
 #' If `coords` is a matrix, it must have only two columns: the first with longitude
 #' and the second with latitude data.
-#' If `coords` is a data.frame, it must contain two columns called `lon` and `lat`
+#' If `coords` is a data.frame, it must contain just two columns called `lon` and `lat`
 #' with longitude and latitude coordinates, respectively.
 #' @param climatic_var Character. Climatic variable to be downloaded. One of 'Tmax', 'Tmin' or 'Prcp'.
 #' @param period Either a single number (representing a year between 1950 and 2017),
@@ -65,7 +65,7 @@
 #'
 #' }
 #'
-#' @author Veronica Cruz-Alonso, Sophia Ratcliffe, Francisco Rodríguez-Sánchez
+#' @author Veronica Cruz-Alonso, Francisco Rodríguez-Sánchez, Sophia Ratcliffe
 
 
 get_daily_climate <- function(coords = NULL,
@@ -93,8 +93,6 @@ get_daily_climate <- function(coords = NULL,
     stopifnot("lon" %in% names(coords))
     stopifnot("lat" %in% names(coords))
   }
-
-###V: Stop para raster + un punto -- no tiene sentido. Probar antes a actualiar paquete
 
   #### Convert matrix, data.frame, sf to SpatVector ####
   if (!inherits(coords, "SpatVector")) {
@@ -159,24 +157,27 @@ get_daily_climate <- function(coords = NULL,
   if (output == "df") {
     out <- terra::extract(rasters.sub, coords.spatvec, xy = TRUE, ...)
 
-    ## Same rows than original data #In progress
-    # out2 <- terra::merge(coords.spatvec0, out, all.x = TRUE,
-    #                      by.x = c("lon", "lat"), by.y = c("x", "y"))
-    #Se duplican row.names
+    if ("y" %in% names(out)) {
+
+    # Same rows than original data
+      if (exists("coords.spatvec0")) {
+        if (nrow(terra::geom(coords.spatvec0)) != nrow(terra::geom(coords.spatvec))) {
+          out.ori <- merge(terra::geom(coords.spatvec0)[,c("x","y")], out, all.x = TRUE)
+        }
+      } else {
+            out.ori <- out
+            }
 
     ## Reshape to long format
-    if ("y" %in% names(out)) {
-      out <- reshape_terra_extract(out, fun = FALSE, climvar = climatic_var)
+      out.ori <- reshape_terra_extract(out.ori, fun = FALSE, climvar = climatic_var)
     } else {
-      out <- reshape_terra_extract(out, fun = TRUE, climvar = climatic_var)
+      out.ori <- reshape_terra_extract(out.ori, fun = TRUE, climvar = climatic_var)
     }
 
 
   }
 
-
   ## If output == "raster", return a cropped raster
-  #V: con una sola coordenada el output no puede ser raster porque no hace el crop
   if (output == "raster") {
     out <- terra::crop(rasters.sub, coords.spatvec)
   }
@@ -259,11 +260,16 @@ reshape_terra_extract <- function(df.wide, fun = FALSE, climvar) {
       names(df.wide)[!names(df.wide) %in% c("ID", "x", "y")] <-
         paste0(climvar, ".", names(df.wide)[!names(df.wide) %in% c("ID", "x", "y")])
 
+      df.wide$ID2 <- stats::ave(df.wide$ID, df.wide$ID,
+                           FUN = function (x) { if (length(x) > 1) {
+                             paste(x, 1:length(x), sep = ".")
+                           } else { x }
+                             })
+
       df.long <- stats::reshape(df.wide, direction = "long",
-                            idvar = c("ID", "x", "y"),
-                            varying = names(df.wide)[!names(df.wide) %in% c("ID", "x", "y")],
-                            timevar = "date",
-                            new.row.names = NULL)
+                            idvar = c("ID", "ID2", "x", "y"),
+                            varying = names(df.wide)[!names(df.wide) %in% c("ID", "ID2", "x", "y")],
+                            timevar = "date")
 
   } else {# Reshaping output of terra::extract when fun has been used
 

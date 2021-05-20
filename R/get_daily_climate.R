@@ -65,7 +65,7 @@
 #'
 #' }
 #'
-#' @author Veronica Cruz-Alonso, Francisco Rodríguez-Sánchez, Sophia Ratcliffe
+#' @author Veronica Cruz-Alonso, Francisco Rodriguez-Sanchez, Sophia Ratcliffe
 
 
 get_daily_climate <- function(coords = NULL,
@@ -97,8 +97,8 @@ get_daily_climate <- function(coords = NULL,
   #### Convert matrix, data.frame, sf to SpatVector ####
   if (!inherits(coords, "SpatVector")) {
     # coords <- coords[!duplicated(coords), ]
-    coords.spatvec0 <- terra::vect(coords)
-    coords.spatvec <- terra::unique(coords.spatvec0)  # remove duplicates
+    coords.spatvec.ori <- terra::vect(coords)
+    coords.spatvec <- terra::unique(coords.spatvec.ori)  # remove duplicates
   } else {
     coords.spatvec <- coords
   }
@@ -160,9 +160,9 @@ get_daily_climate <- function(coords = NULL,
     if ("y" %in% names(out)) {
 
     # Same rows than original data
-      if (exists("coords.spatvec0")) {
-        if (nrow(terra::geom(coords.spatvec0)) != nrow(terra::geom(coords.spatvec))) {
-          out.ori <- merge(terra::geom(coords.spatvec0)[,c("x","y")], out, all.x = TRUE)
+      if (exists("coords.spatvec.ori")) {
+        if (nrow(terra::geom(coords.spatvec.ori)) != nrow(terra::geom(coords.spatvec))) {
+          out.ori <- merge(terra::geom(coords.spatvec.ori)[,c("x","y")], out, all.x = TRUE)
         }
       } else {
             out.ori <- out
@@ -179,10 +179,10 @@ get_daily_climate <- function(coords = NULL,
 
   ## If output == "raster", return a cropped raster
   if (output == "raster") {
-    out <- terra::crop(rasters.sub, coords.spatvec)
+    out.ori <- terra::crop(rasters.sub, coords.spatvec)
   }
 
-  invisible(out)
+  invisible(out.ori)
 
 }
 

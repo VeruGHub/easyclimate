@@ -197,28 +197,21 @@ period_to_days <- function(period) {
 
   if (is.numeric(period)) {
 
-    ini <- period[c(TRUE, diff(period)!=1)]
-    fin <- period[c(diff(period)!=1, TRUE)]
-    days <- as.Date(NULL)
+    ini <- period[c(TRUE, diff(period) != 1)]
+    fin <- period[c(diff(period) != 1, TRUE)]
+    ini.fin <- data.frame(ini = paste0(ini, "-01-01"),
+                          fin = paste0(fin, "-12-31"))
 
-    for (i in 1:length(ini)) {
-
-      days0 <- seq.Date(from = as.Date(paste0(ini[i], "-01-01")),
-                        to = as.Date(paste0(fin[i], "-12-31")),
-                        by = 1)
-
-      days <- c(days, days0)
-    }
+    days.list <- apply(ini.fin, 1, function(x) {
+      seq.Date(from = as.Date(x["ini"]),
+               to = as.Date(x["fin"]),
+               by = 1)},
+      simplify = FALSE)
+    days = do.call("c", days.list)
 
   }
 
   ## period as character, e.g. "2005-01-06"
-
-  # check correct format ("YYYY-MM-DD")
-  if (is.character(period)) {
-    if (any(!grepl("[0-9]{4}-[0-9]{2}-[0-9]{2}", period)))
-      stop("Please provide dates as 'YYYY-MM-DD'")
-  }
 
   if (is.character(period)) {
 
@@ -230,15 +223,22 @@ period_to_days <- function(period) {
       fin <- ini
     }
 
-    days <- as.Date(NULL)
+    ini.fin <- data.frame(ini = ini, fin = fin)
 
-    for (i in 1:length(ini)) {
+    # check correct format ("YYYY-MM-DD")
+    apply(ini.fin, c(1,2), function(x) {
+      if (!grepl("[0-9]{4}-[0-9]{2}-[0-9]{2}", x))
+        stop("Please provide dates as 'YYYY-MM-DD'")
+    })
 
-      days0 <- seq.Date(from = as.Date(ini[i]),
-                        to = as.Date(fin[i]),
-                        by = 1)
-      days <- c(days, days0)
-    }
+
+    days.list <- apply(ini.fin, 1, function(x) {
+      seq.Date(from = as.Date(x["ini"]),
+               to = as.Date(x["fin"]),
+               by = 1)},
+      simplify = FALSE)
+
+    days = do.call("c", days.list)
 
   }
 

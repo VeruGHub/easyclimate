@@ -187,7 +187,7 @@ test_that("polygon input give expected results", {
 test_that("output raster is correct", {
 
   skip_on_cran()
-  # skip_on_ci()
+  skip_on_ci()
 
   library(terra)
 
@@ -212,6 +212,7 @@ test_that("output raster is correct", {
 test_that("different period formats give expected results", {
 
   skip_on_cran()
+  skip_on_ci()
 
   coords = matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
 
@@ -225,7 +226,6 @@ test_that("different period formats give expected results", {
                    Prcp = c(945, 12, 205, 0, 716, 589, 176, 0)),
               row.names = c(NA, -8L), class = "data.frame"))
 
-  skip_on_ci()
 
   out <- get_daily_climate(coords, period = c(2001:2003, 2005))
   expect_identical(head(out),

@@ -84,12 +84,6 @@ ex <- get_daily_climate(coords, period = "2008-09-27", fun = "min")
 
 }
 
-
-coords <- matrix(c(-5.36, 37.40, -5.36, 37.40, 4.05, 38.10), ncol = 2, byrow = TRUE)
-coords <- data.frame(lon = c(-5.36123456, -5.36123456, -5.36123456, 4.05123456),
-lat = c(37.40123456, 37.40123456, 37.40123456, 38.10123456),
-dat = c(1,2,2, 3), dat2 = c(4,5,5,6))
-ex <- get_daily_climate(coords, period = "2001-01-01")  # single day
 }
 \references{
 Werner Rammer, Christoph Pucher, Mathias Neumann. 2018.

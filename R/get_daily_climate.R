@@ -73,12 +73,7 @@
 #'
 #' }
 #'
-#'
-#' coords <- matrix(c(-5.36, 37.40, -5.36, 37.40, 4.05, 38.10), ncol = 2, byrow = TRUE)
-#' coords <- data.frame(lon = c(-5.36123456, -5.36123456, -5.36123456, 4.05123456),
-#' lat = c(37.40123456, 37.40123456, 37.40123456, 38.10123456),
-#' dat = c(1,2,2, 3), dat2 = c(4,5,5,6))
-#' ex <- get_daily_climate(coords, period = "2001-01-01")  # single day
+
 #' @author Veronica Cruz-Alonso, Francisco Rodriguez-Sanchez, Sophia Ratcliffe
 
 
@@ -244,12 +239,13 @@ period_to_days <- function(period) {
     ini.fin <- data.frame(ini = paste0(ini, "-01-01"),
                           fin = paste0(fin, "-12-31"))
 
-    days.list <- apply(ini.fin, 1, function(x) {
-      seq.Date(from = as.Date(x["ini"]),
-               to = as.Date(x["fin"]),
-               by = 1)},
-      simplify = FALSE)
+    days.list <- lapply(split(ini.fin, 1:nrow(ini.fin)),
+                              function(x) {
+                                seq.Date(from = as.Date(x$ini),
+                                         to = as.Date(x$fin),
+                                         by = 1)})
     days = do.call("c", days.list)
+    names(days) <- NULL
 
   }
 
@@ -274,13 +270,13 @@ period_to_days <- function(period) {
     })
 
 
-    days.list <- apply(ini.fin, 1, function(x) {
-      seq.Date(from = as.Date(x["ini"]),
-               to = as.Date(x["fin"]),
-               by = 1)},
-      simplify = FALSE)
-
+    days.list <- lapply(split(ini.fin, 1:nrow(ini.fin)),
+                        function(x) {
+                          seq.Date(from = as.Date(x$ini),
+                                   to = as.Date(x$fin),
+                                   by = 1)})
     days = do.call("c", days.list)
+    names(days) <- NULL
 
   }
 

@@ -8,3 +8,5 @@ other
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+vignettes
+

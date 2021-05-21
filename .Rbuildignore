@@ -3,7 +3,5 @@
 ^README\.Rmd$
 ^LICENSE\.md$
 other
-R/draft_funs
-vignettes
 ^\.github$
 ^codecov\.yml$

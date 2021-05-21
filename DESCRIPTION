@@ -11,9 +11,10 @@ Authors@R: c(
     person("Paloma","Ruiz-Benito", role = c("aut"), comment = c(ORCID = "0000-0002-2781-5870")),
     person("Julen","Astigarraga", role = c("aut"), comment = c(ORCID = "0000-0001-9520-3713"))
     )
-Description: Facilitate the use of the European climatic database 
-    (ftp://palantir.boku.ac.at/Public/ClimateData/) containing daily 
-    high (1 km) resolution data for precipitation, maximum and minimum temperature.
+Description: Easily get high-resolution (1 km) daily climate data (precipitation, 
+    minimum and maximum temperatures) for points and polygons 
+    within Europe, from the European climatic database 
+    (ftp://palantir.boku.ac.at/Public/ClimateData/).
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true

@@ -4,11 +4,12 @@
 \name{easyclimate-package}
 \alias{easyclimate}
 \alias{easyclimate-package}
-\title{easyclimate: easy download and tidy up of a 1-km and 1-day resolution database of European climate}
+\title{easyclimate: Easy access to high-resolution daily climate data for Europe}
 \description{
-Facilitate the use of the European climatic database 
-    (ftp://palantir.boku.ac.at/Public/ClimateData/) containing daily 
-    high (1 km) resolution data for precipitation, maximum and minimum temperature.
+Easily get high-resolution (1 km) daily climate data (precipitation, 
+    minimum and maximum temperatures) for points and polygons 
+    within Europe, from the European climatic database 
+    (ftp://palantir.boku.ac.at/Public/ClimateData/).
 }
 \seealso{
 Useful links:
@@ -23,7 +24,7 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Francisco Rodriguez-Sanchez (\href{https://orcid.org/0000-0002-7981-1599}{ORCID})
+  \item Francisco Rodríguez-Sánchez (\href{https://orcid.org/0000-0002-7981-1599}{ORCID})
   \item Christoph Pucher (\href{https://orcid.org/0000-0002-9269-1907}{ORCID})
   \item Sophia Ratcliffe (\href{https://orcid.org/0000-0001-9284-7900}{ORCID})
   \item Paloma Ruiz-Benito (\href{https://orcid.org/0000-0002-2781-5870}{ORCID})

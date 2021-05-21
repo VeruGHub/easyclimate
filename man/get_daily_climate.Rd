@@ -14,29 +14,33 @@ get_daily_climate(
 }
 \arguments{
 \item{coords}{A matrix, dataframe, \code{\link[sf:sf]{sf::sf()}}, or \code{\link[terra:SpatVector-class]{terra::SpatVector()}} object
-containing point or polygon coordinates (in lonlat/geographic format).
+containing point or polygon coordinates in decimal degrees (lonlat/geographic format).
+Longitude must fall between -40.5 and 75.5 degrees, and latitude between 25.5 and 75.5 degrees.
 If \code{coords} is a matrix, it must have only two columns: the first with longitude
 and the second with latitude data.
-If \code{coords} is a data.frame, it must contain two columns called \code{lon} and \code{lat}
+If \code{coords} is a data.frame, it must contain at least two columns called \code{lon} and \code{lat}
 with longitude and latitude coordinates, respectively.}
 
 \item{climatic_var}{Character. Climatic variable to be downloaded. One of 'Tmax', 'Tmin' or 'Prcp'.}
 
-\item{period}{Either a single number (representing a year between 1950 and 2017),
-a date in "YYYY-MM-DD" format (to obtain data for a single day),
-or a vector of length 2 specifying the starting and ending dates.}
+\item{period}{Either numbers (representing years between 1950 and 2017),
+or dates in "YYYY-MM-DD" format (to obtain data for specific days).
+To specify a sequence of years or dates use the format 'start:end' (e.g. YYYY:YYYY or "YYYY-MM-DD:YYYY-MM-DD", see examples).
+Various elements can be concatenated in the vector
+(e.g. c(2000:2005, 2010:2015, 2017), c("2000-01-01:2000-01-15", "2000-02-01"))}
 
 \item{output}{Character. Either "df", which returns a dataframe with daily climatic values
 for each point/polygon, or "raster", which returns a \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}} object.}
 
 \item{...}{further arguments for \code{\link[terra:extract]{terra::extract()}}. Note you could use this to
-directly calculate summary statistics (e.g. mean) for each polygon.}
+directly calculate summary statistics (e.g. mean) for each polygon (see examples)`.}
 }
 \value{
 A data.frame or a \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}} object (if output = "raster").
+Note temperature values are in ºC\*100, and precipitation values in mm\*100, to avoid floating values.
 }
 \description{
-Extract daily climate data for a given set of points or polygons.
+Extract daily climate data for a given set of points or polygons within Europe.
 }
 \examples{
 \dontrun{
@@ -44,43 +48,54 @@ library(easyclimate)
 
 # Coords as matrix
 coords <- matrix(c(-5.36, 37.40), ncol = 2)
-ex <- get_daily_climate(coords, period = "2008-09-27")  # single day
+ex <- get_daily_climate(coords, period = "2001-01-01")  # single day
+ex <- get_daily_climate(coords, period = c("2001-01-01", "2001-01-03"))  # 1st AND 3rd Jan 2001
+ex <- get_daily_climate(coords, period = "2001-01-01:2001-01-03")  # 1st TO 3rd Jan 2001
 ex <- get_daily_climate(coords, period = 2008)  # entire year
-ex <- get_daily_climate(coords, period = c(2008, 2010))  # several years
-ex <- get_daily_climate(coords, period = c("2008-09-27", "2008-09-30"))  # specific period
+ex <- get_daily_climate(coords, period = c(2008, 2010))  # 2008 AND 2010
+ex <- get_daily_climate(coords, period = 2008:2010)  # 2008 TO 2010
 
-ex <- get_daily_climate(coords, period = "2008-09-27", climatic_var = "Tmin")
+ex <- get_daily_climate(coords, period = "2001-01-01", climatic_var = "Tmin")
 
 # Coords as data.frame
 coords <- as.data.frame(coords)
 names(coords) <- c("lon", "lat")  # must have these columns
-ex <- get_daily_climate(coords, period = "2008-09-27")  # single day
+ex <- get_daily_climate(coords, period = "2001-01-01")  # single day
 
 # Coords as sf
 coords <- sf::st_as_sf(coords, coords = c("lon", "lat"))
-ex <- get_daily_climate(coords, period = "2008-09-27")  # single day
+ex <- get_daily_climate(coords, period = "2001-01-01")  # single day
 
 # Several points
 coords <- matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
-ex <- get_daily_climate(coords, period = "2008-09-27", output = "raster")  # raster output
+ex <- get_daily_climate(coords, period = "2001-01-01", output = "raster")  # raster output
 
 ## Polygons
 coords <- terra::vect("POLYGON ((-5 38, -5 37.5, -4.5 37.5, -4.5 38, -5 38))")
 
 # Return raster
-ex <- get_daily_climate(coords, period = "2008-09-27", output = "raster")
+ex <- get_daily_climate(coords, period = "2001-01-01", output = "raster")
 
 # Calculate average across polygon
-ex <- get_daily_climate(coords, period = "2008-09-27", fun = "mean")
+ex <- get_daily_climate(coords, period = "2001-01-01", fun = "mean")
 # Calculate min across polygon
 ex <- get_daily_climate(coords, period = "2008-09-27", fun = "min")
 
 
-# easily convert sf to SpatVector
-# coords <- vect(poly.sf)
 }
 
+
+coords <- matrix(c(-5.36, 37.40, -5.36, 37.40, 4.05, 38.10), ncol = 2, byrow = TRUE)
+coords <- data.frame(lon = c(-5.36123456, -5.36123456, -5.36123456, 4.05123456),
+lat = c(37.40123456, 37.40123456, 37.40123456, 38.10123456),
+dat = c(1,2,2, 3), dat2 = c(4,5,5,6))
+ex <- get_daily_climate(coords, period = "2001-01-01")  # single day
+}
+\references{
+Werner Rammer, Christoph Pucher, Mathias Neumann. 2018.
+Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2.
+ftp://palantir.boku.ac.at/Public/ClimateData/
 }
 \author{
-Veronica Cruz-Alonso, Sophia Ratcliffe, Francisco Rodríguez-Sánchez
+Veronica Cruz-Alonso, Francisco Rodriguez-Sanchez, Sophia Ratcliffe
 }

@@ -1,38 +1,27 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# easyclimate
+# easyclimate: easy access to high-resolution daily climate data for Europe
 
 <!-- badges: start -->
 
 [![Project Status: WIP – Initial development is in progress, but there
 has not yet been a stable, usable release suitable for the
-public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+public.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/VeruGHub/easyclimate/workflows/R-CMD-check/badge.svg)](https://github.com/VeruGHub/easyclimate/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.svg)](https://codecov.io/gh/VeruGHub/easyclimate?branch=master)
 <!-- badges: end -->
 
-The goal of easyclimate is to …
-
-Facilitate the use of European climatic database
-
-<ftp://palantir.boku.ac.at/Public/ClimateData/>
+Easily get high-resolution (1 km) daily climate data (precipitation,
+minimum and maximum temperatures) across Europe, from the European
+climatic database (<ftp://palantir.boku.ac.at/Public/ClimateData/>).
 
 ## Installation
 
-You can install the released version of easyclimate from
-[CRAN](https://CRAN.R-project.org) with:
-
 ``` r
-install.packages("easyclimate")
-```
-
-And the development version from [GitHub](https://github.com/) with:
-
-``` r
-# install.packages("devtools")
-devtools::install_github("VeruGHub/easyclimate")
+# install.packages("remotes")
+remotes::install_github("VeruGHub/easyclimate")
 ```
 
 ## Example
@@ -44,29 +33,21 @@ This is a basic example which shows you how to solve a common problem:
 ## basic example code
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+## CITATION
 
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/master/examples>.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+    #> 
+    #> If you use easyclimate, please cite both the data source and the
+    #> package as:
+    #> 
+    #>   Werner Rammer, Christoph Pucher, Mathias Neumann. 2018. Description,
+    #>   Evaluation and Validation of Downscaled Daily Climate Data Version 2.
+    #>   ftp://palantir.boku.ac.at/Public/ClimateData/
+    #> 
+    #>   Verónica Cruz-Alonso, Francisco Rodríguez-Sánchez, Christoph Pucher,
+    #>   Sophia Ratcliffe, Paloma Ruiz-Benito and Julen Astigarraga. 2021.
+    #>   easyclimate: Easy access to high-resolution daily climate data for
+    #>   Europe. https://github.com/VeruGHub/easyclimate
+    #> 
+    #> To see these entries in BibTeX format, use 'print(<citation>,
+    #> bibtex=TRUE)', 'toBibtex(.)', or set
+    #> 'options(citation.bibtex.max=999)'.

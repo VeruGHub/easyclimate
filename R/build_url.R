@@ -1,14 +1,14 @@
 
-#' Build url address for a given request
-#'
-#' Build the url to download climatic data from ftp://palantir.boku.ac.at/Public/ClimateData/
-#'
-#' @param climatic_var Character. Climatic variable to be downloaded. One of 'Tmax', 'Tmin' or 'Prcp'.
-#' @param year Numeric. Year to download climatic information
-#'
-#' @return text string with the url
-#'
-#' @author Veronica Cruz-Alonso, Sophia Ratcliffe, Francisco Rodríguez-Sánchez
+# Build url address for a given request
+#
+# Build the url to download climatic data from ftp://palantir.boku.ac.at/Public/ClimateData/
+#
+# @param climatic_var Character. Climatic variable to be downloaded. One of 'Tmax', 'Tmin' or 'Prcp'.
+# @param year Numeric. Year to download climatic information
+#
+# @return text string with the url
+#
+# @author Veronica Cruz-Alonso, Sophia Ratcliffe, Francisco Rodríguez-Sánchez
 
 build_url <- function(climatic_var,
                       year) {

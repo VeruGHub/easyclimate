@@ -28,5 +28,8 @@ Suggests:
     testthat (>= 3.0.0),
     RCurl,
     covr,
-    sf
+    sf,
+    knitr,
+    rmarkdown
 Config/testthat/edition: 3
+VignetteBuilder: knitr

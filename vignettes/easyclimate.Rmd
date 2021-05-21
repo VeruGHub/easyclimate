@@ -1,0 +1,19 @@
+---
+title: "easyclimate: easy access to high-resolution daily climate data for Europe"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{easyclimate: easy access to high-resolution daily climate data for Europe}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(easyclimate)
+```

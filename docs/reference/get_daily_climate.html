@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">easyclimate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -174,9 +174,11 @@ Note temperature values are in ºC\*100, and precipitation values in mm\*100, to
     <p>Werner Rammer, Christoph Pucher, Mathias Neumann. 2018.
 Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2.
 ftp://palantir.boku.ac.at/Public/ClimateData/</p>
+<p>Adam Moreno, Hubert Hasenauer. 2016. Spatial downscaling of European climate data.
+International Journal of Climatology 36: 1444–1458.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <p>Veronica Cruz-Alonso, Francisco Rodriguez-Sanchez, Sophia Ratcliffe</p>
+    <p>Francisco Rodriguez-Sanchez, Veronica Cruz-Alonso, Sophia Ratcliffe</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
@@ -216,8 +218,6 @@ ftp://palantir.boku.ac.at/Public/ClimateData/</p>
 <span class='va'>ex</span> <span class='op'>&lt;-</span> <span class='fu'>get_daily_climate</span><span class='op'>(</span><span class='va'>coords</span>, period <span class='op'>=</span> <span class='st'>"2001-01-01"</span>, fun <span class='op'>=</span> <span class='st'>"mean"</span><span class='op'>)</span>
 <span class='co'># Calculate min across polygon</span>
 <span class='va'>ex</span> <span class='op'>&lt;-</span> <span class='fu'>get_daily_climate</span><span class='op'>(</span><span class='va'>coords</span>, period <span class='op'>=</span> <span class='st'>"2008-09-27"</span>, fun <span class='op'>=</span> <span class='st'>"min"</span><span class='op'>)</span>
-
-
 <span class='op'>}</span>
 
 </div></pre>
@@ -232,7 +232,7 @@ ftp://palantir.boku.ac.at/Public/ClimateData/</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Verónica Cruz-Alonso, Francisco Rodríguez-Sánchez, Christoph Pucher, Sophia Ratcliffe, Paloma Ruiz-Benito, Julen Astigarraga.</p>
+  <p>Developed by Verónica Cruz-Alonso, Francisco Rodríguez-Sánchez, Christoph Pucher, Sophia Ratcliffe, Julen Astigarraga, Mathias Neumann, Paloma Ruiz-Benito.</p>
 </div>
 
 <div class="pkgdown">

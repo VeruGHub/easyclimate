@@ -24,12 +24,14 @@
 #'
 #' @return A data.frame or a [terra::SpatRaster()] object (if output = "raster").
 #' Note temperature values are in ºC\*100, and precipitation values in mm\*100, to avoid floating values.
-#' @export
 #'
 #' @references
 #' Werner Rammer, Christoph Pucher, Mathias Neumann. 2018.
 #' Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2.
 #' ftp://palantir.boku.ac.at/Public/ClimateData/
+#'
+#' Adam Moreno, Hubert Hasenauer. 2016. Spatial downscaling of European climate data.
+#' International Journal of Climatology 36: 1444–1458.
 #'
 #' @examples
 #' \dontrun{
@@ -69,12 +71,9 @@
 #' ex <- get_daily_climate(coords, period = "2001-01-01", fun = "mean")
 #' # Calculate min across polygon
 #' ex <- get_daily_climate(coords, period = "2008-09-27", fun = "min")
-#'
-#'
 #' }
 #'
-
-#' @author Veronica Cruz-Alonso, Francisco Rodriguez-Sanchez, Sophia Ratcliffe
+#' @author Francisco Rodriguez-Sanchez, Veronica Cruz-Alonso, Sophia Ratcliffe
 
 
 get_daily_climate <- function(coords = NULL,
@@ -87,20 +86,15 @@ get_daily_climate <- function(coords = NULL,
 
   ## climatic_var
   if (!climatic_var %in% c("Tmax", "Tmin", "Prcp"))
-    stop("climatic_var must be one of 'Tmax', 'Tmin' or 'Prcp'")
+    stop("Climatic_var must be one of 'Tmax', 'Tmin' or 'Prcp'")
 
   if (climatic_var %in% names(coords)) {
-    stop("coords cannot have a column with the same name as ", climatic_var, ". Please change it.")
+    stop("Coords cannot have a column with the same name as ", climatic_var, ". Please change it.")
   }
-
-  # if ("ID_coords" %in% names(coords)) {
-  #   stop("There cannot be a variable called 'ID_coords'. Please rename it")
-  # }
-
 
   ## coords
   if (!inherits(coords, c("matrix", "data.frame", "sf", "SpatVector")))
-    stop("coords must be either a matrix, data.frame, sf or SpatVector object")
+    stop("Coords must be either a matrix, data.frame, sf or SpatVector object")
 
   if (inherits(coords, "matrix")) {
     stopifnot(ncol(coords) == 2)
@@ -111,24 +105,27 @@ get_daily_climate <- function(coords = NULL,
     stopifnot("lat" %in% names(coords))
   }
 
+  if ("ID_coords" %in% names(coords)) {
+    warning("The variable ID_coords will be overwritten. Consider rename it")
+  }
+
   #### Convert matrix, data.frame, sf to SpatVector ####
+
   if (!inherits(coords, "SpatVector")) {
-    coords.spatvec <- terra::vect(coords)
-    # coords.spatvec <- terra::unique(coords.spatvec)  # remove duplicates
+    coords.spatvec.ori <- terra::vect(coords)
+    coords.spatvec <- terra::unique(coords.spatvec.ori)  # remove duplicates
   } else {
     coords.spatvec <- coords
   }
 
-  # Add ID variable
-  coords.spatvec$ID_coords <- 1:nrow(coords.spatvec)
-
+  ## Add ID variable
+  coords.spatvec.ori$ID_coords <- 1:nrow(coords.spatvec.ori)
 
   ## Warn (or stop) if asking data for too many points or too large area
   # so as not to saturate FTP server
   if (nrow(coords.spatvec) > 10000) {  # change limits if needed
     warning("Asking for climate data for >10000 sites.
-            Please check there are no duplicates in 'coords',
-            and consider downloading original rasters so as not to saturate the server")
+            Please consider downloading original rasters so as not to saturate the server")
   }
 
   if (terra::geomtype(coords.spatvec) == "polygons") {
@@ -140,30 +137,30 @@ get_daily_climate <- function(coords = NULL,
 
   }
 
-
-
   ## Check that SpatVector extent is within bounds
   if (terra::ext(coords.spatvec)$xmin < -40.5 |
       terra::ext(coords.spatvec)$xmax > 75.5 |
       terra::ext(coords.spatvec)$ymin < 25.25 |
       terra::ext(coords.spatvec)$ymax > 75.5) {
-    stop("coordinates fall out of the required extent (-40.5, 75.5, 25.25, 75.5)")
+    stop("Coordinates fall out of the required extent (-40.5, 75.5, 25.25, 75.5)")
   }
 
 
-  #### period: convert to dates ####
+  #### Period ####
+
+  ## Convert to dates
   days <- period_to_days(period)
 
   ## Extract years
   years <- as.numeric(sort(unique(format(days, "%Y"))))
 
-  # Check years are within bounds
+  ## Check years are within bounds
   if (any(years < 1950 | years > 2017))
     stop("Year (period) must be between 1950 and 2017")
 
 
-
   #### Build urls for all required years ####
+
   urls <- unlist(lapply(years, build_url, climatic_var = climatic_var))
   urls.vsicurl <- paste0("/vsicurl/", urls)
 
@@ -172,14 +169,14 @@ get_daily_climate <- function(coords = NULL,
 
   ras.list <- lapply(urls.vsicurl, terra::rast)
 
-  # Name raster layers with their dates
+  ## Name raster layers with their dates
   for (i in 1:length(years)) {
     names(ras.list[[i]]) <- seq.Date(from = as.Date(paste0(years[i], "-01-01")),
                                      to = as.Date(paste0(years[i], "-12-31")),
                                      by = 1)
   }
 
-  # Combine all years
+  ## Combine all years
   rasters <- ras.list[[1]]
   if (length(ras.list) > 1) {
     for (i in 2:length(ras.list)) {
@@ -187,12 +184,11 @@ get_daily_climate <- function(coords = NULL,
     }
   }
 
-
   ## Subset required dates only
   rasters.sub <- terra::subset(rasters, subset = as.character(days))
 
+  #### Extract ####
 
-  ## Extract!
   if (output == "df") {
 
     out <- terra::extract(rasters.sub, coords.spatvec, xy = TRUE, ...)
@@ -205,8 +201,8 @@ get_daily_climate <- function(coords = NULL,
     }
 
     ## Merge with original coords data
-    coords.spatvec.df <- terra::as.data.frame(coords.spatvec)
-    out <- merge(coords.spatvec.df, out, by.x =  "ID_coords", by.y = "ID", all = TRUE)
+    coords.spatvec.df <- terra::as.data.frame(coords.spatvec.ori)
+    out <- merge(coords.spatvec.df, out, by.x =  c("lon","lat"), by.y = c("x", "y"), all = TRUE)
 
     ## Rasters codify NA as very negative values (-32768).
     # So, if value <-10000, it is NA
@@ -216,7 +212,9 @@ get_daily_climate <- function(coords = NULL,
 
   ## If output == "raster", return a cropped raster
   if (output == "raster") {
+
     out <- terra::crop(rasters.sub, coords.spatvec)
+
   }
 
   invisible(out)
@@ -256,17 +254,24 @@ period_to_days <- function(period) {
     ini <- do.call(rbind, strsplit(period, split = ":"))[,1]
 
     if (ncol(do.call(rbind, strsplit(period, split = ":"))) == 2) {
+
       fin <- do.call(rbind, strsplit(period, split = ":"))[,2]
+
     } else {
+
       fin <- ini
+
     }
 
     ini.fin <- data.frame(ini = ini, fin = fin)
 
-    # check correct format ("YYYY-MM-DD")
-    apply(ini.fin, c(1,2), function(x) {
+    ## check correct format ("YYYY-MM-DD")
+    apply(ini.fin, c(1, 2), function(x) {
+
       if (!grepl("[0-9]{4}-[0-9]{2}-[0-9]{2}", x))
+
         stop("Please provide dates as 'YYYY-MM-DD'")
+
     })
 
 
@@ -275,7 +280,9 @@ period_to_days <- function(period) {
                           seq.Date(from = as.Date(x$ini),
                                    to = as.Date(x$fin),
                                    by = 1)})
+
     days = do.call("c", days.list)
+
     names(days) <- NULL
 
   }
@@ -289,7 +296,7 @@ period_to_days <- function(period) {
 reshape_terra_extract <- function(df.wide, fun = FALSE, climvar) {
 
   # Output of terra::extract is different if using 'fun'
-  # (e.g. to summarise values within polygons)
+  # (i.e. to summarise values within polygons)
 
   # First, simple use for points without using 'fun':
 
@@ -303,7 +310,7 @@ reshape_terra_extract <- function(df.wide, fun = FALSE, climvar) {
                             varying = names(df.wide)[!names(df.wide) %in% c("ID", "x", "y")],
                             timevar = "date")
 
-  } else {# Reshaping output of terra::extract when fun has been used
+  } else { # Reshaping output of terra::extract when fun has been used
 
     names(df.wide) <- gsub("\\.", "-", names(df.wide))
     names(df.wide) <- gsub("^X", paste0(climvar, "."), names(df.wide))

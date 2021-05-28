@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# easyclimate: easy access to high-resolution daily climate data for Europe
+# easyclimate: Easy access to high-resolution daily climate data for Europe
 
 <!-- badges: start -->
 [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.svg)](https://codecov.io/gh/VeruGHub/easyclimate?branch=master)
 <!-- badges: end -->
 
-Easily get high-resolution (1 km) daily climate data (precipitation, minimum and maximum temperatures) across Europe, from the European climatic database (ftp://palantir.boku.ac.at/Public/ClimateData/).
+Easily get high-resolution (1 km) daily climate data (precipitation, minimum and maximum temperatures) across Europe, from the European climatic database ftp://palantir.boku.ac.at/Public/ClimateData/.
 
 
 ## Installation

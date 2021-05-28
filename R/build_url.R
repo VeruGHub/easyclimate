@@ -8,25 +8,25 @@
 #
 # @return text string with the url
 #
-# @author Veronica Cruz-Alonso, Sophia Ratcliffe, Francisco Rodríguez-Sánchez
+# @author Veronica Cruz-Alonso, Francisco Rodríguez-Sánchez, Sophia Ratcliffe
 
 build_url <- function(climatic_var,
                       year) {
 
-  # Check arguments
+  ## Check arguments
   if (!climatic_var %in% c("Tmax", "Tmin", "Prcp"))
     stop("climatic_var must be one of 'Tmax', 'Tmin' or 'Prcp'")
 
   if (year < 1950 | year > 2017)
     stop("Year must be between 1950 and 2017")
 
-  # Adjust climvar to file names in FTP server
+  ## Adjust climvar to file names in FTP server
   climvar <- switch(climatic_var,
                     "Tmax" = "tmax",
                     "Tmin" = "tmin",
                     "Prcp" = "prec")
 
-  # Build url
+  ## Build url
   url <- paste("ftp://palantir.boku.ac.at/Public/ClimateData/v2_cogeo/AllDataRasters/",
                climvar,
                "/Downscaled",
@@ -38,11 +38,5 @@ build_url <- function(climatic_var,
   invisible(url)
 
 }
-
-
-
-# check_url_status <- function(url) {
-#   RCurl::url.exists(url)
-# }
 
 

@@ -171,7 +171,7 @@ get_daily_climate <- function(coords = NULL,
   ras.list <- lapply(urls.vsicurl, terra::rast)
 
   ## Name raster layers with their dates
-  for (i in 1:length(years)) {
+  for (i in seq_along(years)) {
     names(ras.list[[i]]) <- seq.Date(from = as.Date(paste0(years[i], "-01-01")),
                                      to = as.Date(paste0(years[i], "-12-31")),
                                      by = 1)
@@ -238,12 +238,12 @@ period_to_days <- function(period) {
     ini.fin <- data.frame(ini = paste0(ini, "-01-01"),
                           fin = paste0(fin, "-12-31"))
 
-    days.list <- lapply(split(ini.fin, 1:nrow(ini.fin)),
+    days.list <- lapply(split(ini.fin, seq_len(nrow(ini.fin))),
                               function(x) {
                                 seq.Date(from = as.Date(x$ini),
                                          to = as.Date(x$fin),
                                          by = 1)})
-    days = do.call("c", days.list)
+    days <- do.call("c", days.list)
     names(days) <- NULL
 
   }
@@ -276,13 +276,13 @@ period_to_days <- function(period) {
     })
 
 
-    days.list <- lapply(split(ini.fin, 1:nrow(ini.fin)),
+    days.list <- lapply(split(ini.fin, seq_len(nrow(ini.fin))),
                         function(x) {
                           seq.Date(from = as.Date(x$ini),
                                    to = as.Date(x$fin),
                                    by = 1)})
 
-    days = do.call("c", days.list)
+    days <- do.call("c", days.list)
 
     names(days) <- NULL
 

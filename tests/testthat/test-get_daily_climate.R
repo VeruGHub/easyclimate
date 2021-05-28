@@ -59,7 +59,7 @@ test_that("different climatic_var give expected results", {
   skip_on_cran()
 
   ## Input matrix
-  coords.mat = matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
+  coords.mat <- matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
 
   # climatic_var = "Tmin"
   expect_identical(
@@ -106,7 +106,7 @@ test_that("different input formats (points) give expected results", {
   skip_on_ci()
 
   ## Input matrix (tested above)
-  coords.mat = matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
+  coords.mat <- matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
 
   output <- structure(list(ID_coords = c(1, 2),
                            lon = c(-5.36, -4.05),
@@ -214,7 +214,7 @@ test_that("different period formats give expected results", {
   skip_on_cran()
   skip_on_ci()
 
-  coords = matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
+  coords <- matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
 
   expect_identical(
     get_daily_climate(coords, period = c("2001-01-01:2001-01-03", "2005-01-01")),

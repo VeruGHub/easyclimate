@@ -25,6 +25,8 @@
 #' @return A data.frame or a [terra::SpatRaster()] object (if output = "raster").
 #' Note temperature values are in ºC\*100, and precipitation values in mm\*100, to avoid floating values.
 #'
+#' @export
+#'
 #' @references
 #' Werner Rammer, Christoph Pucher, Mathias Neumann. 2018.
 #' Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2.
@@ -106,20 +108,19 @@ get_daily_climate <- function(coords = NULL,
   }
 
   if ("ID_coords" %in% names(coords)) {
-    warning("The variable ID_coords will be overwritten. Consider rename it")
+    warning("The variable ID_coords will be overwritten. Consider renaming it")
   }
 
   #### Convert matrix, data.frame, sf to SpatVector ####
 
   if (!inherits(coords, "SpatVector")) {
-    coords.spatvec.ori <- terra::vect(coords)
-    coords.spatvec <- terra::unique(coords.spatvec.ori)  # remove duplicates
+    coords.spatvec <- terra::vect(coords)
   } else {
     coords.spatvec <- coords
   }
 
   ## Add ID variable
-  coords.spatvec.ori$ID_coords <- 1:nrow(coords.spatvec.ori)
+  coords.spatvec$ID_coords <- 1:nrow(coords.spatvec)
 
   ## Warn (or stop) if asking data for too many points or too large area
   # so as not to saturate FTP server
@@ -201,8 +202,8 @@ get_daily_climate <- function(coords = NULL,
     }
 
     ## Merge with original coords data
-    coords.spatvec.df <- terra::as.data.frame(coords.spatvec.ori)
-    out <- merge(coords.spatvec.df, out, by.x =  c("lon","lat"), by.y = c("x", "y"), all = TRUE)
+    coords.spatvec.df <- terra::as.data.frame(coords.spatvec)
+    out <- merge(coords.spatvec.df, out, by.x =  "ID_coords", by.y = "ID", all = TRUE)
 
     ## Rasters codify NA as very negative values (-32768).
     # So, if value <-10000, it is NA

@@ -8,8 +8,7 @@ get_daily_climate(
   coords = NULL,
   climatic_var = "Prcp",
   period = NULL,
-  output = "df",
-  ...
+  output = "df"
 )
 }
 \arguments{
@@ -76,10 +75,6 @@ coords <- terra::vect("POLYGON ((-5 38, -5 37.5, -4.5 37.5, -4.5 38, -5 38))")
 # Return raster
 ex <- get_daily_climate(coords, period = "2001-01-01", output = "raster")
 
-# Calculate average across polygon
-ex <- get_daily_climate(coords, period = "2001-01-01", fun = "mean")
-# Calculate min across polygon
-ex <- get_daily_climate(coords, period = "2008-09-27", fun = "min")
 }
 
 }

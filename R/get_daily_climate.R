@@ -69,10 +69,6 @@
 #' # Return raster
 #' ex <- get_daily_climate(coords, period = "2001-01-01", output = "raster")
 #'
-#' # Calculate average across polygon
-#' ex <- get_daily_climate(coords, period = "2001-01-01", fun = "mean")
-#' # Calculate min across polygon
-#' ex <- get_daily_climate(coords, period = "2008-09-27", fun = "min")
 #' }
 #'
 #' @author Francisco Rodriguez-Sanchez, Veronica Cruz-Alonso, Sophia Ratcliffe
@@ -81,8 +77,7 @@
 get_daily_climate <- function(coords = NULL,
                         climatic_var = "Prcp",
                         period = NULL,
-                        output = "df",
-                        ...) {
+                        output = "df") {
 
   #### Check arguments ####
 
@@ -159,7 +154,6 @@ get_daily_climate <- function(coords = NULL,
   if (any(years < 1950 | years > 2017))
     stop("Year (period) must be between 1950 and 2017")
 
-
   #### Build urls for all required years ####
 
   urls <- unlist(lapply(years, build_url, climatic_var = climatic_var))
@@ -192,13 +186,13 @@ get_daily_climate <- function(coords = NULL,
 
   if (output == "df") {
 
-    out <- terra::extract(rasters.sub, coords.spatvec, xy = TRUE, ...)
+    out <- terra::extract(rasters.sub, coords.spatvec, xy = TRUE)
 
     ## Reshape to long format
     if ("y" %in% names(out)) {
-      out <- reshape_terra_extract(out, fun = FALSE, climvar = climatic_var)
+      out <- reshape_terra_extract(out, climvar = climatic_var)
     } else {
-      out <- reshape_terra_extract(out, fun = TRUE, climvar = climatic_var)
+      out <- reshape_terra_extract(out, climvar = climatic_var)
     }
 
     ## Merge with original coords data
@@ -207,7 +201,7 @@ get_daily_climate <- function(coords = NULL,
 
     ## Rasters codify NA as very negative values (-32768).
     # So, if value <-10000, it is NA
-    out[, climatic_var] <- ifelse(out[, climatic_var] < -10000, NA, out[, climatic_var])
+    out[, climatic_var] <- ifelse(out[, climatic_var] < -9000, NA, out[, climatic_var])
 
   }
 
@@ -293,15 +287,7 @@ period_to_days <- function(period) {
 }
 
 
-
-reshape_terra_extract <- function(df.wide, fun = FALSE, climvar) {
-
-  # Output of terra::extract is different if using 'fun'
-  # (i.e. to summarise values within polygons)
-
-  # First, simple use for points without using 'fun':
-
-  if (!isTRUE(fun)) {
+reshape_terra_extract <- function(df.wide, climvar) {
 
       names(df.wide)[!names(df.wide) %in% c("ID", "x", "y")] <-
         paste0(climvar, ".", names(df.wide)[!names(df.wide) %in% c("ID", "x", "y")])
@@ -311,20 +297,9 @@ reshape_terra_extract <- function(df.wide, fun = FALSE, climvar) {
                             varying = names(df.wide)[!names(df.wide) %in% c("ID", "x", "y")],
                             timevar = "date")
 
-  } else { # Reshaping output of terra::extract when fun has been used
+      df.long <- df.long[order(df.long$ID, df.long$date), ]
+      row.names(df.long) <- NULL
 
-    names(df.wide) <- gsub("\\.", "-", names(df.wide))
-    names(df.wide) <- gsub("^X", paste0(climvar, "."), names(df.wide))
-    df.long <- stats::reshape(df.wide, direction = "long",
-                        idvar = c("ID"),
-                        varying = names(df.wide)[!names(df.wide) %in% c("ID")],
-                        timevar = "date")
-
-  }
-
-  df.long <- df.long[order(df.long$ID, df.long$date), ]
-  row.names(df.long) <- NULL
-
-  df.long
+      df.long
 
 }

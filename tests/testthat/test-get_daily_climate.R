@@ -173,12 +173,6 @@ test_that("polygon input give expected results", {
                             635, 635, 655, 625, 644, 634, 653, 643)),
               row.names = c(NA, -36L), class = "data.frame"))
 
-  expect_identical(
-    get_daily_climate(coords, period = "2001-01-01", climatic_var = "Tmin", fun = "mean"),
-    structure(list(ID_coords = 1, date = "2001-01-01", Tmin = 600.0277777777778),
-              row.names = c(NA, -1L), class = "data.frame"))
-
-
 })
 
 

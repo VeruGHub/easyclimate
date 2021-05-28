@@ -80,8 +80,6 @@ ex <- get_daily_climate(coords, period = "2001-01-01", output = "raster")
 ex <- get_daily_climate(coords, period = "2001-01-01", fun = "mean")
 # Calculate min across polygon
 ex <- get_daily_climate(coords, period = "2008-09-27", fun = "min")
-
-
 }
 
 }
@@ -89,7 +87,10 @@ ex <- get_daily_climate(coords, period = "2008-09-27", fun = "min")
 Werner Rammer, Christoph Pucher, Mathias Neumann. 2018.
 Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2.
 ftp://palantir.boku.ac.at/Public/ClimateData/
+
+Adam Moreno, Hubert Hasenauer. 2016. Spatial downscaling of European climate data.
+International Journal of Climatology 36: 1444–1458.
 }
 \author{
-Veronica Cruz-Alonso, Francisco Rodriguez-Sanchez, Sophia Ratcliffe
+Francisco Rodriguez-Sanchez, Veronica Cruz-Alonso, Sophia Ratcliffe
 }

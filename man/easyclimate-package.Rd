@@ -9,7 +9,7 @@
 Easily get high-resolution (1 km) daily climate data (precipitation, 
     minimum and maximum temperatures) for points and polygons 
     within Europe, from the European climatic database 
-    (ftp://palantir.boku.ac.at/Public/ClimateData/).
+    ftp://palantir.boku.ac.at/Public/ClimateData/.
 }
 \seealso{
 Useful links:
@@ -27,8 +27,9 @@ Authors:
   \item Francisco Rodríguez-Sánchez (\href{https://orcid.org/0000-0002-7981-1599}{ORCID})
   \item Christoph Pucher (\href{https://orcid.org/0000-0002-9269-1907}{ORCID})
   \item Sophia Ratcliffe (\href{https://orcid.org/0000-0001-9284-7900}{ORCID})
-  \item Paloma Ruiz-Benito (\href{https://orcid.org/0000-0002-2781-5870}{ORCID})
   \item Julen Astigarraga (\href{https://orcid.org/0000-0001-9520-3713}{ORCID})
+  \item Mathias Neumann (\href{https://orcid.org/0000-0003-2472-943X}{ORCID})
+  \item Paloma Ruiz-Benito (\href{https://orcid.org/0000-0002-2781-5870}{ORCID})
 }
 
 }

@@ -19,8 +19,6 @@
 #' (e.g. c(2000:2005, 2010:2015, 2017), c("2000-01-01:2000-01-15", "2000-02-01"))
 #' @param output Character. Either "df", which returns a dataframe with daily climatic values
 #' for each point/polygon, or "raster", which returns a [terra::SpatRaster()] object.
-#' @param ... further arguments for [terra::extract()]. Note you could use this to
-#' directly calculate summary statistics (e.g. mean) for each polygon (see examples)`.
 #'
 #' @return A data.frame or a [terra::SpatRaster()] object (if output = "raster").
 #' Note temperature values are in ºC\*100, and precipitation values in mm\*100, to avoid floating values.
@@ -68,6 +66,9 @@
 #'
 #' # Return raster
 #' ex <- get_daily_climate(coords, period = "2001-01-01", output = "raster")
+#'
+#' # Return dataframe for polygon
+#' ex <- get_daily_climate(coords, period = "2001-01-01")
 #'
 #' }
 #'

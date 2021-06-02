@@ -189,11 +189,7 @@ get_daily_climate <- function(coords = NULL,
     out <- terra::extract(rasters.sub, coords.spatvec, xy = TRUE)
 
     ## Reshape to long format
-    if ("y" %in% names(out)) {
-      out <- reshape_terra_extract(out, climvar = climatic_var)
-    } else {
-      out <- reshape_terra_extract(out, climvar = climatic_var)
-    }
+    out <- reshape_terra_extract(out, climvar = climatic_var)
 
     ## Merge with original coords data
     coords.spatvec.df <- terra::as.data.frame(coords.spatvec)

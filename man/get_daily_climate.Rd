@@ -30,9 +30,6 @@ Various elements can be concatenated in the vector
 
 \item{output}{Character. Either "df", which returns a dataframe with daily climatic values
 for each point/polygon, or "raster", which returns a \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}} object.}
-
-\item{...}{further arguments for \code{\link[terra:extract]{terra::extract()}}. Note you could use this to
-directly calculate summary statistics (e.g. mean) for each polygon (see examples)`.}
 }
 \value{
 A data.frame or a \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}} object (if output = "raster").

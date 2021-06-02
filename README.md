@@ -42,9 +42,12 @@ This is a basic example which shows you how to solve a common problem:
     #>   Werner Rammer, Christoph Pucher, Mathias Neumann. 2018. Description,
     #>   Evaluation and Validation of Downscaled Daily Climate Data Version 2.
     #>   ftp://palantir.boku.ac.at/Public/ClimateData/
+    #>
+    #> Adam Moreno, Hubert Hasenauer. 2016. Spatial downscaling of European climate data.
+    #> International Journal of Climatology, 36: 1444–1458
     #> 
     #>   Verónica Cruz-Alonso, Francisco Rodríguez-Sánchez, Christoph Pucher,
-    #>   Sophia Ratcliffe, Paloma Ruiz-Benito and Julen Astigarraga. 2021.
+    #>   Sophia Ratcliffe, Julen Astigarraga, Mathias Newmann, Paloma Ruiz-Benito. 2021.
     #>   easyclimate: Easy access to high-resolution daily climate data for
     #>   Europe. https://github.com/VeruGHub/easyclimate
     #> 

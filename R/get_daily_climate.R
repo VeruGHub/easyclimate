@@ -67,6 +67,9 @@
 #' # Return raster
 #' ex <- get_daily_climate(coords, period = "2001-01-01", output = "raster")
 #'
+#' # Return dataframe for polygon
+#' ex <- get_daily_climate(coords, period = "2001-01-01")
+#'
 #' }
 #'
 #' @author Francisco Rodriguez-Sanchez, Veronica Cruz-Alonso, Sophia Ratcliffe

@@ -72,6 +72,9 @@ coords <- terra::vect("POLYGON ((-5 38, -5 37.5, -4.5 37.5, -4.5 38, -5 38))")
 # Return raster
 ex <- get_daily_climate(coords, period = "2001-01-01", output = "raster")
 
+# Return dataframe for polygon
+ex <- get_daily_climate(coords, period = "2001-01-01")
+
 }
 
 }

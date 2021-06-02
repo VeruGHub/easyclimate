@@ -79,11 +79,8 @@ ex <- get_daily_climate(coords, period = "2001-01-01", output = "raster")
 ex
 plot(ex)
 
-# Calculate average across polygon
-ex <- get_daily_climate(coords, period = "2001-01-01", fun = "mean")
-ex
-# Calculate min across polygon
-ex <- get_daily_climate(coords, period = "2008-09-27", fun = "min")
+# Return dataframe 
+ex <- get_daily_climate(coords, period = "2001-01-01")
 ex
 ```
 

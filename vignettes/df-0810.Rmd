@@ -11,19 +11,19 @@ vignette: >
 knitr::opts_chunk$set(eval = TRUE, collapse = TRUE, warning = FALSE, message = FALSE)
 ```
 
-The objective of `easyclimate` is to easily download daily climate data for a given set of points or polygons within Europe.
+`easyclimate` aims to easily download daily climate data and calculate multiple climatic indices for a given set of points or polygons within Europe.
 
 # Installation
 
-You can download and install the development version of `easyclimate` from github using:
+You can download and install the latest version of `easyclimate` from github:
 
 ```{r, eval = FALSE}
 remotes::install_github("VeruGHub/easyclimate")
 ```
 
-# An example using data frames as input and output
+# Example: introducing coordinates as a data frame
 
-As the name suggests `easyclimate` is very easy to use. Simply create a data frame containing at least two columns named `lon` and `lat` (longitude and latitude coordinates, respectively), and download the daily climate data for that location for the specified period (e.g. 2008-2010).
+As the name suggests `easyclimate` is easy to use. To use it with an example we create a data frame containing two columns named `lon` and `lat` (longitude and latitude coordinates, respectively), and we download the daily climate data for our location for the specified period (e.g. 2008-2010).
 
 ```{r, results = "hide"}
 library(easyclimate)
@@ -33,13 +33,20 @@ library(patchwork)
 library(here)
 ```
 
+First, we generate the coordinates to with the example.
+
+
 ```{r}
 coords <- data.frame(
   lon = -2.41135, lat = 43.0329
   )
 
-Sys.time()
+Sys.time()#Julen, diría por qué pones Sys.time
+```
 
+Second, we obtain the climatic data for our location. With the functions we download all data from 2008 to 2010, creating a data.frame for each climatic variable: precipitation (Prcp), minimum temperatures (Tmin) and maximum temperatures (Tmax).
+
+```{r}
 ex_prcp <- get_daily_climate(
   coords, 
   period = 2008 : 2010, 
@@ -64,7 +71,7 @@ ex_tmax <- get_daily_climate(
 Sys.time()
 ```
 
-Note that temperature and precipitation values are in ºC\*100 and mm\*100, respectively, to avoid floating values. You can mutate them and join all the data frames.
+Temperature and precipitation units are ºC\*100 and mm\*100  to avoid floating values. Now, we mutate each variable, include the date, month and year and we join all the data frames in the data frame "clim_join".
 
 ```{r}
 glimpse(ex_prcp)
@@ -108,10 +115,10 @@ clim_join <- full_join(
     )
 ```
 
-Finally, you can calculate different climate variables (e.g. precipitation and maximum temperature per month, and late-spring frost days) and visualise the results.
+Now, we calculate climate variables: mean annual precipitation and maximum temperature per month, and late-spring frost days. We visualise the results.
 
 ```{r, fig.width = 8, fig.height = 6}
-gg_clim <- function(
+gg_clim <- function(#Julen, creo que esto habría que comentarlo un poco.
   df,
   x,
   y,

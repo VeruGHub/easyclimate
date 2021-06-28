@@ -1,0 +1,200 @@
+---
+title: "easyclimate: Analysing the climate of a given period using data frames"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{easyclimate: Analysing the climate of a given period using data frames}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, echo = FALSE}
+knitr::opts_chunk$set(eval = TRUE, collapse = TRUE, warning = FALSE, message = FALSE)
+```
+
+You can use `easyclimate` to easily download daily climate data and calculate multiple climatic indices for a given set of points or polygons within Europe.
+
+# Installation
+
+YOu can download and install the latest version of `easyclimate` from github:
+
+```{r, eval = FALSE}
+remotes::install_github("VeruGHub/easyclimate")
+#JA and VCA: we should change this to the cran?
+#ahora mismo da un error la instalación
+```
+
+# Example: introducing coordinates as a data frame
+
+You can try our example with `easyclimate`, it is easy to use! First, download the daily climate data for our location for three years (from 2008 to 2010) for sampling plots specified in a data frame with  columns named `lon` and `lat` (longitude and latitude coordinates, respectively) .
+
+```{r, results = "hide"}
+library(easyclimate)
+library(tidyverse)
+library(viridis)
+library(patchwork)
+library(here)
+library(rworldmap)
+
+coords <- data.frame(
+  lon = rnorm(10, mean = -5.36, sd = 0.3), 
+  lat = rnorm(10, mean = 37.40, sd = 0.4)
+  )
+
+#I check that the coordinates are not in the sea
+#If not I get NAs when downloading the data...
+world <- getMap(resolution = "low")
+
+# Call the vector in `borders()`
+Spain <- world[world@data$ADMIN %in% "Spain", ]
+
+ggplot() +
+	geom_polygon(data = Spain, 
+		aes(x = long, y = lat, group = group),
+		fill = NA, colour = "black") + 
+	geom_point(data = coords,  # Add plot coordinates
+		aes(x = lon, y = lat)) +
+	coord_quickmap() +  # Prevents stretching when resizing
+	theme_classic() +  # Remove ugly grey background
+	xlab("Longitude") +
+	ylab("Latitude")
+
+```
+
+Now, download the climatic data for sampling plots! It is easy, you have to use get_daily_climate, specify the period (2008-2010), the output data type (data frame or matrix) and the variables: precipitation (Prcp), minimum temperatures (Tmin) and maximum temperatures (Tmax).
+
+```{r}
+Sys.time()#To know how much does it takes to download
+
+ex_df_prcp <- get_daily_climate(
+  coords, 
+  period = 2008 : 2010, 
+  climatic_var = "Prcp",
+  output = "df"
+)
+
+ex_df_tmin <- get_daily_climate(
+  coords,
+  period = 2008 : 2010,
+  climatic_var = "Tmin",
+  output = "df"
+)
+
+ex_df_tmax <- get_daily_climate(
+  coords,
+  period = 2008 : 2010,
+  climatic_var = "Tmax",
+  output = "df"
+)
+
+Sys.time()#To know how much does it takes to download
+```
+
+Temperature and precipitation units are ºC\*100 and mm\*100  to avoid floating values. Now, mutate each variable, include the date, month and year and we join all the data frames in the data frame "clim_join".
+
+```{r}
+glimpse(ex_df_prcp)
+ex_prcp_date <- ex_df_prcp %>%
+  mutate(
+    prcp = Prcp / 100,
+    date = as.Date(date),
+    month = months(date),
+    year = format(date, format = "%y")
+         )
+
+ex_min_date <- ex_df_tmin %>%
+  mutate(
+    tmin = Tmin / 100,
+    date = as.Date(date)
+  ) %>%
+  select(
+    tmin, date
+  )
+
+ex_max_date <- ex_df_tmax %>%
+  mutate(
+    tmax = Tmax / 100,
+    date = as.Date(date)
+  ) %>%
+  select(
+    tmax, date
+  )
+
+clim_join <- full_join(
+  ex_prcp_date, ex_min_date, by = "date"
+  ) %>%
+  full_join(
+  ex_max_date, by = "date"
+  ) %>%
+  select(
+    !c(ID_coords, x, y, Prcp)
+  ) %>%
+  relocate(
+    lon, lat, date, year, month, prcp, tmin, tmax
+    )
+```
+
+Now, you can visualise the daily climate results
+ 
+```{r, fig.width = 8, fig.height = 6}
+names(clim_join)
+data <- clim_join %>%
+   mutate(tmean = (tmin + tmax)/2) %>% #calculate mean temperature
+  pivot_longer(cols = c("tmin","tmax","tmean"), names_to = "Variable",
+               values_to = "Temperature")
+
+#boxplot of data
+ggplot(data, aes(x=Variable, y=Temperature)) + geom_boxplot(outlier.colour="black", outlier.shape=16,
+             outlier.size=2, notch=FALSE)
+
+#scatter and smoth of data
+names(data)
+ggplot(data, aes(x=date, y=Temperature)) + geom_jitter(aes(colour = Variable)) 
+```
+
+# A similar example with matrix input data
+
+`easyclimate` also handles different input data, try now with matrices!
+
+```{r}
+
+
+mcoords <- as.matrix(coords)
+
+#just download one year (2008) for precipitation (Prcp)
+
+Sys.time()#To know how much does it takes to download
+
+ex_m_prcp <- get_daily_climate(
+  mcoords, 
+  period = 2008, 
+  climatic_var = "Prcp",
+  output = "df"
+)
+
+Sys.time()#To know how much does it takes to download
+
+glimpse(ex_m_prcp)
+
+data <- ex_df_prcp %>%
+  mutate(
+    prcp = Prcp / 100,
+    date = as.Date(date),
+    month = months(date),
+    year = format(date, format = "%y")
+         ) %>%
+  relocate(
+    x, y, date, year, month, prcp
+    )
+
+ggplot(data, aes(x=date, y=prcp)) + 
+  geom_jitter(aes(colour = prcp)) +
+  labs(y = "Daily precipitation (mm)")
+
+boxplot(data$prcp~data$month, outline = FALSE,
+        ylab = "Daily precipitation (mm)", xlab = "Month")
+          
+```
+
+# Learn more
+
+`easyclimate` can handle different types of input and output objects or download data from multiple locations and periods. Check out the vignettes with more information on the other options in this package here:

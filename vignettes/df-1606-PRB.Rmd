@@ -1,0 +1,147 @@
+---
+title: "easyclimate: Analysing the climate in several points for climatic extremes using matrix"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{easyclimate: Analysing the climate of a given period using data frames}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, echo = FALSE}
+knitr::opts_chunk$set(eval = TRUE, collapse = TRUE, warning = FALSE, message = FALSE)
+```
+
+`easyclimate` aims to easily download daily climate data and calculate multiple climatic indices for a given set of points or polygons within Europe.
+
+# Installation
+
+You can download and install the latest version of `easyclimate` from github:
+
+```{r, eval = FALSE}
+remotes::install_github("VeruGHub/easyclimate")
+```
+
+# Example: introducing coordinates as a data frame
+
+As the name suggests `easyclimate` is easy to use. To use it with an example we create a matrix containing two columns named `lon` and `lat` (longitude and latitude coordinates, respectively) and 10 locations. We download the daily climate data for our locations for the specified period (e.g. june, july and august 2010).
+
+```{r, results = "hide"}
+library(easyclimate)
+library(tidyverse)
+library(viridis)
+library(patchwork)
+library(here)
+```
+
+First, we generate a set of coordinates to work with the example.
+
+```{r}
+
+coords <- matrix(
+  c(rnorm(10, mean = -5.36, sd = 5),
+    rnorm(10, mean = 37.40, sd = 5)), ncol = 2)
+
+Sys.time()#Julen, diría por qué pones Sys.time
+
+```
+
+Second, we obtain the climatic data for our locations. With the functions we download all data for summer of 2010, creating a data frame for each climatic variable: precipitation (Prcp), minimum temperatures (Tmin) and maximum temperatures (Tmax).
+
+```{r}
+ex_prec <- get_daily_climate(
+  coords, 
+  period = c("2009-06-01:2009-08-31"), 
+  climatic_var = "Prcp",
+  output = "df"
+)
+
+ex_tmin <- get_daily_climate(
+  coords,
+  period = c("2009-06-01:2009-08-31"),
+  climatic_var = "Tmin",
+  output = "df"
+)
+
+ex_tmax <- get_daily_climate(
+  coords,
+  period = c("2009-06-01:2009-08-31"),
+  climatic_var = "Tmax",
+  output = "df"
+)
+
+Sys.time()
+```
+
+Temperature and precipitation units are ºC\*100 and mm\*100  to avoid floating values. Now, we mutate each variable, include the date, month and year and we join all the data frames in the data frame "clim_join".
+
+```{r}
+glimpse(ex_prec)
+
+
+##PRB: me surge la duda de que la precipitación es nula en algunos casos y que no hay coordenadas
+
+ex_prcp_date <- ex_prec %>%
+  mutate(
+    prcp = Prcp / 100,
+    date = as.Date(date),
+    month = months(date),
+    year = format(date, format = "%y")
+         )
+
+ex_min_date <- ex_tmin %>%
+  mutate(
+    tmin = Tmin / 100,
+    date = as.Date(date)
+  ) %>%
+  select(
+    tmin, date
+  )
+
+ex_max_date <- ex_tmax %>%
+  mutate(
+    tmax = Tmax / 100,
+    date = as.Date(date)
+  ) %>%
+  select(
+    tmax, date
+  )
+
+clim_join <- full_join(
+  ex_prcp_date, ex_min_date, by = "date"
+  ) %>%
+  full_join(
+    ex_max_date, by = "date"
+    ) %>%
+   relocate(
+    ID_coords, x, y,date, year, month, prcp, tmin, tmax
+    )#PRB: tengo un montón de NAs ¿son datos perdidos? Había pensado reemplazarlo a cero pero creo que sería erroneo
+
+View(clim_join)
+##PRB: he visto Calculating climate indicators and bioclimatic variables: use CRAN standard packages?
+##hay que pensar que hacer con esto
+
+```
+
+Now, we calculate climate variables: heatwaves and . We visualise the results.
+ 
+```{r, fig.width = 8, fig.height = 6}
+##Hablar de si calcular extremos y como usarlo
+#install.packages("ClimInd")
+#library(ClimInd)
+names(clim_join)
+data <- clim_join %>%
+   mutate(tmean = (tmin + tmax)/2) %>% #calculate mean temperature
+  pivot_longer(cols = c("tmin","tmax","tmean"), names_to = "Variable",
+               values_to = "Temperature")
+#boxplot of data
+ggplot(data, aes(x=Variable, y=Temperature)) + geom_boxplot(outlier.colour="black", outlier.shape=16,
+             outlier.size=2, notch=FALSE)
+
+#scatter and smoth of data
+ggplot(data, aes(x=date, y=Temperature)) + geom_jitter(aes(colour = Variable)) + geom_smooth(aes(colour = Variable))##hay en ocasiones que no hay algunas variables.
+##lo he probado con 2009 también y hace otro patron raro aunque distinto, creo que los datos que están abajo son para errores. Lo comentamos en la reunión para saber vuestra opinión
+```
+
+# Learn more
+
+`easyclimate` can handle different types of input and output objects or download data from multiple locations and periods. Check out the vignettes with more information on the other options in this package here:

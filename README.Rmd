@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# easyclimate: Easy access to high-resolution daily climate data for Europe
+# `easyclimate`: Easy access to high-resolution daily climate data for Europe
 
 <!-- badges: start -->
 [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
@@ -44,7 +44,7 @@ This is a basic example which shows you how to solve a common problem:
 
 ## CITATION
 
-```{r echo=FALSE}
+```{r echo=FALSE, results='asis'}
 citation("easyclimate")
 ```
 

@@ -1,0 +1,306 @@
+---
+title: "easyclimate: Analysing the climate of a given period introducing coordinates as a data frame, matrix and simple feature"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEncoding{UTF-8}
+  %\VignetteIndexEntry{easyclimate: Analysing the climate of a given period introducing coordinates as a data frame, matrix and simple feature}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r setup, echo = FALSE}
+knitr::opts_chunk$set(eval = TRUE, collapse = TRUE, warning = FALSE, message = FALSE, fig.width = 6, fig.height = 4)
+```
+
+`easyclimate` aims to easily download daily climate data and calculate multiple climatic indices for a given set of points or polygons within Europe.
+
+# Installation
+
+You can download and install the latest version of `easyclimate` from github:
+
+```{r, eval = FALSE}
+remotes::install_github("VeruGHub/easyclimate")
+```
+
+# Example 1: Introducing coordinates as a data frame
+
+You can try our example using `easyclimate` - it is very easy to use! First, specify longitude and latitude coordinates in a data frame with the columns `lon` and `lat` (longitude and latitude coordinates, respectively).
+
+```{r}
+
+library(easyclimate)
+library(tidyverse)
+library(viridis)
+library(rworldmap)
+library(ggforce)
+library(sf)
+
+coords <- data.frame(
+  lon = rnorm(10, mean = -5.36, sd = 0.3), 
+  lat = rnorm(10, mean = 37.40, sd = 0.4)
+  )
+
+world <- getMap(resolution = "low") 
+
+countries <- world[world@data$ADMIN %in% c("Spain", "Portugal", "France"), ]
+
+ggplot() +
+	geom_polygon(data = countries, 
+		aes(x = long, y = lat, group = group),
+		fill = NA, colour = "black") + 
+	geom_point(data = coords,
+		aes(x = lon, y = lat)) +
+  coord_fixed(xlim = c(-10, 2), ylim = c(36, 44), ratio = 1.3) + 
+	xlab("Longitude") +
+	ylab("Latitude") +
+  theme(
+    panel.grid.major = element_line(colour = "grey90", size = 0.5),
+    axis.line = element_blank(),
+    panel.background = element_blank()
+  )
+
+```
+
+Now, download the climatic data for the selected locations. It is very simple, all you have to do is use the function `get_daily_climate`, specify the period (e.g. `2008 : 2010`), the output data type and the variables (precipitation `Prcp`, minimum temperatures `Tmin` and maximum temperatures `Tmax`).
+
+```{r}
+
+Sys.time() # to know how much it takes to download
+
+ex_df_prcp <- get_daily_climate(
+  coords = coords, 
+  period = 2008 : 2010, 
+  climatic_var = "Prcp",
+  output = "df"
+)
+
+ex_df_tmin <- get_daily_climate(
+  coords = coords,
+  period = 2008 : 2010,
+  climatic_var = "Tmin",
+  output = "df"
+)
+
+ex_df_tmax <- get_daily_climate(
+  coords = coords,
+  period = 2008 : 2010,
+  climatic_var = "Tmax",
+  output = "df"
+)
+
+Sys.time()
+
+```
+
+Temperature and precipitation units are ºC\*100 and mm\*100 to avoid floating values. You can mutate them, include the all the variables you might be interested in and join all the data frames.
+
+```{r}
+
+glimpse(ex_df_prcp)
+
+ex_prcp_date <- ex_df_prcp %>%
+  mutate(
+    prcp = Prcp / 100,
+    date = as.Date(date),
+    month = months(date),
+    year = format(date, format = "%y")
+         )
+
+ex_min_date <- ex_df_tmin %>%
+  mutate(
+    tmin = Tmin / 100,
+    date = as.Date(date)
+  ) %>%
+  select(
+    tmin, date
+  )
+
+ex_max_date <- ex_df_tmax %>%
+  mutate(
+    tmax = Tmax / 100,
+    date = as.Date(date)
+  ) %>%
+  select(
+    tmax, date
+  )
+
+clim_join <- full_join(
+  ex_prcp_date, ex_min_date, by = "date"
+  ) %>%
+  full_join(
+  ex_max_date, by = "date"
+  ) %>%
+  select(
+    !c(ID_coords, x, y, Prcp)
+  ) %>%
+  relocate(
+    lon, lat, date, year, month, prcp, tmin, tmax
+    )
+
+```
+
+Finally, you can visualise the daily climate results
+ 
+```{r}
+
+clim_df <- clim_join %>%
+  mutate(
+    tmean = (tmin + tmax) / 2
+    ) %>%
+  pivot_longer(
+    cols = c("tmin", "tmax", "tmean"),
+    names_to = "temp_vars",
+    values_to = "temp_values")
+
+ggplot(clim_df, aes(x = temp_vars, y = temp_values, color = temp_vars)) +
+  geom_violin(fill = "gray80", size = 1, alpha = .5) +
+  geom_sina(alpha = .25) +
+  scale_color_brewer(palette = "Dark2", guide = "none") +
+  coord_flip() +
+  ylab("Temperature (ºC)") +
+  theme(
+    axis.title.y = element_blank(),
+    axis.text = element_text(colour = "black", size = 10),
+    panel.background = element_rect(fill = "white"),
+    panel.grid.major = element_line(color = "gray90", size = 0.5),
+    panel.border = element_rect(color = "gray30",
+                                fill = NA, size = .7)
+    )
+
+ggplot(clim_df, aes(x = date, y = temp_values)) + 
+  geom_jitter(aes(colour = temp_vars)) +
+  scale_color_brewer(palette = "Dark2", name = "Variables") +
+  ylab("Temperature (ºC)") +
+  theme(
+    axis.title.x = element_blank(),
+    axis.text = element_text(colour = "black", size = 10),
+    panel.background = element_rect(fill = "white"),
+    panel.grid.major = element_line(color = "gray90", size = 0.5),
+    panel.border = element_rect(color = "gray30",
+                                fill = NA, size = .7)
+    )
+
+```
+
+# Example 2: Introducing coordinates as a matrix
+
+`easyclimate` handles different input data, try now with matrices!
+
+```{r}
+
+coords_m <- as.matrix(coords)
+
+Sys.time()
+
+ex_m_prcp <- get_daily_climate( 
+  coords = coords_m, 
+  period = 2008, # single year
+  climatic_var = "Prcp",
+  output = "df"
+)
+
+Sys.time()
+
+glimpse(ex_m_prcp)
+
+clim_m <- ex_m_prcp %>%
+  mutate(
+    prcp = Prcp / 100,
+    date = as.Date(date),
+    month = months(date),
+    year = format(date, format = "%y")
+    ) %>%
+  relocate(
+    x, y, date, year, month, prcp
+    )
+
+ggplot(clim_m, aes(x = date, y = prcp, color = prcp)) +
+  geom_point() +  
+  scale_color_viridis_c(option = "cividis", name = "Precipitation (mm)") +
+  scale_y_continuous(expand = c(0, 0)) +
+  coord_cartesian(ylim = c(0, 60)) +
+  ylab("Daily precipitation (mm)")+  
+  theme(
+    axis.title.x = element_blank(),
+    axis.text = element_text(colour = "black", size = 10),
+    panel.background = element_rect(fill = "white"),
+    panel.grid.major = element_line(color = "gray90", size = 0.5),
+    panel.border = element_rect(color = "gray30",
+                                fill = NA, size = .7)
+    )
+
+months <- c(
+  "February", "March", "April",
+  "May", "June", "July", "August",
+  "September", "October", "November", "December"
+  )
+
+clim_m %>%
+  mutate(
+    month = fct_relevel(month, months, after = 5)) %>%
+  ggplot(aes(x = fct_rev(month), y = prcp, color = month)) +
+  geom_point(size = 2, alpha = .3, position = position_jitter(seed = 1, width = .2)) +
+  scale_y_continuous(expand = c(0,0)) +
+  coord_flip(ylim = c(0, 60)) +
+  ylab("Precipitation (mm)") +
+  theme(
+    legend.position = "none",
+    axis.title.y = element_blank(),
+    axis.text = element_text(colour = "black", size = 10),
+    panel.background = element_rect(fill = "white"),
+    panel.grid.major = element_line(color = "gray90", size = 0.5),
+    panel.border = element_rect(color = "gray30",
+                                fill = NA, size = .7)
+    )
+
+```
+
+# Example 3: Introducing coordinates as a simple feature
+
+```{r}
+
+coords_sf <- sf::st_as_sf(
+  coords, 
+  coords = c("lon", "lat")
+  )
+
+ex_sf_tmin <- get_daily_climate(
+  coords = coords_sf, 
+  period = "2001-01-01", # single day
+  climatic_var = "Tmin",
+  ) 
+
+clim_sf <- ex_sf_tmin %>%
+  mutate(
+    tmin = Tmin / 100,
+    date = as.Date(date)
+  )
+
+coords_sp <- as_Spatial(coords_sf)
+
+coords_df <- as.data.frame(coords_sp)
+
+clim_coords <- bind_cols(
+  clim_sf, coords_df
+  )
+
+ggplot() +
+	geom_polygon(data = countries, 
+		aes(x = long, y = lat, group = group),
+		fill = NA, colour = "black") + 
+	geom_point(data = clim_coords,
+		aes(x = coords.x1, y = coords.x2, color = tmin)) +
+  coord_fixed(xlim = c(-10, 0), ylim = c(36, 40), ratio = 1.3) + 
+  scale_color_viridis_c(option = "mako") +
+	xlab("Longitude") +
+	ylab("Latitude") +
+  theme(
+    panel.grid.major = element_line(colour = "grey90", size = 0.5),
+    axis.line = element_blank(),
+    panel.background = element_blank()
+  )
+
+```
+
+# Learn more
+
+`easyclimate` can handle different types of input and output objects or download data from multiple locations and periods. Check out the vignettes with more information on the other options in this package here:

@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# easyclimate: easy access to high-resolution daily climate data for Europe
+# `easyclimate`: Easy access to high-resolution daily climate data for Europe
 
 <!-- badges: start -->
 
@@ -15,7 +15,7 @@ coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.s
 
 Easily get high-resolution (1 km) daily climate data (precipitation,
 minimum and maximum temperatures) across Europe, from the European
-climatic database (<ftp://palantir.boku.ac.at/Public/ClimateData/>).
+climatic database <ftp://palantir.boku.ac.at/Public/ClimateData/>.
 
 ## Installation
 
@@ -35,22 +35,20 @@ This is a basic example which shows you how to solve a common problem:
 
 ## CITATION
 
-    #> 
-    #> If you use easyclimate, please cite both the data source and the
-    #> package as:
-    #> 
-    #>   Werner Rammer, Christoph Pucher, Mathias Neumann. 2018. Description,
-    #>   Evaluation and Validation of Downscaled Daily Climate Data Version 2.
-    #>   ftp://palantir.boku.ac.at/Public/ClimateData/
-    #>
-    #> Adam Moreno, Hubert Hasenauer. 2016. Spatial downscaling of European climate data.
-    #> International Journal of Climatology, 36: 1444–1458
-    #> 
-    #>   Verónica Cruz-Alonso, Francisco Rodríguez-Sánchez, Christoph Pucher,
-    #>   Sophia Ratcliffe, Julen Astigarraga, Mathias Newmann, Paloma Ruiz-Benito. 2021.
-    #>   easyclimate: Easy access to high-resolution daily climate data for
-    #>   Europe. https://github.com/VeruGHub/easyclimate
-    #> 
-    #> To see these entries in BibTeX format, use 'print(<citation>,
-    #> bibtex=TRUE)', 'toBibtex(.)', or set
-    #> 'options(citation.bibtex.max=999)'.
+If you use easyclimate, please cite both the data source and the package
+as:
+
+Werner Rammer, Christoph Pucher, Mathias Neumann. 2018. Description,
+Evaluation and Validation of Downscaled Daily Climate Data Version 2.
+<ftp://palantir.boku.ac.at/Public/ClimateData/>
+
+Adam Moreno, Hubert Hasenauer. 2016. Spatial downscaling of European
+climate data International Journal of Climatology, 36: 1444-1458
+
+Verónica Cruz-Alonso, Francisco Rodríguez-Sánchez, Christoph Pucher,
+Sophia Ratcliffe, Julen Astigarraga, Mathias Neumann and Paloma
+Ruiz-Benito. 2021. easyclimate: Easy access to high-resolution daily
+climate data for Europe. <https://github.com/VeruGHub/easyclimate>
+
+To see these entries in BibTeX format, use ‘print(<citation>,
+bibtex=TRUE)’, ‘toBibtex(.)’, or set ‘options(citation.bibtex.max=999)’.

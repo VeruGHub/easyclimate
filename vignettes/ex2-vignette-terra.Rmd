@@ -1,9 +1,9 @@
 ---
-title: "easyclimate: Analysing the climate of a given period introducing coordinates as a polygon"
+title: "easyclimate: Analysing the climate of an area for a given period"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEncoding{UTF-8}
-  %\VignetteIndexEntry{easyclimate: Analysing the climate of a given period introducing coordinates as a polygon}
+  %\VignetteIndexEntry{easyclimate: Analysing the climate of an area for a given period}
   %\VignetteEngine{knitr::rmarkdown}
 ---
 
@@ -11,29 +11,17 @@ vignette: >
 knitr::opts_chunk$set(eval = TRUE, collapse = TRUE, warning = FALSE, message = FALSE, fig.width = 6, fig.height = 4)
 ```
 
-`easyclimate` aims to easily download daily climate data and calculate multiple climatic indices for a given set of points or polygons within Europe.
+`easyclimate` aims to easily download daily climate data for a given set of points or polygons within Europe. You can download and install the latest version of `easyclimate` from github: https://github.com/VeruGHub/easyclimate 
 
-# Installation
+In this tutorial we will work through the basics of using easyclimate with a spatial polygon.
 
-You can download and install the latest version of `easyclimate` from github:
-
-```{r, eval = FALSE}
-remotes::install_github("VeruGHub/easyclimate")
-```
-
-# Example: Introducing coordinates as a polygon
-
-You only have to specify the four corners of the polygon from which you want to download the climatic data. You can also specify the type of output you want to obtain.
+If you wish to download the climatic data of a specific region, you need to specify at least four corners of the polygon including the area and specify the type of output you want to obtain (i.e. a dataframe - "df" or a raster - "raster").
 
 ```{r}
-
 library(easyclimate)
-library(tidyverse)
-library(viridis)
-library(rworldmap)
 library(terra)
 
-coords_t <- terra::vect("POLYGON ((-4.5 41, -4.5 40.5, -5 40.5, -5 41))")
+coords_t <- vect("POLYGON ((-4.5 41, -4.5 40.5, -5 40.5, -5 41))")
 
 Sys.time() # to know how much it takes to download
 
@@ -48,49 +36,34 @@ Sys.time()
 
 ```
 
-Note that temperature and precipitation units are ºC\*100 and mm\*100 to avoid floating values. You can mutate them, include the all the variables you might be interested in.
+Note that temperature is given as ºC\*100 to avoid floating values. You can mutate this variable as follows:
 
 ```{r}
-
-glimpse(ex_df_tmax)
+library(dplyr)
 
 clim_df <- ex_df_tmax %>%
   mutate(
     tmax = Tmax / 100,
-    date = as.Date(date),
-    month = months(date),
-    year = format(date, format = "%y")
-    ) %>%
-  relocate(
-    x, y, date, year, month, tmax
-    )
+    date = as.Date(date)
+    ) 
 
 ```
 
-Then, you can visualise the results by comparing both dates
+Then, you can visualize the results and compare both dates
 
 ```{r}
 
-world <- getMap(resolution = "low") 
+library(ggplot2)
 
-countries <- world[world@data$ADMIN %in% c("Spain", "Portugal", "France"), ]
+tapply(clim_df$tmax, clim_df$date, summary)
 
 ggplot() +
-	geom_polygon(data = countries, 
-		aes(x = long, y = lat, group = group),
-		fill = NA, colour = "black") + 
-	geom_point(data = clim_df,
-		aes(x = x, y = y, color = tmax)) +
-  coord_fixed(xlim = c(-10, 0), ylim = c(36, 44), ratio = 1.3) + 
-  scale_color_viridis_c(option = "magma") +
-  facet_wrap(~month) +
-	xlab("Longitude") +
-	ylab("Latitude") +
-  theme(
-    panel.grid.major = element_line(colour = "grey90", size = 0.5),
-    axis.line = element_blank(),
-    panel.background = element_blank()
-  )
+	geom_raster(data = clim_df,
+		aes(x = x, y = y, fill = tmax)) +
+  scale_fill_continuous(type = "viridis", name = "Maximum\ntemperature (ºC)") +
+  facet_wrap(~date) +
+	ylab("Latitude") + xlab("Longitude") +
+  theme_bw()
 
 ```
 
@@ -109,10 +82,12 @@ ex_ras_tmax <- get_daily_climate(
 
 Sys.time()
 
-plot(ex_ras_tmax, col = rev(heat.colors(7))) # temperature units are ºC\*100
+ex_ras_tmax <- ex_ras_tmax/100
+  
+plot(ex_ras_tmax, col = rev(heat.colors(7))) 
 
 ```
 
 # Learn more
 
-`easyclimate` can handle different types of input and output objects or download data from multiple locations and periods. Check out the vignettes with more information on the other options in this package here:
+Now you know how to extract climatic variables with `easyclimate`, for a specific area. Check out this [other vignette](/vignettes/ex1-vignette-df-m-sf.Rmd) it you need to extract the data for specific points.

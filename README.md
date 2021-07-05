@@ -29,11 +29,13 @@ remotes::install_github("VeruGHub/easyclimate")
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
-# library(easyclimate)
-## basic example code
+library(easyclimate)
+coords <- matrix(c(-5.36, 37.40), ncol = 2)
+prec <- get_daily_climate(coords, period = "2001-01-01:2001-01-10", climatic_var = "Prcp")
+prec
 ```
 
-## CITATION
+## Citation
 
 If you use easyclimate, please cite both the data source and the package
 as:

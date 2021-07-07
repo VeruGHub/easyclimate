@@ -30,6 +30,10 @@ Suggests:
     covr,
     sf,
     knitr,
-    rmarkdown
+    rmarkdown,
+    ggplot2,
+    dplyr,
+    tidyr,
+    ClimInd
 Config/testthat/edition: 3
 VignetteBuilder: knitr

@@ -1,21 +1,24 @@
 ---
-title: "easyclimate: Analysing the climate of an area for a given period"
+title: "Analysing the climate of an area for a given period"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEncoding{UTF-8}
-  %\VignetteIndexEntry{easyclimate: Analysing the climate of an area for a given period}
+  %\VignetteIndexEntry{Analysing the climate of an area for a given period}
   %\VignetteEngine{knitr::rmarkdown}
 ---
 
 ```{r setup, echo = FALSE}
-knitr::opts_chunk$set(eval = TRUE, collapse = TRUE, warning = FALSE, message = FALSE, fig.width = 6, fig.height = 4)
+knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE, 
+                      fig.width = 6, fig.height = 4, cache = TRUE)
 ```
 
 `easyclimate` aims to easily download daily climate data for a given set of points or polygons within Europe. You can download and install the latest version of `easyclimate` from github: https://github.com/VeruGHub/easyclimate 
 
-In this tutorial we will work through the basics of using easyclimate with a spatial polygon.
+<br>
 
-If you wish to download the climatic data of a specific region, you need to specify at least four corners of the polygon including the area and specify the type of output you want to obtain (i.e. a dataframe - "df" or a raster - "raster").
+In this tutorial we will work through the basics of using `easyclimate` with a spatial polygon.
+
+If you wish to download the climatic data of a specific region, you need to specify at least four corners of the polygon including the area and specify the type of output you want to obtain (i.e. a dataframe - "df" or a raster - "raster"). You can also provide the polygons of interest in a `sf` object.
 
 ```{r}
 library(easyclimate)
@@ -25,7 +28,7 @@ coords_t <- vect("POLYGON ((-4.5 41, -4.5 40.5, -5 40.5, -5 41))")
 
 Sys.time() # to know how much it takes to download
 
-ex_df_tmax <- get_daily_climate(
+df_tmax <- get_daily_climate(
   coords_t,
   period = c("2012-01-01", "2012-08-01"),
   climatic_var = "Tmax",
@@ -34,6 +37,8 @@ ex_df_tmax <- get_daily_climate(
 
 Sys.time()
 
+head(df_tmax)
+
 ```
 
 Note that temperature is given as ºC\*100 to avoid floating values. You can mutate this variable as follows:
@@ -41,11 +46,11 @@ Note that temperature is given as ºC\*100 to avoid floating values. You can mut
 ```{r}
 library(dplyr)
 
-clim_df <- ex_df_tmax %>%
+clim_df <- df_tmax %>%
   mutate(
     tmax = Tmax / 100,
     date = as.Date(date)
-    ) 
+  ) 
 
 ```
 
@@ -67,13 +72,13 @@ ggplot() +
 
 ```
 
-You can do the same but using raster as output
+You can directly get a (multi-layer) raster as output, if you specify output = "raster":
 
 ```{r}
 
 Sys.time()
 
-ex_ras_tmax <- get_daily_climate(
+ras_tmax <- get_daily_climate(
   coords_t,
   period = c("2012-01-01", "2012-08-01"),
   climatic_var = "Tmax",
@@ -82,12 +87,16 @@ ex_ras_tmax <- get_daily_climate(
 
 Sys.time()
 
-ex_ras_tmax <- ex_ras_tmax/100
+ras_tmax
+
+ras_tmax <- ras_tmax/100
   
-plot(ex_ras_tmax, col = rev(heat.colors(7))) 
+plot(ras_tmax, col = rev(heat.colors(7))) 
 
 ```
 
-# Learn more
+<br>
 
-Now you know how to extract climatic variables with `easyclimate`, for a specific area. Check out this [other vignette](/vignettes/ex1-vignette-df-m-sf.Rmd) it you need to extract the data for specific points.
+## Learn more
+
+Now you know how to extract climatic variables with `easyclimate`, for a specific area. Check out this [other vignette](https://verughub.github.io/easyclimate/docs/articles/points-df-mat-sf.html) it you need to extract the data for specific points.

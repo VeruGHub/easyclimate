@@ -87,11 +87,18 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="easyclimate-easy-access-to-high-resolution-daily-climate-data-for-europe" class="section level1">
+
+<div id="easyclimate" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#easyclimate-easy-access-to-high-resolution-daily-climate-data-for-europe" class="anchor"></a><code>easyclimate</code>: Easy access to high-resolution daily climate data for Europe</h1></div>
+<a href="#easyclimate" class="anchor"></a><code>easyclimate</code>
+</h1></div>
+</div>
+<div id="easy-access-to-high-resolution-daily-climate-data-for-europe" class="section level1">
+<h1 class="hasAnchor">
+<a href="#easy-access-to-high-resolution-daily-climate-data-for-europe" class="anchor"></a>Easy access to high-resolution daily climate data for Europe</h1>
 <!-- badges: start -->
 
+<p><a href="https://verughub.github.io/easyclimate/" class="uri">https://verughub.github.io/easyclimate/</a></p>
 <p>Easily get high-resolution (1 km) daily climate data (precipitation, minimum and maximum temperatures) across Europe, from the European climatic database <a href="ftp://palantir.boku.ac.at/Public/ClimateData/" class="uri">ftp://palantir.boku.ac.at/Public/ClimateData/</a>.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -100,19 +107,80 @@
 <code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
 <span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"VeruGHub/easyclimate"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="example" class="section level2">
+<div id="examples" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
-<p>This is a basic example which shows you how to solve a common problem:</p>
+<a href="#examples" class="anchor"></a>Examples</h2>
+<p>Obtaining a data frame with daily climatic values for point coordinates:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/VeruGHub/easyclimate">easyclimate</a></span><span class="op">)</span>
+
 <span class="va">coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5.36</span>, <span class="fl">37.40</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="va">prec</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span><span class="va">coords</span>, period <span class="op">=</span> <span class="st">"2001-01-01:2001-01-10"</span>, climatic_var <span class="op">=</span> <span class="st">"Prcp"</span><span class="op">)</span>
-<span class="va">prec</span></code></pre></div>
+
+<span class="va">prec</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span><span class="va">coords</span>, 
+                          period <span class="op">=</span> <span class="st">"2001-01-01:2001-01-03"</span>, 
+                          climatic_var <span class="op">=</span> <span class="st">"Prcp"</span><span class="op">)</span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="right">ID_coords</th>
+<th align="right">x</th>
+<th align="right">y</th>
+<th align="left">date</th>
+<th align="right">Prcp</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">-5.36</td>
+<td align="right">37.4</td>
+<td align="left">2001-01-01</td>
+<td align="right">945</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">-5.36</td>
+<td align="right">37.4</td>
+<td align="left">2001-01-02</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">-5.36</td>
+<td align="right">37.4</td>
+<td align="left">2001-01-03</td>
+<td align="right">205</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>Obtaining a (multi-layer) raster with daily climatic values for an area:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/terra">terra</a></span><span class="op">)</span>
+<span class="co">#&gt; terra version 1.3.4</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attaching package: 'terra'</span>
+<span class="co">#&gt; The following object is masked from 'package:knitr':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     spin</span>
+
+<span class="va">coords_poly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/vect.html">vect</a></span><span class="op">(</span><span class="st">"POLYGON ((-4.5 41, -4.5 40.5, -5 40.5, -5 41))"</span><span class="op">)</span>
+
+<span class="va">ras_tmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span>
+  <span class="va">coords_poly</span>,
+  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="st">"2012-01-01"</span>, <span class="st">"2012-08-01"</span><span class="op">)</span>,
+  climatic_var <span class="op">=</span> <span class="st">"Tmax"</span>,
+  output <span class="op">=</span> <span class="st">"raster"</span> <span class="co"># return raster</span>
+  <span class="op">)</span>
+
+<span class="va">ras_tmax</span> <span class="op">&lt;-</span> <span class="va">ras_tmax</span><span class="op">/</span><span class="fl">100</span>
+  
+<span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html">plot</a></span><span class="op">(</span><span class="va">ras_tmax</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/flip.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">heat.colors</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> </code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-3-1.png" width="100%"></p>
+<p><br> See the package website for more extended tutorials: <a href="https://verughub.github.io/easyclimate/" class="uri">https://verughub.github.io/easyclimate/</a></p>
+<p><br></p>
 </div>
 <div id="citation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#citation" class="anchor"></a>Citation</h2>
+<a href="#citation" class="anchor"></a>CITATION</h2>
 <p>If you use easyclimate, please cite both the data source and the package as:</p>
 <p>Werner Rammer, Christoph Pucher, Mathias Neumann. 2018. Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2. <a href="ftp://palantir.boku.ac.at/Public/ClimateData/" class="uri">ftp://palantir.boku.ac.at/Public/ClimateData/</a></p>
 <p>Adam Moreno, Hubert Hasenauer. 2016. Spatial downscaling of European climate data International Journal of Climatology, 36: 1444-1458</p>
@@ -120,6 +188,7 @@
 <p>To see these entries in BibTeX format, use ‘print(<citation>, bibtex=TRUE)’, ‘toBibtex(.)’, or set ‘options(citation.bibtex.max=999)’.</citation></p>
 </div>
 </div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

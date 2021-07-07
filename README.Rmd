@@ -5,21 +5,27 @@ output: github_document
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
+library(knitr)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "100%",
+  cache = TRUE
 )
 ```
 
-# `easyclimate`: Easy access to high-resolution daily climate data for Europe
+# `easyclimate`
+
+# Easy access to high-resolution daily climate data for Europe
 
 <!-- badges: start -->
 [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/VeruGHub/easyclimate/workflows/R-CMD-check/badge.svg)](https://github.com/VeruGHub/easyclimate/actions)
 [![Codecov test coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.svg)](https://codecov.io/gh/VeruGHub/easyclimate?branch=master)
 <!-- badges: end -->
+
+https://verughub.github.io/easyclimate/
 
 Easily get high-resolution (1 km) daily climate data (precipitation, minimum and maximum temperatures) across Europe, from the European climatic database ftp://palantir.boku.ac.at/Public/ClimateData/.
 
@@ -32,20 +38,49 @@ remotes::install_github("VeruGHub/easyclimate")
 ```
 
 
-## Example
+## Examples
 
-This is a basic example which shows you how to solve a common problem:
+Obtaining a data frame with daily climatic values for point coordinates:
 
 ```{r example}
 library(easyclimate)
 
 coords <- matrix(c(-5.36, 37.40), ncol = 2)
 
-prec <- get_daily_climate(coords, period = "2001-01-01:2001-01-10", climatic_var = "Prcp")
-
-prec
+prec <- get_daily_climate(coords, 
+                          period = "2001-01-01:2001-01-03", 
+                          climatic_var = "Prcp")
 ```
 
+```{r echo=FALSE}
+kable(prec)
+```
+
+<br>
+
+Obtaining a (multi-layer) raster with daily climatic values for an area:
+
+```{r}
+library(terra)
+
+coords_poly <- vect("POLYGON ((-4.5 41, -4.5 40.5, -5 40.5, -5 41))")
+
+ras_tmax <- get_daily_climate(
+  coords_poly,
+  period = c("2012-01-01", "2012-08-01"),
+  climatic_var = "Tmax",
+  output = "raster" # return raster
+  )
+
+ras_tmax <- ras_tmax/100
+  
+plot(ras_tmax, col = rev(heat.colors(7))) 
+```
+
+<br>
+See the package website for more extended tutorials: https://verughub.github.io/easyclimate/
+
+<br>
 
 ## CITATION
 

@@ -15,7 +15,7 @@ public.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repos
 coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.svg)](https://codecov.io/gh/VeruGHub/easyclimate?branch=master)
 <!-- badges: end -->
 
-<https://verughub.github.io/easyclimate/>
+Website: <https://verughub.github.io/easyclimate/>
 
 Easily get high-resolution (1 km) daily climate data (precipitation,
 minimum and maximum temperatures) across Europe, from the European

@@ -247,4 +247,4 @@ ggplot() +
 
 ## Learn more
 
-Now you know how to extract a dataframe with different climatic variables with `easyclimate`, using point coordinates in different formats and downloading data from multiple locations and periods. Check out this [other vignette](https://verughub.github.io/easyclimate/docs/articles/polygons-raster.html) if you need to extract the data of a complete area.
+Now you know how to extract a dataframe with different climatic variables with `easyclimate`, using point coordinates in different formats and downloading data from multiple locations and periods. Check out this [other vignette](https://verughub.github.io/easyclimate/articles/polygons-raster.html) if you need to extract the data of a complete area.

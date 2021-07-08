@@ -261,7 +261,7 @@ d50mm(data = Prec, time.scale = "month")
 
 ## Learn more
 
-For learning all the details about downloading daily climatic data, please consult [this vignette](https://verughub.github.io/easyclimate/docs/articles/points-df-mat-sf.html) for point coordinates, or [this other](https://verughub.github.io/easyclimate/docs/articles/polygons-raster.html) if you need to extract data for several polygons or a region.
+For learning all the details about downloading daily climatic data, please consult [this vignette](https://verughub.github.io/easyclimate/articles/points-df-mat-sf.html) for point coordinates, or [this other](https://verughub.github.io/easyclimate/articles/polygons-raster.html) if you need to extract data for several polygons or a region.
 
 
 

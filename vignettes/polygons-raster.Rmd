@@ -99,4 +99,4 @@ plot(ras_tmax, col = rev(heat.colors(7)))
 
 ## Learn more
 
-Now you know how to extract climatic variables with `easyclimate`, for a specific area. Check out this [other vignette](https://verughub.github.io/easyclimate/docs/articles/points-df-mat-sf.html) it you need to extract the data for specific points.
+Now you know how to extract climatic variables with `easyclimate`, for a specific area. Check out this [other vignette](https://verughub.github.io/easyclimate/articles/points-df-mat-sf.html) if you need to extract the data for specific points.

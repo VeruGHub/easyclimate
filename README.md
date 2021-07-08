@@ -17,7 +17,16 @@ coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.s
 
 Easily get high-resolution (1 km) daily climate data (precipitation,
 minimum and maximum temperatures) across Europe, from the European
-climatic database <ftp://palantir.boku.ac.at/Public/ClimateData/>.
+climatic database hosted at
+<ftp://palantir.boku.ac.at/Public/ClimateData/>.
+
+This climatic dataset was originally built by [A. Moreno & H.
+Hasenauer](https://doi.org/10.1002/joc.4436) and further developed by W.
+Rammer, C. Pucher & M. Neumann from the University of Natural Resources
+and Life Sciences, Vienna, Austria. Please check [this
+document](https://github.com/VeruGHub/easyclimate/tree/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf)
+for more details on the development and characteristics of the climatic
+dataset.
 
 ## Installation
 

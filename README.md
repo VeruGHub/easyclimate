@@ -15,8 +15,6 @@ public.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repos
 coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.svg)](https://codecov.io/gh/VeruGHub/easyclimate?branch=master)
 <!-- badges: end -->
 
-Website: <https://verughub.github.io/easyclimate/>
-
 Easily get high-resolution (1 km) daily climate data (precipitation,
 minimum and maximum temperatures) across Europe, from the European
 climatic database <ftp://palantir.boku.ac.at/Public/ClimateData/>.
@@ -54,12 +52,6 @@ Obtaining a (multi-layer) raster with daily climatic values for an area:
 
 ``` r
 library(terra)
-#> terra version 1.3.4
-#> 
-#> Attaching package: 'terra'
-#> The following object is masked from 'package:knitr':
-#> 
-#>     spin
 
 coords_poly <- vect("POLYGON ((-4.5 41, -4.5 40.5, -5 40.5, -5 41))")
 
@@ -87,17 +79,14 @@ plot(ras_tmax, col = rev(heat.colors(7)))
 If you use easyclimate, please cite both the data source and the package
 as:
 
-Werner Rammer, Christoph Pucher, Mathias Neumann. 2018. Description,
-Evaluation and Validation of Downscaled Daily Climate Data Version 2.
-<ftp://palantir.boku.ac.at/Public/ClimateData/>
+Moreno A, Hasenauer H (2016). “Spatial downscaling of European climate
+data.” *International Journal of Climatology*, 1444–1458.
 
-Adam Moreno, Hubert Hasenauer. 2016. Spatial downscaling of European
-climate data International Journal of Climatology, 36: 1444-1458
+Rammer W, Pucher C, Neumann M (2018). *Description, Evaluation and
+Validation of Downscaled Daily Climate Data Version 2*. &lt;URL:
+<ftp://palantir.boku.ac.at/Public/ClimateData/>&gt;.
 
-Verónica Cruz-Alonso, Francisco Rodríguez-Sánchez, Christoph Pucher,
-Sophia Ratcliffe, Julen Astigarraga, Mathias Neumann and Paloma
-Ruiz-Benito. 2021. easyclimate: Easy access to high-resolution daily
-climate data for Europe. <https://github.com/VeruGHub/easyclimate>
-
-To see these entries in BibTeX format, use ‘print(<citation>,
-bibtex=TRUE)’, ‘toBibtex(.)’, or set ‘options(citation.bibtex.max=999)’.
+Cruz-Alonso V, Rodríguez-Sánchez F, Pucher C, Ratcliffe S, Astigarraga
+J, Neumann M, Ruiz-Benito P (2021). *easyclimate: Easy access to
+high-resolution daily climate data for Europe*. &lt;URL:
+<https://github.com/VeruGHub/easyclimate>&gt;.

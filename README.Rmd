@@ -13,6 +13,7 @@ knitr::opts_chunk$set(
   out.width = "100%",
   cache = TRUE
 )
+
 ```
 
 # `easyclimate`
@@ -25,7 +26,6 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.svg)](https://codecov.io/gh/VeruGHub/easyclimate?branch=master)
 <!-- badges: end -->
 
-Website: https://verughub.github.io/easyclimate/
 
 Easily get high-resolution (1 km) daily climate data (precipitation, minimum and maximum temperatures) across Europe, from the European climatic database ftp://palantir.boku.ac.at/Public/ClimateData/.
 
@@ -60,7 +60,7 @@ kable(prec)
 
 Obtaining a (multi-layer) raster with daily climatic values for an area:
 
-```{r}
+```{r message=FALSE}
 library(terra)
 
 coords_poly <- vect("POLYGON ((-4.5 41, -4.5 40.5, -5 40.5, -5 41))")
@@ -84,8 +84,10 @@ See the package website for more extended tutorials: https://verughub.github.io/
 
 ## CITATION
 
+If you use easyclimate, please cite both the data source and the package as:
+
 ```{r echo=FALSE, results='asis'}
-citation("easyclimate")
+print(citation("easyclimate"), style = "text")
 ```
 
 

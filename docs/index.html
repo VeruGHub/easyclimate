@@ -98,7 +98,6 @@
 <a href="#easy-access-to-high-resolution-daily-climate-data-for-europe" class="anchor"></a>Easy access to high-resolution daily climate data for Europe</h1>
 <!-- badges: start -->
 
-<p>Website: <a href="https://verughub.github.io/easyclimate/" class="uri">https://verughub.github.io/easyclimate/</a></p>
 <p>Easily get high-resolution (1 km) daily climate data (precipitation, minimum and maximum temperatures) across Europe, from the European climatic database <a href="ftp://palantir.boku.ac.at/Public/ClimateData/" class="uri">ftp://palantir.boku.ac.at/Public/ClimateData/</a>.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -155,12 +154,6 @@
 <p>Obtaining a (multi-layer) raster with daily climatic values for an area:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/terra">terra</a></span><span class="op">)</span>
-<span class="co">#&gt; terra version 1.3.4</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'terra'</span>
-<span class="co">#&gt; The following object is masked from 'package:knitr':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     spin</span>
 
 <span class="va">coords_poly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/vect.html">vect</a></span><span class="op">(</span><span class="st">"POLYGON ((-4.5 41, -4.5 40.5, -5 40.5, -5 41))"</span><span class="op">)</span>
 
@@ -182,10 +175,9 @@
 <h2 class="hasAnchor">
 <a href="#citation" class="anchor"></a>CITATION</h2>
 <p>If you use easyclimate, please cite both the data source and the package as:</p>
-<p>Werner Rammer, Christoph Pucher, Mathias Neumann. 2018. Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2. <a href="ftp://palantir.boku.ac.at/Public/ClimateData/" class="uri">ftp://palantir.boku.ac.at/Public/ClimateData/</a></p>
-<p>Adam Moreno, Hubert Hasenauer. 2016. Spatial downscaling of European climate data International Journal of Climatology, 36: 1444-1458</p>
-<p>Verónica Cruz-Alonso, Francisco Rodríguez-Sánchez, Christoph Pucher, Sophia Ratcliffe, Julen Astigarraga, Mathias Neumann and Paloma Ruiz-Benito. 2021. easyclimate: Easy access to high-resolution daily climate data for Europe. <a href="https://github.com/VeruGHub/easyclimate" class="uri">https://github.com/VeruGHub/easyclimate</a></p>
-<p>To see these entries in BibTeX format, use ‘print(<citation>, bibtex=TRUE)’, ‘toBibtex(.)’, or set ‘options(citation.bibtex.max=999)’.</citation></p>
+<p>Moreno A, Hasenauer H (2016). “Spatial downscaling of European climate data.” <em>International Journal of Climatology</em>, 1444–1458.</p>
+<p>Rammer W, Pucher C, Neumann M (2018). <em>Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2</em>. &lt;URL: <a href="ftp://palantir.boku.ac.at/Public/ClimateData/" class="uri">ftp://palantir.boku.ac.at/Public/ClimateData/</a>&gt;.</p>
+<p>Cruz-Alonso V, Rodríguez-Sánchez F, Pucher C, Ratcliffe S, Astigarraga J, Neumann M, Ruiz-Benito P (2021). <em>easyclimate: Easy access to high-resolution daily climate data for Europe</em>. &lt;URL: <a href="https://github.com/VeruGHub/easyclimate" class="uri">https://github.com/VeruGHub/easyclimate</a>&gt;.</p>
 </div>
 </div>
 

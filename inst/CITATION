@@ -1,20 +1,5 @@
 citHeader("If you use easyclimate, please cite both the data source and the package as:")
 
-citEntry(entry = "manual",
-title = "Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2",
-author = personList(
-person("Werner", "Rammer"),
-person("Christoph", "Pucher"),
-person("Mathias", "Neumann")),
-year = "2018",
-url = "ftp://palantir.boku.ac.at/Public/ClimateData/",
-textVersion = paste(
-"Werner Rammer, Christoph Pucher, Mathias Neumann. 2018.",
-"Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2.",
-"ftp://palantir.boku.ac.at/Public/ClimateData/")
-)
-
-
 citEntry(entry = "article",
 title = "Spatial downscaling of European climate data",
 author = personList(
@@ -29,6 +14,22 @@ textVersion = paste(
 "Spatial downscaling of European climate data",
 "International Journal of Climatology, 36: 1444-1458")
 )
+
+
+citEntry(entry = "manual",
+title = "Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2",
+author = personList(
+person("Werner", "Rammer"),
+person("Christoph", "Pucher"),
+person("Mathias", "Neumann")),
+year = "2018",
+url = "ftp://palantir.boku.ac.at/Public/ClimateData/",
+textVersion = paste(
+"Werner Rammer, Christoph Pucher, Mathias Neumann. 2018.",
+"Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2.",
+"ftp://palantir.boku.ac.at/Public/ClimateData/")
+)
+
 
 citEntry(entry = "manual",
   title        = "easyclimate: Easy access to high-resolution daily climate data for Europe",

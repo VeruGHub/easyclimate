@@ -13,11 +13,11 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE,
                       fig.width = 6, fig.height = 4, cache = TRUE)
 ```
 
-`easyclimate` aims to easily download daily climate data for a given set of points or polygons within Europe. You can download and install the latest version of `easyclimate` from github: https://github.com/VeruGHub/easyclimate
+`easyclimate` aims to easily download daily climate data for a given set of points or polygons within Europe. To download and install the latest version of `easyclimate` from github follow the instructions in  https://github.com/VeruGHub/easyclimate 
 
 <br>
 
-In this tutorial we will work through the basics of using easyclimate with coordinate points. You can enter coordinates as a data.frame, matrix, or `sf` object. At the end we will get a data frame with climatic variables for our points.
+In this tutorial we will work through the basics of using easyclimate with coordinate points. You can enter coordinates as a `data.frame`, `matrix`, or `sf` object. At the end we will get a data frame with climatic variables for our points.
 
 <br>
 
@@ -200,9 +200,9 @@ clim_mat %>%
   mutate(month = factor(month, rev(month_name))) %>%
   ggplot(aes(x = month, y = prcp, color = month)) +
   geom_jitter(size = 2, alpha = .3, width = .3, show.legend = FALSE) +
-  scale_y_continuous(expand = c(0,0), name = "Precipitation\n(mm)") +
+  scale_y_continuous(expand = c(0,0)) +
   coord_flip(ylim = c(0, 60)) +
-  ylab("Precipitation (mm)") + xlab("Month") +
+  ylab("Daily precipitation (mm)") + xlab("Month") +
   theme_bw()
 
 ```
@@ -235,8 +235,8 @@ clim_sf <- sf_tmin %>%
 
 ggplot() +
   borders(regions = c("Spain", "Portugal")) +
-	geom_point(data = clim_sf, aes(x = x, y = y, color = tmin), size = 2) +
-  coord_fixed(xlim = c(-10, 0), ylim = c(36, 40), ratio = 1.3) + 
+	geom_point(data = clim_sf, aes(x = x, y = y, color = tmin), size = 2) + 
+  coord_fixed(xlim = c(-10, 2), ylim = c(36, 44), ratio = 1.3) +  
   scale_color_continuous(type = "viridis", name = "Minimum\ntemperature (ºC)") +
 	ylab("Latitude") + xlab("Longitude") +
   theme_bw()

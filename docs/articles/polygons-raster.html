@@ -82,7 +82,7 @@
 
       
 
-      </header><script src="polygons-raster_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><script src="polygons-raster_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Analysing the climate of an area for a given period</h1>
@@ -95,7 +95,7 @@
 
     
     
-<p><code>easyclimate</code> aims to easily download daily climate data for a given set of points or polygons within Europe. You can download and install the latest version of <code>easyclimate</code> from github: <a href="https://github.com/VeruGHub/easyclimate" class="uri">https://github.com/VeruGHub/easyclimate</a></p>
+<p><code>easyclimate</code> aims to easily download daily climate data for a given set of points or polygons within Europe. To download and install the latest version of <code>easyclimate</code> from github follow the instructions in <a href="https://github.com/VeruGHub/easyclimate" class="uri">https://github.com/VeruGHub/easyclimate</a></p>
 <p><br></p>
 <p>In this tutorial we will work through the basics of using <code>easyclimate</code> with a spatial polygon.</p>
 <p>If you wish to download the climatic data of a specific region, you need to specify at least four corners of the polygon including the area and specify the type of output you want to obtain (i.e. a dataframe - “df” or a raster - “raster”). You can also provide the polygons of interest in a <code>sf</code> object.</p>
@@ -106,7 +106,7 @@
 <span class="va">coords_t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/vect.html">vect</a></span><span class="op">(</span><span class="st">"POLYGON ((-4.5 41, -4.5 40.5, -5 40.5, -5 41))"</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># to know how much it takes to download</span>
-<span class="co">## [1] "2021-07-07 18:23:59 CEST"</span>
+<span class="co">## [1] "2021-07-09 23:41:00 EDT"</span>
 
 <span class="va">df_tmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span>
   <span class="va">coords_t</span>,
@@ -116,7 +116,7 @@
   <span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## [1] "2021-07-07 18:24:12 CEST"</span>
+<span class="co">## [1] "2021-07-09 23:41:27 EDT"</span>
 
 <span class="fu"><a href="https://rdrr.io/pkg/terra/man/headtail.html">head</a></span><span class="op">(</span><span class="va">df_tmax</span><span class="op">)</span>
 <span class="co">##   ID_coords         x        y       date Tmax</span>
@@ -161,7 +161,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## [1] "2021-07-07 18:24:14 CEST"</span>
+<span class="co">## [1] "2021-07-09 23:41:43 EDT"</span>
 
 <span class="va">ras_tmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span>
   <span class="va">coords_t</span>,
@@ -171,7 +171,7 @@
   <span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## [1] "2021-07-07 18:24:26 CEST"</span>
+<span class="co">## [1] "2021-07-09 23:42:08 EDT"</span>
 
 <span class="va">ras_tmax</span>
 <span class="co">## class       : SpatRaster </span>

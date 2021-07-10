@@ -12,7 +12,7 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE,
                       fig.width = 6, fig.height = 4, cache = TRUE)
 ```
 
-`easyclimate` aims to easily download daily climate data for a given set of points or polygons within Europe. You can download and install the latest version of `easyclimate` from github: https://github.com/VeruGHub/easyclimate 
+`easyclimate` aims to easily download daily climate data for a given set of points or polygons within Europe. To download and install the latest version of `easyclimate` from github follow the instructions in https://github.com/VeruGHub/easyclimate 
 
 <br>
 

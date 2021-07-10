@@ -82,7 +82,7 @@
 
       
 
-      </header><script src="climatic-indices_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><script src="climatic-indices_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Calculating basic climatic indices with data from easyclimate</h1>
@@ -518,9 +518,9 @@
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">run</span>, .add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span> 
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="va">run</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>max_heatwave <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html">max</a></span><span class="op">(</span><span class="va">length</span><span class="op">)</span>,    <span class="co"># longest heatwave per year (in days)</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>max_heatwave <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html">max</a></span><span class="op">(</span><span class="va">length</span><span class="op">)</span>, <span class="co"># longest heatwave per year (in days)</span>
               mean_heatwave <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html">mean</a></span><span class="op">(</span><span class="va">length</span><span class="op">)</span>, <span class="co"># average length of heatwaves per year</span>
-              n_heatwave <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>         <span class="co"># No. of events per year</span>
+              n_heatwave <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># No. of events per year</span>
     <span class="fu"><a href="https://tidyr.tidyverse.org/reference/complete.html">complete</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span>, 
              fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>max_heatwave <span class="op">=</span> <span class="cn">NA</span>, mean_heatwave <span class="op">=</span> <span class="cn">NA</span>, nevents <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">kable</span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>

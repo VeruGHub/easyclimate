@@ -154,9 +154,9 @@ daily %>%
     group_by(run, .add = TRUE) %>% 
     summarise(length = n()) %>% 
     ungroup(run) %>% 
-    summarise(max_heatwave = max(length),    # longest heatwave per year (in days)
+    summarise(max_heatwave = max(length), # longest heatwave per year (in days)
               mean_heatwave = mean(length), # average length of heatwaves per year
-              n_heatwave = n()) %>%         # No. of events per year
+              n_heatwave = n()) %>% # No. of events per year
     complete(ID_coords, year, 
              fill = list(max_heatwave = NA, mean_heatwave = NA, nevents = 0)) %>% 
   kable(digits = 1)

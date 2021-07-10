@@ -27,9 +27,9 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 
-Easily get high-resolution (1 km) daily climate data (precipitation, minimum and maximum temperatures) across Europe, from the European climatic database hosted at ftp://palantir.boku.ac.at/Public/ClimateData/. 
+Easily get high-resolution (1 km) daily climate data (precipitation, minimum and maximum temperatures) across Europe from 1950 to 2017, from the European climatic database hosted at ftp://palantir.boku.ac.at/Public/ClimateData/. 
 
-This climatic dataset was originally built by [A. Moreno & H. Hasenauer](https://doi.org/10.1002/joc.4436) and further developed by W. Rammer, C. Pucher & M. Neumann from the University of Natural Resources and Life Sciences, Vienna, Austria. Please check [this document](https://github.com/VeruGHub/easyclimate/tree/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf) for more details on the development and characteristics of the climatic dataset.
+This climatic dataset was originally built by [A. Moreno & H. Hasenauer](https://doi.org/10.1002/joc.4436) and further developed by W. Rammer, C. Pucher & M. Neumann from the University of Natural Resources and Life Sciences, Vienna, Austria. Please, check [this document](https://github.com/VeruGHub/easyclimate/tree/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf) for more details on the development and characteristics of the climatic dataset.
 
 
 ## Installation
@@ -64,6 +64,9 @@ Obtaining a (multi-layer) raster with daily climatic values for an area:
 
 ```{r message=FALSE}
 library(terra)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
 
 coords_poly <- vect("POLYGON ((-4.5 41, -4.5 40.5, -5 40.5, -5 41))")
 
@@ -74,13 +77,23 @@ ras_tmax <- get_daily_climate(
   output = "raster" # return raster
   )
 
-ras_tmax <- ras_tmax/100
+ras_tmax
+
+ras_tmax_df <- terra::as.data.frame(ras_tmax, xy = TRUE)
+ras_tmax_df <- ras_tmax_df %>% 
+  pivot_longer(cols = c("X2012.01.01", "X2012.08.01"), names_to = "date", values_to = "tmax") %>% 
+  mutate(tmax = tmax/100)
   
-plot(ras_tmax, col = rev(heat.colors(7))) 
+ggplot(ras_tmax_df) +
+  geom_raster(aes(x = x, y = y, fill = tmax)) +
+  facet_wrap(~date) +
+  scale_fill_continuous(type = "viridis", name = "Maximum\ntemperature (ºC)") +
+  theme_bw()
+
 ```
 
 <br>
-See the package website for more extended tutorials: https://verughub.github.io/easyclimate/
+Visit the articles of the package website for more extended tutorials!
 
 <br>
 

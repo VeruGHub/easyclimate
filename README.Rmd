@@ -88,6 +88,7 @@ ggplot(ras_tmax_df) +
   geom_raster(aes(x = x, y = y, fill = tmax)) +
   facet_wrap(~date) +
   scale_fill_continuous(type = "viridis", name = "Maximum\ntemperature (ºC)") +
+  coord_fixed(ratio = 1) +
   theme_bw()
 
 ```

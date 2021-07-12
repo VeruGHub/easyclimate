@@ -15,10 +15,10 @@ public.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repos
 coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.svg)](https://codecov.io/gh/VeruGHub/easyclimate?branch=master)
 <!-- badges: end -->
 
-Easily get high-resolution (1 km) daily climate data (precipitation,
-minimum and maximum temperatures) across Europe from 1950 to 2017, from
-the European climatic database hosted at
-<ftp://palantir.boku.ac.at/Public/ClimateData/>.
+Get high-resolution (1 km) daily climate data (precipitation, minimum
+and maximum temperatures) for Europe from the European climatic database
+hosted at <ftp://palantir.boku.ac.at/Public/ClimateData/>. Data are
+available from 1950 to 2017.
 
 This climatic dataset was originally built by [A. Moreno & H.
 Hasenauer](https://doi.org/10.1002/joc.4436) and further developed by W.
@@ -37,7 +37,7 @@ remotes::install_github("VeruGHub/easyclimate")
 
 ## Examples
 
-Obtaining a data frame with daily climatic values for point coordinates:
+To obtain a data frame of daily climatic values for point coordinates:
 
 ``` r
 library(easyclimate)
@@ -57,7 +57,7 @@ prec <- get_daily_climate(coords,
 
 <br>
 
-Obtaining a (multi-layer) raster with daily climatic values for an area:
+To obtain a (multi-layer) raster of daily climatic values for an area:
 
 ``` r
 library(terra)
@@ -74,28 +74,11 @@ ras_tmax <- get_daily_climate(
   output = "raster" # return raster
   )
 
-ras_tmax
-#> class       : SpatRaster 
-#> dimensions  : 60, 60, 2  (nrow, ncol, nlyr)
-#> resolution  : 0.008333333, 0.008333333  (x, y)
-#> extent      : -5, -4.5, 40.5, 41  (xmin, xmax, ymin, ymax)
-#> coord. ref. : +proj=longlat +datum=WGS84 +no_defs 
-#> source      : memory 
-#> names       : 2012-01-01, 2012-08-01 
-#> min values  :        981,       2605 
-#> max values  :       1544,       3366
+ras_tmax <- ras_tmax/100
 
-ras_tmax_df <- terra::as.data.frame(ras_tmax, xy = TRUE)
-ras_tmax_df <- ras_tmax_df %>% 
-  pivot_longer(cols = c("X2012.01.01", "X2012.08.01"), names_to = "date", values_to = "tmax") %>% 
-  mutate(tmax = tmax/100)
-  
-ggplot(ras_tmax_df) +
-  geom_raster(aes(x = x, y = y, fill = tmax)) +
-  facet_wrap(~date) +
-  scale_fill_continuous(type = "viridis", name = "Maximum\ntemperature (ºC)") +
-  coord_fixed(ratio = 1) +
-  theme_bw()
+par(mfrow = c(1, 2))
+terra::plot(ras_tmax, 1, col = rev(heat.colors(20)), type = "continuous", smooth = TRUE, range = c(10, 35), legend = FALSE, mar=c(4, 2, 4, 2), main = "January 1 2012")
+terra::plot(ras_tmax, 2, col = rev(heat.colors(20)), type = "continuous", smooth = TRUE, range = c(10, 35), mar = c(4, 1, 4, 3), main = "August 1 2012")
 ```
 
 <img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />

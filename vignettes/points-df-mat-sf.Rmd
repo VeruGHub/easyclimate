@@ -13,11 +13,11 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE,
                       fig.width = 6, fig.height = 4, cache = TRUE)
 ```
 
-`easyclimate` aims to easily download daily climate data for a given set of points or polygons within Europe. To download and install the latest version of `easyclimate` from github follow the instructions in  https://github.com/VeruGHub/easyclimate 
+With `easyclimate` you can easily download daily climate data for a given set of points or polygons within Europe. To download and install the latest version of `easyclimate` from github follow the instructions in  https://github.com/VeruGHub/easyclimate 
 
 <br>
 
-In this tutorial we will work through the basics of using easyclimate with coordinate points. You can enter coordinates as a `data.frame`, `matrix`, or `sf` object. At the end we will get a data frame with climatic variables for our points.
+In this tutorial we will work through the basics of using easyclimate with coordinate points. You can enter coordinates as a `data.frame`, `matrix`, or `sf` object. At the end we will have a data frame with climate variables for each point.
 
 <br>
 
@@ -47,7 +47,7 @@ ggplot() +
 
 <br>
 
-Now, download the climatic data for the selected locations. It is very simple, all you have to do is use the function `get_daily_climate`, specify the period (e.g. `2008-05-25` for a single day or `2008:2010` for several years), and the variables to be downloaded (precipitation `Prcp`, minimum temperatures `Tmin` or maximum temperatures `Tmax`).
+Now, download the climatic data for the selected locations. It is very simple, all you have to do is use the function `get_daily_climate`, specify the period (e.g. `2008-05-25` for a single day or `2008:2010` for several years), and the variables to be downloaded (precipitation `Prcp`, minimum temperature `Tmin` or maximum temperature `Tmax`).
 
 ```{r}
 
@@ -77,7 +77,7 @@ head(df_prcp[, c("lon", "lat", "date", "Prcp")])
 
 ```
 
-Temperature and precipitation units are ºC\*100 and mm\*100 to avoid floating values. You can mutate them and join all the variables in a data frame. 
+Temperature and precipitation units are ºC\*100 and mm\*100, respectively, to avoid floating values. You can change the units using the mutate function and join all the variables in a data frame. 
 
 ```{r}
 
@@ -124,7 +124,7 @@ ggplot(clim_site1) +
 
 <br>
 
-Or let's calculate daily mean temperature and plot it along with `tmin` and `tmax`:
+Or calculate the daily mean temperature and plot it against `tmin` and `tmax`:
 
 ```{r}
 library(tidyr)
@@ -247,4 +247,4 @@ ggplot() +
 
 ## Learn more
 
-Now you know how to extract a dataframe with different climatic variables with `easyclimate`, using point coordinates in different formats and downloading data from multiple locations and periods. Check out this [other vignette](https://verughub.github.io/easyclimate/articles/polygons-raster.html) if you need to extract the data of a complete area.
+Now you know how to extract a data frame with different climatic variables with `easyclimate`, using point coordinates in different formats and downloading data for multiple locations and periods. Check out this [other vignette](https://verughub.github.io/easyclimate/articles/polygons-raster.html) if you need to extract the data of a complete area.

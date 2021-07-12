@@ -41,7 +41,7 @@ daily <- prec %>%
 ```
 
 
-Temperature and precipitation units are ºC\*100 and mm\*100 to avoid floating values. Here we convert them to ºC and mm, and calculate daily mean temperature:
+Temperature and precipitation units are ºC\*100 and mm\*100, respectively, to avoid floating values. Here we convert them to ºC and mm, and calculate the daily mean temperature:
 
 ```{r}
 realvalue <- function(x) {x/100}
@@ -86,7 +86,7 @@ daily %>%
 ```
 
 
-Similarly, you can calculate accumulated precipitations over different time periods: 
+Similarly, you can calculate accumulated precipitation over different time periods: 
 
 ```{r}
 daily %>% 
@@ -105,7 +105,7 @@ daily %>%
 
 ## Climatic anomalies
 
-Sometimes it can be useful to calculate the deviation of climatic values from a reference period. For example, considering all the data downloaded as the reference period, you could calculate the deviations per site and year as follows:
+Sometimes it can be useful to calculate the deviation of climate values from values from a reference period. For example, if we consider as references the mean values for the period 2001-2005, we can calculate the deviations per site and year as follows:
 
 ```{r}
 
@@ -218,7 +218,7 @@ daily %>%
 The package [`climInd`](https://cran.r-project.org/package=ClimInd) can be used to calculate multiple climatic indices from data obtained through `easyclimate`. For example:
 
 <br>
-Number of days with temperature > 32ºC in summer (June-August):
+Number of days with maximum temperature > 32ºC in summer (June-August):
 
 ```{r}
 library(ClimInd)
@@ -261,7 +261,7 @@ d50mm(data = Prec, time.scale = "month")
 
 ## Learn more
 
-For learning all the details about downloading daily climatic data, please consult [this vignette](https://verughub.github.io/easyclimate/articles/points-df-mat-sf.html) for point coordinates, or [this other](https://verughub.github.io/easyclimate/articles/polygons-raster.html) if you need to extract data for several polygons or a region.
+To learn more about downloading daily climatic data, please consult [this vignette](https://verughub.github.io/easyclimate/articles/points-df-mat-sf.html) for point coordinates, or [this other](https://verughub.github.io/easyclimate/articles/polygons-raster.html) if you need to extract data for several polygons or a region.
 
 
 

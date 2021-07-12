@@ -184,30 +184,11 @@ get_daily_climate <- function(coords = NULL,
   rasters.sub <- terra::subset(rasters, subset = as.character(days))
 
   #### Extract ####
-  niter <- terra::nlyr(rasters.sub)
-  pb <- utils::txtProgressBar(min = 0, max = niter, style = 3,
-                       width = 50, char = "=", title = "Extraction")
 
-  if (output == "df") {
+    if (output == "df") {
 
-    out <- NULL
-    for(i in 1:niter) {
-
-        if (i < terra::nlyr(rasters.sub)) {
-          ext <- terra::extract(rasters.sub[[i]], coords.spatvec)
-          out <- as.data.frame(cbind(out, ext[,2]))
-          colnames(out)[i] <- names(ext)[2]
-        } else {
-          ext <- terra::extract(rasters.sub[[i]], coords.spatvec, xy = TRUE)
-          out <- cbind(out, ext)
-        }
-
-      utils::setTxtProgressBar(pb, i)
-    }
-
-    close(pb)
-
-    #Old: out <- terra::extract(rasters.sub, coords.spatvec, xy = TRUE)
+      message("Downloading data... This process might take several minutes ⌛\n")
+    out <- terra::extract(rasters.sub, coords.spatvec, xy = TRUE)
 
     ## Reshape to long format
     out <- reshape_terra_extract(out, climvar = climatic_var)
@@ -225,6 +206,7 @@ get_daily_climate <- function(coords = NULL,
   ## If output == "raster", return a cropped raster
   if (output == "raster") {
 
+    message("Downloading data... This process might take several minutes ⌛\n")
     out <- terra::crop(rasters.sub, coords.spatvec)
 
   }

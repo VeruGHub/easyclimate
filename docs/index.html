@@ -98,7 +98,7 @@
 <a href="#easy-access-to-high-resolution-daily-climate-data-for-europe" class="anchor"></a>Easy access to high-resolution daily climate data for Europe</h1>
 <!-- badges: start -->
 
-<p>Easily get high-resolution (1 km) daily climate data (precipitation, minimum and maximum temperatures) across Europe from 1950 to 2017, from the European climatic database hosted at <a href="ftp://palantir.boku.ac.at/Public/ClimateData/" class="uri">ftp://palantir.boku.ac.at/Public/ClimateData/</a>.</p>
+<p>Get high-resolution (1 km) daily climate data (precipitation, minimum and maximum temperatures) for Europe from the European climatic database hosted at <a href="ftp://palantir.boku.ac.at/Public/ClimateData/" class="uri">ftp://palantir.boku.ac.at/Public/ClimateData/</a>. Data are available from 1950 to 2017.</p>
 <p>This climatic dataset was originally built by <a href="https://doi.org/10.1002/joc.4436">A. Moreno &amp; H. Hasenauer</a> and further developed by W. Rammer, C. Pucher &amp; M. Neumann from the University of Natural Resources and Life Sciences, Vienna, Austria. Please, check <a href="https://github.com/VeruGHub/easyclimate/tree/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf">this document</a> for more details on the development and characteristics of the climatic dataset.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -110,7 +110,7 @@
 <div id="examples" class="section level2">
 <h2 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h2>
-<p>Obtaining a data frame with daily climatic values for point coordinates:</p>
+<p>To obtain a data frame of daily climatic values for point coordinates:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/VeruGHub/easyclimate">easyclimate</a></span><span class="op">)</span>
 
@@ -152,7 +152,7 @@
 </tbody>
 </table>
 <p><br></p>
-<p>Obtaining a (multi-layer) raster with daily climatic values for an area:</p>
+<p>To obtain a (multi-layer) raster of daily climatic values for an area:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/terra">terra</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
@@ -168,28 +168,11 @@
   output <span class="op">=</span> <span class="st">"raster"</span> <span class="co"># return raster</span>
   <span class="op">)</span>
 
-<span class="va">ras_tmax</span>
-<span class="co">#&gt; class       : SpatRaster </span>
-<span class="co">#&gt; dimensions  : 60, 60, 2  (nrow, ncol, nlyr)</span>
-<span class="co">#&gt; resolution  : 0.008333333, 0.008333333  (x, y)</span>
-<span class="co">#&gt; extent      : -5, -4.5, 40.5, 41  (xmin, xmax, ymin, ymax)</span>
-<span class="co">#&gt; coord. ref. : +proj=longlat +datum=WGS84 +no_defs </span>
-<span class="co">#&gt; source      : memory </span>
-<span class="co">#&gt; names       : 2012-01-01, 2012-08-01 </span>
-<span class="co">#&gt; min values  :        981,       2605 </span>
-<span class="co">#&gt; max values  :       1544,       3366</span>
+<span class="va">ras_tmax</span> <span class="op">&lt;-</span> <span class="va">ras_tmax</span><span class="op">/</span><span class="fl">100</span>
 
-<span class="va">ras_tmax_df</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">ras_tmax</span>, xy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">ras_tmax_df</span> <span class="op">&lt;-</span> <span class="va">ras_tmax_df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="st">"X2012.01.01"</span>, <span class="st">"X2012.08.01"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"date"</span>, values_to <span class="op">=</span> <span class="st">"tmax"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>tmax <span class="op">=</span> <span class="va">tmax</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span>
-  
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">ras_tmax_df</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_raster</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, fill <span class="op">=</span> <span class="va">tmax</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">date</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_continuous.html">scale_fill_continuous</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"viridis"</span>, name <span class="op">=</span> <span class="st">"Maximum\ntemperature (ºC)"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span>ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html">plot</a></span><span class="op">(</span><span class="va">ras_tmax</span>, <span class="fl">1</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/flip.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">heat.colors</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"continuous"</span>, smooth <span class="op">=</span> <span class="cn">TRUE</span>, range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span><span class="op">)</span>, legend <span class="op">=</span> <span class="cn">FALSE</span>, mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span>, main <span class="op">=</span> <span class="st">"January 1 2012"</span><span class="op">)</span>
+<span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html">plot</a></span><span class="op">(</span><span class="va">ras_tmax</span>, <span class="fl">2</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/flip.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">heat.colors</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"continuous"</span>, smooth <span class="op">=</span> <span class="cn">TRUE</span>, range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span><span class="op">)</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">3</span><span class="op">)</span>, main <span class="op">=</span> <span class="st">"August 1 2012"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-3-1.png" width="100%"></p>
 <p><br> Visit the articles of the package website for more extended tutorials!</p>
 <p><br></p>

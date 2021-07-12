@@ -118,7 +118,7 @@
 <span class="va">daily</span> <span class="op">&lt;-</span> <span class="va">prec</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join</a></span><span class="op">(</span><span class="va">tmin</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join</a></span><span class="op">(</span><span class="va">tmax</span><span class="op">)</span> </code></pre></div>
-<p>Temperature and precipitation units are ºC*100 and mm*100 to avoid floating values. Here we convert them to ºC and mm, and calculate daily mean temperature:</p>
+<p>Temperature and precipitation units are ºC*100 and mm*100, respectively, to avoid floating values. Here we convert them to ºC and mm, and calculate the daily mean temperature:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">realvalue</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span><span class="va">x</span><span class="op">/</span><span class="fl">100</span><span class="op">}</span>
 
@@ -281,7 +281,7 @@
 </tr>
 </tbody>
 </table>
-<p>Similarly, you can calculate accumulated precipitations over different time periods:</p>
+<p>Similarly, you can calculate accumulated precipitation over different time periods:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">daily</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -382,7 +382,7 @@
 <div id="climatic-anomalies" class="section level2">
 <h2 class="hasAnchor">
 <a href="#climatic-anomalies" class="anchor"></a>Climatic anomalies</h2>
-<p>Sometimes it can be useful to calculate the deviation of climatic values from a reference period. For example, considering all the data downloaded as the reference period, you could calculate the deviations per site and year as follows:</p>
+<p>Sometimes it can be useful to calculate the deviation of climate values from a value from a reference period. For example, if we consider as the reference the mean value for the period 2001-2005, we can calculate the deviations per site and year as follows:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">daily</span> <span class="op">%&gt;%</span>   
@@ -699,7 +699,7 @@
 <h2 class="hasAnchor">
 <a href="#using-climind-in-combination-with-easyclimate" class="anchor"></a>Using ClimInd in combination with easyclimate</h2>
 <p>The package <a href="https://cran.r-project.org/package=ClimInd"><code>climInd</code></a> can be used to calculate multiple climatic indices from data obtained through <code>easyclimate</code>. For example:</p>
-<p><br> Number of days with temperature &gt; 32ºC in summer (June-August):</p>
+<p><br> Number of days with maximum temperature &gt; 32ºC in summer (June-August):</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gitlab.com/indecis-eu/indecis">ClimInd</a></span><span class="op">)</span>
 
@@ -739,7 +739,7 @@
 <div id="learn-more" class="section level2">
 <h2 class="hasAnchor">
 <a href="#learn-more" class="anchor"></a>Learn more</h2>
-<p>For learning all the details about downloading daily climatic data, please consult <a href="https://verughub.github.io/easyclimate/articles/points-df-mat-sf.html">this vignette</a> for point coordinates, or <a href="https://verughub.github.io/easyclimate/articles/polygons-raster.html">this other</a> if you need to extract data for several polygons or a region.</p>
+<p>To learn more about downloading daily climatic data, please consult <a href="https://verughub.github.io/easyclimate/articles/points-df-mat-sf.html">this vignette</a> for point coordinates, or <a href="https://verughub.github.io/easyclimate/articles/polygons-raster.html">this other</a> if you need to extract data for several polygons or a region.</p>
 </div>
   </div>
 

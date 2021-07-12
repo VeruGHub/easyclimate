@@ -95,10 +95,10 @@
 
     
     
-<p><code>easyclimate</code> aims to easily download daily climate data for a given set of points or polygons within Europe. To download and install the latest version of <code>easyclimate</code> from github follow the instructions in <a href="https://github.com/VeruGHub/easyclimate" class="uri">https://github.com/VeruGHub/easyclimate</a></p>
+<p>With <code>easyclimate</code> you can easily download daily climate data for a given set of points or polygons within Europe. To download and install the latest version of <code>easyclimate</code> from github follow the instructions in <a href="https://github.com/VeruGHub/easyclimate" class="uri">https://github.com/VeruGHub/easyclimate</a></p>
 <p><br></p>
 <p>In this tutorial we will work through the basics of using <code>easyclimate</code> with a spatial polygon.</p>
-<p>If you wish to download the climatic data of a specific region, you need to specify at least four corners of the polygon including the area and specify the type of output you want to obtain (i.e. a dataframe - “df” or a raster - “raster”). You can also provide the polygons of interest in a <code>sf</code> object.</p>
+<p>If you wish to download the climatic data of a specific region, you need to specify at least four corners of the polygon including the area and specify the type of output you want to obtain (i.e. a data frame - <code>df</code> or a raster - <code>raster</code>). You can also provide the polygons of interest in a <code>sf</code> object.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/VeruGHub/easyclimate">easyclimate</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/terra">terra</a></span><span class="op">)</span>
@@ -106,7 +106,7 @@
 <span class="va">coords_t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/vect.html">vect</a></span><span class="op">(</span><span class="st">"POLYGON ((-4.5 41, -4.5 40.5, -5 40.5, -5 41))"</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># to know how much it takes to download</span>
-<span class="co">## [1] "2021-07-09 23:41:00 EDT"</span>
+<span class="co">## [1] "2021-07-12 15:48:33 EDT"</span>
 
 <span class="va">df_tmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span>
   <span class="va">coords_t</span>,
@@ -116,7 +116,7 @@
   <span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## [1] "2021-07-09 23:41:27 EDT"</span>
+<span class="co">## [1] "2021-07-12 15:48:57 EDT"</span>
 
 <span class="fu"><a href="https://rdrr.io/pkg/terra/man/headtail.html">head</a></span><span class="op">(</span><span class="va">df_tmax</span><span class="op">)</span>
 <span class="co">##   ID_coords         x        y       date Tmax</span>
@@ -126,7 +126,7 @@
 <span class="co">## 4         1 -4.970833 40.99583 2012-01-01 1074</span>
 <span class="co">## 5         1 -4.962500 40.99583 2012-01-01 1076</span>
 <span class="co">## 6         1 -4.954167 40.99583 2012-01-01 1089</span></code></pre></div>
-<p>Note that temperature is given as ºC*100 to avoid floating values. You can mutate this variable as follows:</p>
+<p>Note that temperature is given as ºC*100 to avoid floating values. You can change the unit of this variable as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 
@@ -157,11 +157,11 @@
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Latitude"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Longitude"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="polygons-raster_files/figure-html/unnamed-chunk-3-1.png" width="576"></p>
-<p>You can directly get a (multi-layer) raster as output, if you specify output = “raster”:</p>
+<p>You can get a (multi-layer) raster directly as output, if you specify <code>output = raster</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## [1] "2021-07-09 23:41:43 EDT"</span>
+<span class="co">## [1] "2021-07-12 15:49:18 EDT"</span>
 
 <span class="va">ras_tmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span>
   <span class="va">coords_t</span>,
@@ -171,7 +171,7 @@
   <span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## [1] "2021-07-09 23:42:08 EDT"</span>
+<span class="co">## [1] "2021-07-12 15:49:42 EDT"</span>
 
 <span class="va">ras_tmax</span>
 <span class="co">## class       : SpatRaster </span>
@@ -185,8 +185,10 @@
 <span class="co">## max values  :       1544,       3366</span>
 
 <span class="va">ras_tmax</span> <span class="op">&lt;-</span> <span class="va">ras_tmax</span><span class="op">/</span><span class="fl">100</span>
-  
-<span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html">plot</a></span><span class="op">(</span><span class="va">ras_tmax</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/flip.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">heat.colors</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> </code></pre></div>
+
+<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html">plot</a></span><span class="op">(</span><span class="va">ras_tmax</span>, <span class="fl">1</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/flip.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">heat.colors</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"continuous"</span>, smooth <span class="op">=</span> <span class="cn">TRUE</span>, range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span><span class="op">)</span>, legend <span class="op">=</span> <span class="cn">FALSE</span>, mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">2</span>, <span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span>, main <span class="op">=</span> <span class="st">"January 1 2012"</span><span class="op">)</span>
+<span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/plot.html">plot</a></span><span class="op">(</span><span class="va">ras_tmax</span>, <span class="fl">2</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/flip.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html">heat.colors</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span>, type <span class="op">=</span> <span class="st">"continuous"</span>, smooth <span class="op">=</span> <span class="cn">TRUE</span>, range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span><span class="op">)</span>, mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">3</span><span class="op">)</span>, main <span class="op">=</span> <span class="st">"August 1 2012"</span><span class="op">)</span> </code></pre></div>
 <p><img src="polygons-raster_files/figure-html/unnamed-chunk-4-1.png" width="576"></p>
 <p><br></p>
 <div id="learn-more" class="section level2">

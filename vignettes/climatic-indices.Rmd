@@ -105,7 +105,7 @@ daily %>%
 
 ## Climatic anomalies
 
-Sometimes it can be useful to calculate the deviation of climate values from values from a reference period. For example, if we consider as references the mean values for the period 2001-2005, we can calculate the deviations per site and year as follows:
+Sometimes it can be useful to calculate the deviation of climate values from a value from a reference period. For example, if we consider as the reference the mean value for the period 2001-2005, we can calculate the deviations per site and year as follows:
 
 ```{r}
 

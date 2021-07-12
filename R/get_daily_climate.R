@@ -158,8 +158,15 @@ get_daily_climate <- function(coords = NULL,
   #### Build urls for all required years ####
 
   urls <- unlist(lapply(years, build_url, climatic_var = climatic_var))
-  urls.vsicurl <- paste0("/vsicurl/", urls)
 
+  ## Check if the server is working
+  if (sum(unlist(lapply(urls, FUN = RCurl::url.exists))==TRUE) == length(urls)) {
+    message("\nConnecting to the server...\n")
+  } else {
+    stop("\nProblems with the database server. Please, try in a few minutes\n")
+  }
+
+  urls.vsicurl <- paste0("/vsicurl/", urls)
 
   #### Connect and combine all required rasters ####
 
@@ -187,7 +194,7 @@ get_daily_climate <- function(coords = NULL,
 
     if (output == "df") {
 
-      message("Downloading data... This process might take several minutes ⌛\n")
+      message("\nDownloading data... This process might take several minutes\n")
     out <- terra::extract(rasters.sub, coords.spatvec, xy = TRUE)
 
     ## Reshape to long format
@@ -206,7 +213,7 @@ get_daily_climate <- function(coords = NULL,
   ## If output == "raster", return a cropped raster
   if (output == "raster") {
 
-    message("Downloading data... This process might take several minutes ⌛\n")
+    message("\nDownloading data... This process might take several minutes\n")
     out <- terra::crop(rasters.sub, coords.spatvec)
 
   }

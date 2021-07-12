@@ -96,9 +96,9 @@
     
     
 <pre><code>## Warning: package 'knitr' was built under R version 4.0.5</code></pre>
-<p><code>easyclimate</code> aims to easily download daily climate data for a given set of points or polygons within Europe. To download and install the latest version of <code>easyclimate</code> from github follow the instructions in <a href="https://github.com/VeruGHub/easyclimate" class="uri">https://github.com/VeruGHub/easyclimate</a></p>
+<p>With <code>easyclimate</code> you can easily download daily climate data for a given set of points or polygons within Europe. To download and install the latest version of <code>easyclimate</code> from github follow the instructions in <a href="https://github.com/VeruGHub/easyclimate" class="uri">https://github.com/VeruGHub/easyclimate</a></p>
 <p><br></p>
-<p>In this tutorial we will work through the basics of using easyclimate with coordinate points. You can enter coordinates as a <code>data.frame</code>, <code>matrix</code>, or <code>sf</code> object. At the end we will get a data frame with climatic variables for our points.</p>
+<p>In this tutorial we will work through the basics of using easyclimate with coordinate points. You can enter coordinates as a <code>data.frame</code>, <code>matrix</code>, or <code>sf</code> object. At the end we will have a data frame with climate variables for each point.</p>
 <p><br></p>
 <div id="example-1-introducing-coordinates-as-a-data-frame" class="section level1">
 <h1 class="hasAnchor">
@@ -123,7 +123,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="points-df-mat-sf_files/figure-html/unnamed-chunk-1-1.png" width="576"></p>
 <p><br></p>
-<p>Now, download the climatic data for the selected locations. It is very simple, all you have to do is use the function <code>get_daily_climate</code>, specify the period (e.g. <code>2008-05-25</code> for a single day or <code>2008:2010</code> for several years), and the variables to be downloaded (precipitation <code>Prcp</code>, minimum temperatures <code>Tmin</code> or maximum temperatures <code>Tmax</code>).</p>
+<p>Now, download the climatic data for the selected locations. It is very simple, all you have to do is use the function <code>get_daily_climate</code>, specify the period (e.g. <code>2008-05-25</code> for a single day or <code>2008:2010</code> for several years), and the variables to be downloaded (precipitation <code>Prcp</code>, minimum temperature <code>Tmin</code> or maximum temperature <code>Tmax</code>).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># to know how much it takes to download</span>
@@ -158,7 +158,7 @@
 <span class="co">## 4 -5.836705 37.42518 2008-01-04    0</span>
 <span class="co">## 5 -5.836705 37.42518 2008-01-05    0</span>
 <span class="co">## 6 -5.836705 37.42518 2008-01-06    0</span></code></pre></div>
-<p>Temperature and precipitation units are ºC*100 and mm*100 to avoid floating values. You can mutate them and join all the variables in a data frame.</p>
+<p>Temperature and precipitation units are ºC*100 and mm*100, respectively, to avoid floating values. You can change the units using the mutate function and join all the variables in a data frame.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">prcp_date</span> <span class="op">&lt;-</span> <span class="va">df_prcp</span> <span class="op">%&gt;%</span>
@@ -278,7 +278,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="points-df-mat-sf_files/figure-html/unnamed-chunk-4-1.png" width="576"></p>
 <p><br></p>
-<p>Or let’s calculate daily mean temperature and plot it along with <code>tmin</code> and <code>tmax</code>:</p>
+<p>Or calculate the daily mean temperature and plot it against <code>tmin</code> and <code>tmax</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
 
@@ -401,7 +401,7 @@
 <div id="learn-more" class="section level2">
 <h2 class="hasAnchor">
 <a href="#learn-more" class="anchor"></a>Learn more</h2>
-<p>Now you know how to extract a dataframe with different climatic variables with <code>easyclimate</code>, using point coordinates in different formats and downloading data from multiple locations and periods. Check out this <a href="https://verughub.github.io/easyclimate/articles/polygons-raster.html">other vignette</a> if you need to extract the data of a complete area.</p>
+<p>Now you know how to extract a data frame with different climatic variables with <code>easyclimate</code>, using point coordinates in different formats and downloading data for multiple locations and periods. Check out this <a href="https://verughub.github.io/easyclimate/articles/polygons-raster.html">other vignette</a> if you need to extract the data of a complete area.</p>
 </div>
 </div>
   </div>

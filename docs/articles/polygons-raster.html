@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">easyclimate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -82,7 +82,7 @@
 
       
 
-      </header><script src="polygons-raster_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><script src="polygons-raster_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Analysing the climate of an area for a given period</h1>
@@ -106,7 +106,7 @@
 <span class="va">coords_t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/vect.html">vect</a></span><span class="op">(</span><span class="st">"POLYGON ((-4.5 41, -4.5 40.5, -5 40.5, -5 41))"</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># to know how much it takes to download</span>
-<span class="co">## [1] "2021-07-12 15:48:33 EDT"</span>
+<span class="co">## [1] "2021-07-13 09:24:45 CEST"</span>
 
 <span class="va">df_tmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span>
   <span class="va">coords_t</span>,
@@ -116,7 +116,7 @@
   <span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## [1] "2021-07-12 15:48:57 EDT"</span>
+<span class="co">## [1] "2021-07-13 09:24:59 CEST"</span>
 
 <span class="fu"><a href="https://rdrr.io/pkg/terra/man/headtail.html">head</a></span><span class="op">(</span><span class="va">df_tmax</span><span class="op">)</span>
 <span class="co">##   ID_coords         x        y       date Tmax</span>
@@ -161,7 +161,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## [1] "2021-07-12 15:49:18 EDT"</span>
+<span class="co">## [1] "2021-07-13 09:25:01 CEST"</span>
 
 <span class="va">ras_tmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span>
   <span class="va">coords_t</span>,
@@ -171,7 +171,7 @@
   <span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## [1] "2021-07-12 15:49:42 EDT"</span>
+<span class="co">## [1] "2021-07-13 09:25:14 CEST"</span>
 
 <span class="va">ras_tmax</span>
 <span class="co">## class       : SpatRaster </span>

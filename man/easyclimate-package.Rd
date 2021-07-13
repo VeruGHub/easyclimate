@@ -6,9 +6,9 @@
 \alias{easyclimate-package}
 \title{easyclimate: Easy access to high-resolution daily climate data for Europe}
 \description{
-Easily get high-resolution (1 km) daily climate data (precipitation, 
+Get high-resolution (1 km) daily climate data (precipitation, 
     minimum and maximum temperatures) for points and polygons 
-    within Europe, from the European climatic database 
+    within Europe, from the European climatic database hosted at
     ftp://palantir.boku.ac.at/Public/ClimateData/.
 }
 \seealso{

@@ -76,9 +76,9 @@
 
 
 get_daily_climate <- function(coords = NULL,
-                        climatic_var = "Prcp",
-                        period = NULL,
-                        output = "df") {
+                              climatic_var = "Prcp",
+                              period = NULL,
+                              output = "df") {
 
   #### Check arguments ####
 
@@ -160,10 +160,10 @@ get_daily_climate <- function(coords = NULL,
   urls <- unlist(lapply(years, build_url, climatic_var = climatic_var))
 
   ## Check if the server is working
-  if (sum(unlist(lapply(urls, FUN = RCurl::url.exists))==TRUE) == length(urls)) {
+  if (all(RCurl::url.exists(urls))) {
     message("\nConnecting to the server...\n")
   } else {
-    stop("\nProblems with the database server. Please, try in a few minutes\n")
+    stop("\nProblems with the database server. Please, try later\n")
   }
 
   urls.vsicurl <- paste0("/vsicurl/", urls)
@@ -192,9 +192,10 @@ get_daily_climate <- function(coords = NULL,
 
   #### Extract ####
 
-    if (output == "df") {
+  message("\nDownloading data... This process might take several minutes\n")
 
-      message("\nDownloading data... This process might take several minutes\n")
+  if (output == "df") {
+
     out <- terra::extract(rasters.sub, coords.spatvec, xy = TRUE)
 
     ## Reshape to long format
@@ -213,7 +214,6 @@ get_daily_climate <- function(coords = NULL,
   ## If output == "raster", return a cropped raster
   if (output == "raster") {
 
-    message("\nDownloading data... This process might take several minutes\n")
     out <- terra::crop(rasters.sub, coords.spatvec)
 
   }

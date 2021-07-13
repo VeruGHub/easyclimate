@@ -61,9 +61,6 @@ To obtain a (multi-layer) raster of daily climatic values for an area:
 
 ``` r
 library(terra)
-library(ggplot2)
-library(dplyr)
-library(tidyr)
 
 coords_poly <- vect("POLYGON ((-4.5 41, -4.5 40.5, -5 40.5, -5 41))")
 
@@ -93,12 +90,12 @@ tutorials!
 If you use easyclimate, please cite both the data source and the package
 as:
 
+Moreno A, Hasenauer H (2016). “Spatial downscaling of European climate
+data.” *International Journal of Climatology*, 1444–1458.
+
 Rammer W, Pucher C, Neumann M (2018). *Description, Evaluation and
 Validation of Downscaled Daily Climate Data Version 2*. &lt;URL:
 <ftp://palantir.boku.ac.at/Public/ClimateData/>&gt;.
-
-Moreno A, Hasenauer H (2016). “Spatial downscaling of European climate
-data.” *International Journal of Climatology*, 1444–1458.
 
 Cruz-Alonso V, Rodríguez-Sánchez F, Pucher C, Ratcliffe S, Astigarraga
 J, Neumann M, Ruiz-Benito P (2021). *easyclimate: Easy access to

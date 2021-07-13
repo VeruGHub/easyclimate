@@ -64,9 +64,6 @@ To obtain a (multi-layer) raster of daily climatic values for an area:
 
 ```{r message=FALSE}
 library(terra)
-library(ggplot2)
-library(dplyr)
-library(tidyr)
 
 coords_poly <- vect("POLYGON ((-4.5 41, -4.5 40.5, -5 40.5, -5 41))")
 

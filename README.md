@@ -26,7 +26,8 @@ Rammer, C. Pucher & M. Neumann from the University of Natural Resources
 and Life Sciences, Vienna, Austria. Please, check [this
 document](https://github.com/VeruGHub/easyclimate/tree/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf)
 for more details on the development and characteristics of the climatic
-dataset.
+dataset. Note that you may need to enable access to FTP in your internet
+browser to explore the dataset.
 
 ## Installation
 
@@ -90,12 +91,12 @@ tutorials!
 If you use easyclimate, please cite both the data source and the package
 as:
 
-Moreno A, Hasenauer H (2016). “Spatial downscaling of European climate
-data.” *International Journal of Climatology*, 1444–1458.
-
 Rammer W, Pucher C, Neumann M (2018). *Description, Evaluation and
 Validation of Downscaled Daily Climate Data Version 2*. &lt;URL:
 <ftp://palantir.boku.ac.at/Public/ClimateData/>&gt;.
+
+Moreno A, Hasenauer H (2016). “Spatial downscaling of European climate
+data.” *International Journal of Climatology*, 1444–1458.
 
 Cruz-Alonso V, Rodríguez-Sánchez F, Pucher C, Ratcliffe S, Astigarraga
 J, Neumann M, Ruiz-Benito P (2021). *easyclimate: Easy access to

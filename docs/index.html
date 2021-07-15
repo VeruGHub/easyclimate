@@ -99,7 +99,7 @@
 <!-- badges: start -->
 
 <p>Get high-resolution (1 km) daily climate data (precipitation, minimum and maximum temperatures) for Europe from the European climatic database hosted at <a href="ftp://palantir.boku.ac.at/Public/ClimateData/" class="uri">ftp://palantir.boku.ac.at/Public/ClimateData/</a>. Data are available from 1950 to 2017.</p>
-<p>This climatic dataset was originally built by <a href="https://doi.org/10.1002/joc.4436">A. Moreno &amp; H. Hasenauer</a> and further developed by W. Rammer, C. Pucher &amp; M. Neumann from the University of Natural Resources and Life Sciences, Vienna, Austria. Please, check <a href="https://github.com/VeruGHub/easyclimate/tree/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf">this document</a> for more details on the development and characteristics of the climatic dataset.</p>
+<p>This climatic dataset was originally built by <a href="https://doi.org/10.1002/joc.4436">A. Moreno &amp; H. Hasenauer</a> and further developed by W. Rammer, C. Pucher &amp; M. Neumann from the University of Natural Resources and Life Sciences, Vienna, Austria. Please, check <a href="https://github.com/VeruGHub/easyclimate/tree/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf">this document</a> for more details on the development and characteristics of the climatic dataset. Note that you may need to enable access to FTP in your internet browser to explore the dataset.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -154,7 +154,7 @@
 <p><br></p>
 <p>To obtain a (multi-layer) raster of daily climatic values for an area:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/terra">terra</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/terra/">terra</a></span><span class="op">)</span>
 
 <span class="va">coords_poly</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/vect.html">vect</a></span><span class="op">(</span><span class="st">"POLYGON ((-4.5 41, -4.5 40.5, -5 40.5, -5 41))"</span><span class="op">)</span>
 
@@ -178,8 +178,8 @@
 <h2 class="hasAnchor">
 <a href="#citation" class="anchor"></a>CITATION</h2>
 <p>If you use easyclimate, please cite both the data source and the package as:</p>
-<p>Moreno A, Hasenauer H (2016). “Spatial downscaling of European climate data.” <em>International Journal of Climatology</em>, 1444–1458.</p>
 <p>Rammer W, Pucher C, Neumann M (2018). <em>Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2</em>. &lt;URL: <a href="ftp://palantir.boku.ac.at/Public/ClimateData/" class="uri">ftp://palantir.boku.ac.at/Public/ClimateData/</a>&gt;.</p>
+<p>Moreno A, Hasenauer H (2016). “Spatial downscaling of European climate data.” <em>International Journal of Climatology</em>, 1444–1458.</p>
 <p>Cruz-Alonso V, Rodríguez-Sánchez F, Pucher C, Ratcliffe S, Astigarraga J, Neumann M, Ruiz-Benito P (2021). <em>easyclimate: Easy access to high-resolution daily climate data for Europe</em>. &lt;URL: <a href="https://github.com/VeruGHub/easyclimate" class="uri">https://github.com/VeruGHub/easyclimate</a>&gt;.</p>
 </div>
 </div>
@@ -215,10 +215,10 @@
 <li>Verónica Cruz-Alonso <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-0642-036X" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Francisco Rodríguez-Sánchez <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-7981-1599" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Christoph Pucher <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-9269-1907" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Sophia Ratcliffe <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-9284-7900" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Paloma Ruiz-Benito <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-2781-5870" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Julen Astigarraga <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-9520-3713" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Mathias Neumann <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-2472-943X" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Paloma Ruiz-Benito <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-2781-5870" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Sophia Ratcliffe <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-9284-7900" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
 
@@ -235,7 +235,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Verónica Cruz-Alonso, Francisco Rodríguez-Sánchez, Christoph Pucher, Sophia Ratcliffe, Julen Astigarraga, Mathias Neumann, Paloma Ruiz-Benito.</p>
+  <p>Developed by Verónica Cruz-Alonso, Francisco Rodríguez-Sánchez, Christoph Pucher, Paloma Ruiz-Benito, Julen Astigarraga, Mathias Neumann, Sophia Ratcliffe.</p>
 </div>
 
 <div class="pkgdown">

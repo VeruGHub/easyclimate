@@ -7,10 +7,10 @@ Authors@R: c(
             comment = c(ORCID = "0000-0002-0642-036X")),
     person("Francisco","Rodríguez-Sánchez", role = c("aut"), comment = c(ORCID = "0000-0002-7981-1599")),
     person("Christoph", "Pucher", role = c("aut"), comment = c(ORCID = "0000-0002-9269-1907")),
-    person("Sophia", "Ratcliffe", role = c("aut"), comment = c(ORCID = "0000-0001-9284-7900")),
+    person("Paloma","Ruiz-Benito", role = c("aut"), comment = c(ORCID = "0000-0002-2781-5870")),
     person("Julen","Astigarraga", role = c("aut"), comment = c(ORCID = "0000-0001-9520-3713")),
     person("Mathias","Neumann", role = c("aut"), comment = c(ORCID = "0000-0003-2472-943X")),
-    person("Paloma","Ruiz-Benito", role = c("aut"), comment = c(ORCID = "0000-0002-2781-5870"))
+    person("Sophia", "Ratcliffe", role = c("aut"), comment = c(ORCID = "0000-0001-9284-7900"))
     )
 Description: Get high-resolution (1 km) daily climate data (precipitation, 
     minimum and maximum temperatures) for points and polygons 

@@ -48,7 +48,7 @@ citEntry(entry = "manual",
   # note = "R package version 0.0.2",
   year         = "2021",
   url          = "https://github.com/VeruGHub/easyclimate",
-  textVersion  = paste("Verónica Cruz-Alonso, Francisco Rodríguez-Sánchez, Christoph Pucher, Sophia Ratcliffe, Julen Astigarraga, Mathias Neumann and Paloma Ruiz-Benito. 2021.",
+  textVersion  = paste("Verónica Cruz-Alonso, Francisco Rodríguez-Sánchez, Christoph Pucher, Paloma Ruiz-Benito, Julen Astigarraga, Mathias Neumann and Sophia Ratcliffe. 2021.",
   "easyclimate: Easy access to high-resolution daily climate data for Europe.",
   "https://github.com/VeruGHub/easyclimate")
 )

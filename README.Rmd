@@ -31,7 +31,7 @@ Get high-resolution (1 km) daily climate data (precipitation, minimum and maximu
 
 This climatic dataset was originally built by [A. Moreno & H. Hasenauer](https://doi.org/10.1002/joc.4436) and further developed by W. Rammer, C. Pucher & M. Neumann (see [this document](https://github.com/VeruGHub/easyclimate/tree/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf) for more details on the development and characteristics of the climatic dataset).
 
-In this R package we implemented [Cloud-Optimised Geotiffs](https://www.cogeo.org/) so that we can obtain daily climate data for thousands of sites/days within minutes, without having to download huge rasters. But if you need to obtain data for large areas, please download the rasters from the [FTP server](ftp://palantir.boku.ac.at/Public/ClimateData/) and extract the values locally rather than using this package, so as not to saturate the file server (note that you may need to enable FTP access in your internet browser to explore the files hosted in the server). 
+In this R package we implemented [Cloud-Optimised Geotiffs](https://www.cogeo.org/) so that we can obtain daily climate data for thousands of sites/days within minutes, without having to download huge rasters. But if you need to obtain data for large areas, please download the rasters from the FTP server (ftp://palantir.boku.ac.at/Public/ClimateData/) and extract the values locally rather than using this package, so as not to saturate the file server. For that, you may use a FTP client such as [FileZilla](https://filezilla-project.org/).
 
 
 ## Installation

@@ -33,11 +33,11 @@ In this R package we implemented [Cloud-Optimised
 Geotiffs](https://www.cogeo.org/) so that we can obtain daily climate
 data for thousands of sites/days within minutes, without having to
 download huge rasters. But if you need to obtain data for large areas,
-please download the rasters from the [FTP
-server](ftp://palantir.boku.ac.at/Public/ClimateData/) and extract the
-values locally rather than using this package, so as not to saturate the
-file server (note that you may need to enable FTP access in your
-internet browser to explore the files hosted in the server).
+please download the rasters from the FTP server
+(<ftp://palantir.boku.ac.at/Public/ClimateData/>) and extract the values
+locally rather than using this package, so as not to saturate the file
+server. For that, you may use a FTP client such as
+[FileZilla](https://filezilla-project.org/).
 
 ## Installation
 

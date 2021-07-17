@@ -5,6 +5,10 @@ on:
     branches:
       - main
       - master
+    paths-ignore:
+      - 'README.md'
+      - 'README.Rmd'
+      - 'docs/**'
   pull_request:
     branches:
       - main

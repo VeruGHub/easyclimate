@@ -101,15 +101,14 @@ tutorials!
 If you use easyclimate, please cite both the data source and the package
 as:
 
-Moreno A, Hasenauer H (2016). “Spatial downscaling of European climate
-data.” *International Journal of Climatology*, 1444–1458. &lt;URL:
-<https://doi.org/10.1002/joc.4436>&gt;.
-
 Rammer W, Pucher C, Neumann M (2018). *Description, Evaluation and
 Validation of Downscaled Daily Climate Data Version 2*. &lt;URL:
 <ftp://palantir.boku.ac.at/Public/ClimateData/>&gt;.
 
-Cruz-Alonso V, Rodríguez-Sánchez F, Pucher C, Ruiz-Benito P, Astigarraga
-J, Neumann M, Ratcliffe S (2021). *easyclimate: Easy access to
+Moreno A, Hasenauer H (2016). “Spatial downscaling of European climate
+data.” *International Journal of Climatology*, 1444–1458.
+
+Cruz-Alonso V, Rodríguez-Sánchez F, Pucher C, Ratcliffe S, Astigarraga
+J, Neumann M, Ruiz-Benito P (2021). *easyclimate: Easy access to
 high-resolution daily climate data for Europe*. &lt;URL:
 <https://github.com/VeruGHub/easyclimate>&gt;.

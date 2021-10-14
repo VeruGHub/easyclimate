@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ```
 
-# `easyclimate`
+# `easyclimate` <a href='https://verughub.github.io/easyclimate/'><img src='man/figures/easyclimate_logo.png' align="right" height="139" /></a>
 
 # Easy access to high-resolution daily climate data for Europe
 

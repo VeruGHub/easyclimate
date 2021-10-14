@@ -19,8 +19,7 @@ Get high-resolution (1 km) daily climate data (precipitation, minimum
 and maximum temperatures) for Europe from the European climatic database
 hosted at [University of Natural Resources and Life Sciences, Vienna,
 Austria](https://boku.ac.at/en/wabo/waldbau/wir-ueber-uns/daten). Data
-are currently available from 1950 to 2017, but subsequent updates are
-planned.
+are currently available from 1950 to 2020.
 
 This climatic dataset was originally built by [A. Moreno & H.
 Hasenauer](https://doi.org/10.1002/joc.4436) and further developed by W.

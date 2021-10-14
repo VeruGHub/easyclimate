@@ -17,8 +17,8 @@ build_url <- function(climatic_var,
   if (!climatic_var %in% c("Tmax", "Tmin", "Prcp"))
     stop("climatic_var must be one of 'Tmax', 'Tmin' or 'Prcp'")
 
-  if (year < 1950 | year > 2017)
-    stop("Year must be between 1950 and 2017")
+  if (year < 1950 | year > 2020)
+    stop("Year must be between 1950 and 2020")
 
   ## Adjust climvar to file names in FTP server
   climvar <- switch(climatic_var,
@@ -27,7 +27,7 @@ build_url <- function(climatic_var,
                     "Prcp" = "prec")
 
   ## Build url
-  url <- paste("ftp://palantir.boku.ac.at/Public/ClimateData/v2_cogeo/AllDataRasters/",
+  url <- paste("ftp://palantir.boku.ac.at/Public/ClimateData/v3_cogeo/AllDataRasters/",
                climvar,
                "/Downscaled",
                climatic_var,

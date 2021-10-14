@@ -82,7 +82,7 @@
 
       
 
-      </header><script src="climatic-indices_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><script src="climatic-indices_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Calculating basic climatic indices with data from easyclimate</h1>
@@ -140,7 +140,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>Tmin.site <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html">mean</a></span><span class="op">(</span><span class="va">Tmin</span><span class="op">)</span>,
             Tmean.site <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html">mean</a></span><span class="op">(</span><span class="va">Tmean</span><span class="op">)</span>,
             Tmax.site <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html">mean</a></span><span class="op">(</span><span class="va">Tmax</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## # A tibble: 1 x 4</span>
+<span class="co">## # A tibble: 1 × 4</span>
 <span class="co">##   ID_coords Tmin.site Tmean.site Tmax.site</span>
 <span class="co">##       &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;</span>
 <span class="co">## 1         1      11.7       18.4      25.0</span>
@@ -521,7 +521,7 @@
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>max_heatwave <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html">max</a></span><span class="op">(</span><span class="va">length</span><span class="op">)</span>, <span class="co"># longest heatwave per year (in days)</span>
               mean_heatwave <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html">mean</a></span><span class="op">(</span><span class="va">length</span><span class="op">)</span>, <span class="co"># average length of heatwaves per year</span>
               n_heatwave <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># No. of events per year</span>
-    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/complete.html">complete</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span>, 
+    <span class="fu"><a href="https://rdrr.io/pkg/tidyr/man/complete.html">complete</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span>, 
              fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>max_heatwave <span class="op">=</span> <span class="cn">NA</span>, mean_heatwave <span class="op">=</span> <span class="cn">NA</span>, nevents <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">kable</span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <table class="table">
@@ -585,7 +585,7 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">event</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span>, <span class="va">n_frost</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>Tmin_frost_avg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html">mean</a></span><span class="op">(</span><span class="va">Tmin</span><span class="op">)</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># Mean minimum temperature of frost days</span>
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/complete.html">complete</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>n_frost <span class="op">=</span> <span class="fl">0</span>, Tmin_frost_avg <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/tidyr/man/complete.html">complete</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>n_frost <span class="op">=</span> <span class="fl">0</span>, Tmin_frost_avg <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">kable</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -644,7 +644,7 @@
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>max_days_norain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html">max</a></span><span class="op">(</span><span class="va">length</span><span class="op">)</span>, <span class="co"># Maximum length of periods of consecutive days without rain per year</span>
               mean_days_norain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html">mean</a></span><span class="op">(</span><span class="va">length</span><span class="op">)</span>, 
               nevents <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">length</span> <span class="op">&gt;</span> <span class="va">threshold</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># No. of events per year</span>
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/complete.html">complete</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span>, 
+  <span class="fu"><a href="https://rdrr.io/pkg/tidyr/man/complete.html">complete</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span>, 
            fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>max_days_norain <span class="op">=</span> <span class="cn">NA</span>, mean_days_norain <span class="op">=</span> <span class="cn">NA</span>, nevents <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">kable</span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <table class="table">

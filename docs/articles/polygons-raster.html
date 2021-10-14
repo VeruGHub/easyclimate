@@ -82,7 +82,7 @@
 
       
 
-      </header><script src="polygons-raster_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><script src="polygons-raster_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Analysing the climate of an area for a given period</h1>
@@ -106,7 +106,7 @@
 <span class="va">coords_t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/vect.html">vect</a></span><span class="op">(</span><span class="st">"POLYGON ((-4.5 41, -4.5 40.5, -5 40.5, -5 41))"</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># to know how much it takes to download</span>
-<span class="co">## [1] "2021-07-12 15:48:33 EDT"</span>
+<span class="co">## [1] "2021-10-14 11:57:54 CEST"</span>
 
 <span class="va">df_tmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span>
   <span class="va">coords_t</span>,
@@ -116,7 +116,7 @@
   <span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## [1] "2021-07-12 15:48:57 EDT"</span>
+<span class="co">## [1] "2021-10-14 11:58:07 CEST"</span>
 
 <span class="fu"><a href="https://rdrr.io/pkg/terra/man/headtail.html">head</a></span><span class="op">(</span><span class="va">df_tmax</span><span class="op">)</span>
 <span class="co">##   ID_coords         x        y       date Tmax</span>
@@ -161,7 +161,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## [1] "2021-07-12 15:49:18 EDT"</span>
+<span class="co">## [1] "2021-10-14 11:58:09 CEST"</span>
 
 <span class="va">ras_tmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span>
   <span class="va">coords_t</span>,
@@ -171,14 +171,14 @@
   <span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">## [1] "2021-07-12 15:49:42 EDT"</span>
+<span class="co">## [1] "2021-10-14 11:58:23 CEST"</span>
 
 <span class="va">ras_tmax</span>
 <span class="co">## class       : SpatRaster </span>
 <span class="co">## dimensions  : 60, 60, 2  (nrow, ncol, nlyr)</span>
 <span class="co">## resolution  : 0.008333333, 0.008333333  (x, y)</span>
 <span class="co">## extent      : -5, -4.5, 40.5, 41  (xmin, xmax, ymin, ymax)</span>
-<span class="co">## coord. ref. : +proj=longlat +datum=WGS84 +no_defs </span>
+<span class="co">## coord. ref. : lon/lat WGS 84 (EPSG:4326) </span>
 <span class="co">## source      : memory </span>
 <span class="co">## names       : 2012-01-01, 2012-08-01 </span>
 <span class="co">## min values  :        981,       2605 </span>

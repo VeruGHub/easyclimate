@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">easyclimate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@
 <a href="#easy-access-to-high-resolution-daily-climate-data-for-europe" class="anchor"></a>Easy access to high-resolution daily climate data for Europe</h1>
 <!-- badges: start -->
 
-<p>Get high-resolution (1 km) daily climate data (precipitation, minimum and maximum temperatures) for Europe from the European climatic database hosted at <a href="https://boku.ac.at/en/wabo/waldbau/wir-ueber-uns/daten">University of Natural Resources and Life Sciences, Vienna, Austria</a>. Data are currently available from 1950 to 2017, but subsequent updates are planned.</p>
+<p>Get high-resolution (1 km) daily climate data (precipitation, minimum and maximum temperatures) for Europe from the European climatic database hosted at <a href="https://boku.ac.at/en/wabo/waldbau/wir-ueber-uns/daten">University of Natural Resources and Life Sciences, Vienna, Austria</a>. Data are currently available from 1950 to 2020.</p>
 <p>This climatic dataset was originally built by <a href="https://doi.org/10.1002/joc.4436">A. Moreno &amp; H. Hasenauer</a> and further developed by W. Rammer, C. Pucher &amp; M. Neumann (see <a href="https://github.com/VeruGHub/easyclimate/tree/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf">this document</a> for more details on the development and characteristics of the climatic dataset).</p>
 <p>In this R package we implemented <a href="https://www.cogeo.org/">Cloud-Optimised Geotiffs</a> so that we can obtain daily climate data for thousands of sites/days within minutes, without having to download huge rasters. But if you need to obtain data for large areas, please download the rasters from the FTP server (<a href="ftp://palantir.boku.ac.at/Public/ClimateData/" class="uri">ftp://palantir.boku.ac.at/Public/ClimateData/</a>) and extract the values locally rather than using this package, so as not to saturate the file server. For that, you may use a FTP client such as <a href="https://filezilla-project.org/">FileZilla</a>.</p>
 <div id="installation" class="section level2">

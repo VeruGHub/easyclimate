@@ -152,8 +152,8 @@ get_daily_climate <- function(coords = NULL,
   years <- as.numeric(sort(unique(format(days, "%Y"))))
 
   ## Check years are within bounds
-  if (any(years < 1950 | years > 2017))
-    stop("Year (period) must be between 1950 and 2017")
+  if (any(years < 1950 | years > 2020))
+    stop("Year (period) must be between 1950 and 2020")
 
   #### Build urls for all required years ####
 
@@ -206,7 +206,7 @@ get_daily_climate <- function(coords = NULL,
     out <- merge(coords.spatvec.df, out, by.x =  "ID_coords", by.y = "ID", all = TRUE)
 
     ## Rasters codify NA as very negative values (-32768).
-    # So, if value <-10000, it is NA
+    # So, if value <-9000, it is NA
     out[, climatic_var] <- ifelse(out[, climatic_var] < -9000, NA, out[, climatic_var])
 
   }
@@ -215,6 +215,10 @@ get_daily_climate <- function(coords = NULL,
   if (output == "raster") {
 
     out <- terra::crop(rasters.sub, coords.spatvec)
+
+    ## Rasters codify NA as very negative values (-32768).
+    # So, if value <-9000, it is NA
+    out <- terra::subst(out, -9000:-33000, NA)
 
   }
 

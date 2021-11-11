@@ -40,11 +40,11 @@ test_that("coordinates falling outside the bounding box give error", {
                                  period = 2010))
 })
 
-test_that("year below 1950 or above 2017 gives error", {
+test_that("year below 1950 or above 2020 gives error", {
   expect_error(get_daily_climate(coords = matrix(c(-5.36, 37.40), ncol = 2),
                                  period = 1949))
   expect_error(get_daily_climate(coords = matrix(c(-5.36, 37.40), ncol = 2),
-                                 period = 2018))
+                                 period = 2021))
 })
 
 

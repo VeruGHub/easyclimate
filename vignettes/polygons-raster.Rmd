@@ -41,14 +41,11 @@ head(df_tmax)
 
 ```
 
-Note that temperature is given as ºC\*100 to avoid floating values. You can change the unit of this variable as follows:
-
 ```{r}
 library(dplyr)
 
 clim_df <- df_tmax %>%
   mutate(
-    tmax = Tmax / 100,
     date = as.Date(date)
   ) 
 
@@ -60,11 +57,11 @@ Then, you can visualize the results and compare both dates
 
 library(ggplot2)
 
-tapply(clim_df$tmax, clim_df$date, summary)
+tapply(clim_df$Tmax, clim_df$date, summary)
 
 ggplot() +
 	geom_raster(data = clim_df,
-		aes(x = x, y = y, fill = tmax)) +
+		aes(x = x, y = y, fill = Tmax)) +
   scale_fill_continuous(type = "viridis", name = "Maximum\ntemperature (ºC)") +
   facet_wrap(~date) +
 	ylab("Latitude") + xlab("Longitude") +
@@ -88,8 +85,6 @@ ras_tmax <- get_daily_climate(
 Sys.time()
 
 ras_tmax
-
-ras_tmax <- ras_tmax/100
 
 par(mfrow = c(1, 2))
 terra::plot(ras_tmax, 1, col = rev(heat.colors(20)), type = "continuous", smooth = TRUE, range = c(10, 35), legend = FALSE, mar=c(4, 2, 4, 2), main = "January 1 2012")

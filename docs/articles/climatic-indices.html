@@ -82,7 +82,7 @@
 
       
 
-      </header><script src="climatic-indices_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><script src="climatic-indices_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Calculating basic climatic indices with data from easyclimate</h1>
@@ -118,12 +118,10 @@
 <span class="va">daily</span> <span class="op">&lt;-</span> <span class="va">prec</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join</a></span><span class="op">(</span><span class="va">tmin</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join</a></span><span class="op">(</span><span class="va">tmax</span><span class="op">)</span> </code></pre></div>
-<p>Temperature and precipitation units are ºC*100 and mm*100, respectively, to avoid floating values. Here we convert them to ºC and mm, and calculate the daily mean temperature:</p>
+<p>Here we calculate the daily mean temperature:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">realvalue</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span><span class="va">x</span><span class="op">/</span><span class="fl">100</span><span class="op">}</span>
-
+<code class="sourceCode R">
 <span class="va">daily</span> <span class="op">&lt;-</span> <span class="va">daily</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/c.html">c</a></span><span class="op">(</span><span class="va">Prcp</span>, <span class="va">Tmin</span>, <span class="va">Tmax</span><span class="op">)</span>, <span class="va">realvalue</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Tmean <span class="op">=</span> <span class="op">(</span><span class="va">Tmin</span> <span class="op">+</span> <span class="va">Tmax</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span>, <span class="co">#Daily mean temperature</span>
          date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span>,
          month <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="va">date</span>, format <span class="op">=</span> <span class="st">"%m"</span><span class="op">)</span>,
@@ -140,10 +138,10 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>Tmin.site <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html">mean</a></span><span class="op">(</span><span class="va">Tmin</span><span class="op">)</span>,
             Tmean.site <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html">mean</a></span><span class="op">(</span><span class="va">Tmean</span><span class="op">)</span>,
             Tmax.site <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html">mean</a></span><span class="op">(</span><span class="va">Tmax</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## # A tibble: 1 × 4</span>
+<span class="co">## # A tibble: 1 x 4</span>
 <span class="co">##   ID_coords Tmin.site Tmean.site Tmax.site</span>
 <span class="co">##       &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;</span>
-<span class="co">## 1         1      11.7       18.4      25.0</span>
+<span class="co">## 1         1      11.9       18.4      24.9</span>
 
 <span class="va">daily</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -161,33 +159,33 @@
 <tbody>
 <tr class="odd">
 <td align="left">2001</td>
-<td align="right">12.0</td>
+<td align="right">12.2</td>
 <td align="right">18.5</td>
-<td align="right">25.0</td>
+<td align="right">24.8</td>
 </tr>
 <tr class="even">
 <td align="left">2002</td>
+<td align="right">11.9</td>
+<td align="right">18.3</td>
+<td align="right">24.6</td>
+</tr>
+<tr class="odd">
+<td align="left">2003</td>
+<td align="right">12.5</td>
+<td align="right">18.7</td>
+<td align="right">24.9</td>
+</tr>
+<tr class="even">
+<td align="left">2004</td>
 <td align="right">11.7</td>
 <td align="right">18.2</td>
 <td align="right">24.8</td>
 </tr>
 <tr class="odd">
-<td align="left">2003</td>
-<td align="right">12.3</td>
-<td align="right">18.7</td>
-<td align="right">25.1</td>
-</tr>
-<tr class="even">
-<td align="left">2004</td>
-<td align="right">11.5</td>
-<td align="right">18.2</td>
-<td align="right">25.0</td>
-</tr>
-<tr class="odd">
 <td align="left">2005</td>
-<td align="right">11.1</td>
+<td align="right">11.3</td>
 <td align="right">18.3</td>
-<td align="right">25.5</td>
+<td align="right">25.3</td>
 </tr>
 </tbody>
 </table>
@@ -209,57 +207,57 @@
 <tbody>
 <tr class="odd">
 <td align="left">01</td>
-<td align="right">4.5</td>
+<td align="right">4.6</td>
 <td align="right">10.3</td>
-<td align="right">16.1</td>
+<td align="right">15.9</td>
 </tr>
 <tr class="even">
 <td align="left">02</td>
-<td align="right">4.6</td>
-<td align="right">11.1</td>
-<td align="right">17.5</td>
+<td align="right">4.8</td>
+<td align="right">11.0</td>
+<td align="right">17.2</td>
 </tr>
 <tr class="odd">
 <td align="left">03</td>
-<td align="right">8.5</td>
+<td align="right">8.8</td>
 <td align="right">14.5</td>
-<td align="right">20.5</td>
+<td align="right">20.2</td>
 </tr>
 <tr class="even">
 <td align="left">04</td>
-<td align="right">9.4</td>
+<td align="right">9.7</td>
 <td align="right">16.3</td>
-<td align="right">23.1</td>
+<td align="right">23.0</td>
 </tr>
 <tr class="odd">
 <td align="left">05</td>
-<td align="right">12.4</td>
-<td align="right">19.8</td>
-<td align="right">27.1</td>
+<td align="right">12.8</td>
+<td align="right">19.9</td>
+<td align="right">26.9</td>
 </tr>
 <tr class="even">
 <td align="left">06</td>
-<td align="right">17.1</td>
-<td align="right">25.3</td>
-<td align="right">33.6</td>
+<td align="right">17.6</td>
+<td align="right">25.5</td>
+<td align="right">33.4</td>
 </tr>
 <tr class="odd">
 <td align="left">07</td>
-<td align="right">18.7</td>
-<td align="right">27.0</td>
-<td align="right">35.4</td>
+<td align="right">18.9</td>
+<td align="right">27.1</td>
+<td align="right">35.3</td>
 </tr>
 <tr class="even">
 <td align="left">08</td>
-<td align="right">19.6</td>
+<td align="right">19.7</td>
 <td align="right">27.5</td>
-<td align="right">35.4</td>
+<td align="right">35.3</td>
 </tr>
 <tr class="odd">
 <td align="left">09</td>
-<td align="right">16.9</td>
-<td align="right">23.9</td>
-<td align="right">31.0</td>
+<td align="right">17.1</td>
+<td align="right">24.0</td>
+<td align="right">30.9</td>
 </tr>
 <tr class="even">
 <td align="left">10</td>
@@ -269,15 +267,15 @@
 </tr>
 <tr class="odd">
 <td align="left">11</td>
-<td align="right">8.2</td>
+<td align="right">8.1</td>
 <td align="right">13.6</td>
-<td align="right">19.1</td>
+<td align="right">19.0</td>
 </tr>
 <tr class="even">
 <td align="left">12</td>
-<td align="right">6.2</td>
-<td align="right">11.2</td>
-<td align="right">16.2</td>
+<td align="right">6.1</td>
+<td align="right">11.1</td>
+<td align="right">16.0</td>
 </tr>
 </tbody>
 </table>
@@ -295,23 +293,23 @@
 <tbody>
 <tr class="odd">
 <td align="left">2001</td>
-<td align="right">603</td>
+<td align="right">558</td>
 </tr>
 <tr class="even">
 <td align="left">2002</td>
-<td align="right">589</td>
+<td align="right">571</td>
 </tr>
 <tr class="odd">
 <td align="left">2003</td>
-<td align="right">653</td>
+<td align="right">627</td>
 </tr>
 <tr class="even">
 <td align="left">2004</td>
-<td align="right">403</td>
+<td align="right">381</td>
 </tr>
 <tr class="odd">
 <td align="left">2005</td>
-<td align="right">269</td>
+<td align="right">252</td>
 </tr>
 </tbody>
 </table>
@@ -329,23 +327,23 @@
 <tbody>
 <tr class="odd">
 <td align="left">01</td>
-<td align="right">245</td>
+<td align="right">243</td>
 </tr>
 <tr class="even">
 <td align="left">02</td>
-<td align="right">223</td>
+<td align="right">220</td>
 </tr>
 <tr class="odd">
 <td align="left">03</td>
-<td align="right">396</td>
+<td align="right">355</td>
 </tr>
 <tr class="even">
 <td align="left">04</td>
-<td align="right">187</td>
+<td align="right">176</td>
 </tr>
 <tr class="odd">
 <td align="left">05</td>
-<td align="right">142</td>
+<td align="right">138</td>
 </tr>
 <tr class="even">
 <td align="left">06</td>
@@ -357,15 +355,15 @@
 </tr>
 <tr class="even">
 <td align="left">08</td>
-<td align="right">1</td>
+<td align="right">2</td>
 </tr>
 <tr class="odd">
 <td align="left">09</td>
-<td align="right">165</td>
+<td align="right">146</td>
 </tr>
 <tr class="even">
 <td align="left">10</td>
-<td align="right">508</td>
+<td align="right">475</td>
 </tr>
 <tr class="odd">
 <td align="left">11</td>
@@ -373,7 +371,7 @@
 </tr>
 <tr class="even">
 <td align="left">12</td>
-<td align="right">343</td>
+<td align="right">325</td>
 </tr>
 </tbody>
 </table>
@@ -411,7 +409,7 @@
 <tr class="even">
 <td align="right">1</td>
 <td align="left">2002</td>
-<td align="right">18.2</td>
+<td align="right">18.3</td>
 <td align="right">18.4</td>
 <td align="right">-0.1</td>
 </tr>
@@ -459,37 +457,37 @@
 <tr class="odd">
 <td align="right">1</td>
 <td align="left">2001</td>
-<td align="right">603</td>
-<td align="right">503</td>
-<td align="right">100</td>
+<td align="right">558</td>
+<td align="right">478</td>
+<td align="right">81</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
 <td align="left">2002</td>
-<td align="right">589</td>
-<td align="right">503</td>
-<td align="right">85</td>
+<td align="right">571</td>
+<td align="right">478</td>
+<td align="right">93</td>
 </tr>
 <tr class="odd">
 <td align="right">1</td>
 <td align="left">2003</td>
-<td align="right">653</td>
-<td align="right">503</td>
+<td align="right">627</td>
+<td align="right">478</td>
 <td align="right">149</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
 <td align="left">2004</td>
-<td align="right">403</td>
-<td align="right">503</td>
-<td align="right">-100</td>
+<td align="right">381</td>
+<td align="right">478</td>
+<td align="right">-97</td>
 </tr>
 <tr class="odd">
 <td align="right">1</td>
 <td align="left">2005</td>
-<td align="right">269</td>
-<td align="right">503</td>
-<td align="right">-235</td>
+<td align="right">252</td>
+<td align="right">478</td>
+<td align="right">-226</td>
 </tr>
 </tbody>
 </table>
@@ -536,36 +534,36 @@
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">2001</td>
-<td align="right">28</td>
-<td align="right">9.7</td>
-<td align="right">10</td>
+<td align="right">17</td>
+<td align="right">7.9</td>
+<td align="right">12</td>
 </tr>
 <tr class="even">
 <td align="left">1</td>
 <td align="left">2002</td>
-<td align="right">19</td>
-<td align="right">5.1</td>
+<td align="right">13</td>
+<td align="right">4.9</td>
 <td align="right">15</td>
 </tr>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">2003</td>
-<td align="right">32</td>
-<td align="right">6.2</td>
-<td align="right">16</td>
+<td align="right">31</td>
+<td align="right">6.3</td>
+<td align="right">15</td>
 </tr>
 <tr class="even">
 <td align="left">1</td>
 <td align="left">2004</td>
 <td align="right">30</td>
-<td align="right">9.2</td>
+<td align="right">9.1</td>
 <td align="right">11</td>
 </tr>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">2005</td>
 <td align="right">27</td>
-<td align="right">7.9</td>
+<td align="right">7.7</td>
 <td align="right">12</td>
 </tr>
 </tbody>
@@ -617,7 +615,7 @@
 <td align="left">1</td>
 <td align="left">2004</td>
 <td align="right">1</td>
-<td align="right">-0.0056</td>
+<td align="right">-0.0049</td>
 </tr>
 <tr class="odd">
 <td align="left">1</td>
@@ -660,14 +658,14 @@
 <td align="right">1</td>
 <td align="left">2001</td>
 <td align="right">122</td>
-<td align="right">10.4</td>
+<td align="right">10.1</td>
 <td align="right">2</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
 <td align="left">2002</td>
-<td align="right">96</td>
-<td align="right">9.0</td>
+<td align="right">102</td>
+<td align="right">9.2</td>
 <td align="right">1</td>
 </tr>
 <tr class="odd">
@@ -681,14 +679,14 @@
 <td align="right">1</td>
 <td align="left">2004</td>
 <td align="right">75</td>
-<td align="right">10.8</td>
+<td align="right">11.4</td>
 <td align="right">2</td>
 </tr>
 <tr class="odd">
 <td align="right">1</td>
 <td align="left">2005</td>
 <td align="right">98</td>
-<td align="right">13.2</td>
+<td align="right">15.3</td>
 <td align="right">4</td>
 </tr>
 </tbody>
@@ -708,7 +706,7 @@
 
 <span class="fu"><a href="https://rdrr.io/pkg/ClimInd/man/d32.html">d32</a></span><span class="op">(</span><span class="va">Tmax</span><span class="op">)</span>
 <span class="co">## 2001 2002 2003 2004 2005 </span>
-<span class="co">##   80   67   73   76   77</span></code></pre></div>
+<span class="co">##   78   64   70   75   76</span></code></pre></div>
 <p><br> Growing degree days:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Tmean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/coerce.html">as.vector</a></span><span class="op">(</span><span class="va">daily</span><span class="op">$</span><span class="va">Tmean</span><span class="op">)</span>
@@ -716,7 +714,7 @@
 
 <span class="fu"><a href="https://rdrr.io/pkg/ClimInd/man/gd4.html">gd4</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Tmean</span>, time.scale <span class="op">=</span> <span class="st">"year"</span><span class="op">)</span> 
 <span class="co">##     2001     2002     2003     2004     2005 </span>
-<span class="co">## 5288.440 5196.760 5355.355 5201.355 5222.375</span></code></pre></div>
+<span class="co">## 5297.595 5204.115 5362.380 5209.020 5228.450</span></code></pre></div>
 <p><br> Growing season length:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/ClimInd/man/gsl.html">gsl</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Tmean</span>, time.scale <span class="op">=</span> <span class="st">"year"</span><span class="op">)</span> 
@@ -730,7 +728,7 @@
 <span class="fu"><a href="https://rdrr.io/pkg/ClimInd/man/d50mm.html">d50mm</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Prec</span>, time.scale <span class="op">=</span> <span class="st">"month"</span><span class="op">)</span>
 <span class="co">##      Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec</span>
 <span class="co">## 2001   0   0   0   0   0   0   0   0   0   0   0   0</span>
-<span class="co">## 2002   0   0   0   0   0   0   0   0   1   0   0   0</span>
+<span class="co">## 2002   0   0   0   0   0   0   0   0   0   0   0   0</span>
 <span class="co">## 2003   0   0   0   0   0   0   0   0   0   0   0   0</span>
 <span class="co">## 2004   0   0   0   0   0   0   0   0   0   0   0   0</span>
 <span class="co">## 2005   0   0   0   0   0   0   0   0   0   0   0   0</span></code></pre></div>

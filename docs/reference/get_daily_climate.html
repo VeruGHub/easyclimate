@@ -161,11 +161,11 @@ with longitude and latitude coordinates, respectively.</p></td>
     </tr>
     <tr>
       <th>period</th>
-      <td><p>Either numbers (representing years between 1950 and 2017),
+      <td><p>Either numbers (representing years between 1950 and 2020),
 or dates in "YYYY-MM-DD" format (to obtain data for specific days).
 To specify a sequence of years or dates use the format 'start:end' (e.g. YYYY:YYYY or "YYYY-MM-DD:YYYY-MM-DD", see examples).
 Various elements can be concatenated in the vector
-(e.g. c(2000:2005, 2010:2015, 2017), c("2000-01-01:2000-01-15", "2000-02-01"))</p></td>
+(e.g. c(2000:2005, 2010:2015, 2020), c("2000-01-01:2000-01-15", "2000-02-01"))</p></td>
     </tr>
     <tr>
       <th>output</th>
@@ -176,8 +176,7 @@ for each point/polygon, or "raster", which returns a <code><a href='https://rdrr
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data.frame or a <code><a href='https://rdrr.io/pkg/terra/man/SpatRaster-class.html'>terra::SpatRaster()</a></code> object (if output = "raster").
-Note temperature values are in ºC\*100, and precipitation values in mm\*100, to avoid floating values.</p>
+    <p>A data.frame or a <code><a href='https://rdrr.io/pkg/terra/man/SpatRaster-class.html'>terra::SpatRaster()</a></code> object (if output = "raster").</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Werner Rammer, Christoph Pucher, Mathias Neumann. 2018.

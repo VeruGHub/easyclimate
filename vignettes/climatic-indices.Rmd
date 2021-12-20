@@ -41,13 +41,11 @@ daily <- prec %>%
 ```
 
 
-Temperature and precipitation units are ºC\*100 and mm\*100, respectively, to avoid floating values. Here we convert them to ºC and mm, and calculate the daily mean temperature:
+Here we calculate the daily mean temperature:
 
 ```{r}
-realvalue <- function(x) {x/100}
 
 daily <- daily %>% 
-  mutate(across(c(Prcp, Tmin, Tmax), realvalue)) %>%
   mutate(Tmean = (Tmin + Tmax) / 2, #Daily mean temperature
          date = as.Date(date),
          month = format(date, format = "%m"),

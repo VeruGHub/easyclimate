@@ -22,18 +22,17 @@ with longitude and latitude coordinates, respectively.}
 
 \item{climatic_var}{Character. Climatic variable to be downloaded. One of 'Tmax', 'Tmin' or 'Prcp'.}
 
-\item{period}{Either numbers (representing years between 1950 and 2017),
+\item{period}{Either numbers (representing years between 1950 and 2020),
 or dates in "YYYY-MM-DD" format (to obtain data for specific days).
 To specify a sequence of years or dates use the format 'start:end' (e.g. YYYY:YYYY or "YYYY-MM-DD:YYYY-MM-DD", see examples).
 Various elements can be concatenated in the vector
-(e.g. c(2000:2005, 2010:2015, 2017), c("2000-01-01:2000-01-15", "2000-02-01"))}
+(e.g. c(2000:2005, 2010:2015, 2020), c("2000-01-01:2000-01-15", "2000-02-01"))}
 
 \item{output}{Character. Either "df", which returns a dataframe with daily climatic values
 for each point/polygon, or "raster", which returns a \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}} object.}
 }
 \value{
 A data.frame or a \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}} object (if output = "raster").
-Note temperature values are in ºC\*100, and precipitation values in mm\*100, to avoid floating values.
 }
 \description{
 Extract daily climate data for a given set of points or polygons within Europe.

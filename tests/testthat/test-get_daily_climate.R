@@ -68,7 +68,7 @@ test_that("different climatic_var give expected results", {
                    x = c(-5.36, -4.05),
                    y = c(37.4, 38.1),
                    date = c("2001-01-01", "2001-01-01"),
-                   Tmin = c(650, 664)),
+                   Tmin = c(6.50, 6.64)),
               row.names = c(NA, -2L), class = "data.frame"))
 
 
@@ -79,7 +79,7 @@ test_that("different climatic_var give expected results", {
                    x = c(-5.36, -4.05),
                    y = c(37.4, 38.1),
                    date = c("2001-01-01", "2001-01-01"),
-                   Tmax = c(1593, 1492)),
+                   Tmax = c(15.93, 14.92)),
               row.names = c(NA, -2L), class = "data.frame"))
 
 
@@ -90,7 +90,7 @@ test_that("different climatic_var give expected results", {
                    x = c(-5.36, -4.05),
                    y = c(37.4, 38.1),
                    date = c("2001-01-01", "2001-01-01"),
-                   Prcp = c(864, 664)),
+                   Prcp = c(8.64, 6.64)),
               row.names = c(NA, -2L), class = "data.frame"))
 
 })
@@ -114,7 +114,7 @@ test_that("different input formats (points) give expected results", {
                            x = c(-5.36, -4.05),
                            y = c(37.4, 38.1),
                            date = c("2001-01-01", "2001-01-01"),
-                           Tmin = c(650, 664)),
+                           Tmin = c(6.50, 6.64)),
                       row.names = c(NA, -2L),
                       class = "data.frame")
 
@@ -167,10 +167,10 @@ test_that("polygon input give expected results", {
                             "2001-01-01", "2001-01-01", "2001-01-01", "2001-01-01", "2001-01-01",
                             "2001-01-01", "2001-01-01", "2001-01-01", "2001-01-01", "2001-01-01",
                             "2001-01-01", "2001-01-01", "2001-01-01"),
-                   Tmin = c(535, 525,
-                            524, 554, 543, 523, 542, 542, 551, 541, 510, 500, 539, 569, 548,
-                            528, 508, 517, 556, 576, 555, 545, 545, 534, 583, 553, 532, 542,
-                            572, 581, 580, 560, 579, 569, 589, 568)),
+                   Tmin = c(5.35, 5.25,
+                            5.24, 5.54, 5.43, 5.23, 5.42, 5.42, 5.51, 5.41, 5.10, 5.00, 5.39, 5.69, 5.48,
+                            5.28, 5.08, 5.17, 5.56, 5.76, 5.55, 5.45, 5.45, 5.34, 5.83, 5.53, 5.32, 5.42,
+                            5.72, 5.81, 5.80, 5.60, 5.79, 5.69, 5.89, 5.68)),
               row.names = c(NA, 36L
               ), class = "data.frame"))
 
@@ -195,9 +195,9 @@ test_that("output raster is correct", {
   expect_identical(round(res(output), digits = 4), c(0.0083, 0.0083))
   expect_identical(as.vector(ext(output)), c(xmin = -5, xmax = -4.95, ymin = 37.95, ymax = 38))
   expect_identical(names(output), "2001-01-01")
-  expect_identical(values(output), structure(c(535, 525, 524, 554, 543, 523, 542, 542, 551, 541,
-                                               510, 500, 539, 569, 548, 528, 508, 517, 556, 576, 555, 545, 545,
-                                               534, 583, 553, 532, 542, 572, 581, 580, 560, 579, 569, 589, 568
+  expect_identical(values(output), structure(c(5.35, 5.25, 5.24, 5.54, 5.43, 5.23, 5.42, 5.42, 5.51, 5.41,
+                                               5.10, 5.00, 5.39, 5.69, 5.48, 5.28, 5.08, 5.17, 5.56, 5.76, 5.55, 5.45, 5.45,
+                                               5.34, 5.83, 5.53, 5.32, 5.42, 5.72, 5.81, 5.80, 5.60, 5.79, 5.69, 5.89, 5.68
   ), .Dim = c(36L, 1L), .Dimnames = list(NULL, "2001-01-01")))
 
 })
@@ -218,7 +218,7 @@ test_that("different period formats give expected results", {
                    y = c(37.4, 37.4, 37.4, 37.4, 38.1, 38.1, 38.1, 38.1),
                    date = c("2001-01-01", "2001-01-02", "2001-01-03", "2005-01-01",
                             "2001-01-01", "2001-01-02", "2001-01-03", "2005-01-01"),
-                   Prcp = c(864, 0, 293, 0, 664, 0, 159, 0)),
+                   Prcp = c(8.64, 0.00, 2.93, 0.00, 6.64, 0.00, 1.59, 0.00)),
               row.names = c(NA, -8L), class = "data.frame"))
 
 
@@ -229,7 +229,7 @@ test_that("different period formats give expected results", {
                                   y = c(37.4, 37.4, 37.4, 37.4, 37.4, 37.4),
                                   date = c("2001-01-01", "2001-01-02", "2001-01-03",
                                            "2001-01-04", "2001-01-05", "2001-01-06"),
-                                  Prcp = c(864, 0, 293, 189, 1177, 447)),
+                                  Prcp = c(8.64, 0.00, 2.93, 1.89, 11.77, 4.47)),
                              row.names = c(NA, 6L), class = "data.frame"))
 
   expect_identical(tail(out),
@@ -238,7 +238,7 @@ test_that("different period formats give expected results", {
                                   y = c(38.1, 38.1, 38.1, 38.1, 38.1, 38.1),
                                   date = c("2005-12-26", "2005-12-27", "2005-12-28",
                                            "2005-12-29", "2005-12-30", "2005-12-31"),
-                                  Prcp = c(770, 6, 0, 0, 0, 0)),
+                                  Prcp = c(7.70, 0.06, 0.00, 0.00, 0.00, 0.00)),
                              row.names = 2915:2920, class = "data.frame"))
 
 })

@@ -12,16 +12,15 @@
 #' If `coords` is a data.frame, it must contain at least two columns called `lon` and `lat`
 #' with longitude and latitude coordinates, respectively.
 #' @param climatic_var Character. Climatic variable to be downloaded. One of 'Tmax', 'Tmin' or 'Prcp'.
-#' @param period Either numbers (representing years between 1950 and 2017),
+#' @param period Either numbers (representing years between 1950 and 2020),
 #' or dates in "YYYY-MM-DD" format (to obtain data for specific days).
 #' To specify a sequence of years or dates use the format 'start:end' (e.g. YYYY:YYYY or "YYYY-MM-DD:YYYY-MM-DD", see examples).
 #' Various elements can be concatenated in the vector
-#' (e.g. c(2000:2005, 2010:2015, 2017), c("2000-01-01:2000-01-15", "2000-02-01"))
+#' (e.g. c(2000:2005, 2010:2015, 2020), c("2000-01-01:2000-01-15", "2000-02-01"))
 #' @param output Character. Either "df", which returns a dataframe with daily climatic values
 #' for each point/polygon, or "raster", which returns a [terra::SpatRaster()] object.
 #'
 #' @return A data.frame or a [terra::SpatRaster()] object (if output = "raster").
-#' Note temperature values are in ºC\*100, and precipitation values in mm\*100, to avoid floating values.
 #'
 #' @export
 #'
@@ -209,6 +208,9 @@ get_daily_climate <- function(coords = NULL,
     # So, if value <-9000, it is NA
     out[, climatic_var] <- ifelse(out[, climatic_var] < -9000, NA, out[, climatic_var])
 
+    ## Real climatic values
+    out[,climatic_var] <- out[,climatic_var]/100
+
   }
 
   ## If output == "raster", return a cropped raster
@@ -219,6 +221,9 @@ get_daily_climate <- function(coords = NULL,
     ## Rasters codify NA as very negative values (-32768).
     # So, if value <-9000, it is NA
     out <- terra::subst(out, -9000:-33000, NA)
+
+    ## Real climatic values
+    out <- out/100
 
   }
 

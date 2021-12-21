@@ -1,6 +1,6 @@
 Package: easyclimate
 Title: Easy Access to High-Resolution Daily Climate Data for Europe
-Version: 0.1.3
+Version: 0.1.4
 Authors@R: c(
     person("Verónica", "Cruz-Alonso", role = c("aut", "cre"), 
             email = "veronica.cral@gmail.com", 

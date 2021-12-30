@@ -8,7 +8,6 @@ vignette: >
 ---
 
 ```{r setup, echo = FALSE}
-library(knitr)
 knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE, 
                       fig.width = 6, fig.height = 4, cache = TRUE)
 ```
@@ -53,55 +52,27 @@ Now, download the climatic data for the selected locations. It is very simple, a
 
 Sys.time() # to know how much it takes to download
 
-df_prcp <- get_daily_climate(
+daily <- get_daily_climate(
   coords = coords, 
   period = 2008:2010, 
-  climatic_var = "Prcp"
-)
-
-df_tmin <- get_daily_climate(
-  coords = coords,
-  period = 2008:2010,
-  climatic_var = "Tmin"
-)
-
-df_tmax <- get_daily_climate(
-  coords = coords,
-  period = 2008:2010,
-  climatic_var = "Tmax"
-)
+  climatic_var = c("Prcp","Tmin","Tmax"))
 
 Sys.time()
 
-kable(head(df_prcp[, c("lon", "lat", "date", "Prcp")]))
+kable(head(daily))
 
 ```
 
-Here we join all the variables in a data frame. 
+Here we extract different components of the date. 
 
 ```{r}
 
-prcp_date <- df_prcp %>%
-  select(ID_coords, lon, lat, date, Prcp)
-  
-tmin_date <- df_tmin %>%
-  select(ID_coords, date, Tmin)
-
-tmax_date <- df_tmax %>%
-  select(ID_coords, date, Tmax)
-
-
-clim_join <- full_join(prcp_date, tmin_date, by = c("ID_coords", "date")) %>%
-  full_join(tmax_date, by =  c("ID_coords", "date")) %>%
+daily <- daily %>%
   mutate(
     date = as.Date(date),
     month = months(date),
     year = format(date, format = "%y")
-  ) %>%
-  select(ID_coords, lon, lat, date, year, month, Prcp, Tmin, Tmax)
-
-
-kable(head(clim_join))
+    ) 
 
 ```
 
@@ -110,7 +81,7 @@ kable(head(clim_join))
 Finally, you can visualize the daily climate results. For example, let's plot the precipitation for one of the sites:
 
 ```{r}
-clim_site1 <- clim_join %>% 
+clim_site1 <- daily %>% 
   filter(ID_coords == 1)
 
 ggplot(clim_site1) +
@@ -126,20 +97,20 @@ Or calculate the daily mean temperature and plot it against `tmin` and `tmax`:
 ```{r}
 library(tidyr)
 
-clim_df <- clim_join %>%
+temp_long <- daily %>%
   mutate(Tmean = (Tmin + Tmax) / 2) %>%
   pivot_longer(
     cols = c("Tmin", "Tmax", "Tmean"),
     names_to = "temp_vars",
     values_to = "temp_values")
 
-ggplot(clim_df, aes(x = temp_vars, y = temp_values, color = temp_vars)) +
+ggplot(temp_long, aes(x = temp_vars, y = temp_values, color = temp_vars)) +
   geom_violin(fill = "gray80", size = 1, alpha = .5, show.legend = FALSE) +
   coord_flip() +
   ylab("Temperature (ºC)") + xlab("") +
   theme_bw()
 
-ggplot(clim_df, aes(x = date, y = temp_values, color = temp_vars)) + 
+ggplot(temp_long, aes(x = date, y = temp_values, color = temp_vars)) + 
   geom_point(alpha = .1) +
   scale_color_discrete(name = "Variables", 
                        guide = guide_legend(override.aes = list(alpha = 1))) +

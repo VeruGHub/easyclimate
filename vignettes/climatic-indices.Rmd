@@ -22,21 +22,9 @@ library(dplyr)
 
 coords <- matrix(c(-5.36, 37.40), ncol = 2)
 
-prec <- get_daily_climate(coords, 
-                          period = 2001:2005,
-                          climatic_var = "Prcp")  
-
-tmin <- get_daily_climate(coords, 
-                          period = 2001:2005,
-                          climatic_var = "Tmin")
-
-tmax <- get_daily_climate(coords, 
-                          period = 2001:2005,
-                          climatic_var = "Tmax")
-
-daily <- prec %>% 
-  full_join(tmin) %>% 
-  full_join(tmax) 
+daily <- get_daily_climate(coords,
+                           period = 2001:2005,
+                           climatic_var = c("Prcp","Tmin","Tmax"))  
 
 ```
 

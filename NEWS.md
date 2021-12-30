@@ -1,3 +1,7 @@
+# easyclimate 0.1.5
+
+* Now giving the possibility to download multiple variables at once.
+
 # easyclimate 0.1.4
 
 * Now returning temperature data in ºC and precipitation in mm. 

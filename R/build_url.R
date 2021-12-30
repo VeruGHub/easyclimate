@@ -10,18 +10,18 @@
 #
 # @author Veronica Cruz-Alonso, Francisco Rodríguez-Sánchez, Sophia Ratcliffe
 
-build_url <- function(climatic_var,
+build_url <- function(climatic_var_single,
                       year) {
 
   ## Check arguments
-  if (!climatic_var %in% c("Tmax", "Tmin", "Prcp"))
-    stop("climatic_var must be one of 'Tmax', 'Tmin' or 'Prcp'")
+  if (!climatic_var_single %in% c("Tmax", "Tmin", "Prcp"))
+    stop("climatic_var_single must be one of 'Tmax', 'Tmin' or 'Prcp'")
 
   if (year < 1950 | year > 2020)
     stop("Year must be between 1950 and 2020")
 
   ## Adjust climvar to file names in FTP server
-  climvar <- switch(climatic_var,
+  climvar <- switch(climatic_var_single,
                     "Tmax" = "tmax",
                     "Tmin" = "tmin",
                     "Prcp" = "prec")
@@ -30,7 +30,7 @@ build_url <- function(climatic_var,
   url <- paste("ftp://palantir.boku.ac.at/Public/ClimateData/v3_cogeo/AllDataRasters/",
                climvar,
                "/Downscaled",
-               climatic_var,
+               climatic_var_single,
                year,
                "_cogeo.tif",
                sep = "")

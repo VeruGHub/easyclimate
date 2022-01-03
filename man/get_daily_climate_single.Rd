@@ -88,3 +88,4 @@ International Journal of Climatology 36: 1444–1458.
 \author{
 Francisco Rodriguez-Sanchez, Veronica Cruz-Alonso, Sophia Ratcliffe
 }
+\keyword{internal}

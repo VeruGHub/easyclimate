@@ -22,6 +22,7 @@
 #'
 #' @return A data.frame (if output = "df") or a [terra::SpatRaster()] object (if output = "raster").
 #'
+#' @keywords internal
 #'
 #' @references
 #' Werner Rammer, Christoph Pucher, Mathias Neumann. 2018.

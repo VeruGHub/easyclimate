@@ -91,7 +91,7 @@ Visit the articles of the package website for more extended tutorials!
 
 If you use easyclimate, please cite both the data source and the package as:
 
-```{r echo=FALSE, results='asis'}
+```{r echo=FALSE, results='asis', cache = FALSE}
 print(citation("easyclimate"), style = "text")
 ```
 

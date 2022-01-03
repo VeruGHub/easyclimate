@@ -107,6 +107,6 @@ Validation of Downscaled Daily Climate Data Version 2*. &lt;URL:
 <ftp://palantir.boku.ac.at/Public/ClimateData/>&gt;.
 
 Cruz-Alonso V, Rodríguez-Sánchez F, Pucher C, Ruiz-Benito P, Astigarraga
-J, Neumann M, Ratcliffe S (2021). *easyclimate: Easy access to
+J, Neumann M, Ratcliffe S (2022). *easyclimate: Easy access to
 high-resolution daily climate data for Europe*. &lt;URL:
 <https://github.com/VeruGHub/easyclimate>&gt;.

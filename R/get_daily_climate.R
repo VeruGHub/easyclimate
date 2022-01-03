@@ -22,7 +22,8 @@
 #' for each point/polygon, or "raster", which returns [terra::SpatRaster()] objects (within a list when more than one
 #' climatic variable is downloaded).
 #'
-#' @return A data.frame (if output = "df") or [terra::SpatRaster()] objects (if output = "raster").
+#' @return A data.frame (if output = "df"), a [terra::SpatRaster()] object (if output = "raster"),
+#' or a list of [terra::SpatRaster()] objects (if output = "raster" and there is more than one `climatic_var`).
 #'
 #' @export
 #'
@@ -85,7 +86,7 @@ get_daily_climate <- function(coords = NULL,
                               period = NULL,
                               output = "df") {
 
-  if(length(climatic_var) == 1) {
+  if (length(climatic_var) == 1) {
 
     out <- get_daily_climate_single(
       coords = coords,
@@ -93,34 +94,34 @@ get_daily_climate <- function(coords = NULL,
       period = period,
       output = output)
 
-    } else {
+  } else {
 
-       out.list <- lapply(X = climatic_var,
-        FUN = function (x) {
-          get_daily_climate_single(
-            coords = coords,
-            climatic_var_single = x,
-            period = period,
-            output = output) })
+    out.list <- lapply(X = climatic_var,
+                       FUN = function(x) {
+                         get_daily_climate_single(
+                           coords = coords,
+                           climatic_var_single = x,
+                           period = period,
+                           output = output) })
 
     if (output == "df") {
 
-      out <- Reduce(function (var1, var2, climvar = climatic_var) {
+      out <- Reduce(function(var1, var2, climvar = climatic_var) {
 
         merge(var1, var2,
               by = names(var1)[!names(var1) %in% climvar])
 
       }, out.list)
 
-      }
+    }
 
     if (output == "raster") {
 
       out <- out.list
       names(out) <- climatic_var
 
-      }
     }
+  }
 
   invisible(out)
 

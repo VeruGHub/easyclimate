@@ -1,6 +1,6 @@
 Package: easyclimate
 Title: Easy Access to High-Resolution Daily Climate Data for Europe
-Version: 0.1.4
+Version: 0.1.5
 Authors@R: c(
     person("Verónica", "Cruz-Alonso", role = c("aut", "cre"), 
             email = "veronica.cral@gmail.com", 
@@ -19,7 +19,7 @@ Description: Get high-resolution (1 km) daily climate data (precipitation,
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 URL: https://github.com/VeruGHub/easyclimate
 BugReports: https://github.com/VeruGHub/easyclimate/issues
 Imports:

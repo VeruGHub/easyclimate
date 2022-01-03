@@ -1,6 +1,6 @@
 # easyclimate 0.1.5
 
-* Now giving the possibility to download multiple variables at once.
+* Now giving the possibility to download multiple climatic variables at once.
 
 # easyclimate 0.1.4
 

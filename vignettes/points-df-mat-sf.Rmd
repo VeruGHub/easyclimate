@@ -8,6 +8,7 @@ vignette: >
 ---
 
 ```{r setup, echo = FALSE}
+library(knitr)
 knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE, 
                       fig.width = 6, fig.height = 4, cache = TRUE)
 ```

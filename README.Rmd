@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ```
 
-# `easyclimate` <a href='https://verughub.github.io/easyclimate/'><img src='man/figures/easyclimate_logo.png' align="right" height="139" /></a>
+# `easyclimate` <a href='https://verughub.github.io/easyclimate/'><img src='man/figures/easyclimate_logo_small.png' align="right" height="139" /></a>
 
 # Easy access to high-resolution daily climate data for Europe
 
@@ -75,8 +75,6 @@ ras_tmax <- get_daily_climate(
   climatic_var = "Tmax",
   output = "raster" # return raster
   )
-
-ras_tmax <- ras_tmax/100
 
 par(mfrow = c(1, 2))
 terra::plot(ras_tmax, 1, col = rev(heat.colors(20)), type = "continuous", smooth = TRUE, range = c(10, 35), legend = FALSE, mar=c(4, 2, 4, 2), main = "January 1 2012")

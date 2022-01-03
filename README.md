@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# `easyclimate` <a href='https://verughub.github.io/easyclimate/'><img src='man/figures/easyclimate_logo.png' align="right" height="139" /></a>
+# `easyclimate` <a href='https://verughub.github.io/easyclimate/'><img src='man/figures/easyclimate_logo_small.png' align="right" height="139" /></a>
 
 # Easy access to high-resolution daily climate data for Europe
 
@@ -59,11 +59,11 @@ prec <- get_daily_climate(coords,
                           climatic_var = "Prcp")
 ```
 
-| ID\_coords |     x |    y | date       | Prcp  |
-|-----------:|------:|-----:|:-----------|------:|
-|          1 | -5.36 | 37.4 | 2001-01-01 |  8.64 |
-|          1 | -5.36 | 37.4 | 2001-01-02 |  0.00 |
-|          1 | -5.36 | 37.4 | 2001-01-03 |  2.93 |
+| ID\_coords |     x |    y | date       | Prcp |
+|-----------:|------:|-----:|:-----------|-----:|
+|          1 | -5.36 | 37.4 | 2001-01-01 | 8.64 |
+|          1 | -5.36 | 37.4 | 2001-01-02 | 0.00 |
+|          1 | -5.36 | 37.4 | 2001-01-03 | 2.93 |
 
 <br>
 

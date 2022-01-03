@@ -4,6 +4,7 @@ test_that("downloading several variables gives expected results", {
   # Testing for 2 sites and a single day
 
   skip_on_cran()
+  skip_on_ci()
 
   ## Input matrix
   coords.mat <- matrix(c(-5.36, 37.40), ncol = 2, byrow = TRUE)

@@ -57,6 +57,7 @@ test_that("different climatic_var_single give expected results", {
   # Testing for 2 sites and a single day
 
   skip_on_cran()
+  skip_if_not(check_server())
 
   ## Input matrix
   coords.mat <- matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
@@ -104,6 +105,7 @@ test_that("different input formats (points) give expected results", {
 
   skip_on_cran()
   skip_on_ci()
+  skip_if_not(check_server())
 
   ## Input matrix (tested above)
   coords.mat <- matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
@@ -150,6 +152,7 @@ test_that("polygon input give expected results", {
 
   skip_on_cran()
   skip_on_ci()
+  skip_if_not(check_server())
 
   coords <- terra::vect("POLYGON ((-5 38, -5 37.95, -4.95 37.95, -4.95 38, -5 38))")
 
@@ -183,6 +186,7 @@ test_that("output raster is correct", {
 
   skip_on_cran()
   skip_on_ci()
+  skip_if_not(check_server())
 
   library(terra)
 
@@ -208,6 +212,7 @@ test_that("different period formats give expected results", {
 
   skip_on_cran()
   skip_on_ci()
+  skip_if_not(check_server())
 
   coords <- matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
 

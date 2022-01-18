@@ -5,6 +5,7 @@ test_that("downloading several variables gives expected results", {
 
   skip_on_cran()
   skip_on_ci()
+  skip_if_not(check_server())
 
   ## Input matrix
   coords.mat <- matrix(c(-5.36, 37.40), ncol = 2, byrow = TRUE)

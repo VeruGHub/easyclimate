@@ -1,3 +1,7 @@
+# easyclimate 0.1.6
+
+* New function `check_server()` to check that the climate data server is working correctly.
+
 # easyclimate 0.1.5
 
 * Now giving the possibility to download multiple climatic variables at once.

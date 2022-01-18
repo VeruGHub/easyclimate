@@ -14,5 +14,6 @@ test_that("built url is correct", {
 
 test_that("server is running and built url exists", {
   skip_on_cran()
+  skip_on_ci()
   expect_true(check_server())
 })

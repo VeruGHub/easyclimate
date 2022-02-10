@@ -154,9 +154,9 @@ test_that("polygon input give expected results", {
   expect_identical(
     subset(get_daily_climate_single(coords, period = "2001-01-01", climatic_var_single = "Tmin"),
            select = -c(lon, lat)),
-    structure(list(ID_coords = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    structure(list(ID_coords = as.integer(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                                  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                                 1, 1, 1, 1),
+                                 1, 1, 1, 1)),
                    date = c("2001-01-01", "2001-01-01", "2001-01-01",
                             "2001-01-01", "2001-01-01", "2001-01-01", "2001-01-01", "2001-01-01",
                             "2001-01-01", "2001-01-01", "2001-01-01", "2001-01-01", "2001-01-01",
@@ -213,9 +213,9 @@ test_that("different period formats give expected results", {
 
   expect_identical(
     get_daily_climate_single(coords, period = c("2001-01-01:2001-01-03", "2005-01-01")),
-    structure(list(ID_coords = c(1, 1, 1, 1, 2, 2, 2, 2),
-                   x = c(-5.36, -5.36, -5.36, -5.36, -4.05, -4.05, -4.05, -4.05),
-                   y = c(37.4, 37.4, 37.4, 37.4, 38.1, 38.1, 38.1, 38.1),
+    structure(list(ID_coords = as.integer(c(1, 1, 1, 1, 2, 2, 2, 2)),
+                   lon = c(-5.36, -5.36, -5.36, -5.36, -4.05, -4.05, -4.05, -4.05),
+                   lat = c(37.4, 37.4, 37.4, 37.4, 38.1, 38.1, 38.1, 38.1),
                    date = c("2001-01-01", "2001-01-02", "2001-01-03", "2005-01-01",
                             "2001-01-01", "2001-01-02", "2001-01-03", "2005-01-01"),
                    Prcp = c(8.64, 0.00, 2.93, 0.00, 6.64, 0.00, 1.59, 0.00)),
@@ -224,18 +224,18 @@ test_that("different period formats give expected results", {
 
   out <- get_daily_climate_single(coords, period = c(2001:2003, 2005))
   expect_identical(head(out),
-                   structure(list(ID_coords = c(1, 1, 1, 1, 1, 1),
-                                  x = c(-5.36, -5.36, -5.36, -5.36, -5.36, -5.36),
-                                  y = c(37.4, 37.4, 37.4, 37.4, 37.4, 37.4),
+                   structure(list(ID_coords = as.integer(c(1, 1, 1, 1, 1, 1)),
+                                  lon = c(-5.36, -5.36, -5.36, -5.36, -5.36, -5.36),
+                                  lat = c(37.4, 37.4, 37.4, 37.4, 37.4, 37.4),
                                   date = c("2001-01-01", "2001-01-02", "2001-01-03",
                                            "2001-01-04", "2001-01-05", "2001-01-06"),
                                   Prcp = c(8.64, 0.00, 2.93, 1.89, 11.77, 4.47)),
                              row.names = c(NA, 6L), class = "data.frame"))
 
   expect_identical(tail(out),
-                   structure(list(ID_coords = c(2, 2, 2, 2, 2, 2),
-                                  x = c(-4.05, -4.05, -4.05, -4.05, -4.05, -4.05),
-                                  y = c(38.1, 38.1, 38.1, 38.1, 38.1, 38.1),
+                   structure(list(ID_coords = as.integer(c(2, 2, 2, 2, 2, 2)),
+                                  lon = c(-4.05, -4.05, -4.05, -4.05, -4.05, -4.05),
+                                  lat = c(38.1, 38.1, 38.1, 38.1, 38.1, 38.1),
                                   date = c("2005-12-26", "2005-12-27", "2005-12-28",
                                            "2005-12-29", "2005-12-30", "2005-12-31"),
                                   Prcp = c(7.70, 0.06, 0.00, 0.00, 0.00, 0.00)),

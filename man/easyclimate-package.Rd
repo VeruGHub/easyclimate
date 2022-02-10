@@ -6,7 +6,9 @@
 \alias{easyclimate-package}
 \title{easyclimate: Easy Access to High-Resolution Daily Climate Data for Europe}
 \description{
-Get high-resolution (1 km) daily climate data (precipitation, minimum and maximum temperatures) for points and polygons within Europe.
+Get high-resolution (1 km) daily climate data (precipitation,
+    minimum and maximum temperatures) for points and polygons within
+    Europe.
 }
 \seealso{
 Useful links:

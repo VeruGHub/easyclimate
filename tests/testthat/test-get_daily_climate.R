@@ -13,9 +13,9 @@ test_that("downloading several variables gives expected results", {
   # ## Output data.frame
   expect_identical(
     get_daily_climate(coords.mat, period = "2001-01-01", climatic_var = c("Tmin", "Tmax", "Prcp")),
-    structure(list(ID_coords = 1,
-                   x = -5.36,
-                   y = 37.4,
+    structure(list(ID_coords = as.integer(1),
+                   lon = -5.36,
+                   lat = 37.4,
                    date = "2001-01-01",
                    Tmin = 6.50,
                    Tmax = 15.93,

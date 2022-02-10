@@ -304,12 +304,15 @@ period_to_days <- function(period) {
 
 reshape_terra_extract <- function(df.wide, climvar) {
 
-      names(df.wide)[!names(df.wide) %in% c("ID", "x", "y")] <-
-        paste0(climvar, ".", names(df.wide)[!names(df.wide) %in% c("ID", "x", "y")])
+  df.wide <- df.wide[,!names(df.wide) %in% c("lon", "lat")]
+  names(df.wide)[names(df.wide) %in% c("x", "y")] <- c("lon", "lat")
+
+      names(df.wide)[!names(df.wide) %in% c("ID", "lon", "lat")] <-
+        paste0(climvar, ".", names(df.wide)[!names(df.wide) %in% c("ID", "lon", "lat")])
 
       df.long <- stats::reshape(df.wide, direction = "long",
-                            idvar = c("ID", "x", "y"),
-                            varying = names(df.wide)[!names(df.wide) %in% c("ID", "x", "y")],
+                            idvar = c("ID", "lon", "lat"),
+                            varying = names(df.wide)[!names(df.wide) %in% c("ID", "lon", "lat")],
                             timevar = "date")
 
       df.long <- df.long[order(df.long$ID, df.long$date), ]

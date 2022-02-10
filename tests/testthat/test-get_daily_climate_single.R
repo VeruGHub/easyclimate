@@ -65,9 +65,9 @@ test_that("different climatic_var_single give expected results", {
   # climatic_var_single = "Tmin"
   expect_identical(
     get_daily_climate_single(coords.mat, period = "2001-01-01", climatic_var_single = "Tmin"),
-    structure(list(ID_coords = c(1, 2),
-                   x = c(-5.36, -4.05),
-                   y = c(37.4, 38.1),
+    structure(list(ID_coords = as.integer(c(1, 2)),
+                   lon = c(-5.36, -4.05),
+                   lat = c(37.4, 38.1),
                    date = c("2001-01-01", "2001-01-01"),
                    Tmin = c(6.50, 6.64)),
               row.names = c(NA, -2L), class = "data.frame"))
@@ -76,9 +76,9 @@ test_that("different climatic_var_single give expected results", {
   ## climatic_var_single = "Tmax"
   expect_identical(
     get_daily_climate_single(coords.mat, period = "2001-01-01", climatic_var_single = "Tmax"),
-    structure(list(ID_coords = c(1, 2),
-                   x = c(-5.36, -4.05),
-                   y = c(37.4, 38.1),
+    structure(list(ID_coords = as.integer(c(1, 2)),
+                   lon = c(-5.36, -4.05),
+                   lat = c(37.4, 38.1),
                    date = c("2001-01-01", "2001-01-01"),
                    Tmax = c(15.93, 14.92)),
               row.names = c(NA, -2L), class = "data.frame"))
@@ -87,9 +87,9 @@ test_that("different climatic_var_single give expected results", {
   ## climatic_var_single = "Prcp"
   expect_identical(
     get_daily_climate_single(coords.mat, period = "2001-01-01", climatic_var_single = "Prcp"),
-    structure(list(ID_coords = c(1, 2),
-                   x = c(-5.36, -4.05),
-                   y = c(37.4, 38.1),
+    structure(list(ID_coords = as.integer(c(1, 2)),
+                   lon = c(-5.36, -4.05),
+                   lat = c(37.4, 38.1),
                    date = c("2001-01-01", "2001-01-01"),
                    Prcp = c(8.64, 6.64)),
               row.names = c(NA, -2L), class = "data.frame"))
@@ -110,11 +110,9 @@ test_that("different input formats (points) give expected results", {
   ## Input matrix (tested above)
   coords.mat <- matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
 
-  output <- structure(list(ID_coords = c(1, 2),
+  output <- structure(list(ID_coords = as.integer(c(1, 2)),
                            lon = c(-5.36, -4.05),
                            lat = c(37.4, 38.1),
-                           x = c(-5.36, -4.05),
-                           y = c(37.4, 38.1),
                            date = c("2001-01-01", "2001-01-01"),
                            Tmin = c(6.50, 6.64)),
                       row.names = c(NA, -2L),
@@ -126,9 +124,6 @@ test_that("different input formats (points) give expected results", {
   expect_identical(
     get_daily_climate_single(coords.df, period = "2001-01-01", climatic_var_single = "Tmin"),
     output)
-
-  ## output with sf and SpatVector does not include lon & lat columns
-  output <- subset(output, select = -c(lon, lat))
 
   #Input sf
   coords.sf <- sf::st_as_sf(coords.df, coords = c("lon", "lat"))
@@ -158,7 +153,7 @@ test_that("polygon input give expected results", {
 
   expect_identical(
     subset(get_daily_climate_single(coords, period = "2001-01-01", climatic_var_single = "Tmin"),
-           select = -c(x, y)),
+           select = -c(lon, lat)),
     structure(list(ID_coords = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                                  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                                  1, 1, 1, 1),

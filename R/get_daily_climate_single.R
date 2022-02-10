@@ -162,7 +162,9 @@ get_daily_climate_single <- function(coords = NULL,
   if (all(RCurl::url.exists(urls))) {
     message("\nConnecting to the server...\n")
   } else {
-    stop("Problems with the database server. Please, try later.\nIf problems persist, please contact christoph.pucher@boku.ac.at")
+    stop("Problems with the database server.\n
+            Please, make sure that you are connected to the Internet and try later.\n
+            If problems persist, please, contact christoph.pucher@boku.ac.at")
   }
 
   urls.vsicurl <- paste0("/vsicurl/", urls)

@@ -18,7 +18,9 @@ check_server <- function() {
   if (isTRUE(server.ok)) {
     message("The server seems to be running correctly.")
   } else {
-    message("Problems with the database server. Please, try later.\nIf problems persist, please contact christoph.pucher@boku.ac.at")
+    message("Problems with the database server.\n
+            Please, make sure that you are connected to the Internet and try later.\n
+            If problems persist, please, contact christoph.pucher@boku.ac.at")
   }
 
   return(server.ok)

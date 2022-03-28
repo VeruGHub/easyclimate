@@ -138,13 +138,11 @@ daily %>%
          run = cumsum(start)) %>% 
     filter(event == 1) %>% 
     group_by(run, .add = TRUE) %>% 
-    summarise(length = n()) %>% 
-    ungroup(run) %>% 
+    mutate(length = n()) %>% 
+   group_by(ID_coords, year) %>% 
     summarise(max_heatwave = max(length), # longest heatwave per year (in days)
               mean_heatwave = mean(length), # average length of heatwaves per year
               n_heatwave = n()) %>% # No. of events per year
-    complete(ID_coords, year, 
-             fill = list(max_heatwave = NA, mean_heatwave = NA, nevents = 0)) %>% 
   kable(digits = 1)
 
 ```
@@ -166,6 +164,7 @@ daily %>%
   filter(event == 1) %>% 
   group_by(ID_coords, year, n_frost) %>% 
   summarise(Tmin_frost_avg = mean(Tmin)/100) %>% # Mean minimum temperature of frost days
+  ungroup() %>% 
   complete(ID_coords, year, fill = list(n_frost = 0, Tmin_frost_avg = NA)) %>% 
   kable()
 
@@ -190,6 +189,7 @@ daily %>%
     summarise(max_days_norain = max(length), # Maximum length of periods of consecutive days without rain per year
               mean_days_norain = mean(length), 
               nevents = sum(length > threshold)) %>% # No. of events per year
+  ungroup() %>% 
   complete(ID_coords, year, 
            fill = list(max_days_norain = NA, mean_days_norain = NA, nevents = 0)) %>% 
   kable(digits = 1)

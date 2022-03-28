@@ -105,8 +105,8 @@ temp_long <- daily %>%
     names_to = "temp_vars",
     values_to = "temp_values")
 
-ggplot(temp_long, aes(x = temp_vars, y = temp_values, color = temp_vars)) +
-  geom_violin(fill = "gray80", size = 1, alpha = .5, show.legend = FALSE) +
+ggplot(temp_long, aes(x = temp_vars, y = temp_values, fill = temp_vars, color = temp_vars)) +
+  geom_violin(size = 1, alpha = .5, show.legend = FALSE) +
   coord_flip() +
   ylab("Temperature (ºC)") + xlab("") +
   theme_bw()
@@ -152,7 +152,7 @@ clim_mat <- mat_prcp %>%
     month = months(date),
     year = format(date, format = "%y")
   ) %>%
-  relocate(x, y, date, year, month, Prcp)
+  relocate(lon, lat, date, year, month, Prcp)
 
 ggplot(clim_mat, aes(x = date, y = Prcp, color = Prcp)) +
   geom_point() +
@@ -199,8 +199,8 @@ sf_tmin <- get_daily_climate(
   ) 
 
 ggplot() +
-  borders(regions = c("Spain", "Portugal")) +
-	geom_point(data = sf_tmin, aes(x = x, y = y, color = Tmin), size = 2) + 
+  borders(regions = c("Spain", "Portugal", "France")) +
+	geom_point(data = sf_tmin, aes(x = lon, y = lat, color = Tmin), size = 2) + 
   coord_fixed(xlim = c(-10, 2), ylim = c(36, 44), ratio = 1.3) +  
   scale_color_continuous(type = "viridis", name = "Minimum\ntemperature (ºC)") +
 	ylab("Latitude") + xlab("Longitude") +

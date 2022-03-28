@@ -13,7 +13,7 @@ TRUE if the server seems available, FALSE otherwise.
 Check that the online climate data server is available and working correctly.
 }
 \examples{
-\dontrun{
+
 check_server()
-}
+
 }

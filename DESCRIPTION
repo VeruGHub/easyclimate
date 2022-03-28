@@ -1,36 +1,22 @@
 Package: easyclimate
 Title: Easy Access to High-Resolution Daily Climate Data for Europe
 Version: 0.1.6
-Authors@R: 
-    c(person(given = "Verónica",
-             family = "Cruz-Alonso",
-             role = c("aut", "cre"),
-             email = "veronica.cral@gmail.com",
-             comment = c(ORCID = "0000-0002-0642-036X")),
-      person(given = "Francisco",
-             family = "Rodríguez-Sánchez",
-             role = "aut",
-             comment = c(ORCID = "0000-0002-7981-1599")),
-      person(given = "Christoph",
-             family = "Pucher",
-             role = "aut",
-             comment = c(ORCID = "0000-0002-9269-1907")),
-      person(given = "Paloma",
-             family = "Ruiz-Benito",
-             role = "aut",
-             comment = c(ORCID = "0000-0002-2781-5870")),
-      person(given = "Julen",
-             family = "Astigarraga",
-             role = "aut",
-             comment = c(ORCID = "0000-0001-9520-3713")),
-      person(given = "Mathias",
-             family = "Neumann",
-             role = "aut",
-             comment = c(ORCID = "0000-0003-2472-943X")),
-      person(given = "Sophia",
-             family = "Ratcliffe",
-             role = "aut",
-             comment = c(ORCID = "0000-0001-9284-7900")))
+Authors@R: c(
+    person("Verónica", "Cruz-Alonso", , "veronica.cral@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-0642-036X")),
+    person("Francisco", "Rodríguez-Sánchez", role = "aut",
+           comment = c(ORCID = "0000-0002-7981-1599")),
+    person("Christoph", "Pucher", role = "aut",
+           comment = c(ORCID = "0000-0002-9269-1907")),
+    person("Paloma", "Ruiz-Benito", role = "aut",
+           comment = c(ORCID = "0000-0002-2781-5870")),
+    person("Julen", "Astigarraga", role = "aut",
+           comment = c(ORCID = "0000-0001-9520-3713")),
+    person("Mathias", "Neumann", role = "aut",
+           comment = c(ORCID = "0000-0003-2472-943X")),
+    person("Sophia", "Ratcliffe", role = "aut",
+           comment = c(ORCID = "0000-0001-9284-7900"))
+  )
 Description: Get high-resolution (1 km) daily climate data (precipitation,
     minimum and maximum temperatures) for points and polygons within
     Europe.

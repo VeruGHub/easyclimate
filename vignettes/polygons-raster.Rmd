@@ -61,7 +61,7 @@ tapply(clim_df$Tmax, clim_df$date, summary)
 
 ggplot() +
 	geom_raster(data = clim_df,
-		aes(x = x, y = y, fill = Tmax)) +
+		aes(x = lon, y = lat, fill = Tmax)) +
   scale_fill_continuous(type = "viridis", name = "Maximum\ntemperature (ºC)") +
   facet_wrap(~date) +
 	ylab("Latitude") + xlab("Longitude") +

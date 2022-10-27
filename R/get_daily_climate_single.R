@@ -203,7 +203,17 @@ get_daily_climate_single <- function(coords = NULL,
     out <- reshape_terra_extract(out, climvar = climatic_var_single)
 
     ## Merge with original coords data
-    coords.spatvec.df <- terra::as.data.frame(coords.spatvec)
+    if (terra::is.polygons(coords.spatvec)) {
+      # if polygons, keep coordinates from raster cells
+      coords.spatvec.df <- terra::as.data.frame(coords.spatvec)
+    } else {
+      # else (ie for point coordinates) keep input coords rather than raster cells
+      out <- subset(out, select = -c(lon, lat))
+      spatvec.coords <- terra::crds(coords.spatvec, df = TRUE)
+      names(spatvec.coords) <- c("lon", "lat")
+      coords.spatvec.df <- data.frame(terra::as.data.frame(coords.spatvec), spatvec.coords)
+    }
+
     out <- merge(coords.spatvec.df, out, by.x =  "ID_coords", by.y = "ID", all = TRUE)
 
     ## Rasters codify NA as very negative values (-32768).

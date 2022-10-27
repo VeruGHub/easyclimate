@@ -1,3 +1,7 @@
+# easyclimate 0.1.7
+
+* Coordinates (lon, lat) of the output dataframe now match input coordinates to `get_daily_climate`, unless providing a polygon when output coordinates are those of the raster cells enclosed in the polygon.
+
 # easyclimate 0.1.6
 
 * New function `check_server()` to check that the climate data server is working correctly.

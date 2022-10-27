@@ -24,6 +24,8 @@ knitr::opts_chunk$set(
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/VeruGHub/easyclimate/workflows/R-CMD-check/badge.svg)](https://github.com/VeruGHub/easyclimate/actions)
 [![Codecov test coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.svg)](https://codecov.io/gh/VeruGHub/easyclimate?branch=master)
+[![HitCount](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square)](http://hits.dwyl.com/VeruGHub/easyclimate)
+[![HitCount](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square&show=unique)](http://hits.dwyl.com/VeruGHub/easyclimate)
 <!-- badges: end -->
 
 
@@ -83,7 +85,7 @@ terra::plot(ras_tmax, 2, col = rev(heat.colors(20)), type = "continuous", smooth
 ```
 
 <br>
-Visit the articles of the package website for more extended tutorials!
+Visit the articles of the [package website](https://verughub.github.io/easyclimate/) for more extended tutorials!
 
 <br>
 

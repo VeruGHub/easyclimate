@@ -13,6 +13,8 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 [![R-CMD-check](https://github.com/VeruGHub/easyclimate/workflows/R-CMD-check/badge.svg)](https://github.com/VeruGHub/easyclimate/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.svg)](https://codecov.io/gh/VeruGHub/easyclimate?branch=master)
+[![HitCount](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square)](http://hits.dwyl.com/VeruGHub/easyclimate)
+[![HitCount](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square&show=unique)](http://hits.dwyl.com/VeruGHub/easyclimate)
 <!-- badges: end -->
 
 Get high-resolution (1 km) daily climate data (precipitation, minimum
@@ -59,11 +61,11 @@ prec <- get_daily_climate(coords,
                           climatic_var = "Prcp")
 ```
 
-| ID\_coords |     x |    y | date       | Prcp |
-|-----------:|------:|-----:|:-----------|-----:|
-|          1 | -5.36 | 37.4 | 2001-01-01 | 8.64 |
-|          1 | -5.36 | 37.4 | 2001-01-02 | 0.00 |
-|          1 | -5.36 | 37.4 | 2001-01-03 | 2.93 |
+| ID_coords |     lon |      lat | date       | Prcp |
+|----------:|--------:|---------:|:-----------|-----:|
+|         1 | -5.3625 | 37.39583 | 2001-01-01 | 8.64 |
+|         1 | -5.3625 | 37.39583 | 2001-01-02 | 0.00 |
+|         1 | -5.3625 | 37.39583 | 2001-01-03 | 2.93 |
 
 <br>
 
@@ -88,7 +90,8 @@ terra::plot(ras_tmax, 2, col = rev(heat.colors(20)), type = "continuous", smooth
 
 <img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
 
-<br> Visit the articles of the package website for more extended
+<br> Visit the articles of the [package
+website](https://verughub.github.io/easyclimate/) for more extended
 tutorials!
 
 <br>
@@ -99,14 +102,14 @@ If you use easyclimate, please cite both the data source and the package
 as:
 
 Moreno A, Hasenauer H (2016). “Spatial downscaling of European climate
-data.” *International Journal of Climatology*, 1444–1458. &lt;URL:
-<https://doi.org/10.1002/joc.4436>&gt;.
+data.” *International Journal of Climatology*, 1444–1458.
+<https://doi.org/10.1002/joc.4436>.
 
 Rammer W, Pucher C, Neumann M (2018). *Description, Evaluation and
-Validation of Downscaled Daily Climate Data Version 2*. &lt;URL:
-<ftp://palantir.boku.ac.at/Public/ClimateData/>&gt;.
+Validation of Downscaled Daily Climate Data Version 2*.
+<ftp://palantir.boku.ac.at/Public/ClimateData/>.
 
 Cruz-Alonso V, Rodríguez-Sánchez F, Pucher C, Ruiz-Benito P, Astigarraga
 J, Neumann M, Ratcliffe S (2022). *easyclimate: Easy access to
-high-resolution daily climate data for Europe*. &lt;URL:
-<https://github.com/VeruGHub/easyclimate>&gt;.
+high-resolution daily climate data for Europe*.
+<https://github.com/VeruGHub/easyclimate>.

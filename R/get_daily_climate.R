@@ -36,7 +36,7 @@
 #' International Journal of Climatology 36: 1444–1458.
 #'
 #' @examples
-#'
+#' \dontrun{
 #' library(easyclimate)
 #'
 #' # Coords as matrix
@@ -76,7 +76,7 @@
 #' # Return dataframe for polygon
 #' ex <- get_daily_climate(coords, period = "2001-01-01")
 #'
-#'
+#' }
 #'
 #' @author Veronica Cruz-Alonso, Francisco Rodriguez-Sanchez
 

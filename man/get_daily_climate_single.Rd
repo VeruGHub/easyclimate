@@ -38,7 +38,7 @@ A data.frame (if output = "df") or a \code{\link[terra:SpatRaster-class]{terra::
 Extract daily climate data (temperature or precipitation) for a given set of points or polygons within Europe.
 }
 \examples{
-
+\dontrun{
 library(easyclimate)
 
 # Coords as matrix
@@ -74,7 +74,7 @@ ex <- get_daily_climate_single(coords, period = "2001-01-01", output = "raster")
 # Return dataframe for polygon
 ex <- get_daily_climate_single(coords, period = "2001-01-01")
 
-
+}
 
 }
 \references{

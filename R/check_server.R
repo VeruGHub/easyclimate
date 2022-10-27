@@ -6,9 +6,9 @@
 #' @export
 #'
 #' @examples
-#'
+#' \dontrun{
 #' check_server()
-#'
+#' }
 check_server <- function() {
 
   cog.url <- build_url(climatic_var_single = "Prcp", year = 2010)

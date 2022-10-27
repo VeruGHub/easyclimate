@@ -57,6 +57,7 @@ test_that("different climatic_var_single give expected results", {
   # Testing for 2 sites and a single day
 
   skip_on_cran()
+  skip_on_ci()
   skip_if_not(check_server())
 
   ## Input matrix

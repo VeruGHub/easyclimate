@@ -31,6 +31,7 @@ Imports:
     terra (>= 1.2-13)
 Suggests: 
     ClimInd,
+    covr,
     dplyr,
     ggplot2,
     knitr,

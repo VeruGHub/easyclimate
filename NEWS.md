@@ -1,3 +1,7 @@
+# easyclimate 0.1.8
+
+* Queries limited to max. 10000 sites or 10000 km2 to avoid saturating the server.
+
 # easyclimate 0.1.7
 
 * Coordinates (lon, lat) of the output dataframe now match input coordinates to `get_daily_climate`, unless providing a polygon when output coordinates are those of the raster cells enclosed in the polygon.

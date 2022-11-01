@@ -120,15 +120,13 @@ get_daily_climate_single <- function(coords = NULL,
   ## Warn (or stop) if asking data for too many points or too large area
   # so as not to saturate FTP server
   if (nrow(coords.spatvec) > 10000) {  # change limits if needed
-    warning("Asking for climate data for >10000 sites.
-            Please consider downloading original rasters so as not to saturate the server")
+    stop("Asking for climate data for >10000 sites. Please reduce the number of sites or download original rasters directly from ftp://palantir.boku.ac.at/Public/ClimateData/ so as not to saturate the server")
   }
 
   if (terra::geomtype(coords.spatvec) == "polygons") {
 
     if (sum(suppressWarnings(terra::expanse(coords.spatvec, unit = "km"))) > 10000) {  # change limits if needed
-      warning("Asking for climate data for too large area.
-            Please consider downloading original rasters so as not to saturate the server")
+      stop("Asking for climate data for too large area. Please reduce the polygon area or download original rasters directly from ftp://palantir.boku.ac.at/Public/ClimateData/ so as not to saturate the server")
     }
 
   }

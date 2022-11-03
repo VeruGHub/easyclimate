@@ -51,7 +51,7 @@ To obtain a data frame of daily climatic values for point coordinates:
 ```{r example, message = FALSE}
 library(easyclimate)
 
-coords <- matrix(c(-5.36, 37.40), ncol = 2)
+coords <- data.frame(lon = -5.36, lat = 37.40)
 
 prec <- get_daily_climate(coords, 
                           period = "2001-01-01:2001-01-03", 

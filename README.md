@@ -54,18 +54,18 @@ To obtain a data frame of daily climatic values for point coordinates:
 ``` r
 library(easyclimate)
 
-coords <- matrix(c(-5.36, 37.40), ncol = 2)
+coords <- data.frame(lon = -5.36, lat = 37.40)
 
 prec <- get_daily_climate(coords, 
                           period = "2001-01-01:2001-01-03", 
                           climatic_var = "Prcp")
 ```
 
-| ID_coords |     lon |      lat | date       | Prcp |
-|----------:|--------:|---------:|:-----------|-----:|
-|         1 | -5.3625 | 37.39583 | 2001-01-01 | 8.64 |
-|         1 | -5.3625 | 37.39583 | 2001-01-02 | 0.00 |
-|         1 | -5.3625 | 37.39583 | 2001-01-03 | 2.93 |
+| ID_coords |   lon |  lat | date       | Prcp |
+|----------:|------:|-----:|:-----------|-----:|
+|         1 | -5.36 | 37.4 | 2001-01-01 | 8.64 |
+|         1 | -5.36 | 37.4 | 2001-01-02 | 0.00 |
+|         1 | -5.36 | 37.4 | 2001-01-03 | 2.93 |
 
 <br>
 

@@ -10,5 +10,6 @@ other
 ^pkgdown$
 vignettes
 README_cache
+man/figures
 
 inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf

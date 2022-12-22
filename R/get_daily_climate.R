@@ -4,12 +4,12 @@
 #' Extract daily climate data (temperature and precipitation) for a given set of points or polygons within Europe.
 #'
 #'
-#' @param coords A [matrix], [data.frame], [sf::sf()], or [terra::SpatVector()] object
+#' @param coords A [matrix], [data.frame], [tbl_df], [sf::sf()], or [terra::SpatVector()] object
 #' containing point or polygon coordinates in decimal degrees (lonlat/geographic format).
 #' Longitude must fall between -40.5 and 75.5 degrees, and latitude between 25.5 and 75.5 degrees.
 #' If `coords` is a matrix, it must have only two columns: the first with longitude
 #' and the second with latitude data.
-#' If `coords` is a data.frame, it must contain at least two columns called `lon` and `lat`
+#' If `coords` is a data.frame or a tbl_df, it must contain at least two columns called `lon` and `lat`
 #' with longitude and latitude coordinates, respectively.
 #' @param climatic_var Character. Climatic variables to be downloaded ('Tmax', 'Tmin' or 'Prcp').
 #' Various elements can be concatenated in the vector.
@@ -50,8 +50,8 @@
 #'
 #' ex <- get_daily_climate(coords, period = "2001-01-01", climatic_var = "Tmin")
 #'
-#' # Coords as data.frame
-#' coords <- as.data.frame(coords)
+#' # Coords as data.frame or tbl_df
+#' coords <- as.data.frame(coords) #coords <- tibble::as_tibble(coords)
 #' names(coords) <- c("lon", "lat")  # must have these columns
 #' ex <- get_daily_climate(coords, period = "2001-01-01")  # single day
 #'

@@ -90,7 +90,7 @@ get_daily_climate_single <- function(coords = NULL,
   }
 
   ## coords
-  if (!inherits(coords, c("matrix", "data.frame", "sf", "SpatVector")))
+  if (!inherits(coords, c("matrix", "data.frame", "sf", "sfc", "sfg", "SpatVector")))
     stop("Coords must be either a matrix, data.frame, tbl_df, sf or SpatVector object")
 
   if (inherits(coords, "matrix")) {

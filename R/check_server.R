@@ -45,7 +45,7 @@ check_server <- function(climatic_var = NULL, year = NULL) {
     message("Problems with the database server.\n
             Please, make sure that you are connected to the Internet and try later.\n
             If problems persist, please, contact christoph.pucher@boku.ac.at\n")
-    cat(data.ok2)
+    cat(data.ok)
     server.ok <- FALSE
   }
 

@@ -12,12 +12,12 @@ get_daily_climate_single(
 )
 }
 \arguments{
-\item{coords}{A \link{matrix}, \link{data.frame}, \code{\link[sf:sf]{sf::sf()}}, or \code{\link[terra:SpatVector-class]{terra::SpatVector()}} object
+\item{coords}{A \link{matrix}, \link{data.frame}, \link{tbl_df}, \code{\link[sf:sf]{sf::sf()}}, or \code{\link[terra:SpatVector-class]{terra::SpatVector()}} object
 containing point or polygon coordinates in decimal degrees (lonlat/geographic format).
 Longitude must fall between -40.5 and 75.5 degrees, and latitude between 25.5 and 75.5 degrees.
 If \code{coords} is a matrix, it must have only two columns: the first with longitude
 and the second with latitude data.
-If \code{coords} is a data.frame, it must contain at least two columns called \code{lon} and \code{lat}
+If \code{coords} is a data.frame or tbl_df, it must contain at least two columns called \code{lon} and \code{lat}
 with longitude and latitude coordinates, respectively.}
 
 \item{climatic_var_single}{Character. Climatic variable to be downloaded. One of 'Tmax', 'Tmin' or 'Prcp'.}
@@ -52,8 +52,8 @@ ex <- get_daily_climate_single(coords, period = 2008:2010)  # 2008 TO 2010
 
 ex <- get_daily_climate_single(coords, period = "2001-01-01", climatic_var_single = "Tmin")
 
-# Coords as data.frame
-coords <- as.data.frame(coords)
+# Coords as data.frame or tbl_df
+coords <- as.data.frame(coords) #coords <- tibble::as_tibble(coords)
 names(coords) <- c("lon", "lat")  # must have these columns
 ex <- get_daily_climate_single(coords, period = "2001-01-01")  # single day
 

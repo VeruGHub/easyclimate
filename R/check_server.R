@@ -25,14 +25,28 @@ check_server <- function(climatic_var = NULL, year = NULL) {
   cog.url <- build_url(climatic_var_single = climatic_var,
                        year = year)
 
-  server.ok <- RCurl::url.exists(cog.url)
+  # Can we see the raster file?
+  url.ok <- RCurl::url.exists(cog.url)
 
-  if (isTRUE(server.ok)) {
+  if (isTRUE(url.ok)) {
+    message("The server has been contacted.")
+  }
+
+  # Can we download a single data point?
+  coords <- data.frame(lon = -5, lat = 37)
+  data.ok <- try(suppressMessages(
+    get_daily_climate(coords, climatic_var, paste0(year, "-01-01"))),
+    silent = TRUE)
+
+  if (inherits(data.ok, "data.frame")) {
     message("The server seems to be running correctly.")
+    server.ok <- TRUE
   } else {
     message("Problems with the database server.\n
             Please, make sure that you are connected to the Internet and try later.\n
-            If problems persist, please, contact christoph.pucher@boku.ac.at")
+            If problems persist, please, contact christoph.pucher@boku.ac.at\n")
+    cat(data.ok2)
+    server.ok <- FALSE
   }
 
   return(server.ok)

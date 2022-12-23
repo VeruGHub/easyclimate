@@ -114,7 +114,7 @@ the polygons of interest in a <code>sf</code> object.</p>
 <span><span class="va">coords_t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/vect.html" class="external-link">vect</a></span><span class="op">(</span><span class="st">"POLYGON ((-4.5 41, -4.5 40.5, -5 40.5, -5 41))"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># to know how much it takes to download</span></span>
-<span><span class="co">## [1] "2022-12-22 12:03:10 CET"</span></span>
+<span><span class="co">## [1] "2022-10-27 21:56:58 CEST"</span></span>
 <span></span>
 <span><span class="va">df_tmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span></span>
 <span>  <span class="va">coords_t</span>,</span>
@@ -124,7 +124,7 @@ the polygons of interest in a <code>sf</code> object.</p>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">## [1] "2022-12-22 12:03:28 CET"</span></span>
+<span><span class="co">## [1] "2022-10-27 21:57:11 CEST"</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/headtail.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df_tmax</span><span class="op">)</span></span>
 <span><span class="co">##   ID_coords       lon      lat       date  Tmax</span></span>
@@ -168,7 +168,7 @@ the polygons of interest in a <code>sf</code> object.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">## [1] "2022-12-22 12:03:43 CET"</span></span>
+<span><span class="co">## [1] "2022-10-27 21:57:13 CEST"</span></span>
 <span></span>
 <span><span class="va">ras_tmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span></span>
 <span>  <span class="va">coords_t</span>,</span>
@@ -178,7 +178,7 @@ the polygons of interest in a <code>sf</code> object.</p>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">## [1] "2022-12-22 12:04:01 CET"</span></span>
+<span><span class="co">## [1] "2022-10-27 21:57:26 CEST"</span></span>
 <span></span>
 <span><span class="va">ras_tmax</span></span>
 <span><span class="co">## class       : SpatRaster </span></span>
@@ -186,7 +186,7 @@ the polygons of interest in a <code>sf</code> object.</p>
 <span><span class="co">## resolution  : 0.008333333, 0.008333333  (x, y)</span></span>
 <span><span class="co">## extent      : -5, -4.5, 40.5, 41  (xmin, xmax, ymin, ymax)</span></span>
 <span><span class="co">## coord. ref. : lon/lat WGS 84 (EPSG:4326) </span></span>
-<span><span class="co">## source(s)   : memory</span></span>
+<span><span class="co">## source      : memory </span></span>
 <span><span class="co">## names       : 2012-01-01, 2012-08-01 </span></span>
 <span><span class="co">## min values  :       9.90,      26.81 </span></span>
 <span><span class="co">## max values  :      15.34,      32.31</span></span>

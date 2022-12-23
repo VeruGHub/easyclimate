@@ -4,7 +4,7 @@
 #' Extract daily climate data (temperature and precipitation) for a given set of points or polygons within Europe.
 #'
 #'
-#' @param coords A [matrix], [data.frame], [tbl_df], [sf::sf()], or [terra::SpatVector()] object
+#' @param coords A [matrix], [data.frame], [tibble::tbl_df-class], [sf::sf()], or [terra::SpatVector()] object
 #' containing point or polygon coordinates in decimal degrees (lonlat/geographic format).
 #' Longitude must fall between -40.5 and 75.5 degrees, and latitude between 25.5 and 75.5 degrees.
 #' If `coords` is a matrix, it must have only two columns: the first with longitude

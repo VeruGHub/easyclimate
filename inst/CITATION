@@ -41,18 +41,14 @@ citEntry(entry = "article",
   person("Julen","Astigarraga", role = c("aut"), comment = c(ORCID = "0000-0001-9520-3713")),
   person("Mathias","Neumann", role = c("aut"), comment = c(ORCID = "0000-0003-2472-943X")),
   person("Hubert","Hasenauer", role = c("aut"), comment = c(ORCID = "0000-0003-3469-4031")),
-  person("Francisco","Rodríguez-Sánchez", role = c("aut"), comment = c(ORCID = "0000-0002-7981-1599"))
-  ),
-  journal = {Environmental Modelling & Software},
-  pages = {105627},
-  year = {2023},
-  doi = {https://doi.org/10.1016/j.envsoft.2023.105627},
-  url = {https://www.sciencedirect.com/science/article/pii/S1364815223000130},
+  person("Francisco","Rodríguez-Sánchez", role = c("aut"), comment = c(ORCID = "0000-0002-7981-1599"))),
+  journal = "Environmental Modelling & Software",
+  pages = "105627",
+  year = "2023",
+  doi = "https://doi.org/10.1016/j.envsoft.2023.105627",
+  url = "https://www.sciencedirect.com/science/article/pii/S1364815223000130",
   textVersion  = paste("Verónica Cruz-Alonso, Christoph Pucher, Sophia Ratcliffe, Paloma Ruiz-Benito, Julen Astigarraga, Mathias Neumann, Hubert Hasenauer, Francisco Rodríguez-Sánchez. 2023",
   "The easyclimate R package: Easy access to high-resolution daily climate data for Europe",
   "Environmental Modelling & Software, 105627",
   "https://doi.org/10.1016/j.envsoft.2023.105627")
 )
-
-
-

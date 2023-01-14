@@ -103,14 +103,17 @@ If you use easyclimate, please cite both the data source and the package
 as:
 
 Moreno A, Hasenauer H (2016). “Spatial downscaling of European climate
-data.” *International Journal of Climatology*, 1444–1458.
-<https://doi.org/10.1002/joc.4436>.
+data.” *International Journal of Climatology*, 1444–1458. \<URL:
+<https://doi.org/10.1002/joc.4436>\>.
 
-Rammer W, Pucher C, Neumann M (2018). *Description, Evaluation and
-Validation of Downscaled Daily Climate Data Version 2*.
-<ftp://palantir.boku.ac.at/Public/ClimateData/>.
+Pucher C, Neumann M (2022). *Description and Evaluation of Downscaled
+Daily Climate Data Version 3*. \<URL:
+<https://doi.org/10.6084/m9.figshare.19070162.v1>\>.
 
-Cruz-Alonso V, Rodríguez-Sánchez F, Pucher C, Ruiz-Benito P, Astigarraga
-J, Neumann M, Ratcliffe S (2022). *easyclimate: Easy access to
-high-resolution daily climate data for Europe*.
-<https://github.com/VeruGHub/easyclimate>.
+Cruz-Alonso V, Pucher C, Ratcliffe S, Ruiz-Benito P, Astigarraga J,
+Neumann M, Hasenauer H, Rodríguez-Sánchez F (2023). “The easyclimate R
+package: Easy access to high-resolution daily climate data for Europe.”
+*Environmental Modelling & Software*, 105627. doi:
+10.1016/j.envsoft.2023.105627 (URL:
+<https://doi.org/10.1016/j.envsoft.2023.105627>), \<URL:
+<https://www.sciencedirect.com/science/article/pii/S1364815223000130>\>.

@@ -115,5 +115,4 @@ Neumann M, Hasenauer H, Rodríguez-Sánchez F (2023). “The easyclimate R
 package: Easy access to high-resolution daily climate data for Europe.”
 *Environmental Modelling & Software*, 105627. doi:
 10.1016/j.envsoft.2023.105627 (URL:
-<https://doi.org/10.1016/j.envsoft.2023.105627>), \<URL:
-<https://www.sciencedirect.com/science/article/pii/S1364815223000130>\>.
+<https://doi.org/10.1016/j.envsoft.2023.105627>).

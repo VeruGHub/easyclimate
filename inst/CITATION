@@ -18,39 +18,40 @@ textVersion = paste(
 
 
 citEntry(entry = "manual",
-title = "Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2",
+title = "Description and Evaluation of Downscaled Daily Climate Data Version 3",
 author = personList(
-person("Werner", "Rammer"),
 person("Christoph", "Pucher"),
 person("Mathias", "Neumann")),
-year = "2018",
-url = "ftp://palantir.boku.ac.at/Public/ClimateData/",
+year = "2022",
+url = "https://doi.org/10.6084/m9.figshare.19070162.v1",
 textVersion = paste(
-"Werner Rammer, Christoph Pucher, Mathias Neumann. 2018.",
-"Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2.",
-"ftp://palantir.boku.ac.at/Public/ClimateData/")
+"Christoph Pucher, Mathias Neumann. 2022.",
+"Description and Evaluation of Downscaled Daily Climate Data Version 3.",
+"https://doi.org/10.6084/m9.figshare.19070162.v1")
 )
 
 
-citEntry(entry = "manual",
-  title        = "easyclimate: Easy access to high-resolution daily climate data for Europe",
+citEntry(entry = "article",
+  title        = "The easyclimate R package: Easy access to high-resolution daily climate data for Europe",
   author       = personList(
-  person("Verónica", "Cruz-Alonso", role = c("aut", "cre"),
-  email = "veronica.cral@gmail.com",
-  comment = c(ORCID = "0000-0002-0642-036X")),
-  person("Francisco","Rodríguez-Sánchez", role = c("aut"), comment = c(ORCID = "0000-0002-7981-1599")),
+  person("Verónica", "Cruz-Alonso", role = c("aut", "cre"), email = "veronica.cral@gmail.com", comment = c(ORCID = "0000-0002-0642-036X")),
   person("Christoph", "Pucher", role = c("aut"), comment = c(ORCID = "0000-0002-9269-1907")),
+  person("Sophia", "Ratcliffe", role = c("aut"), comment = c(ORCID = "0000-0001-9284-7900")),
   person("Paloma","Ruiz-Benito", role = c("aut"), comment = c(ORCID = "0000-0002-2781-5870")),
   person("Julen","Astigarraga", role = c("aut"), comment = c(ORCID = "0000-0001-9520-3713")),
   person("Mathias","Neumann", role = c("aut"), comment = c(ORCID = "0000-0003-2472-943X")),
-    person("Sophia", "Ratcliffe", role = c("aut"), comment = c(ORCID = "0000-0001-9284-7900"))
+  person("Hubert","Hasenauer", role = c("aut"), comment = c(ORCID = "0000-0003-3469-4031")),
+  person("Francisco","Rodríguez-Sánchez", role = c("aut"), comment = c(ORCID = "0000-0002-7981-1599"))
   ),
-  # note = "R package version 0.1.5",
-  year         = "2022",
-  url          = "https://github.com/VeruGHub/easyclimate",
-  textVersion  = paste("Verónica Cruz-Alonso, Francisco Rodríguez-Sánchez, Christoph Pucher, Paloma Ruiz-Benito, Julen Astigarraga, Mathias Neumann and Sophia Ratcliffe. 2021.",
-  "easyclimate: Easy access to high-resolution daily climate data for Europe.",
-  "https://github.com/VeruGHub/easyclimate")
+  journal = {Environmental Modelling & Software},
+  pages = {105627},
+  year = {2023},
+  doi = {https://doi.org/10.1016/j.envsoft.2023.105627},
+  url = {https://www.sciencedirect.com/science/article/pii/S1364815223000130},
+  textVersion  = paste("Verónica Cruz-Alonso, Christoph Pucher, Sophia Ratcliffe, Paloma Ruiz-Benito, Julen Astigarraga, Mathias Neumann, Hubert Hasenauer, Francisco Rodríguez-Sánchez. 2023",
+  "The easyclimate R package: Easy access to high-resolution daily climate data for Europe",
+  "Environmental Modelling & Software, 105627",
+  "https://doi.org/10.1016/j.envsoft.2023.105627")
 )
 
 

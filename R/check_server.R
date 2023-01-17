@@ -28,25 +28,26 @@ check_server <- function(climatic_var = NULL, year = NULL) {
   # Can we see the raster file?
   url.ok <- RCurl::url.exists(cog.url)
 
-  if (isTRUE(url.ok)) {
-    message("The server has been contacted.")
-  }
-
-  # Can we download a single data point?
-  coords <- data.frame(lon = -5, lat = 37)
-  data.ok <- try(suppressMessages(
-    get_daily_climate(coords, climatic_var, paste0(year, "-01-01"))),
-    silent = TRUE)
-
-  if (inherits(data.ok, "data.frame")) {
-    message("The server seems to be running correctly.")
-    server.ok <- TRUE
+  if (!isTRUE(url.ok)) {
+    message("Cannot connect to the server.\nPlease, make sure that you have internet connection.\nSome network connections (e.g. eduroam, some VPN) often give problems. Please try from a different network.\nIf problems persist, please contact christoph.pucher@boku.ac.at")
   } else {
-    message("Problems with the database server.\n
-            Please, make sure that you are connected to the Internet and try later.\n
-            If problems persist, please, contact christoph.pucher@boku.ac.at\n")
-    cat(data.ok)
-    server.ok <- FALSE
+    # Server is reachable
+    # Can we download a single data point?
+    coords <- data.frame(lon = -5, lat = 37)
+    data.ok <- try(suppressMessages(
+      get_daily_climate(coords, climatic_var, paste0(year, "-01-01"))),
+      silent = TRUE)
+
+    if (inherits(data.ok, "data.frame")) {
+      message("The server seems to be running correctly.")
+      server.ok <- TRUE
+    } else {
+      cat(data.ok)
+      message("The server has been reached, but data downloading is failing.\nSome network connections (e.g. eduroam, some VPN) often give problems. Please try from a different network.\nIf problems persist, please contact christoph.pucher@boku.ac.at")
+
+      server.ok <- FALSE
+    }
+
   }
 
   return(server.ok)

@@ -1,3 +1,7 @@
+# easyclimate 0.1.10
+
+* Improved check_server diagnosis.
+
 # easyclimate 0.1.8
 
 * Queries limited to max. 10000 sites or 10000 km2 to avoid saturating the server.

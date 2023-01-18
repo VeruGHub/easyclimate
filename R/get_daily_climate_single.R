@@ -117,7 +117,7 @@ get_daily_climate_single <- function(coords = NULL,
   }
 
   ## Add ID variable
-  coords.spatvec$ID_coords <- 1:nrow(coords.spatvec)
+  coords.spatvec$ID_coords <- seq(from = 1, to = nrow(coords.spatvec), by = 1)
 
   ## Warn (or stop) if asking data for too many points or too large area
   # so as not to saturate FTP server

@@ -4,12 +4,14 @@
 \alias{check_server}
 \title{Check climate data server}
 \usage{
-check_server(climatic_var = NULL, year = NULL)
+check_server(climatic_var = NULL, year = NULL, verbose = TRUE)
 }
 \arguments{
 \item{climatic_var}{Optional. One of "Prcp", "Tmin", or "Tmax".}
 
 \item{year}{Optional. Year between 1950 and 2020.}
+
+\item{verbose}{Logical. Print diagnostic messages, or just return TRUE/FALSE?}
 }
 \value{
 TRUE if the server seems available, FALSE otherwise.

@@ -21,6 +21,7 @@
 #' @param output Character. Either "df", which returns a dataframe with daily climatic values
 #' for each point/polygon, or "raster", which returns [terra::SpatRaster()] objects (within a list when more than one
 #' climatic variable is downloaded).
+#' @param check_connection Logical. Check the connection to the server before attempting data download?
 #'
 #' @return A data.frame (if output = "df"), a [terra::SpatRaster()] object (if output = "raster"),
 #' or a list of [terra::SpatRaster()] objects (if output = "raster" and there is more than one `climatic_var`).
@@ -84,7 +85,8 @@
 get_daily_climate <- function(coords = NULL,
                               climatic_var = "Prcp",
                               period = NULL,
-                              output = "df") {
+                              output = "df",
+                              check_connection = TRUE) {
 
   if (length(climatic_var) == 1) {
 
@@ -92,7 +94,8 @@ get_daily_climate <- function(coords = NULL,
       coords = coords,
       climatic_var_single = climatic_var,
       period = period,
-      output = output)
+      output = output,
+      check_conn = check_connection)
 
   } else {
 
@@ -102,7 +105,8 @@ get_daily_climate <- function(coords = NULL,
                            coords = coords,
                            climatic_var_single = x,
                            period = period,
-                           output = output) })
+                           output = output,
+                           check_conn = check_connection) })
 
     if (output == "df") {
 

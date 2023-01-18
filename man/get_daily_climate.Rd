@@ -8,7 +8,8 @@ get_daily_climate(
   coords = NULL,
   climatic_var = "Prcp",
   period = NULL,
-  output = "df"
+  output = "df",
+  check_connection = TRUE
 )
 }
 \arguments{
@@ -32,6 +33,8 @@ Various elements can be concatenated in the vector
 \item{output}{Character. Either "df", which returns a dataframe with daily climatic values
 for each point/polygon, or "raster", which returns \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}} objects (within a list when more than one
 climatic variable is downloaded).}
+
+\item{check_connection}{Logical. Check the connection to the server before attempting data download?}
 }
 \value{
 A data.frame (if output = "df"), a \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}} object (if output = "raster"),

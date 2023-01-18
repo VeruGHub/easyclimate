@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">easyclimate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.10</span>
       </span>
     </div>
 
@@ -73,14 +73,15 @@
 <span>  coords <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  climatic_var <span class="op">=</span> <span class="st">"Prcp"</span>,</span>
 <span>  period <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  output <span class="op">=</span> <span class="st">"df"</span></span>
+<span>  output <span class="op">=</span> <span class="st">"df"</span>,</span>
+<span>  check_connection <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>coords</dt>
-<dd><p>A <a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a>, <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>, tbl_df, <code><a href="https://r-spatial.github.io/sf/reference/sf.html" class="external-link">sf::sf()</a></code>, or <code><a href="https://rdrr.io/pkg/terra/man/SpatVector-class.html" class="external-link">terra::SpatVector()</a></code> object
+<dd><p>A <a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a>, <a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a>, <a href="https://tibble.tidyverse.org/reference/tbl_df-class.html" class="external-link">tibble::tbl_df</a>, <code><a href="https://r-spatial.github.io/sf/reference/sf.html" class="external-link">sf::sf()</a></code>, or <code><a href="https://rdrr.io/pkg/terra/man/SpatVector-class.html" class="external-link">terra::SpatVector()</a></code> object
 containing point or polygon coordinates in decimal degrees (lonlat/geographic format).
 Longitude must fall between -40.5 and 75.5 degrees, and latitude between 25.5 and 75.5 degrees.
 If <code>coords</code> is a matrix, it must have only two columns: the first with longitude
@@ -106,6 +107,10 @@ Various elements can be concatenated in the vector
 <dd><p>Character. Either "df", which returns a dataframe with daily climatic values
 for each point/polygon, or "raster", which returns <code><a href="https://rdrr.io/pkg/terra/man/SpatRaster-class.html" class="external-link">terra::SpatRaster()</a></code> objects (within a list when more than one
 climatic variable is downloaded).</p></dd>
+
+
+<dt>check_connection</dt>
+<dd><p>Logical. Check the connection to the server before attempting data download?</p></dd>
 
 </dl></div>
     <div id="value">

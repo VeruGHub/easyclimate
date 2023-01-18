@@ -19,6 +19,7 @@
 #' (e.g. c(2000:2005, 2010:2015, 2020), c("2000-01-01:2000-01-15", "2000-02-01"))
 #' @param output Character. Either "df", which returns a dataframe with daily climatic values
 #' for each point/polygon, or "raster", which returns a [terra::SpatRaster()] object.
+#' @param check_conn Logical. Check the data connection before attempting to download the data?
 #'
 #' @return A data.frame (if output = "df") or a [terra::SpatRaster()] object (if output = "raster").
 #'
@@ -77,7 +78,8 @@
 get_daily_climate_single <- function(coords = NULL,
                               climatic_var_single = "Prcp",
                               period = NULL,
-                              output = "df") {
+                              output = "df",
+                              check_conn = TRUE) {
 
   #### Check arguments ####
 
@@ -157,13 +159,14 @@ get_daily_climate_single <- function(coords = NULL,
   urls <- unlist(lapply(years, build_url, climatic_var_single = climatic_var_single))
 
   ## Check if the server is working
-  if (all(RCurl::url.exists(urls))) {
-    message("\nConnecting to the server...\n")
-  } else {
-    stop("Problems with the database server.\n
-            Please, make sure that you are connected to the Internet and try later.\n
-            If problems persist, please, contact christoph.pucher@boku.ac.at")
+  if (check_conn) {
+    if (isTRUE(check_server(verbose = FALSE))) {
+      message("Connecting to the server...")
+    } else {
+      stop("Problems retrieving the data. Please run 'check_server()' to diagnose the problems.\n")
+    }
   }
+  ###
 
   urls.vsicurl <- paste0("/vsicurl/", urls)
 

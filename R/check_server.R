@@ -4,6 +4,7 @@
 #'
 #' @param climatic_var Optional. One of "Prcp", "Tmin", or "Tmax".
 #' @param year Optional. Year between 1950 and 2020.
+#' @param verbose Logical. Print diagnostic messages, or just return TRUE/FALSE?
 #'
 #' @return TRUE if the server seems available, FALSE otherwise.
 #' @export
@@ -12,7 +13,7 @@
 #' \dontrun{
 #' check_server()
 #' }
-check_server <- function(climatic_var = NULL, year = NULL) {
+check_server <- function(climatic_var = NULL, year = NULL, verbose = TRUE) {
 
   if (is.null(climatic_var)) {
     climatic_var <- sample(c("Prcp", "Tmin", "Tmax"), size = 1)
@@ -29,23 +30,30 @@ check_server <- function(climatic_var = NULL, year = NULL) {
   url.ok <- RCurl::url.exists(cog.url)
 
   if (!isTRUE(url.ok)) {
-    message("Cannot connect to the server.\nPlease, make sure that you have internet connection.\nSome network connections (e.g. eduroam, some VPN) often give problems. Please try from a different network.\nIf problems persist, please contact christoph.pucher@boku.ac.at")
+    server.ok <- FALSE
+    if (verbose) {
+      message("Cannot connect to the server.\nPlease, make sure that you have internet connection.\nSome network connections (e.g. eduroam, some VPN) often give problems. Please try from a different network.\nIf problems persist, please contact christoph.pucher@boku.ac.at\n")
+    }
+
   } else {
-    # Server is reachable
-    # Can we download a single data point?
+    # Server is reachable, but can we download a single data point?
     coords <- data.frame(lon = -5, lat = 37)
     data.ok <- try(suppressMessages(
-      get_daily_climate(coords, climatic_var, paste0(year, "-01-01"))),
+      get_daily_climate_single(coords, climatic_var, paste0(year, "-01-01"), check_conn = FALSE)),
       silent = TRUE)
 
     if (inherits(data.ok, "data.frame")) {
-      message("The server seems to be running correctly.")
       server.ok <- TRUE
+      if (verbose) {
+        message("The server seems to be running correctly.")
+      }
     } else {
-      cat(data.ok)
-      message("The server has been reached, but data downloading is failing.\nSome network connections (e.g. eduroam, some VPN) often give problems. Please try from a different network.\nIf problems persist, please contact christoph.pucher@boku.ac.at")
-
       server.ok <- FALSE
+      if (verbose) {
+        message(data.ok)
+        message("The server has been reached, but data downloading is failing.\nSome network connections (e.g. eduroam, some VPN) often give problems. Please try from a different network.\nIf problems persist, please contact christoph.pucher@boku.ac.at\n")
+
+      }
     }
 
   }

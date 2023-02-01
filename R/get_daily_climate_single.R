@@ -159,7 +159,7 @@ get_daily_climate_single <- function(coords = NULL,
   urls <- unlist(lapply(years, build_url, climatic_var_single = climatic_var_single))
 
   ## Check if the server is working
-  if (check_conn) {
+  if (isTRUE(check_conn)) {
     if (isTRUE(check_server(verbose = FALSE))) {
       message("Connecting to the server...")
     } else {

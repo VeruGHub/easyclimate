@@ -66,7 +66,7 @@ test_that("different climatic_var_single give expected results", {
   # climatic_var_single = "Tmin"
   expect_identical(
     get_daily_climate_single(coords.mat, period = "2001-01-01", climatic_var_single = "Tmin"),
-    structure(list(ID_coords = as.integer(c(1, 2)),
+    structure(list(ID_coords = c(1, 2),
                    lon = c(-5.36, -4.05),
                    lat = c(37.4, 38.1),
                    date = c("2001-01-01", "2001-01-01"),
@@ -77,7 +77,7 @@ test_that("different climatic_var_single give expected results", {
   ## climatic_var_single = "Tmax"
   expect_identical(
     get_daily_climate_single(coords.mat, period = "2001-01-01", climatic_var_single = "Tmax"),
-    structure(list(ID_coords = as.integer(c(1, 2)),
+    structure(list(ID_coords = c(1, 2),
                    lon = c(-5.36, -4.05),
                    lat = c(37.4, 38.1),
                    date = c("2001-01-01", "2001-01-01"),
@@ -88,7 +88,7 @@ test_that("different climatic_var_single give expected results", {
   ## climatic_var_single = "Prcp"
   expect_identical(
     get_daily_climate_single(coords.mat, period = "2001-01-01", climatic_var_single = "Prcp"),
-    structure(list(ID_coords = as.integer(c(1, 2)),
+    structure(list(ID_coords = c(1, 2),
                    lon = c(-5.36, -4.05),
                    lat = c(37.4, 38.1),
                    date = c("2001-01-01", "2001-01-01"),
@@ -111,7 +111,7 @@ test_that("different input formats (points) give expected results", {
   ## Input matrix (tested above)
   coords.mat <- matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
 
-  output <- structure(list(ID_coords = as.integer(c(1, 2)),
+  output <- structure(list(ID_coords = c(1, 2),
                            lon = c(-5.36, -4.05),
                            lat = c(37.4, 38.1),
                            date = c("2001-01-01", "2001-01-01"),
@@ -155,9 +155,9 @@ test_that("polygon input give expected results", {
   expect_identical(
     subset(get_daily_climate_single(coords, period = "2001-01-01", climatic_var_single = "Tmin"),
            select = -c(lon, lat)),
-    structure(list(ID_coords = as.integer(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    structure(list(ID_coords = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                                  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                                 1, 1, 1, 1)),
+                                 1, 1, 1, 1),
                    date = c("2001-01-01", "2001-01-01", "2001-01-01",
                             "2001-01-01", "2001-01-01", "2001-01-01", "2001-01-01", "2001-01-01",
                             "2001-01-01", "2001-01-01", "2001-01-01", "2001-01-01", "2001-01-01",
@@ -214,7 +214,7 @@ test_that("different period formats give expected results", {
 
   expect_identical(
     get_daily_climate_single(coords, period = c("2001-01-01:2001-01-03", "2005-01-01")),
-    structure(list(ID_coords = as.integer(c(1, 1, 1, 1, 2, 2, 2, 2)),
+    structure(list(ID_coords = c(1, 1, 1, 1, 2, 2, 2, 2),
                    lon = c(-5.36, -5.36, -5.36, -5.36, -4.05, -4.05, -4.05, -4.05),
                    lat = c(37.4, 37.4, 37.4, 37.4, 38.1, 38.1, 38.1, 38.1),
                    date = c("2001-01-01", "2001-01-02", "2001-01-03", "2005-01-01",
@@ -225,7 +225,7 @@ test_that("different period formats give expected results", {
 
   out <- get_daily_climate_single(coords, period = c(2001:2003, 2005))
   expect_identical(head(out),
-                   structure(list(ID_coords = as.integer(c(1, 1, 1, 1, 1, 1)),
+                   structure(list(ID_coords = c(1, 1, 1, 1, 1, 1),
                                   lon = c(-5.36, -5.36, -5.36, -5.36, -5.36, -5.36),
                                   lat = c(37.4, 37.4, 37.4, 37.4, 37.4, 37.4),
                                   date = c("2001-01-01", "2001-01-02", "2001-01-03",
@@ -234,7 +234,7 @@ test_that("different period formats give expected results", {
                              row.names = c(NA, 6L), class = "data.frame"))
 
   expect_identical(tail(out),
-                   structure(list(ID_coords = as.integer(c(2, 2, 2, 2, 2, 2)),
+                   structure(list(ID_coords = c(2, 2, 2, 2, 2, 2),
                                   lon = c(-4.05, -4.05, -4.05, -4.05, -4.05, -4.05),
                                   lat = c(38.1, 38.1, 38.1, 38.1, 38.1, 38.1),
                                   date = c("2005-12-26", "2005-12-27", "2005-12-28",

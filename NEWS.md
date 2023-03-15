@@ -1,3 +1,7 @@
+# easyclimate 0.1.11
+
+* Improved check_server diagnosis. Now timing out after 30 seconds, and providing better error messages.
+
 # easyclimate 0.1.10
 
 * Improved check_server diagnosis.

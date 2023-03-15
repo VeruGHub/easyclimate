@@ -40,7 +40,7 @@
 #' # Coords as matrix
 #' coords <- matrix(c(-5.36, 37.40), ncol = 2)
 #' ex <- get_daily_climate_single(coords, period = "2001-01-01")  # single day
-#' ex <- get_daily_climate_single(coords, period = c("2001-01-01", "2001-01-03"))  # 1st AND 3rd Jan 2001
+#' ex <- get_daily_climate_single(coords, period = c("2001-01-01", "2001-01-03")) #1st & 3rd Jan 2001
 #' ex <- get_daily_climate_single(coords, period = "2001-01-01:2001-01-03")  # 1st TO 3rd Jan 2001
 #' ex <- get_daily_climate_single(coords, period = 2008)  # entire year
 #' ex <- get_daily_climate_single(coords, period = c(2008, 2010))  # 2008 AND 2010

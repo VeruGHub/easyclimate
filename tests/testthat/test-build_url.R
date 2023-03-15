@@ -12,8 +12,10 @@ test_that("built url is correct", {
                    "ftp://palantir.boku.ac.at/Public/ClimateData/v3_cogeo/AllDataRasters/tmin/DownscaledTmin2008_cogeo.tif")
 })
 
-test_that("server is running and built url exists", {
-  skip_on_cran()
-  skip_on_ci()
-  expect_true(check_server())
-})
+
+# Better to check server status differently than giving package error if server not working
+# test_that("server is running and built url exists", {
+#   skip_on_cran()
+#   skip_on_ci()
+#   expect_true(check_server())
+# })

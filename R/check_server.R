@@ -32,14 +32,25 @@ check_server <- function(climatic_var = NULL, year = NULL, verbose = TRUE) {
   if (!isTRUE(url.ok)) {
     server.ok <- FALSE
     if (verbose) {
-      message("Cannot connect to the server.\nPlease, make sure that you have internet connection.\nSome network connections (e.g. eduroam, some VPN) often give problems. Please try from a different network.\nIf problems persist, please contact christoph.pucher@boku.ac.at\n")
+      message(paste(
+        "Cannot connect to the server.",
+        "Please, make sure that you have internet connection.",
+        "Some network connections (e.g. eduroam, some VPN) often give problems. Please try from a different network.",
+        "If problems persist, please send an email to christoph.pucher@boku.ac.at with the output of running check_server()",
+        sep = "\n"
+      ))
     }
 
   } else {
     # Server is reachable, but can we download a single data point?
     coords <- data.frame(lon = -5, lat = 37)
-    data.ok <- try(suppressMessages(
-      get_daily_climate_single(coords, climatic_var, paste0(year, "-01-01"), check_conn = FALSE)),
+    data.ok <- try(
+      R.utils::withTimeout({
+        suppressMessages(
+          get_daily_climate_single(coords, climatic_var, paste0(year, "-01-01"), check_conn = FALSE))
+      },
+      timeout = 30,   # allow 30 seconds to download this single data point
+      onTimeout = "silent"),  # if time out, return NULL
       silent = TRUE)
 
     if (inherits(data.ok, "data.frame")) {
@@ -50,8 +61,25 @@ check_server <- function(climatic_var = NULL, year = NULL, verbose = TRUE) {
     } else {
       server.ok <- FALSE
       if (verbose) {
-        message(data.ok)
-        message("The server has been reached, but data downloading is failing.\nSome network connections (e.g. eduroam, some VPN) often give problems. Please try from a different network.\nIf problems persist, please contact christoph.pucher@boku.ac.at\n")
+        if (is.null(data.ok)) {
+          message(paste(
+            "The server has been reached, but data transfer seems too slow.",
+            "The server may be too busy, or your internet connection too slow.",
+            "Please try again in a few hours, or from a different network.",
+            "If problems persist, please send an email to christoph.pucher@boku.ac.at with the output of running check_server()",
+            sep = "\n"
+          ))
+
+        } else {
+          message(data.ok)
+          message(paste(
+            "The server has been reached, but data downloading is failing.",
+            "Some network connections (e.g. eduroam, some VPN) often give problems. Please try from a different network.",
+            "If problems persist, please send an email to christoph.pucher@boku.ac.at with the output of running check_server()",
+            sep = "\n"
+          ))
+
+        }
 
       }
     }

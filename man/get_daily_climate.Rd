@@ -9,6 +9,7 @@ get_daily_climate(
   climatic_var = "Prcp",
   period = NULL,
   output = "df",
+  version = c(4, 3),
   check_connection = TRUE
 )
 }
@@ -33,6 +34,8 @@ Various elements can be concatenated in the vector
 \item{output}{Character. Either "df", which returns a dataframe with daily climatic values
 for each point/polygon, or "raster", which returns \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}} objects (within a list when more than one
 climatic variable is downloaded).}
+
+\item{version}{Numeric. Version of the climate data. It uses the latest version (4) by default.}
 
 \item{check_connection}{Logical. Check the connection to the server before attempting data download?}
 }

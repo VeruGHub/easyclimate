@@ -9,6 +9,7 @@ get_daily_climate_single(
   climatic_var_single = "Prcp",
   period = NULL,
   output = "df",
+  version = c(4, 3),
   check_conn = TRUE
 )
 }
@@ -18,7 +19,7 @@ containing point or polygon coordinates in decimal degrees (lonlat/geographic fo
 Longitude must fall between -40.5 and 75.5 degrees, and latitude between 25.5 and 75.5 degrees.
 If \code{coords} is a matrix, it must have only two columns: the first with longitude
 and the second with latitude data.
-If \code{coords} is a data.frame or tbl_df, it must contain at least two columns called \code{lon} and \code{lat}
+If \code{coords} is a data.frame or a tbl_df, it must contain at least two columns called \code{lon} and \code{lat}
 with longitude and latitude coordinates, respectively.}
 
 \item{climatic_var_single}{Character. Climatic variable to be downloaded. One of 'Tmax', 'Tmin' or 'Prcp'.}
@@ -31,6 +32,8 @@ Various elements can be concatenated in the vector
 
 \item{output}{Character. Either "df", which returns a dataframe with daily climatic values
 for each point/polygon, or "raster", which returns a \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}} object.}
+
+\item{version}{Numeric. Version of the climate data. It uses the latest version (4) by default.}
 
 \item{check_conn}{Logical. Check the data connection before attempting to download the data?}
 }

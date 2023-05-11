@@ -30,6 +30,19 @@ textVersion = paste(
 "https://doi.org/10.6084/m9.figshare.19070162.v1")
 )
 
+citEntry(entry = "manual",
+title = "Description and Evaluation of Downscaled Daily Climate Data Version 4",
+author = personList(
+person("Christoph", "Pucher"),
+person("Mathias", "Neumann")),
+year = "2023",
+url = "https://doi.org/10.6084/m9.figshare.19070162.v1",
+textVersion = paste(
+"Christoph Pucher, Mathias Neumann. 2023.",
+"Description and Evaluation of Downscaled Daily Climate Data Version 3.",
+"https://doi.org/10.6084/m9.figshare.19070162.v1")
+)
+
 
 citEntry(entry = "article",
   title        = "The easyclimate R package: Easy access to high-resolution daily climate data for Europe",

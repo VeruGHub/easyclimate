@@ -11,14 +11,21 @@
 # @author Veronica Cruz-Alonso, Francisco Rodríguez-Sánchez, Sophia Ratcliffe
 
 build_url <- function(climatic_var_single,
-                      year) {
+                      year,
+                      version = 4) {
 
   ## Check arguments
   if (!climatic_var_single %in% c("Tmax", "Tmin", "Prcp"))
     stop("climatic_var_single must be one of 'Tmax', 'Tmin' or 'Prcp'")
 
-  if (year < 1950 | year > 2020)
-    stop("Year must be between 1950 and 2020")
+  if (version == 3) {
+    if (year < 1950 | year > 2020)
+      stop("Year (period) must be between 1950 and 2020")
+  }
+  if (version == 4) {
+    if (year < 1950 | year > 2022)
+      stop("Year (period) must be between 1950 and 2022")
+  }
 
   ## Adjust climvar to file names in FTP server
   climvar <- switch(climatic_var_single,
@@ -27,7 +34,9 @@ build_url <- function(climatic_var_single,
                     "Prcp" = "prec")
 
   ## Build url
-  url <- paste("ftp://palantir.boku.ac.at/Public/ClimateData/v3_cogeo/AllDataRasters/",
+  url <- paste("ftp://palantir.boku.ac.at/Public/ClimateData/v",
+               version,
+               "_cogeo/AllDataRasters/",
                climvar,
                "/Downscaled",
                climatic_var_single,

@@ -16,25 +16,21 @@ knitr::opts_chunk$set(
 
 ```
 
-# `easyclimate` <a href='https://verughub.github.io/easyclimate/'><img src='man/figures/easyclimate_logo_small.png' align="right" height="139" /></a>
+# `easyclimate` <a href='https://verughub.github.io/easyclimate/'><img src="man/figures/easyclimate_logo_small.png" align="right" height="139"/></a>
 
 # Easy access to high-resolution daily climate data for Europe
 
 <!-- badges: start -->
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![R-CMD-check](https://github.com/VeruGHub/easyclimate/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/VeruGHub/easyclimate/actions/workflows/R-CMD-check.yaml)
-[![Codecov test coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.svg)](https://codecov.io/gh/VeruGHub/easyclimate?branch=master)
-[![HitCount](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square)](http://hits.dwyl.com/VeruGHub/easyclimate)
-[![HitCount: unique users](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square&show=unique)](http://hits.dwyl.com/VeruGHub/easyclimate)
+
+[![Project Status: Active -- The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) [![R-CMD-check](https://github.com/VeruGHub/easyclimate/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/VeruGHub/easyclimate/actions/workflows/R-CMD-check.yaml) [![Codecov test coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.svg)](https://codecov.io/gh/VeruGHub/easyclimate?branch=master) [![HitCount](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square)](http://hits.dwyl.com/VeruGHub/easyclimate) [![HitCount: unique users](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square&show=unique)](http://hits.dwyl.com/VeruGHub/easyclimate)
+
 <!-- badges: end -->
 
+Get high-resolution (1 km) daily climate data (precipitation, minimum and maximum temperatures) for Europe from the European climatic database hosted at [University of Natural Resources and Life Sciences, Vienna, Austria](https://boku.ac.at/en/wabo/waldbau/wir-ueber-uns/daten). Data are currently available from 1950 to 2022.
 
-Get high-resolution (1 km) daily climate data (precipitation, minimum and maximum temperatures) for Europe from the European climatic database hosted at [University of Natural Resources and Life Sciences, Vienna, Austria](https://boku.ac.at/en/wabo/waldbau/wir-ueber-uns/daten). Data are currently available from 1950 to 2020. 
+This climatic dataset was originally built by [A. Moreno & H. Hasenauer](https://doi.org/10.1002/joc.4436) and further developed by W. Rammer, C. Pucher & M. Neumann (see [this document](https://github.com/VeruGHub/easyclimate/tree/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf) for more details on the development and characteristics of the climatic dataset, and this document for the updates of the last version - v4).
 
-This climatic dataset was originally built by [A. Moreno & H. Hasenauer](https://doi.org/10.1002/joc.4436) and further developed by W. Rammer, C. Pucher & M. Neumann (see [this document](https://github.com/VeruGHub/easyclimate/tree/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf) for more details on the development and characteristics of the climatic dataset).
-
-In this R package we implemented [Cloud-Optimised Geotiffs](https://www.cogeo.org/) so that we can obtain daily climate data for thousands of sites/days within minutes, without having to download huge rasters. But if you need to obtain data for large areas, please download the rasters from the FTP server (ftp://palantir.boku.ac.at/Public/ClimateData/) and extract the values locally rather than using this package, so as not to saturate the file server. For that, you may use a FTP client such as [FileZilla](https://filezilla-project.org/).
-
+In this R package we implemented [Cloud-Optimised Geotiffs](https://www.cogeo.org/) ([v3](https://github.com/VeruGHub/easyclimate/blob/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf)) so that we can obtain daily climate data for thousands of sites/days within minutes, without having to download huge rasters. But if you need to obtain data for large areas, please download the rasters from the FTP server (<ftp://palantir.boku.ac.at/Public/ClimateData/>) and extract the values locally rather than using this package, so as not to saturate the file server. For that, you may use a FTP client such as [FileZilla](https://filezilla-project.org/).
 
 ## Installation
 
@@ -42,7 +38,6 @@ In this R package we implemented [Cloud-Optimised Geotiffs](https://www.cogeo.or
 # install.packages("remotes")
 remotes::install_github("VeruGHub/easyclimate")
 ```
-
 
 ## Examples
 
@@ -55,7 +50,8 @@ coords <- data.frame(lon = -5.36, lat = 37.40)
 
 prec <- get_daily_climate(coords, 
                           period = "2001-01-01:2001-01-03", 
-                          climatic_var = "Prcp")
+                          climatic_var = "Prcp",
+                          version = 4) # default
 ```
 
 ```{r echo=FALSE}
@@ -75,8 +71,8 @@ ras_tmax <- get_daily_climate(
   coords_poly,
   period = c("2012-01-01", "2012-08-01"),
   climatic_var = "Tmax",
-  output = "raster" # return raster
-  )
+  output = "raster", # return raster
+  version = 4) # default
 
 par(mfrow = c(1, 2))
 terra::plot(ras_tmax, 1, col = rev(heat.colors(20)), type = "continuous", smooth = TRUE, range = c(10, 35), legend = FALSE, mar=c(4, 2, 4, 2), main = "January 1 2012")
@@ -84,8 +80,7 @@ terra::plot(ras_tmax, 2, col = rev(heat.colors(20)), type = "continuous", smooth
 
 ```
 
-<br>
-Visit the articles of the [package website](https://verughub.github.io/easyclimate/) for more extended tutorials!
+<br> Visit the articles of the [package website](https://verughub.github.io/easyclimate/) for more extended tutorials!
 
 <br>
 
@@ -96,6 +91,3 @@ If you use easyclimate, please cite both the data source and the package as:
 ```{r echo=FALSE, results='asis', cache = FALSE}
 print(citation("easyclimate"), style = "text")
 ```
-
-
-

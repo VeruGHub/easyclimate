@@ -13,7 +13,9 @@
 #' \dontrun{
 #' check_server()
 #' }
-check_server <- function(climatic_var = NULL, year = NULL, verbose = TRUE) {
+check_server <- function(climatic_var = NULL,
+                         year = NULL,
+                         verbose = TRUE) {
 
   if (is.null(climatic_var)) {
     climatic_var <- sample(c("Prcp", "Tmin", "Tmax"), size = 1)
@@ -24,6 +26,7 @@ check_server <- function(climatic_var = NULL, year = NULL, verbose = TRUE) {
   }
 
   cog.url <- build_url(climatic_var_single = climatic_var,
+                       version = 4,
                        year = year)
 
   # Can we see the raster file?

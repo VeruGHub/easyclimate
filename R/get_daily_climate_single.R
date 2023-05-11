@@ -3,23 +3,11 @@
 #'
 #' Extract daily climate data (temperature or precipitation) for a given set of points or polygons within Europe.
 #'
-#'
-#' @param coords A [matrix], [data.frame], [tibble::tbl_df-class], [sf::sf()], or [terra::SpatVector()] object
-#' containing point or polygon coordinates in decimal degrees (lonlat/geographic format).
-#' Longitude must fall between -40.5 and 75.5 degrees, and latitude between 25.5 and 75.5 degrees.
-#' If `coords` is a matrix, it must have only two columns: the first with longitude
-#' and the second with latitude data.
-#' If `coords` is a data.frame or tbl_df, it must contain at least two columns called `lon` and `lat`
-#' with longitude and latitude coordinates, respectively.
 #' @param climatic_var_single Character. Climatic variable to be downloaded. One of 'Tmax', 'Tmin' or 'Prcp'.
-#' @param period Either numbers (representing years between 1950 and 2020),
-#' or dates in "YYYY-MM-DD" format (to obtain data for specific days).
-#' To specify a sequence of years or dates use the format 'start:end' (e.g. YYYY:YYYY or "YYYY-MM-DD:YYYY-MM-DD", see examples).
-#' Various elements can be concatenated in the vector
-#' (e.g. c(2000:2005, 2010:2015, 2020), c("2000-01-01:2000-01-15", "2000-02-01"))
 #' @param output Character. Either "df", which returns a dataframe with daily climatic values
 #' for each point/polygon, or "raster", which returns a [terra::SpatRaster()] object.
 #' @param check_conn Logical. Check the data connection before attempting to download the data?
+#' @inheritParams get_daily_climate
 #'
 #' @return A data.frame (if output = "df") or a [terra::SpatRaster()] object (if output = "raster").
 #'
@@ -79,13 +67,21 @@ get_daily_climate_single <- function(coords = NULL,
                               climatic_var_single = "Prcp",
                               period = NULL,
                               output = "df",
+                              version = 4,
                               check_conn = TRUE) {
 
   #### Check arguments ####
 
+  ## version
+  if (!version %in% c(4, 3)) {
+    stop("version must be 3 or 4")
+  }
+
+
   ## climatic_var_single
-  if (!climatic_var_single %in% c("Tmax", "Tmin", "Prcp"))
+  if (!climatic_var_single %in% c("Tmax", "Tmin", "Prcp")) {
     stop("climatic_var_single must be one of 'Tmax', 'Tmin' or 'Prcp'")
+  }
 
   if (climatic_var_single %in% names(coords)) {
     stop("Coords cannot have a column with the same name as ", climatic_var_single, ". Please change it.")
@@ -151,12 +147,21 @@ get_daily_climate_single <- function(coords = NULL,
   years <- as.numeric(sort(unique(format(days, "%Y"))))
 
   ## Check years are within bounds
-  if (any(years < 1950 | years > 2020))
-    stop("Year (period) must be between 1950 and 2020")
+  if (version == 3) {
+    if (any(years < 1950 | years > 2020))
+      stop("Year (period) must be between 1950 and 2020")
+  }
+  if (version == 4) {
+    if (any(years < 1950 | years > 2022))
+      stop("Year (period) must be between 1950 and 2022")
+  }
 
   #### Build urls for all required years ####
 
-  urls <- unlist(lapply(years, build_url, climatic_var_single = climatic_var_single))
+  urls <- unlist(lapply(years,
+                        build_url,
+                        climatic_var_single = climatic_var_single,
+                        version = version))
 
   ## Check if the server is working
   if (isTRUE(check_conn)) {

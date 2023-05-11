@@ -1,3 +1,7 @@
+# easyclimate 0.2.0
+
+* Added new argument "version" to specify the version of the climate data to download (latest version is v4 - available from 1950 to 2022 and using E-Obs 27.0e; previous version is v3 - available from 1950 to 2020 and using E-Obs 17.0e).
+
 # easyclimate 0.1.11
 
 * Improved check_server diagnosis. Now timing out after 30 seconds, and providing better error messages.

@@ -9,7 +9,7 @@ get_daily_climate(
   climatic_var = "Prcp",
   period = NULL,
   output = "df",
-  version = c(4, 3),
+  version = 4,
   check_connection = TRUE
 )
 }

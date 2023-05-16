@@ -17,7 +17,7 @@ With `easyclimate` you can easily download daily climate data for a given set of
 
 <br>
 
-In this tutorial we will work through the basics of using easyclimate with coordinate points. You can enter coordinates as a `data.frame`, `matrix`, or `sf` object. At the end we will have a data frame with climate variables for each point.
+In this tutorial we will work through the basics of using easyclimate with coordinate points. You can enter coordinates as a `data.frame`, `matrix`, `sf` or `SpatVector` object. At the end we will have a data frame with climate variables for each point.
 
 <br>
 
@@ -47,11 +47,11 @@ ggplot() +
 
 <br>
 
-Now, download the climatic data for the selected locations. It is very simple, all you have to do is use the function `get_daily_climate`, specify the period (e.g. `2008-05-25` for a single day or `2008:2010` for several years), and the variables to be downloaded (precipitation `Prcp`, minimum temperature `Tmin` or maximum temperature `Tmax`).
+Now, download the climatic data for the selected locations. All you have to do is use the function `get_daily_climate`, specifying the period (e.g. `2008-05-25` for a single day or `2008:2010` for several years), and the variables to be downloaded (precipitation `Prcp`, minimum temperature `Tmin` or maximum temperature `Tmax`).
 
 ```{r}
 
-Sys.time() # to know how much it takes to download
+Sys.time() # to know how much time it takes to download
 
 daily <- get_daily_climate(
   coords = coords, 
@@ -68,7 +68,7 @@ Here we extract different components of the date.
 
 ```{r}
 
-daily <- daily %>%
+daily <- daily |> 
   mutate(
     date = as.Date(date),
     month = months(date),
@@ -82,7 +82,7 @@ daily <- daily %>%
 Finally, you can visualize the daily climate results. For example, let's plot the precipitation for one of the sites:
 
 ```{r}
-clim_site1 <- daily %>% 
+clim_site1 <- daily |> 
   filter(ID_coords == 1)
 
 ggplot(clim_site1) +
@@ -98,23 +98,25 @@ Or calculate the daily mean temperature and plot it against `tmin` and `tmax`:
 ```{r}
 library(tidyr)
 
-temp_long <- daily %>%
-  mutate(Tmean = (Tmin + Tmax) / 2) %>%
+temp_long <- daily |> 
+  mutate(Tmean = (Tmin + Tmax) / 2) |> 
   pivot_longer(
     cols = c("Tmin", "Tmax", "Tmean"),
     names_to = "temp_vars",
     values_to = "temp_values")
 
-ggplot(temp_long, aes(x = temp_vars, y = temp_values, fill = temp_vars, color = temp_vars)) +
-  geom_violin(size = 1, alpha = .5, show.legend = FALSE) +
-  coord_flip() +
+ggplot(temp_long, aes(x = factor(ID_coords), y = temp_values, fill = temp_vars, color = temp_vars)) +
+  geom_violin(size = 1, alpha = .7) +
+    scale_fill_manual(values = c("#C54A52", "#FAFBC5", "#4B8AB8")) +
+  scale_color_manual(values = c("#C54A52", "#FAFBC5", "#4B8AB8")) +
   ylab("Temperature (ºC)") + xlab("") +
   theme_bw()
 
 ggplot(temp_long, aes(x = date, y = temp_values, color = temp_vars)) + 
-  geom_point(alpha = .1) +
-  scale_color_discrete(name = "Variables", 
-                       guide = guide_legend(override.aes = list(alpha = 1))) +
+  geom_point(alpha = .3) +
+  scale_color_manual(name = "Variables",
+                     values = c("#C54A52", "#FAFBC5", "#4B8AB8"),
+                     guide = guide_legend(override.aes = list(alpha = 1))) +
   ylab("Temperature (ºC)") + xlab("Date") +
   theme_bw()
 
@@ -146,15 +148,15 @@ Sys.time()
 
 kable(head(mat_prcp))
 
-clim_mat <- mat_prcp %>%
+mat_prcp <- mat_prcp |> 
   mutate(
     date = as.Date(date),
     month = months(date),
     year = format(date, format = "%y")
-  ) %>%
+  ) |> 
   relocate(lon, lat, date, year, month, Prcp)
 
-ggplot(clim_mat, aes(x = date, y = Prcp, color = Prcp)) +
+ggplot(mat_prcp, aes(x = date, y = Prcp, color = Prcp)) +
   geom_point() +
   scale_color_continuous(name = "Precipitation (mm)") +
   scale_y_continuous(expand = c(0, 0)) +
@@ -164,8 +166,8 @@ ggplot(clim_mat, aes(x = date, y = Prcp, color = Prcp)) +
 
 month_name <- format(ISOdate(2021, 1:12, 1), "%B")
 
-clim_mat %>%
-  mutate(month = factor(month, rev(month_name))) %>%
+mat_prcp |> 
+  mutate(month = factor(month, rev(month_name))) |> 
   ggplot(aes(x = month, y = Prcp, color = month)) +
   geom_jitter(size = 2, alpha = .3, width = .3, show.legend = FALSE) +
   scale_y_continuous(expand = c(0,0)) +
@@ -202,7 +204,9 @@ ggplot() +
   borders(regions = c("Spain", "Portugal", "France")) +
 	geom_point(data = sf_tmin, aes(x = lon, y = lat, color = Tmin), size = 2) + 
   coord_fixed(xlim = c(-10, 2), ylim = c(36, 44), ratio = 1.3) +  
-  scale_color_continuous(type = "viridis", name = "Minimum\ntemperature (ºC)") +
+  scale_color_gradient2(name = "Minimum\ntemperature (ºC)",
+                        low = "#4B8AB8", mid = "#FAFBC5", high = "#C54A52",
+                        midpoint = mean(sf_tmin$Tmin)) +
 	ylab("Latitude") + xlab("Longitude") +
   theme_bw()
 
@@ -212,4 +216,4 @@ ggplot() +
 
 ## Learn more
 
-Now you know how to extract a data frame with different climatic variables with `easyclimate`, using point coordinates in different formats and downloading data for multiple locations and periods. Check out this [other vignette](https://verughub.github.io/easyclimate/articles/polygons-raster.html) if you need to extract the data of a complete area.
+Now you know how to obtain a data frame with different climatic variables with `easyclimate`, using point coordinates in different formats and downloading data for multiple locations and periods. Check out this [other vignette](https://verughub.github.io/easyclimate/articles/polygons-raster.html) if you need to extract the data of a complete area.

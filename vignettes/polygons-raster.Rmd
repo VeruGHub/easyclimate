@@ -44,7 +44,7 @@ head(df_tmax)
 ```{r}
 library(dplyr)
 
-clim_df <- df_tmax %>%
+clim_df <- df_tmax |> 
   mutate(
     date = as.Date(date)
   ) 
@@ -62,7 +62,9 @@ tapply(clim_df$Tmax, clim_df$date, summary)
 ggplot() +
 	geom_raster(data = clim_df,
 		aes(x = lon, y = lat, fill = Tmax)) +
-  scale_fill_continuous(type = "viridis", name = "Maximum\ntemperature (ºC)") +
+  scale_fill_gradient2(name = "Maximum\ntemperature",
+                       low = "#4B8AB8", mid = "#FAFBC5", high = "#C54A52",
+                       midpoint = 21, ) +
   facet_wrap(~date) +
 	ylab("Latitude") + xlab("Longitude") +
   theme_bw()
@@ -72,6 +74,8 @@ ggplot() +
 You can get a (multi-layer) raster directly as output, if you specify `output = raster`:
 
 ```{r}
+
+library(tidyterra)
 
 Sys.time()
 
@@ -86,9 +90,11 @@ Sys.time()
 
 ras_tmax
 
-par(mfrow = c(1, 2))
-terra::plot(ras_tmax, 1, col = rev(heat.colors(20)), type = "continuous", smooth = TRUE, range = c(10, 35), legend = FALSE, mar=c(4, 2, 4, 2), main = "January 1 2012")
-terra::plot(ras_tmax, 2, col = rev(heat.colors(20)), type = "continuous", smooth = TRUE, range = c(10, 35), mar = c(4, 1, 4, 3), main = "August 1 2012") 
+ggplot() +
+  geom_spatraster(data = ras_tmax, alpha = 0.9) +
+  facet_wrap(lyr~., ncol = 2) +
+  scale_fill_whitebox_c(name = "Minimum\ntemperature (ºC)", palette = "muted") +
+  theme_bw()
 
 ```
 

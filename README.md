@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# `easyclimate` <a href='https://verughub.github.io/easyclimate/'><img src='man/figures/easyclimate_logo_small.png' align="right" height="139" /></a>
+# `easyclimate` <a href='https://verughub.github.io/easyclimate/'><img src="man/figures/easyclimate_logo_small.png" align="right" height="139"/></a>
 
 # Easy access to high-resolution daily climate data for Europe
 
@@ -16,29 +16,31 @@ coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.s
 [![HitCount](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square)](http://hits.dwyl.com/VeruGHub/easyclimate)
 [![HitCount: unique
 users](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square&show=unique)](http://hits.dwyl.com/VeruGHub/easyclimate)
+
 <!-- badges: end -->
 
 Get high-resolution (1 km) daily climate data (precipitation, minimum
 and maximum temperatures) for Europe from the European climatic database
 hosted at [University of Natural Resources and Life Sciences, Vienna,
 Austria](https://boku.ac.at/en/wabo/waldbau/wir-ueber-uns/daten). Data
-are currently available from 1950 to 2020.
+are currently available from 1950 to 2022.
 
 This climatic dataset was originally built by [A. Moreno & H.
 Hasenauer](https://doi.org/10.1002/joc.4436) and further developed by W.
 Rammer, C. Pucher & M. Neumann (see [this
 document](https://github.com/VeruGHub/easyclimate/tree/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf)
 for more details on the development and characteristics of the climatic
-dataset).
+dataset, and this document for the updates of the last version - v4).
 
 In this R package we implemented [Cloud-Optimised
-Geotiffs](https://www.cogeo.org/) so that we can obtain daily climate
-data for thousands of sites/days within minutes, without having to
-download huge rasters. But if you need to obtain data for large areas,
-please download the rasters from the FTP server
-(<ftp://palantir.boku.ac.at/Public/ClimateData/>) and extract the values
-locally rather than using this package, so as not to saturate the file
-server. For that, you may use a FTP client such as
+Geotiffs](https://www.cogeo.org/)
+([v3](https://github.com/VeruGHub/easyclimate/blob/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf))
+so that we can obtain daily climate data for thousands of sites/days
+within minutes, without having to download huge rasters. But if you need
+to obtain data for large areas, please download the rasters from the FTP
+server (<ftp://palantir.boku.ac.at/Public/ClimateData/>) and extract the
+values locally rather than using this package, so as not to saturate the
+file server. For that, you may use a FTP client such as
 [FileZilla](https://filezilla-project.org/).
 
 ## Installation
@@ -59,7 +61,8 @@ coords <- data.frame(lon = -5.36, lat = 37.40)
 
 prec <- get_daily_climate(coords, 
                           period = "2001-01-01:2001-01-03", 
-                          climatic_var = "Prcp")
+                          climatic_var = "Prcp",
+                          version = 4) # default
 ```
 
 | ID_coords |   lon |  lat | date       | Prcp |
@@ -74,22 +77,41 @@ To obtain a (multi-layer) raster of daily climatic values for an area:
 
 ``` r
 library(terra)
+library(ggplot2)
 
-coords_poly <- vect("POLYGON ((-4.5 41, -4.5 40.5, -5 40.5, -5 41))")
+sobrarbe <- mapSpain::esp_get_comarca(comarca = "Sobrarbe")
+sobrarbe <- project(vect(sobrarbe), "EPSG:4326")
 
-ras_tmax <- get_daily_climate(
-  coords_poly,
-  period = c("2012-01-01", "2012-08-01"),
-  climatic_var = "Tmax",
-  output = "raster" # return raster
-  )
+sobrarbetemp <- get_daily_climate(coords = sobrarbe,
+                               climatic_var = "Tmax",
+                               period = "2020-05-01:2020-05-03",
+                               output = "raster")
 
-par(mfrow = c(1, 2))
-terra::plot(ras_tmax, 1, col = rev(heat.colors(20)), type = "continuous", smooth = TRUE, range = c(10, 35), legend = FALSE, mar=c(4, 2, 4, 2), main = "January 1 2012")
-terra::plot(ras_tmax, 2, col = rev(heat.colors(20)), type = "continuous", smooth = TRUE, range = c(10, 35), mar = c(4, 1, 4, 3), main = "August 1 2012")
+sobrarbetemp <- crop(sobrarbetemp, sobrarbe, mask = TRUE)
+
+sobrarbe_df <- as.data.frame(geom(sobrarbe))
+sobrarbetemp_df <- terra::as.data.frame(sobrarbetemp, xy = TRUE)
+sobrarbetemp_tidydf <- sobrarbetemp_df |> 
+  tidyr::pivot_longer(cols = `2020-05-01`:`2020-05-03`, names_to = "dates", values_to = "tmax")
+
+ggplot() +
+  geom_vline(xintercept = 0, color = "gray90", linewidth = 1) +
+  geom_tile(data = sobrarbetemp_tidydf, aes(x = x, y = y, fill = tmax),
+            alpha = 0.9) +
+  scale_fill_gradient2(low = "#4B8AB8", mid = "#FAFBC5", high = "#C54A52",
+                       midpoint = 15) +
+  facet_wrap(dates~., ncol = 3) +
+  geom_polygon(data = sobrarbe_df, aes(x=x, y=y, group=part), fill = NA,
+               col = "grey30", linewidth = 1) +
+  xlab("") + ylab("") +
+  labs(fill = "Maximum\ntemperature (ºC)",) +
+  theme(panel.background = element_rect(fill = "white"),
+        panel.grid.major = element_line(color = "grey90"),
+        strip.background = element_blank(),
+        strip.text = element_text(hjust = 0))
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+<img src="man/figures/README-fig-1.png" width="100%" />
 
 <br> Visit the articles of the [package
 website](https://verughub.github.io/easyclimate/) for more extended
@@ -108,6 +130,10 @@ data.” *International Journal of Climatology*, 1444–1458. \<URL:
 
 Pucher C, Neumann M (2022). *Description and Evaluation of Downscaled
 Daily Climate Data Version 3*. \<URL:
+<https://doi.org/10.6084/m9.figshare.19070162.v1>\>.
+
+Pucher C, Neumann M (2023). *Description and Evaluation of Downscaled
+Daily Climate Data Version 4*. \<URL:
 <https://doi.org/10.6084/m9.figshare.19070162.v1>\>.
 
 Cruz-Alonso V, Pucher C, Ratcliffe S, Ruiz-Benito P, Astigarraga J,

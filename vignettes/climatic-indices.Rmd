@@ -33,7 +33,7 @@ Here we calculate the daily mean temperature:
 
 ```{r}
 
-daily <- daily %>% 
+daily <- daily |> 
   mutate(Tmean = (Tmin + Tmax) / 2, #Daily mean temperature
          date = as.Date(date),
          month = format(date, format = "%m"),
@@ -48,24 +48,24 @@ To calculate average temperatures by site or time period we can use `group_by` a
 
 ```{r}
 
-daily %>% 
-  group_by(ID_coords) %>% 
+daily |> 
+  group_by(ID_coords) |> 
   summarise(Tmin.site = mean(Tmin),
             Tmean.site = mean(Tmean),
             Tmax.site = mean(Tmax))
 
-daily %>% 
-  group_by(year) %>% 
+daily |> 
+  group_by(year) |>  
   summarise(Tmin.year = mean(Tmin),
             Tmean.year = mean(Tmean),
-            Tmax.year = mean(Tmax)) %>% 
+            Tmax.year = mean(Tmax)) |> 
   kable(digits = 1)
 
-daily %>% 
-  group_by(month) %>% 
+daily |>  
+  group_by(month) |> 
   summarise(Tmin.month = mean(Tmin),
             Tmean.month = mean(Tmean),
-            Tmax.month = mean(Tmax)) %>% 
+            Tmax.month = mean(Tmax)) |> 
   kable(digits = 1)
 
 
@@ -75,14 +75,15 @@ daily %>%
 Similarly, you can calculate accumulated precipitation over different time periods: 
 
 ```{r}
-daily %>% 
-  group_by(year) %>% 
-  summarise(sumPrec = sum(Prcp)) %>% 
+daily |> 
+  group_by(year) |>  
+  summarise(sumPrec = sum(Prcp)) |> 
   kable(digits = 0)
 
-daily %>% 
-  group_by(month) %>% 
-  summarise(sumPrec = sum(Prcp)) %>% 
+daily |> 
+  group_by(year, month) |> 
+  summarise(sumPrec = sum(Prcp)) |>  
+  pivot_wider(names_from = month, values_from = sumPrec) |> 
   kable(digits = 0)
 ```
 
@@ -91,24 +92,24 @@ daily %>%
 
 ## Climatic anomalies
 
-Sometimes it can be useful to calculate the deviation of climate values from a value from a reference period. For example, if we consider as the reference the mean value for the period 2001-2005, we can calculate the deviations per site and year as follows:
+Sometimes it can be useful to calculate the deviation of climate values from a reference value. For example, if we consider as the reference the mean value for the period 2001-2005, we can calculate the deviations per site and year as follows:
 
 ```{r}
 
-daily %>%   
-  group_by(ID_coords, year) %>% 
-  summarise(avgTm = mean(Tmean)) %>% 
-  group_by(ID_coords) %>% 
-  mutate(refTm = mean(avgTm)) %>% #Reference mean temperature
-  mutate(devTm = avgTm - refTm) %>% 
+daily |>    
+  group_by(ID_coords, year) |>  
+  summarise(avgTm = mean(Tmean)) |>  
+  group_by(ID_coords) |>  
+  mutate(refTm = mean(avgTm)) |>  #Reference mean temperature
+  mutate(devTm = avgTm - refTm) |>  
   kable(digits = 1)
 
-daily %>%   
-  group_by(ID_coords, year) %>% 
-  summarise(sumPrec = sum(Prcp)) %>% 
-  group_by(ID_coords) %>% 
-  mutate(refPrec = mean(sumPrec)) %>% #Reference precipitation
-  mutate(devPrec =sumPrec - refPrec) %>% 
+daily |>    
+  group_by(ID_coords, year) |>  
+  summarise(sumPrec = sum(Prcp)) |> 
+  group_by(ID_coords) |> 
+  mutate(refPrec = mean(sumPrec)) |>  #Reference precipitation
+  mutate(devPrec =sumPrec - refPrec) |>  
   kable(digits = 0)
 
 ```
@@ -117,7 +118,7 @@ daily %>%
 
 ## Climatic events
 
-Having daily values allows us to calculate climatic indices such as the number of consecutive days above a given temperature threshold (e.g. heat waves or growing degree days), the number of spring frosts or the number of consecutive days without rain.
+Having daily values allows us to calculate climatic indices such as the number of consecutive days above a given temperature (e.g. heat waves or growing degree days), the number of spring frosts or the number of consecutive days without rain.
 
 <br>
 
@@ -129,49 +130,49 @@ library(tidyr)
 
 threshold <- 32  
 
-daily %>% 
+daily |>  
   mutate(ID_coords = as.factor(ID_coords),
-         year = factor(year)) %>% 
-  group_by(ID_coords, year) %>% 
+         year = factor(year)) |>  
+  group_by(ID_coords, year) |>  
   mutate(event = ifelse(Tmax >= threshold, 1, 0), # NAs will be 0 
          start = c(1, diff(event) != 0),
-         run = cumsum(start)) %>% 
-    filter(event == 1) %>% 
-    group_by(run, .add = TRUE) %>% 
-    mutate(length = n()) %>% 
-   group_by(ID_coords, year) %>% 
-    summarise(max_heatwave = max(length), # longest heatwave per year (in days)
-              mean_heatwave = mean(length), # average length of heatwaves per year
-              n_heatwave = n()) %>% # No. of events per year
+         run = cumsum(start)) |>  
+  filter(event == 1) |> 
+  group_by(run, .add = TRUE) |>  
+  mutate(length = n()) |>  
+  group_by(ID_coords, year) |> 
+  summarise(max_heatwave = max(length), # longest heatwave per year (in days)
+            mean_heatwave = mean(length), # average length of heatwaves per year
+            n_heatwave = n()) |>  # No. of events per year
   kable(digits = 1)
 
 ```
 
 <br>
-Calculating the number of days with spring frosts (minimum temperatures below 0):
+To calculate the number of days with spring frosts (minimum temperatures below 0) we can use the next code:
 
 ```{r}
 
 spring.months <- c("03","04","05") # March to May
 
-daily %>% 
+daily |>  
   mutate(ID_coords = as.factor(ID_coords),
-         year = factor(year)) %>% 
-  filter(month %in% spring.months) %>% 
-  mutate(event = ifelse(Tmin < 0, 1, 0)) %>% # NAs will be 0 
-  group_by(ID_coords, year) %>% 
-  mutate(n_frost = sum(event)) %>% # No. of days with minimum temperature < 0 per year
-  filter(event == 1) %>% 
-  group_by(ID_coords, year, n_frost) %>% 
-  summarise(Tmin_frost_avg = mean(Tmin)/100) %>% # Mean minimum temperature of frost days
-  ungroup() %>% 
-  complete(ID_coords, year, fill = list(n_frost = 0, Tmin_frost_avg = NA)) %>% 
+         year = factor(year)) |>  
+  filter(month %in% spring.months) |>  
+  mutate(event = ifelse(Tmin < 0, 1, 0)) |>  # NAs will be 0 
+  group_by(ID_coords, year) |>  
+  mutate(n_frost = sum(event)) |>  # No. of days with minimum temperature < 0 per year
+  filter(event == 1) |>  
+  group_by(ID_coords, year, n_frost) |>  
+  summarise(Tmin_frost_avg = mean(Tmin)/100) |>  # Mean minimum temperature of frost days
+  ungroup() |>  
+  complete(ID_coords, year, fill = list(n_frost = 0, Tmin_frost_avg = NA)) |>  
   kable()
 
 ```
 
 <br>
-Dry periods: consecutive days with no precipitation. 
+A dry periods can be defined as a specific number of consecutive days with no precipitation. 
 
 ```{r}
 
@@ -179,19 +180,19 @@ threshold <- 30 #threshold in days to count extreme long events of no-rain
 
 daily %>%  
   mutate(event = ifelse(Prcp < 0.01, 1, 0), # NAs will be 0 
-         start = c(1, diff(event) != 0)) %>% 
-    group_by(ID_coords, year) %>% 
-    mutate(run = cumsum(start)) %>% 
-    filter(event == 1) %>% 
-    group_by(ID_coords, year, run) %>% 
-    summarise(length = n()) %>% 
-    ungroup(run) %>% 
+         start = c(1, diff(event) != 0)) |>  
+    group_by(ID_coords, year) |>  
+    mutate(run = cumsum(start)) |> 
+    filter(event == 1) |>  
+    group_by(ID_coords, year, run) |>  
+    summarise(length = n()) |>  
+    ungroup(run) |> 
     summarise(max_days_norain = max(length), # Maximum length of periods of consecutive days without rain per year
               mean_days_norain = mean(length), 
-              nevents = sum(length > threshold)) %>% # No. of events per year
-  ungroup() %>% 
+              nextreme_events = sum(length > threshold)) %>% # No. of events per year
+  ungroup() |>  
   complete(ID_coords, year, 
-           fill = list(max_days_norain = NA, mean_days_norain = NA, nevents = 0)) %>% 
+           fill = list(max_days_norain = NA, mean_days_norain = NA, nevents = 0))  |>  
   kable(digits = 1)
 
 ```

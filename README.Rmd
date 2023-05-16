@@ -62,9 +62,9 @@ kable(prec)
 
 To obtain a (multi-layer) raster of daily climatic values for an area:
 
-```{r message=FALSE}
+```{r message=FALSE, fig,height=3}
 library(terra)
-library(tidyverse)
+library(ggplot2)
 
 sobrarbe <- mapSpain::esp_get_comarca(comarca = "Sobrarbe")
 sobrarbe <- project(vect(sobrarbe), "EPSG:4326")
@@ -79,7 +79,7 @@ sobrarbetemp <- crop(sobrarbetemp, sobrarbe, mask = TRUE)
 sobrarbe_df <- as.data.frame(geom(sobrarbe))
 sobrarbetemp_df <- terra::as.data.frame(sobrarbetemp, xy = TRUE)
 sobrarbetemp_tidydf <- sobrarbetemp_df |> 
-  pivot_longer(cols = `2020-05-01`:`2020-05-03`, names_to = "dates", values_to = "tmax")
+  tidyr::pivot_longer(cols = `2020-05-01`:`2020-05-03`, names_to = "dates", values_to = "tmax")
 
 ggplot() +
   geom_vline(xintercept = 0, color = "gray90", linewidth = 1) +

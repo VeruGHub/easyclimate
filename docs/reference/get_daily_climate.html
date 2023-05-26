@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">easyclimate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -74,6 +74,7 @@
 <span>  climatic_var <span class="op">=</span> <span class="st">"Prcp"</span>,</span>
 <span>  period <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  output <span class="op">=</span> <span class="st">"df"</span>,</span>
+<span>  version <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  check_connection <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -107,6 +108,10 @@ Various elements can be concatenated in the vector
 <dd><p>Character. Either "df", which returns a dataframe with daily climatic values
 for each point/polygon, or "raster", which returns <code><a href="https://rdrr.io/pkg/terra/man/SpatRaster-class.html" class="external-link">terra::SpatRaster()</a></code> objects (within a list when more than one
 climatic variable is downloaded).</p></dd>
+
+
+<dt>version</dt>
+<dd><p>Numeric. Version of the climate data. It uses the latest version (4) by default.</p></dd>
 
 
 <dt>check_connection</dt>

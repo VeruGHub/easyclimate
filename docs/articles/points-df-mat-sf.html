@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">easyclimate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -102,9 +102,9 @@ follow the instructions in <a href="https://github.com/VeruGHub/easyclimate" cla
 <p><br></p>
 <p>In this tutorial we will work through the basics of using easyclimate
 with coordinate points. You can enter coordinates as a
-<code>data.frame</code>, <code>matrix</code>, or <code>sf</code> object.
-At the end we will have a data frame with climate variables for each
-point.</p>
+<code>data.frame</code>, <code>matrix</code>, <code>sf</code> or
+<code>SpatVector</code> object. At the end we will have a data frame
+with climate variables for each point.</p>
 <p><br></p>
 <div class="section level2">
 <h2 id="example-1-introducing-coordinates-as-a-data-frame">Example 1: Introducing coordinates as a data frame<a class="anchor" aria-label="anchor" href="#example-1-introducing-coordinates-as-a-data-frame"></a>
@@ -131,17 +131,16 @@ simulating coordinates for three random sites in southern Spain</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="points-df-mat-sf_files/figure-html/unnamed-chunk-1-1.png" width="576"></p>
 <p><br></p>
-<p>Now, download the climatic data for the selected locations. It is
-very simple, all you have to do is use the function
-<code>get_daily_climate</code>, specify the period
-(e.g. <code>2008-05-25</code> for a single day or <code>2008:2010</code>
-for several years), and the variables to be downloaded (precipitation
-<code>Prcp</code>, minimum temperature <code>Tmin</code> or maximum
-temperature <code>Tmax</code>).</p>
+<p>Now, download the climatic data for the selected locations. All you
+have to do is use the function <code>get_daily_climate</code>,
+specifying the period (e.g. <code>2008-05-25</code> for a single day or
+<code>2008:2010</code> for several years), and the variables to be
+downloaded (precipitation <code>Prcp</code>, minimum temperature
+<code>Tmin</code> or maximum temperature <code>Tmax</code>).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># to know how much it takes to download</span></span>
-<span><span class="co">## [1] "2022-10-27 21:48:33 CEST"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># to know how much time it takes to download</span></span>
+<span><span class="co">## [1] "2023-05-26 09:41:47 EDT"</span></span>
 <span></span>
 <span><span class="va">daily</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span></span>
 <span>  coords <span class="op">=</span> <span class="va">coords</span>, </span>
@@ -149,7 +148,7 @@ temperature <code>Tmax</code>).</p>
 <span>  climatic_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Prcp"</span>,<span class="st">"Tmin"</span>,<span class="st">"Tmax"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">## [1] "2022-10-27 21:50:57 CEST"</span></span>
+<span><span class="co">## [1] "2023-05-26 09:46:15 EDT"</span></span>
 <span></span>
 <span><span class="fu">kable</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/headtail.html" class="external-link">head</a></span><span class="op">(</span><span class="va">daily</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
@@ -165,64 +164,64 @@ temperature <code>Tmax</code>).</p>
 <tbody>
 <tr class="odd">
 <td align="right">1</td>
-<td align="right">-5.056158</td>
-<td align="right">37.05587</td>
+<td align="right">-5.52957</td>
+<td align="right">37.83773</td>
 <td align="left">2008-01-01</td>
-<td align="right">0.13</td>
-<td align="right">3.69</td>
-<td align="right">13.39</td>
+<td align="right">5.53</td>
+<td align="right">1.39</td>
+<td align="right">11.71</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
-<td align="right">-5.056158</td>
-<td align="right">37.05587</td>
+<td align="right">-5.52957</td>
+<td align="right">37.83773</td>
 <td align="left">2008-01-02</td>
-<td align="right">17.02</td>
-<td align="right">6.73</td>
-<td align="right">12.73</td>
+<td align="right">22.96</td>
+<td align="right">6.08</td>
+<td align="right">13.56</td>
 </tr>
 <tr class="odd">
 <td align="right">1</td>
-<td align="right">-5.056158</td>
-<td align="right">37.05587</td>
+<td align="right">-5.52957</td>
+<td align="right">37.83773</td>
 <td align="left">2008-01-03</td>
-<td align="right">9.28</td>
-<td align="right">5.44</td>
-<td align="right">11.70</td>
+<td align="right">5.28</td>
+<td align="right">5.67</td>
+<td align="right">12.19</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
-<td align="right">-5.056158</td>
-<td align="right">37.05587</td>
+<td align="right">-5.52957</td>
+<td align="right">37.83773</td>
 <td align="left">2008-01-04</td>
 <td align="right">0.00</td>
-<td align="right">3.13</td>
-<td align="right">10.74</td>
+<td align="right">3.19</td>
+<td align="right">11.39</td>
 </tr>
 <tr class="odd">
 <td align="right">1</td>
-<td align="right">-5.056158</td>
-<td align="right">37.05587</td>
+<td align="right">-5.52957</td>
+<td align="right">37.83773</td>
 <td align="left">2008-01-05</td>
 <td align="right">0.00</td>
-<td align="right">3.17</td>
-<td align="right">13.01</td>
+<td align="right">3.42</td>
+<td align="right">12.98</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
-<td align="right">-5.056158</td>
-<td align="right">37.05587</td>
+<td align="right">-5.52957</td>
+<td align="right">37.83773</td>
 <td align="left">2008-01-06</td>
 <td align="right">0.00</td>
-<td align="right">9.17</td>
-<td align="right">15.45</td>
+<td align="right">9.74</td>
+<td align="right">14.85</td>
 </tr>
 </tbody>
 </table>
 <p>Here we extract different components of the date.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">daily</span> <span class="op">&lt;-</span> <span class="va">daily</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span><span class="va">daily</span> <span class="op">&lt;-</span> <span class="va">daily</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span>,</span>
 <span>    month <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/weekday.POSIXt.html" class="external-link">months</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span>,</span>
@@ -232,7 +231,7 @@ temperature <code>Tmax</code>).</p>
 <p>Finally, you can visualize the daily climate results. For example,
 let’s plot the precipitation for one of the sites:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">clim_site1</span> <span class="op">&lt;-</span> <span class="va">daily</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">clim_site1</span> <span class="op">&lt;-</span> <span class="va">daily</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ID_coords</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">clim_site1</span><span class="op">)</span> <span class="op">+</span></span>
@@ -246,25 +245,27 @@ let’s plot the precipitation for one of the sites:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">temp_long</span> <span class="op">&lt;-</span> <span class="va">daily</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Tmean <span class="op">=</span> <span class="op">(</span><span class="va">Tmin</span> <span class="op">+</span> <span class="va">Tmax</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span><span class="va">temp_long</span> <span class="op">&lt;-</span> <span class="va">daily</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Tmean <span class="op">=</span> <span class="op">(</span><span class="va">Tmin</span> <span class="op">+</span> <span class="va">Tmax</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span></span>
 <span>    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Tmin"</span>, <span class="st">"Tmax"</span>, <span class="st">"Tmean"</span><span class="op">)</span>,</span>
 <span>    names_to <span class="op">=</span> <span class="st">"temp_vars"</span>,</span>
 <span>    values_to <span class="op">=</span> <span class="st">"temp_values"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">temp_long</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">temp_vars</span>, y <span class="op">=</span> <span class="va">temp_values</span>, fill <span class="op">=</span> <span class="va">temp_vars</span>, color <span class="op">=</span> <span class="va">temp_vars</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html" class="external-link">geom_violin</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span>, alpha <span class="op">=</span> <span class="fl">.5</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">temp_long</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">ID_coords</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">temp_values</span>, fill <span class="op">=</span> <span class="va">temp_vars</span>, color <span class="op">=</span> <span class="va">temp_vars</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html" class="external-link">geom_violin</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span>, alpha <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#C54A52"</span>, <span class="st">"#FAFBC5"</span>, <span class="st">"#4B8AB8"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#C54A52"</span>, <span class="st">"#FAFBC5"</span>, <span class="st">"#4B8AB8"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Temperature (ºC)"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="points-df-mat-sf_files/figure-html/unnamed-chunk-5-1.png" width="576"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">temp_long</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">temp_values</span>, color <span class="op">=</span> <span class="va">temp_vars</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">.1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html" class="external-link">scale_color_discrete</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Variables"</span>, </span>
-<span>                       guide <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>override.aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">.3</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Variables"</span>,</span>
+<span>                     values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#C54A52"</span>, <span class="st">"#FAFBC5"</span>, <span class="st">"#4B8AB8"</span><span class="op">)</span>,</span>
+<span>                     guide <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>override.aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Temperature (ºC)"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Date"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="points-df-mat-sf_files/figure-html/unnamed-chunk-5-2.png" width="576"></p>
@@ -282,7 +283,7 @@ matrices!</p>
 <span><span class="va">coords_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/coerce.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">coords</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">## [1] "2022-10-27 21:50:58 CEST"</span></span>
+<span><span class="co">## [1] "2023-05-26 09:46:17 EDT"</span></span>
 <span></span>
 <span><span class="va">mat_prcp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span> </span>
 <span>  coords <span class="op">=</span> <span class="va">coords_mat</span>, </span>
@@ -291,7 +292,7 @@ matrices!</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">## [1] "2022-10-27 21:51:07 CEST"</span></span>
+<span><span class="co">## [1] "2023-05-26 09:46:43 EDT"</span></span>
 <span></span>
 <span><span class="fu">kable</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/headtail.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mat_prcp</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
@@ -305,43 +306,43 @@ matrices!</p>
 <tbody>
 <tr class="odd">
 <td align="right">1</td>
-<td align="right">-5.056158</td>
-<td align="right">37.05587</td>
+<td align="right">-5.52957</td>
+<td align="right">37.83773</td>
 <td align="left">2008-01-01</td>
-<td align="right">0.13</td>
+<td align="right">5.53</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
-<td align="right">-5.056158</td>
-<td align="right">37.05587</td>
+<td align="right">-5.52957</td>
+<td align="right">37.83773</td>
 <td align="left">2008-01-02</td>
-<td align="right">17.02</td>
+<td align="right">22.96</td>
 </tr>
 <tr class="odd">
 <td align="right">1</td>
-<td align="right">-5.056158</td>
-<td align="right">37.05587</td>
+<td align="right">-5.52957</td>
+<td align="right">37.83773</td>
 <td align="left">2008-01-03</td>
-<td align="right">9.28</td>
+<td align="right">5.28</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
-<td align="right">-5.056158</td>
-<td align="right">37.05587</td>
+<td align="right">-5.52957</td>
+<td align="right">37.83773</td>
 <td align="left">2008-01-04</td>
 <td align="right">0.00</td>
 </tr>
 <tr class="odd">
 <td align="right">1</td>
-<td align="right">-5.056158</td>
-<td align="right">37.05587</td>
+<td align="right">-5.52957</td>
+<td align="right">37.83773</td>
 <td align="left">2008-01-05</td>
 <td align="right">0.00</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
-<td align="right">-5.056158</td>
-<td align="right">37.05587</td>
+<td align="right">-5.52957</td>
+<td align="right">37.83773</td>
 <td align="left">2008-01-06</td>
 <td align="right">0.00</td>
 </tr>
@@ -349,15 +350,15 @@ matrices!</p>
 </table>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">clim_mat</span> <span class="op">&lt;-</span> <span class="va">mat_prcp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span><span class="va">mat_prcp</span> <span class="op">&lt;-</span> <span class="va">mat_prcp</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span>,</span>
 <span>    month <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/weekday.POSIXt.html" class="external-link">months</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span>,</span>
 <span>    year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">date</span>, format <span class="op">=</span> <span class="st">"%y"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html" class="external-link">relocate</a></span><span class="op">(</span><span class="va">lon</span>, <span class="va">lat</span>, <span class="va">date</span>, <span class="va">year</span>, <span class="va">month</span>, <span class="va">Prcp</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">clim_mat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">Prcp</span>, color <span class="op">=</span> <span class="va">Prcp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mat_prcp</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">Prcp</span>, color <span class="op">=</span> <span class="va">Prcp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_continuous.html" class="external-link">scale_color_continuous</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Precipitation (mm)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -369,8 +370,8 @@ matrices!</p>
 <code class="sourceCode R"><span></span>
 <span><span class="va">month_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ISOdatetime.html" class="external-link">ISOdate</a></span><span class="op">(</span><span class="fl">2021</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">12</span>, <span class="fl">1</span><span class="op">)</span>, <span class="st">"%B"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">clim_mat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">month</span>, <span class="fu"><a href="https://rdrr.io/pkg/terra/man/flip.html" class="external-link">rev</a></span><span class="op">(</span><span class="va">month_name</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span><span class="va">mat_prcp</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">month</span>, <span class="fu"><a href="https://rdrr.io/pkg/terra/man/flip.html" class="external-link">rev</a></span><span class="op">(</span><span class="va">month_name</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">month</span>, y <span class="op">=</span> <span class="va">Prcp</span>, color <span class="op">=</span> <span class="va">month</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html" class="external-link">geom_jitter</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span>, alpha <span class="op">=</span> <span class="fl">.3</span>, width <span class="op">=</span> <span class="fl">.3</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -403,7 +404,9 @@ retrieve minimum temperature for a single day (1 January 2001).</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/borders.html" class="external-link">borders</a></span><span class="op">(</span>regions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Spain"</span>, <span class="st">"Portugal"</span>, <span class="st">"France"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">sf_tmin</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lon</span>, y <span class="op">=</span> <span class="va">lat</span>, color <span class="op">=</span> <span class="va">Tmin</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_fixed</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">2</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">36</span>, <span class="fl">44</span><span class="op">)</span>, ratio <span class="op">=</span> <span class="fl">1.3</span><span class="op">)</span> <span class="op">+</span>  </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_continuous.html" class="external-link">scale_color_continuous</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"viridis"</span>, name <span class="op">=</span> <span class="st">"Minimum\ntemperature (ºC)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_color_gradient2</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Minimum\ntemperature (ºC)"</span>,</span>
+<span>                        low <span class="op">=</span> <span class="st">"#4B8AB8"</span>, mid <span class="op">=</span> <span class="st">"#FAFBC5"</span>, high <span class="op">=</span> <span class="st">"#C54A52"</span>,</span>
+<span>                        midpoint <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">sf_tmin</span><span class="op">$</span><span class="va">Tmin</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Latitude"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Longitude"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="points-df-mat-sf_files/figure-html/unnamed-chunk-7-1.png" width="576"></p>
@@ -411,7 +414,7 @@ retrieve minimum temperature for a single day (1 January 2001).</p>
 <div class="section level3">
 <h3 id="learn-more">Learn more<a class="anchor" aria-label="anchor" href="#learn-more"></a>
 </h3>
-<p>Now you know how to extract a data frame with different climatic
+<p>Now you know how to obtain a data frame with different climatic
 variables with <code>easyclimate</code>, using point coordinates in
 different formats and downloading data for multiple locations and
 periods. Check out this <a href="https://verughub.github.io/easyclimate/articles/polygons-raster.html" class="external-link">other

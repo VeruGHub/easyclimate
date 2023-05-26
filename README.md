@@ -30,7 +30,9 @@ Hasenauer](https://doi.org/10.1002/joc.4436) and further developed by W.
 Rammer, C. Pucher & M. Neumann (see [this
 document](https://github.com/VeruGHub/easyclimate/tree/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf)
 for more details on the development and characteristics of the climatic
-dataset, and this document for the updates of the last version - v4).
+dataset, and [this
+document](https://doi.org/10.6084/m9.figshare.22962671.v1) for the
+updates of the last version - v4).
 
 In this R package we implemented [Cloud-Optimised
 Geotiffs](https://www.cogeo.org/)
@@ -67,9 +69,9 @@ prec <- get_daily_climate(coords,
 
 | ID_coords |   lon |  lat | date       | Prcp |
 |----------:|------:|-----:|:-----------|-----:|
-|         1 | -5.36 | 37.4 | 2001-01-01 | 8.64 |
+|         1 | -5.36 | 37.4 | 2001-01-01 | 8.30 |
 |         1 | -5.36 | 37.4 | 2001-01-02 | 0.00 |
-|         1 | -5.36 | 37.4 | 2001-01-03 | 2.93 |
+|         1 | -5.36 | 37.4 | 2001-01-03 | 3.38 |
 
 <br>
 
@@ -111,7 +113,7 @@ ggplot() +
         strip.text = element_text(hjust = 0))
 ```
 
-<img src="man/figures/README-fig-1.png" width="100%" />
+![](man/figures/README-unnamed-chunk-3-1.png)<!-- -->
 
 <br> Visit the articles of the [package
 website](https://verughub.github.io/easyclimate/) for more extended
@@ -132,9 +134,9 @@ Pucher C, Neumann M (2022). *Description and Evaluation of Downscaled
 Daily Climate Data Version 3*. \<URL:
 <https://doi.org/10.6084/m9.figshare.19070162.v1>\>.
 
-Pucher C, Neumann M (2023). *Description and Evaluation of Downscaled
-Daily Climate Data Version 4*. \<URL:
-<https://doi.org/10.6084/m9.figshare.19070162.v1>\>.
+Pucher C (2023). *Description and Evaluation of Downscaled Daily Climate
+Data Version 4*. \<URL:
+<https://doi.org/10.6084/m9.figshare.22962671.v1>\>.
 
 Cruz-Alonso V, Pucher C, Ratcliffe S, Ruiz-Benito P, Astigarraga J,
 Neumann M, Hasenauer H, Rodríguez-Sánchez F (2023). “The easyclimate R

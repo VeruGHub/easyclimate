@@ -10,7 +10,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%",
   cache = TRUE
 )
 
@@ -28,7 +27,7 @@ knitr::opts_chunk$set(
 
 Get high-resolution (1 km) daily climate data (precipitation, minimum and maximum temperatures) for Europe from the European climatic database hosted at [University of Natural Resources and Life Sciences, Vienna, Austria](https://boku.ac.at/en/wabo/waldbau/wir-ueber-uns/daten). Data are currently available from 1950 to 2022.
 
-This climatic dataset was originally built by [A. Moreno & H. Hasenauer](https://doi.org/10.1002/joc.4436) and further developed by W. Rammer, C. Pucher & M. Neumann (see [this document](https://github.com/VeruGHub/easyclimate/tree/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf) for more details on the development and characteristics of the climatic dataset, and this document for the updates of the last version - v4).
+This climatic dataset was originally built by [A. Moreno & H. Hasenauer](https://doi.org/10.1002/joc.4436) and further developed by W. Rammer, C. Pucher & M. Neumann (see [this document](https://github.com/VeruGHub/easyclimate/tree/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf) for more details on the development and characteristics of the climatic dataset, and [this document](https://doi.org/10.6084/m9.figshare.22962671.v1) for the updates of the last version - v4).
 
 In this R package we implemented [Cloud-Optimised Geotiffs](https://www.cogeo.org/) ([v3](https://github.com/VeruGHub/easyclimate/blob/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf)) so that we can obtain daily climate data for thousands of sites/days within minutes, without having to download huge rasters. But if you need to obtain data for large areas, please download the rasters from the FTP server (<ftp://palantir.boku.ac.at/Public/ClimateData/>) and extract the values locally rather than using this package, so as not to saturate the file server. For that, you may use a FTP client such as [FileZilla](https://filezilla-project.org/).
 
@@ -62,7 +61,7 @@ kable(prec)
 
 To obtain a (multi-layer) raster of daily climatic values for an area:
 
-```{r message=FALSE, fig,height=3}
+```{r message=FALSE, fig.width = 8, fig.height = 3}
 library(terra)
 library(ggplot2)
 

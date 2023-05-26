@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">easyclimate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -110,7 +110,7 @@ store it in a dataframe.</p>
 <p>Here we calculate the daily mean temperature:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">daily</span> <span class="op">&lt;-</span> <span class="va">daily</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">daily</span> <span class="op">&lt;-</span> <span class="va">daily</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Tmean <span class="op">=</span> <span class="op">(</span><span class="va">Tmin</span> <span class="op">+</span> <span class="va">Tmax</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span>, <span class="co">#Daily mean temperature</span></span>
 <span>         date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span>,</span>
 <span>         month <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">date</span>, format <span class="op">=</span> <span class="st">"%m"</span><span class="op">)</span>,</span>
@@ -125,21 +125,21 @@ store it in a dataframe.</p>
 base R:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">daily</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">daily</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Tmin.site <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Tmin</span><span class="op">)</span>,</span>
 <span>            Tmean.site <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Tmean</span><span class="op">)</span>,</span>
 <span>            Tmax.site <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Tmax</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">## <span style="color: #949494;"># A tibble: 1 × 4</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># A tibble: 1 x 4</span></span></span>
 <span><span class="co">##   ID_coords Tmin.site Tmean.site Tmax.site</span></span>
-<span><span class="co">##       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">##       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">1</span>         1      11.9       18.4      24.9</span></span>
 <span></span>
-<span><span class="va">daily</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">daily</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Tmin.year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Tmin</span><span class="op">)</span>,</span>
 <span>            Tmean.year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Tmean</span><span class="op">)</span>,</span>
-<span>            Tmax.year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Tmax</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>            Tmax.year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Tmax</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">kable</span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -157,7 +157,7 @@ base R:</p>
 </tr>
 <tr class="even">
 <td align="left">2002</td>
-<td align="right">11.9</td>
+<td align="right">12.0</td>
 <td align="right">18.3</td>
 <td align="right">24.6</td>
 </tr>
@@ -170,7 +170,7 @@ base R:</p>
 <tr class="even">
 <td align="left">2004</td>
 <td align="right">11.7</td>
-<td align="right">18.2</td>
+<td align="right">18.3</td>
 <td align="right">24.8</td>
 </tr>
 <tr class="odd">
@@ -183,11 +183,11 @@ base R:</p>
 </table>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">daily</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">daily</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Tmin.month <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Tmin</span><span class="op">)</span>,</span>
 <span>            Tmean.month <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Tmean</span><span class="op">)</span>,</span>
-<span>            Tmax.month <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Tmax</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>            Tmax.month <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Tmax</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">kable</span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -199,7 +199,7 @@ base R:</p>
 <tbody>
 <tr class="odd">
 <td align="left">01</td>
-<td align="right">4.6</td>
+<td align="right">4.7</td>
 <td align="right">10.3</td>
 <td align="right">15.9</td>
 </tr>
@@ -213,25 +213,25 @@ base R:</p>
 <td align="left">03</td>
 <td align="right">8.8</td>
 <td align="right">14.5</td>
-<td align="right">20.2</td>
+<td align="right">20.3</td>
 </tr>
 <tr class="even">
 <td align="left">04</td>
-<td align="right">9.7</td>
-<td align="right">16.3</td>
+<td align="right">9.8</td>
+<td align="right">16.4</td>
 <td align="right">23.0</td>
 </tr>
 <tr class="odd">
 <td align="left">05</td>
-<td align="right">12.8</td>
+<td align="right">12.9</td>
 <td align="right">19.9</td>
-<td align="right">26.9</td>
+<td align="right">27.0</td>
 </tr>
 <tr class="even">
 <td align="left">06</td>
 <td align="right">17.6</td>
-<td align="right">25.5</td>
-<td align="right">33.4</td>
+<td align="right">25.6</td>
+<td align="right">33.5</td>
 </tr>
 <tr class="odd">
 <td align="left">07</td>
@@ -241,42 +241,42 @@ base R:</p>
 </tr>
 <tr class="even">
 <td align="left">08</td>
-<td align="right">19.7</td>
+<td align="right">19.8</td>
 <td align="right">27.5</td>
 <td align="right">35.3</td>
 </tr>
 <tr class="odd">
 <td align="left">09</td>
-<td align="right">17.1</td>
+<td align="right">17.2</td>
 <td align="right">24.0</td>
-<td align="right">30.9</td>
+<td align="right">30.8</td>
 </tr>
 <tr class="even">
 <td align="left">10</td>
-<td align="right">14.0</td>
-<td align="right">19.6</td>
-<td align="right">25.1</td>
+<td align="right">14.1</td>
+<td align="right">19.5</td>
+<td align="right">25.0</td>
 </tr>
 <tr class="odd">
 <td align="left">11</td>
-<td align="right">8.1</td>
+<td align="right">8.2</td>
 <td align="right">13.6</td>
-<td align="right">19.0</td>
+<td align="right">18.9</td>
 </tr>
 <tr class="even">
 <td align="left">12</td>
-<td align="right">6.1</td>
+<td align="right">6.2</td>
 <td align="right">11.1</td>
-<td align="right">16.0</td>
+<td align="right">16.1</td>
 </tr>
 </tbody>
 </table>
 <p>Similarly, you can calculate accumulated precipitation over different
 time periods:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">daily</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>sumPrec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Prcp</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">daily</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>sumPrec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Prcp</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">kable</span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -286,85 +286,124 @@ time periods:</p>
 <tbody>
 <tr class="odd">
 <td align="left">2001</td>
-<td align="right">558</td>
+<td align="right">568</td>
 </tr>
 <tr class="even">
 <td align="left">2002</td>
-<td align="right">571</td>
+<td align="right">564</td>
 </tr>
 <tr class="odd">
 <td align="left">2003</td>
-<td align="right">627</td>
+<td align="right">643</td>
 </tr>
 <tr class="even">
 <td align="left">2004</td>
-<td align="right">381</td>
+<td align="right">373</td>
 </tr>
 <tr class="odd">
 <td align="left">2005</td>
-<td align="right">252</td>
+<td align="right">261</td>
 </tr>
 </tbody>
 </table>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">daily</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>sumPrec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Prcp</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">daily</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>sumPrec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Prcp</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">month</span>, values_from <span class="op">=</span> <span class="va">sumPrec</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">kable</span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
-<th align="left">month</th>
-<th align="right">sumPrec</th>
+<th align="left">year</th>
+<th align="right">01</th>
+<th align="right">02</th>
+<th align="right">03</th>
+<th align="right">04</th>
+<th align="right">05</th>
+<th align="right">06</th>
+<th align="right">07</th>
+<th align="right">08</th>
+<th align="right">09</th>
+<th align="right">10</th>
+<th align="right">11</th>
+<th align="right">12</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">01</td>
-<td align="right">243</td>
-</tr>
-<tr class="even">
-<td align="left">02</td>
-<td align="right">220</td>
-</tr>
-<tr class="odd">
-<td align="left">03</td>
-<td align="right">355</td>
-</tr>
-<tr class="even">
-<td align="left">04</td>
-<td align="right">176</td>
-</tr>
-<tr class="odd">
-<td align="left">05</td>
-<td align="right">138</td>
-</tr>
-<tr class="even">
-<td align="left">06</td>
+<td align="left">2001</td>
+<td align="right">136</td>
+<td align="right">17</td>
+<td align="right">123</td>
 <td align="right">3</td>
-</tr>
-<tr class="odd">
-<td align="left">07</td>
+<td align="right">44</td>
 <td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">36</td>
+<td align="right">76</td>
+<td align="right">65</td>
+<td align="right">68</td>
 </tr>
 <tr class="even">
-<td align="left">08</td>
+<td align="left">2002</td>
+<td align="right">31</td>
+<td align="right">9</td>
+<td align="right">101</td>
+<td align="right">53</td>
+<td align="right">14</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">80</td>
+<td align="right">32</td>
+<td align="right">141</td>
+<td align="right">100</td>
+</tr>
+<tr class="odd">
+<td align="left">2003</td>
+<td align="right">69</td>
+<td align="right">68</td>
+<td align="right">43</td>
+<td align="right">62</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">30</td>
+<td align="right">195</td>
+<td align="right">77</td>
+<td align="right">96</td>
+</tr>
+<tr class="even">
+<td align="left">2004</td>
+<td align="right">10</td>
+<td align="right">80</td>
+<td align="right">63</td>
+<td align="right">40</td>
+<td align="right">61</td>
+<td align="right">0</td>
+<td align="right">0</td>
 <td align="right">2</td>
+<td align="right">2</td>
+<td align="right">70</td>
+<td align="right">9</td>
+<td align="right">37</td>
 </tr>
 <tr class="odd">
-<td align="left">09</td>
-<td align="right">146</td>
-</tr>
-<tr class="even">
-<td align="left">10</td>
-<td align="right">475</td>
-</tr>
-<tr class="odd">
-<td align="left">11</td>
-<td align="right">305</td>
-</tr>
-<tr class="even">
-<td align="left">12</td>
-<td align="right">325</td>
+<td align="left">2005</td>
+<td align="right">0</td>
+<td align="right">58</td>
+<td align="right">22</td>
+<td align="right">20</td>
+<td align="right">18</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">103</td>
+<td align="right">14</td>
+<td align="right">27</td>
 </tr>
 </tbody>
 </table>
@@ -374,17 +413,17 @@ time periods:</p>
 <h2 id="climatic-anomalies">Climatic anomalies<a class="anchor" aria-label="anchor" href="#climatic-anomalies"></a>
 </h2>
 <p>Sometimes it can be useful to calculate the deviation of climate
-values from a value from a reference period. For example, if we consider
-as the reference the mean value for the period 2001-2005, we can
-calculate the deviations per site and year as follows:</p>
+values from a reference value. For example, if we consider as the
+reference the mean value for the period 2001-2005, we can calculate the
+deviations per site and year as follows:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">daily</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>   </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>avgTm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Tmean</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>refTm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">avgTm</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co">#Reference mean temperature</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>devTm <span class="op">=</span> <span class="va">avgTm</span> <span class="op">-</span> <span class="va">refTm</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">daily</span> <span class="op">|&gt;</span>    </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>avgTm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Tmean</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>refTm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">avgTm</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="co">#Reference mean temperature</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>devTm <span class="op">=</span> <span class="va">avgTm</span> <span class="op">-</span> <span class="va">refTm</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
 <span>  <span class="fu">kable</span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -419,7 +458,7 @@ calculate the deviations per site and year as follows:</p>
 <tr class="even">
 <td align="right">1</td>
 <td align="left">2004</td>
-<td align="right">18.2</td>
+<td align="right">18.3</td>
 <td align="right">18.4</td>
 <td align="right">-0.2</td>
 </tr>
@@ -434,12 +473,12 @@ calculate the deviations per site and year as follows:</p>
 </table>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">daily</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>   </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>sumPrec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Prcp</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>refPrec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">sumPrec</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co">#Reference precipitation</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>devPrec <span class="op">=</span><span class="va">sumPrec</span> <span class="op">-</span> <span class="va">refPrec</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">daily</span> <span class="op">|&gt;</span>    </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>sumPrec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Prcp</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>refPrec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">sumPrec</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="co">#Reference precipitation</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>devPrec <span class="op">=</span><span class="va">sumPrec</span> <span class="op">-</span> <span class="va">refPrec</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
 <span>  <span class="fu">kable</span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -453,37 +492,37 @@ calculate the deviations per site and year as follows:</p>
 <tr class="odd">
 <td align="right">1</td>
 <td align="left">2001</td>
-<td align="right">558</td>
-<td align="right">478</td>
-<td align="right">81</td>
+<td align="right">568</td>
+<td align="right">482</td>
+<td align="right">86</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
 <td align="left">2002</td>
-<td align="right">571</td>
-<td align="right">478</td>
-<td align="right">93</td>
+<td align="right">564</td>
+<td align="right">482</td>
+<td align="right">82</td>
 </tr>
 <tr class="odd">
 <td align="right">1</td>
 <td align="left">2003</td>
-<td align="right">627</td>
-<td align="right">478</td>
-<td align="right">149</td>
+<td align="right">643</td>
+<td align="right">482</td>
+<td align="right">161</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
 <td align="left">2004</td>
-<td align="right">381</td>
-<td align="right">478</td>
-<td align="right">-97</td>
+<td align="right">373</td>
+<td align="right">482</td>
+<td align="right">-109</td>
 </tr>
 <tr class="odd">
 <td align="right">1</td>
 <td align="left">2005</td>
-<td align="right">252</td>
-<td align="right">478</td>
-<td align="right">-226</td>
+<td align="right">261</td>
+<td align="right">482</td>
+<td align="right">-221</td>
 </tr>
 </tbody>
 </table>
@@ -493,9 +532,9 @@ calculate the deviations per site and year as follows:</p>
 <h2 id="climatic-events">Climatic events<a class="anchor" aria-label="anchor" href="#climatic-events"></a>
 </h2>
 <p>Having daily values allows us to calculate climatic indices such as
-the number of consecutive days above a given temperature threshold
-(e.g. heat waves or growing degree days), the number of spring frosts or
-the number of consecutive days without rain.</p>
+the number of consecutive days above a given temperature (e.g. heat
+waves or growing degree days), the number of spring frosts or the number
+of consecutive days without rain.</p>
 <p><br></p>
 <p>Let’s start with an example on heat waves, or number of days with
 maximum temperatures above a given threshold:</p>
@@ -505,20 +544,20 @@ maximum temperatures above a given threshold:</p>
 <span></span>
 <span><span class="va">threshold</span> <span class="op">&lt;-</span> <span class="fl">32</span>  </span>
 <span></span>
-<span><span class="va">daily</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">daily</span> <span class="op">|&gt;</span>  </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>ID_coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/is.bool.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">ID_coords</span><span class="op">)</span>,</span>
-<span>         year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>         year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>event <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">Tmax</span> <span class="op">&gt;=</span> <span class="va">threshold</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>, <span class="co"># NAs will be 0 </span></span>
 <span>         start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/pkg/terra/man/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="va">event</span><span class="op">)</span> <span class="op">!=</span> <span class="fl">0</span><span class="op">)</span>,</span>
-<span>         run <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum</a></span><span class="op">(</span><span class="va">start</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">event</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">run</span>, .add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>max_heatwave <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">length</span><span class="op">)</span>, <span class="co"># longest heatwave per year (in days)</span></span>
-<span>              mean_heatwave <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">length</span><span class="op">)</span>, <span class="co"># average length of heatwaves per year</span></span>
-<span>              n_heatwave <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># No. of events per year</span></span>
+<span>         run <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum</a></span><span class="op">(</span><span class="va">start</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">event</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">run</span>, .add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>max_heatwave <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">length</span><span class="op">)</span>, <span class="co"># longest heatwave per year (in days)</span></span>
+<span>            mean_heatwave <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">length</span><span class="op">)</span>, <span class="co"># average length of heatwaves per year</span></span>
+<span>            n_heatwave <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="co"># No. of events per year</span></span>
 <span>  <span class="fu">kable</span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -532,9 +571,9 @@ maximum temperatures above a given threshold:</p>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">2001</td>
-<td align="right">17</td>
-<td align="right">10.5</td>
-<td align="right">95</td>
+<td align="right">28</td>
+<td align="right">14.6</td>
+<td align="right">94</td>
 </tr>
 <tr class="even">
 <td align="left">1</td>
@@ -547,43 +586,43 @@ maximum temperatures above a given threshold:</p>
 <td align="left">1</td>
 <td align="left">2003</td>
 <td align="right">31</td>
-<td align="right">14.5</td>
-<td align="right">94</td>
+<td align="right">14.3</td>
+<td align="right">97</td>
 </tr>
 <tr class="even">
 <td align="left">1</td>
 <td align="left">2004</td>
 <td align="right">30</td>
 <td align="right">15.5</td>
-<td align="right">100</td>
+<td align="right">99</td>
 </tr>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">2005</td>
 <td align="right">27</td>
-<td align="right">15.2</td>
-<td align="right">92</td>
+<td align="right">15.0</td>
+<td align="right">93</td>
 </tr>
 </tbody>
 </table>
-<p><br> Calculating the number of days with spring frosts (minimum
-temperatures below 0):</p>
+<p><br> To calculate the number of days with spring frosts (minimum
+temperatures below 0) we can use the next code:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">spring.months</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"03"</span>,<span class="st">"04"</span>,<span class="st">"05"</span><span class="op">)</span> <span class="co"># March to May</span></span>
 <span></span>
-<span><span class="va">daily</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">daily</span> <span class="op">|&gt;</span>  </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>ID_coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/is.bool.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">ID_coords</span><span class="op">)</span>,</span>
-<span>         year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">month</span> <span class="op"><a href="https://rdrr.io/pkg/terra/man/match.html" class="external-link">%in%</a></span> <span class="va">spring.months</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>event <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">Tmin</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># NAs will be 0 </span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>n_frost <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">event</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># No. of days with minimum temperature &lt; 0 per year</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">event</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span>, <span class="va">n_frost</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Tmin_frost_avg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Tmin</span><span class="op">)</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># Mean minimum temperature of frost days</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/complete.html" class="external-link">complete</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_frost <span class="op">=</span> <span class="fl">0</span>, Tmin_frost_avg <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>         year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">month</span> <span class="op"><a href="https://rdrr.io/pkg/terra/man/match.html" class="external-link">%in%</a></span> <span class="va">spring.months</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>event <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">Tmin</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="co"># NAs will be 0 </span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>n_frost <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">event</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="co"># No. of days with minimum temperature &lt; 0 per year</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">event</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span>, <span class="va">n_frost</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Tmin_frost_avg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Tmin</span><span class="op">)</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span>  <span class="co"># Mean minimum temperature of frost days</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/complete.html" class="external-link">complete</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_frost <span class="op">=</span> <span class="fl">0</span>, Tmin_frost_avg <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
 <span>  <span class="fu">kable</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -615,36 +654,37 @@ temperatures below 0):</p>
 <td align="left">1</td>
 <td align="left">2004</td>
 <td align="right">1</td>
-<td align="right">-0.0049</td>
+<td align="right">-0.0050</td>
 </tr>
 <tr class="odd">
 <td align="left">1</td>
 <td align="left">2005</td>
-<td align="right">0</td>
-<td align="right">NA</td>
+<td align="right">1</td>
+<td align="right">-0.0021</td>
 </tr>
 </tbody>
 </table>
-<p><br> Dry periods: consecutive days with no precipitation.</p>
+<p><br> A dry periods can be defined as a specific number of consecutive
+days with no precipitation.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">threshold</span> <span class="op">&lt;-</span> <span class="fl">30</span> <span class="co">#threshold in days to count extreme long events of no-rain</span></span>
 <span></span>
 <span><span class="va">daily</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>  </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>event <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">Prcp</span> <span class="op">&lt;</span> <span class="fl">0.01</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>, <span class="co"># NAs will be 0 </span></span>
-<span>         start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/pkg/terra/man/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="va">event</span><span class="op">)</span> <span class="op">!=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>run <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum</a></span><span class="op">(</span><span class="va">start</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">event</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span>, <span class="va">run</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="va">run</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>         start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/pkg/terra/man/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="va">event</span><span class="op">)</span> <span class="op">!=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>run <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum</a></span><span class="op">(</span><span class="va">start</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">event</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span>, <span class="va">run</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="va">run</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>max_days_norain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">length</span><span class="op">)</span>, <span class="co"># Maximum length of periods of consecutive days without rain per year</span></span>
 <span>              mean_days_norain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/summarize-generics.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">length</span><span class="op">)</span>, </span>
-<span>              nevents <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">length</span> <span class="op">&gt;</span> <span class="va">threshold</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># No. of events per year</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>              nextreme_events <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">length</span> <span class="op">&gt;</span> <span class="va">threshold</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co"># No. of events per year</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/complete.html" class="external-link">complete</a></span><span class="op">(</span><span class="va">ID_coords</span>, <span class="va">year</span>, </span>
-<span>           fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>max_days_norain <span class="op">=</span> <span class="cn">NA</span>, mean_days_norain <span class="op">=</span> <span class="cn">NA</span>, nevents <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>           fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>max_days_norain <span class="op">=</span> <span class="cn">NA</span>, mean_days_norain <span class="op">=</span> <span class="cn">NA</span>, nevents <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span>  <span class="op">|&gt;</span>  </span>
 <span>  <span class="fu">kable</span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -652,43 +692,43 @@ temperatures below 0):</p>
 <th align="left">year</th>
 <th align="right">max_days_norain</th>
 <th align="right">mean_days_norain</th>
-<th align="right">nevents</th>
+<th align="right">nextreme_events</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="right">1</td>
 <td align="left">2001</td>
-<td align="right">122</td>
-<td align="right">10.1</td>
+<td align="right">124</td>
+<td align="right">10.5</td>
 <td align="right">2</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
 <td align="left">2002</td>
 <td align="right">102</td>
-<td align="right">9.2</td>
+<td align="right">9.9</td>
 <td align="right">1</td>
 </tr>
 <tr class="odd">
 <td align="right">1</td>
 <td align="left">2003</td>
-<td align="right">144</td>
-<td align="right">8.8</td>
+<td align="right">146</td>
+<td align="right">8.9</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
 <td align="left">2004</td>
-<td align="right">75</td>
-<td align="right">11.4</td>
+<td align="right">87</td>
+<td align="right">12.0</td>
 <td align="right">2</td>
 </tr>
 <tr class="odd">
 <td align="right">1</td>
 <td align="left">2005</td>
-<td align="right">98</td>
-<td align="right">15.3</td>
-<td align="right">4</td>
+<td align="right">132</td>
+<td align="right">17.3</td>
+<td align="right">3</td>
 </tr>
 </tbody>
 </table>
@@ -710,7 +750,7 @@ through <code>easyclimate</code>. For example:</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/ClimInd/man/d32.html" class="external-link">d32</a></span><span class="op">(</span><span class="va">Tmax</span><span class="op">)</span></span>
 <span><span class="co">## 2001 2002 2003 2004 2005 </span></span>
-<span><span class="co">##   78   64   70   75   76</span></span></code></pre></div>
+<span><span class="co">##   77   64   72   75   76</span></span></code></pre></div>
 <p><br> Growing degree days:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Tmean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="va">daily</span><span class="op">$</span><span class="va">Tmean</span><span class="op">)</span></span>
@@ -718,7 +758,7 @@ through <code>easyclimate</code>. For example:</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/ClimInd/man/gd4.html" class="external-link">gd4</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Tmean</span>, time.scale <span class="op">=</span> <span class="st">"year"</span><span class="op">)</span> </span>
 <span><span class="co">##     2001     2002     2003     2004     2005 </span></span>
-<span><span class="co">## 5297.595 5204.115 5362.380 5209.020 5228.450</span></span></code></pre></div>
+<span><span class="co">## 5304.165 5211.840 5371.645 5218.365 5234.140</span></span></code></pre></div>
 <p><br> Growing season length:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ClimInd/man/gsl.html" class="external-link">gsl</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">Tmean</span>, time.scale <span class="op">=</span> <span class="st">"year"</span><span class="op">)</span> </span>

@@ -68,33 +68,52 @@ library(ggplot2)
 sobrarbe <- mapSpain::esp_get_comarca(comarca = "Sobrarbe")
 sobrarbe <- project(vect(sobrarbe), "EPSG:4326")
 
-sobrarbetemp <- get_daily_climate(coords = sobrarbe,
-                               climatic_var = "Tmax",
-                               period = "2020-05-01:2020-05-03",
-                               output = "raster")
+sobrarbetemp <- get_daily_climate(
+  coords = sobrarbe,
+  climatic_var = "Tmax",
+  period = "2020-05-01:2020-05-03",
+  output = "raster"
+)
 
 sobrarbetemp <- crop(sobrarbetemp, sobrarbe, mask = TRUE)
 
 sobrarbe_df <- as.data.frame(geom(sobrarbe))
 sobrarbetemp_df <- terra::as.data.frame(sobrarbetemp, xy = TRUE)
-sobrarbetemp_tidydf <- sobrarbetemp_df |> 
-  tidyr::pivot_longer(cols = `2020-05-01`:`2020-05-03`, names_to = "dates", values_to = "tmax")
+sobrarbetemp_tidydf <- sobrarbetemp_df |>
+  tidyr::pivot_longer(
+    cols = `2020-05-01`:`2020-05-03`,
+    names_to = "dates",
+    values_to = "tmax"
+  )
 
 ggplot() +
-  geom_vline(xintercept = 0, color = "gray90", linewidth = 1) +
+  geom_vline(xintercept = 0,
+             color = "gray90",
+             linewidth = 1) +
   geom_tile(data = sobrarbetemp_tidydf, aes(x = x, y = y, fill = tmax),
             alpha = 0.9) +
-  scale_fill_gradient2(low = "#4B8AB8", mid = "#FAFBC5", high = "#C54A52",
-                       midpoint = 15) +
-  facet_wrap(dates~., ncol = 3) +
-  geom_polygon(data = sobrarbe_df, aes(x=x, y=y, group=part), fill = NA,
-               col = "grey30", linewidth = 1) +
+  scale_fill_gradient2(
+    low = "#4B8AB8",
+    mid = "#FAFBC5",
+    high = "#C54A52",
+    midpoint = 15
+  ) +
+  facet_wrap(dates ~ ., ncol = 3) +
+  geom_polygon(
+    data = sobrarbe_df,
+    aes(x = x, y = y, group = part),
+    fill = NA,
+    col = "grey30",
+ linewidth = 1
+) +
   xlab("") + ylab("") +
-  labs(fill = "Maximum\ntemperature (ºC)",) +
-  theme(panel.background = element_rect(fill = "white"),
+  labs(fill = "Maximum\ntemperature (ºC)", ) +
+  theme(
+panel.background = element_rect(fill = "white"),
         panel.grid.major = element_line(color = "grey90"),
         strip.background = element_blank(),
-        strip.text = element_text(hjust = 0))
+        strip.text = element_text(hjust = 0)
+)
 ```
 
 <br> Visit the articles of the [package website](https://verughub.github.io/easyclimate/) for more extended tutorials!

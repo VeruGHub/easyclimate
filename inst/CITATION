@@ -9,7 +9,7 @@ year = "2016",
 journal = "International Journal of Climatology",
 number = "36",
 pages = "1444–1458",
-url = "https://doi.org/10.1002/joc.4436",
+doi = "https://doi.org/10.1002/joc.4436",
 textVersion = paste(
 "Adam Moreno, Hubert Hasenauer. 2016.",
 "Spatial downscaling of European climate data",
@@ -23,11 +23,10 @@ author = personList(
 person("Christoph", "Pucher"),
 person("Mathias", "Neumann")),
 year = "2022",
-url = "https://doi.org/10.6084/m9.figshare.19070162.v1",
+doi = "https://doi.org/10.6084/m9.figshare.19070162.v1",
 textVersion = paste(
 "Christoph Pucher, Mathias Neumann. 2022.",
-"Description and Evaluation of Downscaled Daily Climate Data Version 3.",
-"https://doi.org/10.6084/m9.figshare.19070162.v1")
+"Description and Evaluation of Downscaled Daily Climate Data Version 3.")
 )
 
 citEntry(entry = "manual",
@@ -35,11 +34,10 @@ title = "Description and Evaluation of Downscaled Daily Climate Data Version 4",
 author = personList(
 person("Christoph", "Pucher")),
 year = "2023",
-url = "https://doi.org/10.6084/m9.figshare.22962671.v1",
+doi = "https://doi.org/10.6084/m9.figshare.22962671.v1",
 textVersion = paste(
 "Christoph Pucher. 2023.",
-"Description and Evaluation of Downscaled Daily Climate Data Version 4.",
-"https://doi.org/10.6084/m9.figshare.22962671.v1")
+"Description and Evaluation of Downscaled Daily Climate Data Version 4.")
 )
 
 
@@ -60,6 +58,5 @@ citEntry(entry = "article",
   doi = "https://doi.org/10.1016/j.envsoft.2023.105627",
   textVersion  = paste("Verónica Cruz-Alonso, Christoph Pucher, Sophia Ratcliffe, Paloma Ruiz-Benito, Julen Astigarraga, Mathias Neumann, Hubert Hasenauer, Francisco Rodríguez-Sánchez. 2023",
   "The easyclimate R package: Easy access to high-resolution daily climate data for Europe",
-  "Environmental Modelling & Software, 105627",
-  "https://doi.org/10.1016/j.envsoft.2023.105627")
+  "Environmental Modelling & Software, 105627")
 )

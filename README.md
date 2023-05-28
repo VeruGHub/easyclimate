@@ -11,10 +11,10 @@
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/VeruGHub/easyclimate/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/VeruGHub/easyclimate/actions/workflows/R-CMD-check.yaml)
-<!-- [![Codecov test coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.svg)](https://codecov.io/gh/VeruGHub/easyclimate?branch=master) -->
 [![HitCount](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square)](http://hits.dwyl.com/VeruGHub/easyclimate)
 [![HitCount: unique
 users](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square&show=unique)](http://hits.dwyl.com/VeruGHub/easyclimate)
+<!-- [![Codecov test coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.svg)](https://codecov.io/gh/VeruGHub/easyclimate?branch=master) -->
 
 <!-- badges: end -->
 
@@ -155,19 +155,17 @@ as:
 
 Moreno A, Hasenauer H (2016). “Spatial downscaling of European climate
 data.” *International Journal of Climatology*, 1444–1458.
-<doi:10.1002/joc.4436> <https://doi.org/10.1002/joc.4436>.
+<https://doi.org/10.1002/joc.4436>.
 
 Pucher C, Neumann M (2022). *Description and Evaluation of Downscaled
-Daily Climate Data Version 3*. <doi:10.6084/m9.figshare.19070162.v1>
+Daily Climate Data Version 3*.
 <https://doi.org/10.6084/m9.figshare.19070162.v1>.
 
 Pucher C (2023). *Description and Evaluation of Downscaled Daily Climate
-Data Version 4*. <doi:10.6084/m9.figshare.22962671.v1>
-<https://doi.org/10.6084/m9.figshare.22962671.v1>.
+Data Version 4*. <https://doi.org/10.6084/m9.figshare.22962671.v1>.
 
 Cruz-Alonso V, Pucher C, Ratcliffe S, Ruiz-Benito P, Astigarraga J,
 Neumann M, Hasenauer H, Rodríguez-Sánchez F (2023). “The easyclimate R
 package: Easy access to high-resolution daily climate data for Europe.”
 *Environmental Modelling & Software*, 105627.
-<doi:10.1016/j.envsoft.2023.105627>
 <https://doi.org/10.1016/j.envsoft.2023.105627>.

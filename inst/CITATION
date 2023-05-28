@@ -1,49 +1,42 @@
-citHeader("If you use easyclimate, please cite both the data source and the package as:")
 
-citEntry(entry = "article",
-title = "Spatial downscaling of European climate data",
-author = personList(
-person("Adam", "Moreno"),
-person("Hubert", "Hasenauer")),
-year = "2016",
-journal = "International Journal of Climatology",
-number = "36",
-pages = "1444–1458",
-doi = "https://doi.org/10.1002/joc.4436",
-textVersion = paste(
-"Adam Moreno, Hubert Hasenauer. 2016.",
-"Spatial downscaling of European climate data",
-"International Journal of Climatology, 36: 1444-1458")
+bibentry(
+  mheader = "If you use easyclimate, please cite both the data source and the package as:",
+  bibtype = "Article",
+  title = "Spatial downscaling of European climate data",
+  author = c(
+    person("Adam", "Moreno"),
+    person("Hubert", "Hasenauer")),
+  year = "2016",
+  journal = "International Journal of Climatology",
+  number = "36",
+  pages = "1444–1458",
+  url = "https://doi.org/10.1002/joc.4436"
 )
 
 
-citEntry(entry = "manual",
-title = "Description and Evaluation of Downscaled Daily Climate Data Version 3",
-author = personList(
-person("Christoph", "Pucher"),
-person("Mathias", "Neumann")),
-year = "2022",
-doi = "https://doi.org/10.6084/m9.figshare.19070162.v1",
-textVersion = paste(
-"Christoph Pucher, Mathias Neumann. 2022.",
-"Description and Evaluation of Downscaled Daily Climate Data Version 3.")
+bibentry(
+  bibtype = "Manual",
+  title = "Description and Evaluation of Downscaled Daily Climate Data Version 3",
+  author = c(
+    person("Christoph", "Pucher"),
+    person("Mathias", "Neumann")),
+    year = "2022",
+    url = "https://doi.org/10.6084/m9.figshare.19070162.v1"
 )
 
-citEntry(entry = "manual",
-title = "Description and Evaluation of Downscaled Daily Climate Data Version 4",
-author = personList(
-person("Christoph", "Pucher")),
-year = "2023",
-doi = "https://doi.org/10.6084/m9.figshare.22962671.v1",
-textVersion = paste(
-"Christoph Pucher. 2023.",
-"Description and Evaluation of Downscaled Daily Climate Data Version 4.")
+bibentry(
+  bibtype = "Manual",
+  title = "Description and Evaluation of Downscaled Daily Climate Data Version 4",
+  author = person("Christoph", "Pucher"),
+  year = "2023",
+  url = "https://doi.org/10.6084/m9.figshare.22962671.v1"
 )
 
 
-citEntry(entry = "article",
-  title        = "The easyclimate R package: Easy access to high-resolution daily climate data for Europe",
-  author       = personList(
+bibentry(
+  bibtype = "Article",
+  title = "The easyclimate R package: Easy access to high-resolution daily climate data for Europe",
+  author = c(
   person("Verónica", "Cruz-Alonso", role = c("aut", "cre"), email = "veronica.cral@gmail.com", comment = c(ORCID = "0000-0002-0642-036X")),
   person("Christoph", "Pucher", role = c("aut"), comment = c(ORCID = "0000-0002-9269-1907")),
   person("Sophia", "Ratcliffe", role = c("aut"), comment = c(ORCID = "0000-0001-9284-7900")),
@@ -55,8 +48,5 @@ citEntry(entry = "article",
   journal = "Environmental Modelling & Software",
   pages = "105627",
   year = "2023",
-  doi = "https://doi.org/10.1016/j.envsoft.2023.105627",
-  textVersion  = paste("Verónica Cruz-Alonso, Christoph Pucher, Sophia Ratcliffe, Paloma Ruiz-Benito, Julen Astigarraga, Mathias Neumann, Hubert Hasenauer, Francisco Rodríguez-Sánchez. 2023",
-  "The easyclimate R package: Easy access to high-resolution daily climate data for Europe",
-  "Environmental Modelling & Software, 105627")
+  url = "https://doi.org/10.1016/j.envsoft.2023.105627"
 )

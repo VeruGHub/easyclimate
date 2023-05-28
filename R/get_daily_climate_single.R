@@ -199,7 +199,7 @@ get_daily_climate_single <- function(coords = NULL,
 
   #### Extract ####
 
-  message(paste0("\nDownloading ", climatic_var_single, " data... This process might take several minutes\n"))
+  message(paste0("\nDownloading ", climatic_var_single, " data... This process might take several minutes"))
 
   if (output == "df") {
 
@@ -234,7 +234,11 @@ get_daily_climate_single <- function(coords = NULL,
   ## If output == "raster", return a cropped raster
   if (output == "raster") {
 
-    out <- terra::crop(rasters.sub, coords.spatvec)
+    if (terra::geomtype(coords.spatvec) == "polygons") {
+      out <- terra::crop(rasters.sub, coords.spatvec, mask = TRUE)
+    } else {
+      out <- terra::crop(rasters.sub, coords.spatvec)
+    }
 
     ## Rasters codify NA as very negative values (-32768).
     # So, if value <-9000, it is NA

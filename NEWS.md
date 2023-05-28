@@ -1,3 +1,7 @@
+# easyclimate 0.2.1
+
+* When asking for climate data for a polygon dataset (sf or SpatVector), the output raster is now masked to the extent of the polygon (issue #39).
+
 # easyclimate 0.2.0
 
 * Added new argument "version" to specify the version of the climate data to download (latest version is v4 - available from 1950 to 2022 and using E-Obs 27.0e; previous version is v3 - available from 1950 to 2020 and using E-Obs 17.0e).

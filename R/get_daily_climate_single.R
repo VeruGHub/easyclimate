@@ -112,6 +112,14 @@ get_daily_climate_single <- function(coords = NULL,
     coords.spatvec <- coords
   }
 
+  # If missing CRS, assume lonlat (EPSG:4326)
+  if (terra::crs(coords.spatvec) == "") {
+    terra::crs(coords.spatvec) <- "epsg:4326"
+  }
+
+  stopifnot(terra::crs(coords.spatvec, describe = TRUE)$code == "4326")
+
+
   ## Add ID variable
   coords.spatvec$ID_coords <- seq(from = 1, to = nrow(coords.spatvec), by = 1)
 

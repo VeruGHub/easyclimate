@@ -14,6 +14,9 @@
 #' @keywords internal
 #'
 #' @references
+#' Pucher C. 2023. Description and Evaluation of Downscaled Daily Climate Data Version 4.
+#' https://doi.org/10.6084/m9.figshare.22962671.v1
+#'
 #' Werner Rammer, Christoph Pucher, Mathias Neumann. 2018.
 #' Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2.
 #' ftp://palantir.boku.ac.at/Public/ClimateData/
@@ -21,9 +24,7 @@
 #' Adam Moreno, Hubert Hasenauer. 2016. Spatial downscaling of European climate data.
 #' International Journal of Climatology 36: 1444–1458.
 #'
-#' @examples
-#' \dontrun{
-#' library(easyclimate)
+#' @examplesIf interactive()
 #'
 #' # Coords as matrix
 #' coords <- matrix(c(-5.36, 37.40), ncol = 2)
@@ -58,7 +59,6 @@
 #' # Return dataframe for polygon
 #' ex <- get_daily_climate_single(coords, period = "2001-01-01")
 #'
-#' }
 #'
 #' @author Francisco Rodriguez-Sanchez, Veronica Cruz-Alonso, Sophia Ratcliffe
 

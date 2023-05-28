@@ -3,16 +3,19 @@
 #' Check that the online climate data server is available and working correctly.
 #'
 #' @param climatic_var Optional. One of "Prcp", "Tmin", or "Tmax".
-#' @param year Optional. Year between 1950 and 2020.
+#' @param year Optional. Year between 1950 and 2022.
 #' @param verbose Logical. Print diagnostic messages, or just return TRUE/FALSE?
 #'
 #' @return TRUE if the server seems available, FALSE otherwise.
+#'
+#' @details This function checks access to the latest version of the climatic dataset
+#' (version 4).
+#'
 #' @export
 #'
-#' @examples
-#' \dontrun{
+#' @examplesIf interactive()
 #' check_server()
-#' }
+
 check_server <- function(climatic_var = NULL,
                          year = NULL,
                          verbose = TRUE) {
@@ -22,7 +25,7 @@ check_server <- function(climatic_var = NULL,
   }
 
   if (is.null(year)) {
-    year <- sample(1950:2020, size = 1)
+    year <- sample(1950:2022, size = 1)
   }
 
   cog.url <- build_url(climatic_var_single = climatic_var,

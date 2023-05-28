@@ -13,7 +13,7 @@
 #' with longitude and latitude coordinates, respectively.
 #' @param climatic_var Character. Climatic variables to be downloaded ('Tmax', 'Tmin' or 'Prcp').
 #' Various elements can be concatenated in the vector.
-#' @param period Either numbers (representing years between 1950 and 2020),
+#' @param period Either numbers (representing years between 1950 and 2022),
 #' or dates in "YYYY-MM-DD" format (to obtain data for specific days).
 #' To specify a sequence of years or dates use the format 'start:end' (e.g. YYYY:YYYY or "YYYY-MM-DD:YYYY-MM-DD", see examples).
 #' Various elements can be concatenated in the vector
@@ -22,14 +22,21 @@
 #' for each point/polygon, or "raster", which returns [terra::SpatRaster()] objects (within a list when more than one
 #' climatic variable is downloaded).
 #' @param version Numeric. Version of the climate data. It uses the latest version (4) by default.
+#' The former version (3) is also available, for the sake of reproducibility.
+#' See 'references' for details on the climatic data sets.
 #' @param check_connection Logical. Check the connection to the server before attempting data download?
 #'
-#' @return A data.frame (if output = "df"), a [terra::SpatRaster()] object (if output = "raster"),
-#' or a list of [terra::SpatRaster()] objects (if output = "raster" and there is more than one `climatic_var`).
+#' @return Either:
+#' - A data.frame (if output = "df")
+#' - A [terra::SpatRaster()] object (if output = "raster")
+#' - A list of [terra::SpatRaster()] objects (if output = "raster" and there is more than one `climatic_var`).
 #'
 #' @export
 #'
 #' @references
+#' Pucher C. 2023. Description and Evaluation of Downscaled Daily Climate Data Version 4.
+#' https://doi.org/10.6084/m9.figshare.22962671.v1
+#'
 #' Werner Rammer, Christoph Pucher, Mathias Neumann. 2018.
 #' Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2.
 #' ftp://palantir.boku.ac.at/Public/ClimateData/

@@ -9,7 +9,7 @@ check_server(climatic_var = NULL, year = NULL, verbose = TRUE)
 \arguments{
 \item{climatic_var}{Optional. One of "Prcp", "Tmin", or "Tmax".}
 
-\item{year}{Optional. Year between 1950 and 2020.}
+\item{year}{Optional. Year between 1950 and 2022.}
 
 \item{verbose}{Logical. Print diagnostic messages, or just return TRUE/FALSE?}
 }
@@ -19,8 +19,12 @@ TRUE if the server seems available, FALSE otherwise.
 \description{
 Check that the online climate data server is available and working correctly.
 }
-\examples{
-\dontrun{
-check_server()
+\details{
+This function checks access to the latest version of the climatic dataset
+(version 4).
 }
+\examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+check_server()
+\dontshow{\}) # examplesIf}
 }

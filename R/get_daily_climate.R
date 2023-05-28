@@ -44,9 +44,9 @@
 #' Adam Moreno, Hubert Hasenauer. 2016. Spatial downscaling of European climate data.
 #' International Journal of Climatology 36: 1444–1458.
 #'
-#' @examples
-#' \dontrun{
-#' library(easyclimate)
+#' @author Veronica Cruz-Alonso, Francisco Rodriguez-Sanchez
+#'
+#' @examplesIf interactive()
 #'
 #' # Coords as matrix
 #' coords <- matrix(c(-5.36, 37.40), ncol = 2)
@@ -85,9 +85,6 @@
 #' # Return dataframe for polygon
 #' ex <- get_daily_climate(coords, period = "2001-01-01")
 #'
-#' }
-#'
-#' @author Veronica Cruz-Alonso, Francisco Rodriguez-Sanchez
 
 
 get_daily_climate <- function(coords = NULL,

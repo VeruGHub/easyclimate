@@ -53,8 +53,7 @@ Either:
 Extract daily climate data (temperature and precipitation) for a given set of points or polygons within Europe.
 }
 \examples{
-\dontrun{
-library(easyclimate)
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
 # Coords as matrix
 coords <- matrix(c(-5.36, 37.40), ncol = 2)
@@ -92,9 +91,7 @@ ex <- get_daily_climate(coords, period = "2001-01-01", output = "raster")
 
 # Return dataframe for polygon
 ex <- get_daily_climate(coords, period = "2001-01-01")
-
-}
-
+\dontshow{\}) # examplesIf}
 }
 \references{
 Pucher C. 2023. Description and Evaluation of Downscaled Daily Climate Data Version 4.

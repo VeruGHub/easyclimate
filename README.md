@@ -11,9 +11,9 @@
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/VeruGHub/easyclimate/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/VeruGHub/easyclimate/actions/workflows/R-CMD-check.yaml)
-[![HitCount](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square)](http://hits.dwyl.com/VeruGHub/easyclimate)
+[![HitCount](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square)](https://hits.dwyl.com/VeruGHub/easyclimate)
 [![HitCount: unique
-users](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square&show=unique)](http://hits.dwyl.com/VeruGHub/easyclimate)
+users](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square&show=unique)](https://hits.dwyl.com/VeruGHub/easyclimate)
 <!-- [![Codecov test coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.svg)](https://codecov.io/gh/VeruGHub/easyclimate?branch=master) -->
 
 <!-- badges: end -->
@@ -27,22 +27,26 @@ are currently available from 1950 to 2022.
 This climatic dataset was originally built by [A. Moreno & H.
 Hasenauer](https://doi.org/10.1002/joc.4436) and further developed by W.
 Rammer, C. Pucher & M. Neumann (see [this
-document](https://github.com/VeruGHub/easyclimate/tree/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf)
+document](https://github.com/VeruGHub/easyclimate/blob/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf)
 for more details on the development and characteristics of the climatic
 dataset, and [this
 document](https://doi.org/10.6084/m9.figshare.22962671.v1) for the
 updates of the last version - v4).
 
 In this R package we implemented [Cloud-Optimised
-Geotiffs](https://www.cogeo.org/)
-([v3](https://github.com/VeruGHub/easyclimate/blob/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf))
-so that we can obtain daily climate data for thousands of sites/days
-within minutes, without having to download huge rasters. But if you need
-to obtain data for large areas, please download the rasters from the FTP
-server (<ftp://palantir.boku.ac.at/Public/ClimateData/>) and extract the
-values locally rather than using this package, so as not to saturate the
-file server. For that, you may use a FTP client such as
+Geotiffs](https://www.cogeo.org/) so that we can obtain daily climate
+data for thousands of sites/days within seconds/minutes, without having
+to download huge rasters. But if you need to obtain data for large
+areas, please download the rasters from the FTP server
+(<ftp://palantir.boku.ac.at/Public/ClimateData/>) and extract the values
+locally rather than using this package, so as not to saturate the file
+server. For that, you may use a FTP client such as
 [FileZilla](https://filezilla-project.org/).
+
+For a detailed description of {easyclimate}, please read [this
+paper](https://doi.org/10.1016/j.envsoft.2023.105627) (open access
+version [here](https://doi.org/10.32942/osf.io/mc8uj)) or visit the
+package [website](https://verughub.github.io/easyclimate/).
 
 ## Installation
 

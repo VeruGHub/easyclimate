@@ -12,8 +12,10 @@ test_that("downloading several variables gives expected results from v3", {
 
   # ## Output data.frame
   expect_identical(
-    get_daily_climate(coords.mat, period = "2001-01-01", climatic_var = c("Tmin", "Tmax", "Prcp"),
-                      version = 3),
+    get_daily_climate(coords.mat, period = "2001-01-01",
+                      climatic_var = c("Tmin", "Tmax", "Prcp"),
+                      version = 3,
+                      check_connection = FALSE),
     structure(list(ID_coords = as.double(1:2),
                    lon = c(-5.36, -5.5),
                    lat = c(37.40, 37.5),
@@ -24,8 +26,10 @@ test_that("downloading several variables gives expected results from v3", {
               row.names = c(NA, -2L), class = "data.frame"))
 
   # Output raster
-  output <- get_daily_climate(coords.mat, period = "2001-01-01", climatic_var = c("Tmin", "Tmax", "Prcp"),
-                      output = "raster", version = 3)
+  output <- get_daily_climate(coords.mat, period = "2001-01-01",
+                              climatic_var = c("Tmin", "Tmax", "Prcp"),
+                              output = "raster",
+                              version = 3, check_connection = FALSE)
 
   library(terra)
   expect_true(inherits(output, "list"))
@@ -55,7 +59,9 @@ test_that("downloading several variables gives expected results from v4", {
 
   # ## Output data.frame
   expect_identical(
-    get_daily_climate(coords.mat, period = "2001-01-01", climatic_var = c("Tmin", "Tmax", "Prcp")),
+    get_daily_climate(coords.mat, period = "2001-01-01",
+                      climatic_var = c("Tmin", "Tmax", "Prcp"),
+                      check_connection = FALSE),
     structure(list(ID_coords = as.double(1:2),
                    lon = c(-5.36, -5.5),
                    lat = c(37.40, 37.5),
@@ -66,8 +72,10 @@ test_that("downloading several variables gives expected results from v4", {
               row.names = c(NA, -2L), class = "data.frame"))
 
   # Output raster
-  output <- get_daily_climate(coords.mat, period = "2001-01-01", climatic_var = c("Tmin", "Tmax", "Prcp"),
-                              output = "raster")
+  output <- get_daily_climate(coords.mat, period = "2001-01-01",
+                              climatic_var = c("Tmin", "Tmax", "Prcp"),
+                              output = "raster",
+                              check_connection = FALSE)
 
   library(terra)
   expect_true(inherits(output, "list"))

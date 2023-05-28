@@ -11,8 +11,7 @@
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/VeruGHub/easyclimate/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/VeruGHub/easyclimate/actions/workflows/R-CMD-check.yaml)
-[![Codecov test
-coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.svg)](https://codecov.io/gh/VeruGHub/easyclimate?branch=master)
+<!-- [![Codecov test coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.svg)](https://codecov.io/gh/VeruGHub/easyclimate?branch=master) -->
 [![HitCount](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square)](http://hits.dwyl.com/VeruGHub/easyclimate)
 [![HitCount: unique
 users](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square&show=unique)](http://hits.dwyl.com/VeruGHub/easyclimate)
@@ -54,6 +53,8 @@ remotes::install_github("VeruGHub/easyclimate")
 
 ## Examples
 
+### Obtain a data frame of climatic values
+
 To obtain a data frame of daily climatic values for point coordinates:
 
 ``` r
@@ -75,64 +76,71 @@ prec <- get_daily_climate(coords,
 
 <br>
 
+### Obtain a raster of climatic values
+
 To obtain a (multi-layer) raster of daily climatic values for an area:
 
 ``` r
 library(terra)
-library(ggplot2)
 
+## Download the polygon contour of a region
 sobrarbe <- mapSpain::esp_get_comarca(comarca = "Sobrarbe")
+
+## Coordinates must be in lonlat 
 sobrarbe <- project(vect(sobrarbe), "EPSG:4326")
 
+## Download Tmax values for that region between 1st and 3rd May 2020
 sobrarbetemp <- get_daily_climate(
   coords = sobrarbe,
   climatic_var = "Tmax",
   period = "2020-05-01:2020-05-03",
   output = "raster"
 )
-
-sobrarbetemp <- crop(sobrarbetemp, sobrarbe, mask = TRUE)
-
-sobrarbe_df <- as.data.frame(geom(sobrarbe))
-sobrarbetemp_df <- terra::as.data.frame(sobrarbetemp, xy = TRUE)
-sobrarbetemp_tidydf <- sobrarbetemp_df |>
-  tidyr::pivot_longer(
-    cols = `2020-05-01`:`2020-05-03`,
-    names_to = "dates",
-    values_to = "tmax"
-  )
-
-ggplot() +
-  geom_vline(xintercept = 0,
-             color = "gray90",
-             linewidth = 1) +
-  geom_tile(data = sobrarbetemp_tidydf, aes(x = x, y = y, fill = tmax),
-            alpha = 0.9) +
-  scale_fill_gradient2(
-    low = "#4B8AB8",
-    mid = "#FAFBC5",
-    high = "#C54A52",
-    midpoint = 15
-  ) +
-  facet_wrap(dates ~ ., ncol = 3) +
-  geom_polygon(
-    data = sobrarbe_df,
-    aes(x = x, y = y, group = part),
-    fill = NA,
-    col = "grey30",
- linewidth = 1
-) +
-  xlab("") + ylab("") +
-  labs(fill = "Maximum\ntemperature (ºC)", ) +
-  theme(
-panel.background = element_rect(fill = "white"),
-        panel.grid.major = element_line(color = "grey90"),
-        strip.background = element_blank(),
-        strip.text = element_text(hjust = 0)
-)
 ```
 
-![](man/figures/README-unnamed-chunk-3-1.png)<!-- -->
+The output (`sobrarbetemp`) is a SpatRaster with 3 layers (for each of 3
+days):
+
+``` r
+sobrarbetemp
+#> class       : SpatRaster 
+#> dimensions  : 70, 82, 3  (nrow, ncol, nlyr)
+#> resolution  : 0.008333333, 0.008333333  (x, y)
+#> extent      : -0.2416667, 0.4416667, 42.21667, 42.8  (xmin, xmax, ymin, ymax)
+#> coord. ref. : lon/lat WGS 84 (EPSG:4326) 
+#> source(s)   : memory
+#> names       : 2020-05-01, 2020-05-02, 2020-05-03 
+#> min values  :       2.34,       4.42,       6.91 
+#> max values  :      22.89,      25.03,      26.87
+```
+
+Let’s make a map. First using terra:
+
+``` r
+plot(sobrarbetemp, col = rev(RColorBrewer::brewer.pal(9, "RdYlBu")), 
+     smooth = TRUE, nc = 3)
+```
+
+![](man/figures/README-map_terra.png)
+
+Now using ggplot2 and tidyterra:
+
+``` r
+library(ggplot2)
+library(tidyterra)
+
+ggplot() +
+  geom_spatraster(data = sobrarbetemp) +
+  facet_wrap(~lyr, ncol = 3) +
+  scale_fill_distiller(palette = "RdYlBu", na.value = "transparent") +
+  geom_spatvector(data = sobrarbe, fill = NA) +
+  labs(fill = "Maximum\ntemperature (ºC)") +
+  scale_x_continuous(breaks = c(-0.25, 0, 0.25)) +
+  scale_y_continuous(breaks = seq(42.2, 42.8, by = 0.2)) +
+  theme_minimal()
+```
+
+![](man/figures/README-map_ggplot-1.png)<!-- -->
 
 <br> Visit the articles of the [package
 website](https://verughub.github.io/easyclimate/) for more extended
@@ -146,20 +154,20 @@ If you use easyclimate, please cite both the data source and the package
 as:
 
 Moreno A, Hasenauer H (2016). “Spatial downscaling of European climate
-data.” *International Journal of Climatology*, 1444–1458. doi:
-10.1002/joc.4436 (URL: <https://doi.org/10.1002/joc.4436>).
+data.” *International Journal of Climatology*, 1444–1458.
+<doi:10.1002/joc.4436> <https://doi.org/10.1002/joc.4436>.
 
 Pucher C, Neumann M (2022). *Description and Evaluation of Downscaled
-Daily Climate Data Version 3*. doi: 10.6084/m9.figshare.19070162.v1
-(URL: <https://doi.org/10.6084/m9.figshare.19070162.v1>).
+Daily Climate Data Version 3*. <doi:10.6084/m9.figshare.19070162.v1>
+<https://doi.org/10.6084/m9.figshare.19070162.v1>.
 
 Pucher C (2023). *Description and Evaluation of Downscaled Daily Climate
-Data Version 4*. doi: 10.6084/m9.figshare.22962671.v1 (URL:
-<https://doi.org/10.6084/m9.figshare.22962671.v1>).
+Data Version 4*. <doi:10.6084/m9.figshare.22962671.v1>
+<https://doi.org/10.6084/m9.figshare.22962671.v1>.
 
 Cruz-Alonso V, Pucher C, Ratcliffe S, Ruiz-Benito P, Astigarraga J,
 Neumann M, Hasenauer H, Rodríguez-Sánchez F (2023). “The easyclimate R
 package: Easy access to high-resolution daily climate data for Europe.”
-*Environmental Modelling & Software*, 105627. doi:
-10.1016/j.envsoft.2023.105627 (URL:
-<https://doi.org/10.1016/j.envsoft.2023.105627>).
+*Environmental Modelling & Software*, 105627.
+<doi:10.1016/j.envsoft.2023.105627>
+<https://doi.org/10.1016/j.envsoft.2023.105627>.

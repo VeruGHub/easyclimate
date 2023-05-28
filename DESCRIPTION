@@ -2,9 +2,10 @@ Package: easyclimate
 Title: Easy Access to High-Resolution Daily Climate Data for Europe
 Version: 0.2.1
 Authors@R: c(
-    person("Verónica", "Cruz-Alonso", , "veronica.cral@gmail.com", role = c("aut", "cre"),
+    person("Verónica", "Cruz-Alonso", , "veronica.cral@gmail.com", 
+           role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-0642-036X")),
-    person("Francisco", "Rodríguez-Sánchez", role = "aut",
+    person("Francisco", "Rodríguez-Sánchez", role = c("aut", "cph"),
            comment = c(ORCID = "0000-0002-7981-1599")),
     person("Christoph", "Pucher", role = "aut",
            comment = c(ORCID = "0000-0002-9269-1907")),

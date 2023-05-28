@@ -12,6 +12,7 @@
 #' @return A data.frame (if output = "df") or a [terra::SpatRaster()] object (if output = "raster").
 #'
 #' @keywords internal
+#' @noRd
 #'
 #' @references
 #' Pucher C. 2023. Description and Evaluation of Downscaled Daily Climate Data Version 4.
@@ -23,42 +24,6 @@
 #'
 #' Adam Moreno, Hubert Hasenauer. 2016. Spatial downscaling of European climate data.
 #' International Journal of Climatology 36: 1444–1458.
-#'
-#' @examplesIf interactive()
-#'
-#' # Coords as matrix
-#' coords <- matrix(c(-5.36, 37.40), ncol = 2)
-#' ex <- get_daily_climate_single(coords, period = "2001-01-01")  # single day
-#' ex <- get_daily_climate_single(coords, period = c("2001-01-01", "2001-01-03")) #1st & 3rd Jan 2001
-#' ex <- get_daily_climate_single(coords, period = "2001-01-01:2001-01-03")  # 1st TO 3rd Jan 2001
-#' ex <- get_daily_climate_single(coords, period = 2008)  # entire year
-#' ex <- get_daily_climate_single(coords, period = c(2008, 2010))  # 2008 AND 2010
-#' ex <- get_daily_climate_single(coords, period = 2008:2010)  # 2008 TO 2010
-#'
-#' ex <- get_daily_climate_single(coords, period = "2001-01-01", climatic_var_single = "Tmin")
-#'
-#' # Coords as data.frame or tbl_df
-#' coords <- as.data.frame(coords) #coords <- tibble::as_tibble(coords)
-#' names(coords) <- c("lon", "lat")  # must have these columns
-#' ex <- get_daily_climate_single(coords, period = "2001-01-01")  # single day
-#'
-#' # Coords as sf
-#' coords <- sf::st_as_sf(coords, coords = c("lon", "lat"))
-#' ex <- get_daily_climate_single(coords, period = "2001-01-01")  # single day
-#'
-#' # Several points
-#' coords <- matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
-#' ex <- get_daily_climate_single(coords, period = "2001-01-01", output = "raster")  # raster output
-#'
-#' ## Polygons
-#' coords <- terra::vect("POLYGON ((-5 38, -5 37.5, -4.5 37.5, -4.5 38, -5 38))")
-#'
-#' # Return raster
-#' ex <- get_daily_climate_single(coords, period = "2001-01-01", output = "raster")
-#'
-#' # Return dataframe for polygon
-#' ex <- get_daily_climate_single(coords, period = "2001-01-01")
-#'
 #'
 #' @author Francisco Rodriguez-Sanchez, Veronica Cruz-Alonso, Sophia Ratcliffe
 

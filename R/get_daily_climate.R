@@ -96,7 +96,7 @@ get_daily_climate <- function(coords = NULL,
 
   if (!version %in% c(4, 3)) {
     stop("version must be 3 or 4")
-    }
+  }
 
   if (length(climatic_var) == 1) {
 

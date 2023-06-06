@@ -29,11 +29,11 @@
 
 
 get_daily_climate_single <- function(coords = NULL,
-                              climatic_var_single = "Prcp",
-                              period = NULL,
-                              output = "df",
-                              version = 4,
-                              check_conn = TRUE) {
+                                     climatic_var_single = "Prcp",
+                                     period = NULL,
+                                     output = "df",
+                                     version = 4,
+                                     check_conn = TRUE) {
 
   #### Check arguments ####
 
@@ -141,7 +141,7 @@ get_daily_climate_single <- function(coords = NULL,
     if (isTRUE(check_server(verbose = FALSE))) {
       message("Connecting to the server...")
     } else {
-      stop("Problems retrieving the data. Please run 'check_server()' to diagnose the problems.\n")
+      message("Problems retrieving the data. Please run 'check_server()' to diagnose the problems.\n")
     }
   }
   ###
@@ -243,10 +243,10 @@ period_to_days <- function(period) {
                           fin = paste0(fin, "-12-31"))
 
     days.list <- lapply(split(ini.fin, seq_len(nrow(ini.fin))),
-                              function(x) {
-                                seq.Date(from = as.Date(x$ini),
-                                         to = as.Date(x$fin),
-                                         by = 1)})
+                        function(x) {
+                          seq.Date(from = as.Date(x$ini),
+                                   to = as.Date(x$fin),
+                                   by = 1)})
     days <- do.call("c", days.list)
     names(days) <- NULL
 
@@ -302,18 +302,18 @@ reshape_terra_extract <- function(df.wide, climvar) {
   df.wide <- df.wide[,!names(df.wide) %in% c("lon", "lat")]
   names(df.wide)[names(df.wide) %in% c("x", "y")] <- c("lon", "lat")
 
-      names(df.wide)[!names(df.wide) %in% c("ID", "lon", "lat")] <-
-        paste0(climvar, ".", names(df.wide)[!names(df.wide) %in% c("ID", "lon", "lat")])
+  names(df.wide)[!names(df.wide) %in% c("ID", "lon", "lat")] <-
+    paste0(climvar, ".", names(df.wide)[!names(df.wide) %in% c("ID", "lon", "lat")])
 
-      df.long <- stats::reshape(df.wide, direction = "long",
+  df.long <- stats::reshape(df.wide, direction = "long",
                             idvar = c("ID", "lon", "lat"),
                             varying = names(df.wide)[!names(df.wide) %in% c("ID", "lon", "lat")],
                             timevar = "date")
 
-      df.long <- df.long[order(df.long$ID, df.long$date), ]
-      row.names(df.long) <- NULL
+  df.long <- df.long[order(df.long$ID, df.long$date), ]
+  row.names(df.long) <- NULL
 
-      df.long
+  df.long
 
 }
 

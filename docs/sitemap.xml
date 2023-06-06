@@ -4,6 +4,9 @@
     <loc>/404.html</loc>
   </url>
   <url>
+    <loc>/LICENSE.html</loc>
+  </url>
+  <url>
     <loc>/articles/climatic-indices.html</loc>
   </url>
   <url>
@@ -22,9 +25,6 @@
     <loc>/index.html</loc>
   </url>
   <url>
-    <loc>/LICENSE.html</loc>
-  </url>
-  <url>
     <loc>/news/index.html</loc>
   </url>
   <url>
@@ -35,9 +35,6 @@
   </url>
   <url>
     <loc>/reference/get_daily_climate.html</loc>
-  </url>
-  <url>
-    <loc>/reference/get_daily_climate_single.html</loc>
   </url>
   <url>
     <loc>/reference/index.html</loc>

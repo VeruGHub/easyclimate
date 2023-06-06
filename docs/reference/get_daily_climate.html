@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">easyclimate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
       </span>
     </div>
 
@@ -97,7 +97,7 @@ Various elements can be concatenated in the vector.</p></dd>
 
 
 <dt>period</dt>
-<dd><p>Either numbers (representing years between 1950 and 2020),
+<dd><p>Either numbers (representing years between 1950 and 2022),
 or dates in "YYYY-MM-DD" format (to obtain data for specific days).
 To specify a sequence of years or dates use the format 'start:end' (e.g. YYYY:YYYY or "YYYY-MM-DD:YYYY-MM-DD", see examples).
 Various elements can be concatenated in the vector
@@ -111,7 +111,9 @@ climatic variable is downloaded).</p></dd>
 
 
 <dt>version</dt>
-<dd><p>Numeric. Version of the climate data. It uses the latest version (4) by default.</p></dd>
+<dd><p>Numeric. Version of the climate data. It uses the latest version (4) by default.
+The former version (3) is also available, for the sake of reproducibility.
+See 'references' for details on the climatic data sets.</p></dd>
 
 
 <dt>check_connection</dt>
@@ -122,12 +124,15 @@ climatic variable is downloaded).</p></dd>
     <h2>Value</h2>
     
 
-<p>A data.frame (if output = "df"), a <code><a href="https://rdrr.io/pkg/terra/man/SpatRaster-class.html" class="external-link">terra::SpatRaster()</a></code> object (if output = "raster"),
-or a list of <code><a href="https://rdrr.io/pkg/terra/man/SpatRaster-class.html" class="external-link">terra::SpatRaster()</a></code> objects (if output = "raster" and there is more than one <code>climatic_var</code>).</p>
-    </div>
+<p>Either:</p><ul><li><p>A data.frame (if output = "df")</p></li>
+<li><p>A <code><a href="https://rdrr.io/pkg/terra/man/SpatRaster-class.html" class="external-link">terra::SpatRaster()</a></code> object (if output = "raster")</p></li>
+<li><p>A list of <code><a href="https://rdrr.io/pkg/terra/man/SpatRaster-class.html" class="external-link">terra::SpatRaster()</a></code> objects (if output = "raster" and there is more than one <code>climatic_var</code>).</p></li>
+</ul></div>
     <div id="references">
     <h2>References</h2>
-    <p>Werner Rammer, Christoph Pucher, Mathias Neumann. 2018.
+    <p>Pucher C. 2023. Description and Evaluation of Downscaled Daily Climate Data Version 4.
+https://doi.org/10.6084/m9.figshare.22962671.v1</p>
+<p>Werner Rammer, Christoph Pucher, Mathias Neumann. 2018.
 Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2.
 ftp://palantir.boku.ac.at/Public/ClimateData/</p>
 <p>Adam Moreno, Hubert Hasenauer. 2016. Spatial downscaling of European climate data.
@@ -140,8 +145,7 @@ International Journal of Climatology 36: 1444–1458.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/VeruGHub/easyclimate" class="external-link">easyclimate</a></span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive()</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Coords as matrix</span></span></span>
 <span class="r-in"><span><span class="va">coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5.36</span>, <span class="fl">37.40</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
@@ -179,9 +183,7 @@ International Journal of Climatology 36: 1444–1458.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Return dataframe for polygon</span></span></span>
 <span class="r-in"><span><span class="va">ex</span> <span class="op">&lt;-</span> <span class="fu">get_daily_climate</span><span class="op">(</span><span class="va">coords</span>, period <span class="op">=</span> <span class="st">"2001-01-01"</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>

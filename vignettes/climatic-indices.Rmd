@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r climatic-indices-1, include = FALSE}
 library(knitr)
 knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE, 
                       fig.width = 6, fig.height = 4, cache = TRUE)
@@ -15,9 +15,10 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE,
 
 First, let's download daily climatic data for a specific location and store it in a dataframe.
 
-```{r}
+```{r climatic-indices-2}
 
 library(easyclimate)
+library(tidyr)
 library(dplyr)
 
 coords <- matrix(c(-5.36, 37.40), ncol = 2)
@@ -31,7 +32,7 @@ daily <- get_daily_climate(coords,
 
 Here we calculate the daily mean temperature:
 
-```{r}
+```{r climatic-indices-3}
 
 daily <- daily |> 
   mutate(Tmean = (Tmin + Tmax) / 2, #Daily mean temperature
@@ -46,7 +47,7 @@ daily <- daily |>
 
 To calculate average temperatures by site or time period we can use `group_by` and `summarise` from `dplyr`, or `by` and `aggregate` from base R: 
 
-```{r}
+```{r climatic-indices-4}
 
 daily |> 
   group_by(ID_coords) |> 
@@ -74,7 +75,7 @@ daily |>
 
 Similarly, you can calculate accumulated precipitation over different time periods: 
 
-```{r}
+```{r climatic-indices-5}
 daily |> 
   group_by(year) |>  
   summarise(sumPrec = sum(Prcp)) |> 
@@ -94,7 +95,7 @@ daily |>
 
 Sometimes it can be useful to calculate the deviation of climate values from a reference value. For example, if we consider as the reference the mean value for the period 2001-2005, we can calculate the deviations per site and year as follows:
 
-```{r}
+```{r climatic-indices-6}
 
 daily |>    
   group_by(ID_coords, year) |>  
@@ -124,9 +125,7 @@ Having daily values allows us to calculate climatic indices such as the number o
 
 Let's start with an example on heat waves, or number of days with maximum temperatures above a given threshold:
 
-```{r}
-
-library(tidyr)
+```{r climatic-indices-7}
 
 threshold <- 32  
 
@@ -151,7 +150,7 @@ daily |>
 <br>
 To calculate the number of days with spring frosts (minimum temperatures below 0) we can use the next code:
 
-```{r}
+```{r climatic-indices-8}
 
 spring.months <- c("03","04","05") # March to May
 
@@ -174,7 +173,7 @@ daily |>
 <br>
 A dry periods can be defined as a specific number of consecutive days with no precipitation. 
 
-```{r}
+```{r climatic-indices-9}
 
 threshold <- 30 #threshold in days to count extreme long events of no-rain
 
@@ -207,7 +206,7 @@ The package [`climInd`](https://cran.r-project.org/package=ClimInd) can be used 
 <br>
 Number of days with maximum temperature > 32ºC in summer (June-August):
 
-```{r}
+```{r climatic-indices-10}
 library(ClimInd)
 
 Tmax <- as.vector(daily$Tmax)
@@ -220,7 +219,7 @@ d32(Tmax)
 <br>
 Growing degree days:
 
-```{r}
+```{r climatic-indices-11}
 Tmean <- as.vector(daily$Tmean)
 names(Tmean) <- as.character(format(daily$date, format = "%m/%d/%Y"))
 
@@ -230,14 +229,14 @@ gd4(data = Tmean, time.scale = "year")
 <br>
 Growing season length:
 
-```{r}
+```{r climatic-indices-12}
 gsl(data = Tmean, time.scale = "year") 
 ```
 
 <br>
 Heavy precipitation days:
 
-```{r}
+```{r climatic-indices-13}
 Prec <- as.vector(daily$Prcp)
 names(Prec) <- as.character(format(daily$date, format = "%m/%d/%Y"))
 

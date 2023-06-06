@@ -25,7 +25,7 @@ In this tutorial we will work through the basics of using easyclimate with coord
 
 First, specify longitude and latitude coordinates in a data frame with the column names `lon` and `lat`. Here we are simulating coordinates for three random sites in southern Spain
 
-```{r}
+```{r points-df-mat-sf-1}
 library(easyclimate)
 library(ggplot2)
 library(dplyr)
@@ -49,7 +49,7 @@ ggplot() +
 
 Now, download the climatic data for the selected locations. All you have to do is use the function `get_daily_climate`, specifying the period (e.g. `2008-05-25` for a single day or `2008:2010` for several years), and the variables to be downloaded (precipitation `Prcp`, minimum temperature `Tmin` or maximum temperature `Tmax`).
 
-```{r}
+```{r points-df-mat-sf-2}
 
 Sys.time() # to know how much time it takes to download
 
@@ -66,7 +66,7 @@ kable(head(daily))
 
 Here we extract different components of the date. 
 
-```{r}
+```{r points-df-mat-sf-3}
 
 daily <- daily |> 
   mutate(
@@ -81,7 +81,7 @@ daily <- daily |>
 
 Finally, you can visualize the daily climate results. For example, let's plot the precipitation for one of the sites:
 
-```{r}
+```{r points-df-mat-sf-4}
 clim_site1 <- daily |> 
   filter(ID_coords == 1)
 
@@ -95,7 +95,7 @@ ggplot(clim_site1) +
 
 Or calculate the daily mean temperature and plot it against `tmin` and `tmax`:
 
-```{r}
+```{r points-df-mat-sf-5}
 library(tidyr)
 
 temp_long <- daily |> 
@@ -132,7 +132,7 @@ ggplot(temp_long, aes(x = date, y = temp_values, color = temp_vars)) +
 
 Here we are retrieving daily precipitation data for a single year (2008).
 
-```{r}
+```{r points-df-mat-sf-6}
 
 coords_mat <- as.matrix(coords)
 
@@ -186,7 +186,7 @@ mat_prcp |>
 Here we introduce coordinates as a `sf` object, and retrieve minimum temperature for a single day (1 January 2001).
 
 
-```{r}
+```{r points-df-mat-sf-7}
 library(sf)
 
 coords_sf <- st_as_sf(

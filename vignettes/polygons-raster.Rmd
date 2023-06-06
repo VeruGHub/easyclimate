@@ -20,7 +20,7 @@ In this tutorial we will work through the basics of using `easyclimate` with a s
 
 If you wish to download the climatic data of a specific region, you need to specify at least four corners of the polygon including the area and specify the type of output you want to obtain (i.e. a data frame - `df` or a raster - `raster`). You can also provide the polygons of interest in a `sf` object.
 
-```{r}
+```{r polygons-raster-1}
 library(easyclimate)
 library(terra)
 
@@ -41,7 +41,7 @@ head(df_tmax)
 
 ```
 
-```{r}
+```{r polygons-raster-2}
 library(dplyr)
 
 clim_df <- df_tmax |> 
@@ -53,7 +53,7 @@ clim_df <- df_tmax |>
 
 Then, you can visualize the results and compare both dates
 
-```{r}
+```{r polygons-raster-3}
 
 library(ggplot2)
 
@@ -73,7 +73,7 @@ ggplot() +
 
 You can get a (multi-layer) raster directly as output, if you specify `output = raster`:
 
-```{r}
+```{r polygons-raster-4}
 
 library(tidyterra)
 
@@ -92,7 +92,7 @@ ras_tmax
 
 ggplot() +
   geom_spatraster(data = ras_tmax, alpha = 0.9) +
-  facet_wrap(lyr~., ncol = 2) +
+  facet_wrap(~lyr, ncol = 2) +
   scale_fill_whitebox_c(name = "Minimum\ntemperature (ºC)", palette = "muted") +
   theme_bw()
 

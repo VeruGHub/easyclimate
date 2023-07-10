@@ -1,15 +1,20 @@
 
 #' Get daily data for one climatic variable
 #'
-#' Extract daily climate data (temperature or precipitation) for a given set of points or polygons within Europe.
+#' Extract daily climate data (temperature or precipitation) for a given set of
+#' points or polygons within Europe.
 #'
-#' @param climatic_var_single Character. Climatic variable to be downloaded. One of 'Tmax', 'Tmin' or 'Prcp'.
-#' @param output Character. Either "df", which returns a dataframe with daily climatic values
-#' for each point/polygon, or "raster", which returns a [terra::SpatRaster()] object.
-#' @param check_conn Logical. Check the data connection before attempting to download the data?
+#' @param climatic_var_single Character. Climatic variable to be downloaded.
+#' One of 'Tmax', 'Tmin' or 'Prcp'.
+#' @param output Character. Either "df", which returns a dataframe with daily
+#' climatic values for each point/polygon, or "raster", which returns a
+#' [terra::SpatRaster()] object.
+#' @param check_conn Logical. Check the connection to the server before
+#' attempting data download?
 #' @inheritParams get_daily_climate
 #'
-#' @return A data.frame (if output = "df") or a [terra::SpatRaster()] object (if output = "raster").
+#' @return A data.frame (if output = "df") or a [terra::SpatRaster()] object
+#' (if output = "raster").
 #'
 #' @keywords internal
 #' @noRd
@@ -49,7 +54,8 @@ get_daily_climate_single <- function(coords = NULL,
   }
 
   if (climatic_var_single %in% names(coords)) {
-    stop("Coords cannot have a column with the same name as ", climatic_var_single, ". Please change it.")
+    stop("Coords cannot have a column with the same name as ", climatic_var_single,
+         ". Please change it.")
   }
 
   ## coords
@@ -96,7 +102,8 @@ get_daily_climate_single <- function(coords = NULL,
 
   if (terra::geomtype(coords.spatvec) == "polygons") {
 
-    if (sum(suppressWarnings(terra::expanse(coords.spatvec, unit = "km"))) > 10000) {  # change limits if needed
+    if (sum(suppressWarnings(terra::expanse(coords.spatvec, unit = "km"))) >
+        10000) {  # change limits if needed
       stop("Asking for climate data for too large area. Please reduce the polygon area or download original rasters directly from ftp://palantir.boku.ac.at/Public/ClimateData/ so as not to saturate the server")
     }
 
@@ -172,7 +179,8 @@ get_daily_climate_single <- function(coords = NULL,
 
   #### Extract ####
 
-  message(paste0("\nDownloading ", climatic_var_single, " data... This process might take several minutes"))
+  message(paste0("\nDownloading ", climatic_var_single,
+                 " data... This process might take several minutes"))
 
   if (output == "df") {
 
@@ -190,14 +198,16 @@ get_daily_climate_single <- function(coords = NULL,
       out <- subset(out, select = -c(lon, lat))
       spatvec.coords <- terra::crds(coords.spatvec, df = TRUE)
       names(spatvec.coords) <- c("lon", "lat")
-      coords.spatvec.df <- data.frame(terra::as.data.frame(coords.spatvec), spatvec.coords)
+      coords.spatvec.df <- data.frame(terra::as.data.frame(coords.spatvec),
+                                      spatvec.coords)
     }
 
     out <- merge(coords.spatvec.df, out, by.x =  "ID_coords", by.y = "ID", all = TRUE)
 
     ## Rasters codify NA as very negative values (-32768).
     # So, if value <-9000, it is NA
-    out[, climatic_var_single] <- ifelse(out[, climatic_var_single] < -9000, NA, out[, climatic_var_single])
+    out[, climatic_var_single] <- ifelse(out[, climatic_var_single] < -9000, NA,
+                                         out[, climatic_var_single])
 
     ## Real climatic values
     out[,climatic_var_single] <- out[,climatic_var_single]/100
@@ -307,7 +317,8 @@ reshape_terra_extract <- function(df.wide, climvar) {
 
   df.long <- stats::reshape(df.wide, direction = "long",
                             idvar = c("ID", "lon", "lat"),
-                            varying = names(df.wide)[!names(df.wide) %in% c("ID", "lon", "lat")],
+                            varying = names(df.wide)[!names(df.wide) %in%
+                                                       c("ID", "lon", "lat")],
                             timevar = "date")
 
   df.long <- df.long[order(df.long$ID, df.long$date), ]

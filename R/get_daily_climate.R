@@ -1,35 +1,40 @@
 
 #' Get daily data for multiple climatic variables
 #'
-#' Extract daily climate data (temperature and precipitation) for a given set of points or polygons within Europe.
+#' Extract daily climate data (temperature and precipitation) for a given set of
+#' points or polygons within Europe.
 #'
 #'
-#' @param coords A [matrix], [data.frame], [tibble::tbl_df-class], [sf::sf()], or [terra::SpatVector()] object
-#' containing point or polygon coordinates in decimal degrees (lonlat/geographic format).
-#' Longitude must fall between -40.5 and 75.5 degrees, and latitude between 25.5 and 75.5 degrees.
+#' @param coords A [matrix], [data.frame], [tibble::tbl_df-class], [sf::sf()], or
+#' [terra::SpatVector()] object containing point or polygon coordinates in decimal
+#' degrees (lonlat/geographic format). Longitude must fall between -40.5 and 75.5
+#' degrees, and latitude between 25.5 and 75.5 degrees.
 #' If `coords` is a matrix, it must have only two columns: the first with longitude
 #' and the second with latitude data.
-#' If `coords` is a data.frame or a tbl_df, it must contain at least two columns called `lon` and `lat`
-#' with longitude and latitude coordinates, respectively.
-#' @param climatic_var Character. Climatic variables to be downloaded ('Tmax', 'Tmin' or 'Prcp').
-#' Various elements can be concatenated in the vector.
+#' If `coords` is a data.frame or a tbl_df, it must contain at least two columns
+#' called `lon` and `lat` with longitude and latitude coordinates, respectively.
+#' @param climatic_var Character. Climatic variables to be downloaded ('Tmax',
+#' 'Tmin' or 'Prcp'). Various elements can be concatenated in the vector.
 #' @param period Either numbers (representing years between 1950 and 2022),
 #' or dates in "YYYY-MM-DD" format (to obtain data for specific days).
-#' To specify a sequence of years or dates use the format 'start:end' (e.g. YYYY:YYYY or "YYYY-MM-DD:YYYY-MM-DD", see examples).
-#' Various elements can be concatenated in the vector
-#' (e.g. c(2000:2005, 2010:2015, 2020), c("2000-01-01:2000-01-15", "2000-02-01"))
-#' @param output Character. Either "df", which returns a dataframe with daily climatic values
-#' for each point/polygon, or "raster", which returns [terra::SpatRaster()] objects (within a list when more than one
-#' climatic variable is downloaded).
-#' @param version Numeric. Version of the climate data. It uses the latest version (4) by default.
-#' The former version (3) is also available, for the sake of reproducibility.
+#' To specify a sequence of years or dates use the format 'start:end'
+#' (e.g. YYYY:YYYY or "YYYY-MM-DD:YYYY-MM-DD", see examples). Various elements
+#' can be concatenated in the vector (e.g. c(2000:2005, 2010:2015, 2020),
+#' c("2000-01-01:2000-01-15", "2000-02-01"))
+#' @param output Character. Either "df", which returns a dataframe with daily
+#' climatic values for each point/polygon, or "raster", which returns [terra::SpatRaster()]
+#' objects (within a list when more than one climatic variable is downloaded).
+#' @param version Numeric. Version of the climate data. It uses the latest version (4)
+#' by default. The former version (3) is also available, for the sake of reproducibility.
 #' See 'references' for details on the climatic data sets.
-#' @param check_connection Logical. Check the connection to the server before attempting data download?
+#' @param check_connection Logical. Check the connection to the server before
+#' attempting data download?
 #'
 #' @return Either:
 #' - A data.frame (if output = "df")
 #' - A [terra::SpatRaster()] object (if output = "raster")
-#' - A list of [terra::SpatRaster()] objects (if output = "raster" and there is more than one `climatic_var`).
+#' - A list of [terra::SpatRaster()] objects (if output = "raster" and there is
+#' more than one `climatic_var`).
 #'
 #' @export
 #'

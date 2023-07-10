@@ -8,8 +8,8 @@
 #'
 #' @return TRUE if the server seems available, FALSE otherwise.
 #'
-#' @details This function checks access to the latest version of the climatic dataset
-#' (version 4).
+#' @details This function checks access to the latest version of the climatic
+#' dataset (version 4).
 #'
 #' @export
 #'
@@ -53,7 +53,8 @@ check_server <- function(climatic_var = NULL,
     data.ok <- try(
       R.utils::withTimeout({
         suppressMessages(
-          get_daily_climate_single(coords, climatic_var, paste0(year, "-01-01"), check_conn = FALSE))
+          get_daily_climate_single(coords, climatic_var, paste0(year, "-01-01"),
+                                   check_conn = FALSE))
       },
       timeout = 30,   # allow 30 seconds to download this single data point
       onTimeout = "silent"),  # if time out, return NULL

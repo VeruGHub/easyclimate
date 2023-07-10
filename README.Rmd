@@ -21,10 +21,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 
-[![Project Status: Active -- The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) [![R-CMD-check](https://github.com/VeruGHub/easyclimate/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/VeruGHub/easyclimate/actions/workflows/R-CMD-check.yaml) 
-[![HitCount](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square)](https://hits.dwyl.com/VeruGHub/easyclimate)
-[![HitCount: unique users](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square&show=unique)](https://hits.dwyl.com/VeruGHub/easyclimate)
-<!-- [![Codecov test coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.svg)](https://codecov.io/gh/VeruGHub/easyclimate?branch=master) -->
+[![Project Status: Active -- The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) [![R-CMD-check](https://github.com/VeruGHub/easyclimate/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/VeruGHub/easyclimate/actions/workflows/R-CMD-check.yaml) [![HitCount](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square)](https://hits.dwyl.com/VeruGHub/easyclimate) [![HitCount: unique users](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square&show=unique)](https://hits.dwyl.com/VeruGHub/easyclimate) <!-- [![Codecov test coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.svg)](https://codecov.io/gh/VeruGHub/easyclimate?branch=master) -->
 
 <!-- badges: end -->
 

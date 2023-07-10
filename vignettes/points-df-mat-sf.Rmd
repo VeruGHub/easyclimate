@@ -105,7 +105,8 @@ temp_long <- daily |>
     names_to = "temp_vars",
     values_to = "temp_values")
 
-ggplot(temp_long, aes(x = factor(ID_coords), y = temp_values, fill = temp_vars, color = temp_vars)) +
+ggplot(temp_long, aes(x = factor(ID_coords), y = temp_values, 
+                      fill = temp_vars, color = temp_vars)) +
   geom_violin(size = 1, alpha = .7) +
     scale_fill_manual(values = c("#C54A52", "#FAFBC5", "#4B8AB8")) +
   scale_color_manual(values = c("#C54A52", "#FAFBC5", "#4B8AB8")) +

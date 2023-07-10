@@ -14,43 +14,48 @@ get_daily_climate(
 )
 }
 \arguments{
-\item{coords}{A \link{matrix}, \link{data.frame}, \link[tibble:tbl_df-class]{tibble::tbl_df}, \code{\link[sf:sf]{sf::sf()}}, or \code{\link[terra:SpatVector-class]{terra::SpatVector()}} object
-containing point or polygon coordinates in decimal degrees (lonlat/geographic format).
-Longitude must fall between -40.5 and 75.5 degrees, and latitude between 25.5 and 75.5 degrees.
+\item{coords}{A \link{matrix}, \link{data.frame}, \link[tibble:tbl_df-class]{tibble::tbl_df}, \code{\link[sf:sf]{sf::sf()}}, or
+\code{\link[terra:SpatVector-class]{terra::SpatVector()}} object containing point or polygon coordinates in decimal
+degrees (lonlat/geographic format). Longitude must fall between -40.5 and 75.5
+degrees, and latitude between 25.5 and 75.5 degrees.
 If \code{coords} is a matrix, it must have only two columns: the first with longitude
 and the second with latitude data.
-If \code{coords} is a data.frame or a tbl_df, it must contain at least two columns called \code{lon} and \code{lat}
-with longitude and latitude coordinates, respectively.}
+If \code{coords} is a data.frame or a tbl_df, it must contain at least two columns
+called \code{lon} and \code{lat} with longitude and latitude coordinates, respectively.}
 
-\item{climatic_var}{Character. Climatic variables to be downloaded ('Tmax', 'Tmin' or 'Prcp').
-Various elements can be concatenated in the vector.}
+\item{climatic_var}{Character. Climatic variables to be downloaded ('Tmax',
+'Tmin' or 'Prcp'). Various elements can be concatenated in the vector.}
 
 \item{period}{Either numbers (representing years between 1950 and 2022),
 or dates in "YYYY-MM-DD" format (to obtain data for specific days).
-To specify a sequence of years or dates use the format 'start:end' (e.g. YYYY:YYYY or "YYYY-MM-DD:YYYY-MM-DD", see examples).
-Various elements can be concatenated in the vector
-(e.g. c(2000:2005, 2010:2015, 2020), c("2000-01-01:2000-01-15", "2000-02-01"))}
+To specify a sequence of years or dates use the format 'start:end'
+(e.g. YYYY:YYYY or "YYYY-MM-DD:YYYY-MM-DD", see examples). Various elements
+can be concatenated in the vector (e.g. c(2000:2005, 2010:2015, 2020),
+c("2000-01-01:2000-01-15", "2000-02-01"))}
 
-\item{output}{Character. Either "df", which returns a dataframe with daily climatic values
-for each point/polygon, or "raster", which returns \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}} objects (within a list when more than one
-climatic variable is downloaded).}
+\item{output}{Character. Either "df", which returns a dataframe with daily
+climatic values for each point/polygon, or "raster", which returns \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}}
+objects (within a list when more than one climatic variable is downloaded).}
 
-\item{version}{Numeric. Version of the climate data. It uses the latest version (4) by default.
-The former version (3) is also available, for the sake of reproducibility.
+\item{version}{Numeric. Version of the climate data. It uses the latest version (4)
+by default. The former version (3) is also available, for the sake of reproducibility.
 See 'references' for details on the climatic data sets.}
 
-\item{check_connection}{Logical. Check the connection to the server before attempting data download?}
+\item{check_connection}{Logical. Check the connection to the server before
+attempting data download?}
 }
 \value{
 Either:
 \itemize{
 \item A data.frame (if output = "df")
 \item A \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}} object (if output = "raster")
-\item A list of \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}} objects (if output = "raster" and there is more than one \code{climatic_var}).
+\item A list of \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}} objects (if output = "raster" and there is
+more than one \code{climatic_var}).
 }
 }
 \description{
-Extract daily climate data (temperature and precipitation) for a given set of points or polygons within Europe.
+Extract daily climate data (temperature and precipitation) for a given set of
+points or polygons within Europe.
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}

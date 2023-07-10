@@ -140,7 +140,7 @@ downloaded (precipitation <code>Prcp</code>, minimum temperature
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># to know how much time it takes to download</span></span>
-<span><span class="co">## [1] "2023-06-06 11:02:58 CEST"</span></span>
+<span><span class="co">## [1] "2023-07-10 12:14:17 CEST"</span></span>
 <span></span>
 <span><span class="va">daily</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span></span>
 <span>  coords <span class="op">=</span> <span class="va">coords</span>, </span>
@@ -148,7 +148,7 @@ downloaded (precipitation <code>Prcp</code>, minimum temperature
 <span>  climatic_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Prcp"</span>,<span class="st">"Tmin"</span>,<span class="st">"Tmax"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">## [1] "2023-06-06 11:05:32 CEST"</span></span>
+<span><span class="co">## [1] "2023-07-10 12:16:35 CEST"</span></span>
 <span></span>
 <span><span class="fu">kable</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/headtail.html" class="external-link">head</a></span><span class="op">(</span><span class="va">daily</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
@@ -164,57 +164,57 @@ downloaded (precipitation <code>Prcp</code>, minimum temperature
 <tbody>
 <tr class="odd">
 <td align="right">1</td>
-<td align="right">-5.2264</td>
-<td align="right">37.35226</td>
+<td align="right">-5.115934</td>
+<td align="right">37.35703</td>
 <td align="left">2008-01-01</td>
-<td align="right">2.79</td>
-<td align="right">3.27</td>
-<td align="right">13.56</td>
+<td align="right">0.00</td>
+<td align="right">3.33</td>
+<td align="right">13.79</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
-<td align="right">-5.2264</td>
-<td align="right">37.35226</td>
+<td align="right">-5.115934</td>
+<td align="right">37.35703</td>
 <td align="left">2008-01-02</td>
-<td align="right">20.73</td>
-<td align="right">7.00</td>
-<td align="right">15.35</td>
+<td align="right">20.52</td>
+<td align="right">6.79</td>
+<td align="right">15.25</td>
 </tr>
 <tr class="odd">
 <td align="right">1</td>
-<td align="right">-5.2264</td>
-<td align="right">37.35226</td>
+<td align="right">-5.115934</td>
+<td align="right">37.35703</td>
 <td align="left">2008-01-03</td>
-<td align="right">6.32</td>
-<td align="right">7.00</td>
-<td align="right">14.09</td>
+<td align="right">6.69</td>
+<td align="right">6.86</td>
+<td align="right">13.87</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
-<td align="right">-5.2264</td>
-<td align="right">37.35226</td>
+<td align="right">-5.115934</td>
+<td align="right">37.35703</td>
 <td align="left">2008-01-04</td>
 <td align="right">0.00</td>
-<td align="right">5.09</td>
-<td align="right">12.96</td>
+<td align="right">5.01</td>
+<td align="right">12.88</td>
 </tr>
 <tr class="odd">
 <td align="right">1</td>
-<td align="right">-5.2264</td>
-<td align="right">37.35226</td>
+<td align="right">-5.115934</td>
+<td align="right">37.35703</td>
 <td align="left">2008-01-05</td>
 <td align="right">0.00</td>
-<td align="right">5.36</td>
-<td align="right">14.40</td>
+<td align="right">5.25</td>
+<td align="right">14.33</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
-<td align="right">-5.2264</td>
-<td align="right">37.35226</td>
+<td align="right">-5.115934</td>
+<td align="right">37.35703</td>
 <td align="left">2008-01-06</td>
 <td align="right">0.00</td>
-<td align="right">10.65</td>
-<td align="right">16.41</td>
+<td align="right">10.72</td>
+<td align="right">16.82</td>
 </tr>
 </tbody>
 </table>
@@ -252,7 +252,8 @@ let’s plot the precipitation for one of the sites:</p>
 <span>    names_to <span class="op">=</span> <span class="st">"temp_vars"</span>,</span>
 <span>    values_to <span class="op">=</span> <span class="st">"temp_values"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">temp_long</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">ID_coords</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">temp_values</span>, fill <span class="op">=</span> <span class="va">temp_vars</span>, color <span class="op">=</span> <span class="va">temp_vars</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">temp_long</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">ID_coords</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">temp_values</span>, </span>
+<span>                      fill <span class="op">=</span> <span class="va">temp_vars</span>, color <span class="op">=</span> <span class="va">temp_vars</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html" class="external-link">geom_violin</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span>, alpha <span class="op">=</span> <span class="fl">.7</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#C54A52"</span>, <span class="st">"#FAFBC5"</span>, <span class="st">"#4B8AB8"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#C54A52"</span>, <span class="st">"#FAFBC5"</span>, <span class="st">"#4B8AB8"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -283,7 +284,7 @@ matrices!</p>
 <span><span class="va">coords_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/coerce.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">coords</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">## [1] "2023-06-06 11:05:34 CEST"</span></span>
+<span><span class="co">## [1] "2023-07-10 12:16:38 CEST"</span></span>
 <span></span>
 <span><span class="va">mat_prcp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span> </span>
 <span>  coords <span class="op">=</span> <span class="va">coords_mat</span>, </span>
@@ -292,7 +293,7 @@ matrices!</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">## [1] "2023-06-06 11:05:48 CEST"</span></span>
+<span><span class="co">## [1] "2023-07-10 12:16:53 CEST"</span></span>
 <span></span>
 <span><span class="fu">kable</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/headtail.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mat_prcp</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
@@ -306,43 +307,43 @@ matrices!</p>
 <tbody>
 <tr class="odd">
 <td align="right">1</td>
-<td align="right">-5.2264</td>
-<td align="right">37.35226</td>
+<td align="right">-5.115934</td>
+<td align="right">37.35703</td>
 <td align="left">2008-01-01</td>
-<td align="right">2.79</td>
+<td align="right">0.00</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
-<td align="right">-5.2264</td>
-<td align="right">37.35226</td>
+<td align="right">-5.115934</td>
+<td align="right">37.35703</td>
 <td align="left">2008-01-02</td>
-<td align="right">20.73</td>
+<td align="right">20.52</td>
 </tr>
 <tr class="odd">
 <td align="right">1</td>
-<td align="right">-5.2264</td>
-<td align="right">37.35226</td>
+<td align="right">-5.115934</td>
+<td align="right">37.35703</td>
 <td align="left">2008-01-03</td>
-<td align="right">6.32</td>
+<td align="right">6.69</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
-<td align="right">-5.2264</td>
-<td align="right">37.35226</td>
+<td align="right">-5.115934</td>
+<td align="right">37.35703</td>
 <td align="left">2008-01-04</td>
 <td align="right">0.00</td>
 </tr>
 <tr class="odd">
 <td align="right">1</td>
-<td align="right">-5.2264</td>
-<td align="right">37.35226</td>
+<td align="right">-5.115934</td>
+<td align="right">37.35703</td>
 <td align="left">2008-01-05</td>
 <td align="right">0.00</td>
 </tr>
 <tr class="even">
 <td align="right">1</td>
-<td align="right">-5.2264</td>
-<td align="right">37.35226</td>
+<td align="right">-5.115934</td>
+<td align="right">37.35703</td>
 <td align="left">2008-01-06</td>
 <td align="right">0.00</td>
 </tr>

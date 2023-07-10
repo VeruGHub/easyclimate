@@ -4,9 +4,6 @@
     <loc>/404.html</loc>
   </url>
   <url>
-    <loc>/LICENSE.html</loc>
-  </url>
-  <url>
     <loc>/articles/climatic-indices.html</loc>
   </url>
   <url>
@@ -23,6 +20,9 @@
   </url>
   <url>
     <loc>/index.html</loc>
+  </url>
+  <url>
+    <loc>/LICENSE.html</loc>
   </url>
   <url>
     <loc>/news/index.html</loc>

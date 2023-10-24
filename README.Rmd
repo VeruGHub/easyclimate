@@ -41,6 +41,13 @@ For a detailed description of {easyclimate}, please read [this paper](https://do
 
 ## Installation
 
+Stable version from CRAN:
+
+``` r
+install.packages("easyclimate")
+```
+
+Development version from GitHub:
 ``` r
 # install.packages("remotes")
 remotes::install_github("VeruGHub/easyclimate")

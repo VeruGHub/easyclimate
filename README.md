@@ -54,6 +54,14 @@ package [website](https://verughub.github.io/easyclimate/).
 
 ## Installation
 
+Stable version from CRAN:
+
+``` r
+install.packages("easyclimate")
+```
+
+Development version from GitHub:
+
 ``` r
 # install.packages("remotes")
 remotes::install_github("VeruGHub/easyclimate")

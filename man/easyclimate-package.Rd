@@ -17,11 +17,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Ver<U+00F3>nica Cruz-Alonso \email{veronica.cral@gmail.com} (\href{https://orcid.org/0000-0002-0642-036X}{ORCID}) [copyright holder]
+\strong{Maintainer}: Verónica Cruz-Alonso \email{veronica.cral@gmail.com} (\href{https://orcid.org/0000-0002-0642-036X}{ORCID}) [copyright holder]
 
 Authors:
 \itemize{
-  \item Francisco Rodr<U+00ED>guez-S<U+00E1>nchez (\href{https://orcid.org/0000-0002-7981-1599}{ORCID}) [copyright holder]
+  \item Francisco Rodríguez-Sánchez (\href{https://orcid.org/0000-0002-7981-1599}{ORCID}) [copyright holder]
   \item Christoph Pucher (\href{https://orcid.org/0000-0002-9269-1907}{ORCID})
   \item Paloma Ruiz-Benito (\href{https://orcid.org/0000-0002-2781-5870}{ORCID})
   \item Julen Astigarraga (\href{https://orcid.org/0000-0001-9520-3713}{ORCID})

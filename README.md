@@ -7,14 +7,18 @@
 
 <!-- badges: start -->
 
+[![](https://www.r-pkg.org/badges/version/easyclimate)](https://cran.r-project.org/package=easyclimate)
+![](https://img.shields.io/github/r-package/v/VeruGHub/easyclimate)
+<a href="https://diffify.com/R/easyclimate" target="_blank"><img src="https://diffify.com/diffify-badge.svg" alt="The diffify page for the R package easyclimate" style="width: 100px; max-width: 100%;"></a>
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/VeruGHub/easyclimate/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/VeruGHub/easyclimate/actions/workflows/R-CMD-check.yaml)
-[![HitCount](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square)](https://hits.dwyl.com/VeruGHub/easyclimate)
-[![HitCount: unique
-users](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square&show=unique)](https://hits.dwyl.com/VeruGHub/easyclimate)
-<!-- [![Codecov test coverage](https://codecov.io/gh/VeruGHub/easyclimate/branch/master/graph/badge.svg)](https://codecov.io/gh/VeruGHub/easyclimate?branch=master) -->
+[![HitCount since
+2022-10-27](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square)](https://hits.dwyl.com/VeruGHub/easyclimate)
+[![HitCount: unique users since
+2022-10-27](https://hits.dwyl.com/VeruGHub/easyclimate.svg?style=flat-square&show=unique)](https://hits.dwyl.com/VeruGHub/easyclimate)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/easyclimate)](https://cran.r-project.org/package=easyclimate)
 
 <!-- badges: end -->
 
@@ -154,8 +158,8 @@ tutorials!
 
 ## CITATION
 
-If you use easyclimate, please cite both the data source and the package
-as:
+If you use easyclimate, please cite both the appropriate data source and
+the package as:
 
 Moreno A, Hasenauer H (2016). “Spatial downscaling of European climate
 data.” *International Journal of Climatology*, 1444–1458.

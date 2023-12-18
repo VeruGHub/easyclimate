@@ -85,6 +85,7 @@ get_daily_climate_single <- function(coords = NULL,
 
   # If missing CRS, assume lonlat (EPSG:4326)
   if (terra::crs(coords.spatvec) == "") {
+    warning("Coordinate Reference System is missing and EPSG 4326 is assigned by default")
     terra::crs(coords.spatvec) <- "epsg:4326"
   }
 
@@ -305,26 +306,3 @@ period_to_days <- function(period) {
   invisible(days)
 
 }
-
-
-reshape_terra_extract <- function(df.wide, climvar) {
-
-  df.wide <- df.wide[,!names(df.wide) %in% c("lon", "lat")]
-  names(df.wide)[names(df.wide) %in% c("x", "y")] <- c("lon", "lat")
-
-  names(df.wide)[!names(df.wide) %in% c("ID", "lon", "lat")] <-
-    paste0(climvar, ".", names(df.wide)[!names(df.wide) %in% c("ID", "lon", "lat")])
-
-  df.long <- stats::reshape(df.wide, direction = "long",
-                            idvar = c("ID", "lon", "lat"),
-                            varying = names(df.wide)[!names(df.wide) %in%
-                                                       c("ID", "lon", "lat")],
-                            timevar = "date")
-
-  df.long <- df.long[order(df.long$ID, df.long$date), ]
-  row.names(df.long) <- NULL
-
-  df.long
-
-}
-

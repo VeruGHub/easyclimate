@@ -250,7 +250,7 @@ get_monthly_climate_single <- function(coords = NULL,
     out <- out/100
 
     #invisible(list(out, out_NA))
-    return(list(out, out_NA))
+    return(list(value = out, daily_NA = out_NA))
 
   }
 

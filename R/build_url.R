@@ -77,11 +77,10 @@ build_url <- function(climatic_var_single,
                "/Downscaled",
                climatic_var_single,
                year,
-               aggr,
-               "cogeo.tif", #"NAs_cogeo.tif",
+               "Monthly_NoDMissing_cogeo.tif",
                sep = "")
 
-  invisible(list(url, url_NA))
+  return(c(url, url_NA))
 
     }}
 

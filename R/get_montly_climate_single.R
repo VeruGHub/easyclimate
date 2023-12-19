@@ -144,9 +144,8 @@ get_monthly_climate_single <- function(coords = NULL,
                         climatic_var_single = climatic_var_single,
                         version = version,
                         temp_res = "month"))
-
-  urls <- urls[[1]]
-  urls_NA <- urls[[2]]
+  urls_NA <- urls[seq(from = 2, to = length(urls), by = 2)]
+  urls <-  urls[seq(from = 1, to = length(urls), by = 2)]
 
   ## Check if the server is working
   if (isTRUE(check_conn)) {
@@ -231,7 +230,8 @@ get_monthly_climate_single <- function(coords = NULL,
     ## Real climatic values
     out[,climatic_var_single] <- out[,climatic_var_single]/100
 
-    invisible(out)
+    #invisible(out)
+    return(out)
 
   }
 
@@ -249,7 +249,8 @@ get_monthly_climate_single <- function(coords = NULL,
     ## Real climatic values
     out <- out/100
 
-    invisible(list(out, out_NA))
+    #invisible(list(out, out_NA))
+    return(list(out, out_NA))
 
   }
 
@@ -258,7 +259,7 @@ get_monthly_climate_single <- function(coords = NULL,
 
 
 
-period_to_month <- function(period) {
+period_to_months <- function(period) {
 
   stopifnot(length(period) >= 1)
 

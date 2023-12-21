@@ -99,10 +99,6 @@ get_monthly_climate <- function(coords = NULL,
                               version = 4,
                               check_connection = TRUE) {
 
-  if (!version %in% c(4, 3)) {
-    stop("version must be 3 or 4")
-  }
-
   if (length(climatic_var) == 1) {
 
     out <- get_monthly_climate_single(

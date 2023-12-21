@@ -43,8 +43,8 @@ get_monthly_climate_single <- function(coords = NULL,
   #### Check arguments ####
 
   ## version
-  if (!version %in% c(4, 3)) {
-    stop("version must be 3 or 4")
+  if (!version %in% c(4)) {
+    stop("monthly values are only available for data version 4")
   }
 
 
@@ -85,7 +85,6 @@ get_monthly_climate_single <- function(coords = NULL,
 
   # If missing CRS, assume lonlat (EPSG:4326)
   if (terra::crs(coords.spatvec) == "") {
-    warning("Coordinate Reference System is missing and EPSG 4326 is assigned by default")
     terra::crs(coords.spatvec) <- "epsg:4326"
   }
 
@@ -300,6 +299,15 @@ period_to_months <- function(period) {
 
     ini.fin <- data.frame(ini = paste0(ini, "-01"),
                           fin = paste0(fin, "-01"))
+
+    ## check correct format ("YYYY-MM-DD")
+    apply(ini.fin, c(1, 2), function(x) {
+
+      if (!grepl("[0-9]{4}-[0-9]{2}", x))
+
+        stop("Please provide dates as 'YYYY-MM'")
+
+    })
 
     months.list <- lapply(split(ini.fin, seq_len(nrow(ini.fin))),
                         function(x) {

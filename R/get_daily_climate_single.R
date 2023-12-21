@@ -85,7 +85,6 @@ get_daily_climate_single <- function(coords = NULL,
 
   # If missing CRS, assume lonlat (EPSG:4326)
   if (terra::crs(coords.spatvec) == "") {
-    warning("Coordinate Reference System is missing and EPSG 4326 is assigned by default")
     terra::crs(coords.spatvec) <- "epsg:4326"
   }
 

@@ -2,3 +2,4 @@
 
 export(check_server)
 export(get_daily_climate)
+export(get_monthly_climate)

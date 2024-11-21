@@ -1,9 +1,8 @@
-pandoc: 3.1.1
-pkgdown: 2.0.7
+pandoc: '3.2'
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   climatic-indices: climatic-indices.html
   points-df-mat-sf: points-df-mat-sf.html
   polygons-raster: polygons-raster.html
-last_built: 2023-10-24T17:30Z
-
+last_built: 2024-11-21T17:48Z

@@ -14,7 +14,7 @@ get_daily_climate(
 )
 }
 \arguments{
-\item{coords}{A \link{matrix}, \link{data.frame}, \link[tibble:tbl_df-class]{tibble::tbl_df}, \code{\link[sf:sf]{sf::sf()}}, or
+\item{coords}{A \link{matrix}, \link{data.frame}, \code{tibble::tbl_df-class}, \code{\link[sf:sf]{sf::sf()}}, or
 \code{\link[terra:SpatVector-class]{terra::SpatVector()}} object containing point or polygon coordinates in decimal
 degrees (lonlat/geographic format). Longitude must fall between -40.5 and 75.5
 degrees, and latitude between 25.5 and 75.5 degrees.

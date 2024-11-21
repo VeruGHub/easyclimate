@@ -14,3 +14,4 @@ man/figures
 
 inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf
 ^cran-comments\.md$
+^CRAN-SUBMISSION$

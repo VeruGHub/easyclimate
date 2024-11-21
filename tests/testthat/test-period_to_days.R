@@ -28,9 +28,10 @@ test_that("period_to_days throws error with badly formatted dates", {
 test_that("period_to_days works with character input", {
 
   expect_identical(period_to_days(period = "2008-09-27"),
-                   as.Date("2008-09-27"))
+                   seq.Date(from = as.Date("2008-09-27"), to = as.Date("2008-09-27"), by = 1))
   expect_identical(period_to_days(period = c("2008-09-27", "2008-01-27")),
-                   as.Date(c("2008-09-27", "2008-01-27")))
+                   c(seq.Date(from = as.Date("2008-09-27"), to = as.Date("2008-09-27"), by = 1),
+                     seq.Date(from = as.Date("2008-01-27"), to = as.Date("2008-01-27"), by = 1)))
   expect_identical(period_to_days(period = c("2008-01-27:2008-09-27")),
                    seq.Date(from = as.Date("2008-01-27"), to = as.Date("2008-09-27"), by = 1))
   expect_identical(period_to_days(period = "2008-01-27:2008-09-27"),

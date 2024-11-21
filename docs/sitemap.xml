@@ -1,16 +1,16 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
-<url><loc>/404.html</loc></url>
-<url><loc>/LICENSE.html</loc></url>
-<url><loc>/articles/climatic-indices.html</loc></url>
-<url><loc>/articles/index.html</loc></url>
-<url><loc>/articles/points-df-mat-sf.html</loc></url>
-<url><loc>/articles/polygons-raster.html</loc></url>
-<url><loc>/authors.html</loc></url>
-<url><loc>/index.html</loc></url>
-<url><loc>/news/index.html</loc></url>
-<url><loc>/reference/check_server.html</loc></url>
-<url><loc>/reference/easyclimate-package.html</loc></url>
-<url><loc>/reference/get_daily_climate.html</loc></url>
-<url><loc>/reference/index.html</loc></url>
+<url><loc>https://verughub.github.io/easyclimate/404.html</loc></url>
+<url><loc>https://verughub.github.io/easyclimate/LICENSE.html</loc></url>
+<url><loc>https://verughub.github.io/easyclimate/articles/climatic-indices.html</loc></url>
+<url><loc>https://verughub.github.io/easyclimate/articles/index.html</loc></url>
+<url><loc>https://verughub.github.io/easyclimate/articles/points-df-mat-sf.html</loc></url>
+<url><loc>https://verughub.github.io/easyclimate/articles/polygons-raster.html</loc></url>
+<url><loc>https://verughub.github.io/easyclimate/authors.html</loc></url>
+<url><loc>https://verughub.github.io/easyclimate/index.html</loc></url>
+<url><loc>https://verughub.github.io/easyclimate/news/index.html</loc></url>
+<url><loc>https://verughub.github.io/easyclimate/reference/check_server.html</loc></url>
+<url><loc>https://verughub.github.io/easyclimate/reference/easyclimate-package.html</loc></url>
+<url><loc>https://verughub.github.io/easyclimate/reference/get_daily_climate.html</loc></url>
+<url><loc>https://verughub.github.io/easyclimate/reference/index.html</loc></url>
 </urlset>
 

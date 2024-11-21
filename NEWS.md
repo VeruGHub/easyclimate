@@ -1,3 +1,7 @@
+# easyclimate 0.2.2
+
+* Fix issues with R-devel
+
 # easyclimate 0.2.1
 
 * When asking for climate data for a polygon dataset (sf or SpatVector), the output raster is now masked to the extent of the polygon (issue #39).

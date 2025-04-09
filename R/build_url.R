@@ -27,8 +27,8 @@ build_url <- function(climatic_var_single,
       stop("Year (period) must be between 1950 and 2020")
   }
   if (version == 4) {
-    if (year < 1950 | year > 2022)
-      stop("Year (period) must be between 1950 and 2022")
+    if (year < 1950 | year > 2024)
+      stop("Year (period) must be between 1950 and 2024")
   }
 
   ## Adjust climvar to file names in FTP server
@@ -70,17 +70,7 @@ build_url <- function(climatic_var_single,
                "_cogeo.tif",
                sep = "")
 
-  url_NA <- paste("ftp://palantir.boku.ac.at/Public/ClimateData/v",
-               version,
-               "_cogeo/MonthlyDataRasters/",
-               climvar,
-               "/Downscaled",
-               climatic_var_single,
-               year,
-               "Monthly_NoDMissing_cogeo.tif",
-               sep = "")
-
-  return(c(url, url_NA))
+  invisible(url)
 
     }}
 

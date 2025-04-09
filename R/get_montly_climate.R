@@ -15,19 +15,16 @@
 #' called `lon` and `lat` with longitude and latitude coordinates, respectively.
 #' @param climatic_var Character. Climatic variables to be downloaded ('Tmax',
 #' 'Tmin' or 'Prcp'). Various elements can be concatenated in the vector.
-#' @param period Either numbers (representing years between 1950 and 2022),
+#' @param period Either numbers (representing years between 1950 and 2024),
 #' or dates in "YYYY-MM" format (to obtain data for specific months).
 #' To specify a sequence of years or months use the format 'start:end'
 #' (e.g. YYYY:YYYY or "YYYY-MM:YYYY-MM", see examples). Various elements
 #' can be concatenated in the vector (e.g. c(2000:2005, 2010:2015, 2020),
 #' c("2000-01:2000-06", "2001-01"))
 #' @param output Character. Either "df", which returns a dataframe with monthly
-#' climatic values and temporal coverage of data for each point/polygon,
-#' or "raster", which returns a list of [terra::SpatRaster()] objects (within another
-#' list when more than one climatic variable is downloaded).
-#' @param version Numeric. Version of the climate data. It uses the latest version (4)
-#' by default. The former version (3) is also available, for the sake of reproducibility.
-#' See 'references' for details on the climatic data sets.
+#' climatic values for each point/polygon,
+#' or "raster", which returns a [terra::SpatRaster()] object (within a list when
+#' more than one climatic variable is downloaded).
 #' @param check_connection Logical. Check the connection to the server before
 #' attempting data download?
 #'
@@ -96,7 +93,6 @@ get_monthly_climate <- function(coords = NULL,
                               climatic_var = "Prcp",
                               period = NULL,
                               output = "df",
-                              version = 4,
                               check_connection = TRUE) {
 
   if (length(climatic_var) == 1) {
@@ -106,7 +102,6 @@ get_monthly_climate <- function(coords = NULL,
       climatic_var_single = climatic_var,
       period = period,
       output = output,
-      version = version,
       check_conn = check_connection)
 
   } else {
@@ -118,7 +113,6 @@ get_monthly_climate <- function(coords = NULL,
                            climatic_var_single = x,
                            period = period,
                            output = output,
-                           version = version,
                            check_conn = check_connection) })
 
     if (output == "df") {
@@ -126,7 +120,7 @@ get_monthly_climate <- function(coords = NULL,
       out <- Reduce(function(var1, var2, climvar = climatic_var) {
 
         merge(var1, var2,
-              by = names(var1)[!names(var1) %in% c(climvar, paste0("daily_", climvar, "_NA"))])
+              by = names(var1)[!names(var1) %in% climvar])
 
       }, out.list)
 

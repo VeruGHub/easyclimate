@@ -37,16 +37,9 @@ get_monthly_climate_single <- function(coords = NULL,
                                        climatic_var_single = "Prcp",
                                        period = NULL,
                                        output = "df",
-                                       version = 4,
                                        check_conn = TRUE) {
 
   #### Check arguments ####
-
-  ## version
-  if (!version %in% c(4)) {
-    stop("monthly values are only available for data version 4")
-  }
-
 
   ## climatic_var_single
   if (!climatic_var_single %in% c("Tmax", "Tmin", "Prcp")) {
@@ -127,13 +120,8 @@ get_monthly_climate_single <- function(coords = NULL,
   years <- as.numeric(sort(unique(format(months, "%Y"))))
 
   ## Check years are within bounds
-  if (version == 3) {
-    if (any(years < 1950 | years > 2020))
-      stop("Year (period) must be between 1950 and 2020")
-  }
-  if (version == 4) {
-    if (any(years < 1950 | years > 2022))
-      stop("Year (period) must be between 1950 and 2022")
+  if (any(years < 1950 | years > 2024)) {
+      stop("Year (period) must be between 1950 and 2024")
   }
 
   #### Build urls for all required years ####
@@ -141,10 +129,7 @@ get_monthly_climate_single <- function(coords = NULL,
   urls <- unlist(lapply(years,
                         build_url,
                         climatic_var_single = climatic_var_single,
-                        version = version,
                         temp_res = "month"))
-  urls_NA <- urls[seq(from = 2, to = length(urls), by = 2)]
-  urls <-  urls[seq(from = 1, to = length(urls), by = 2)]
 
   ## Check if the server is working
   if (isTRUE(check_conn)) {
@@ -157,12 +142,10 @@ get_monthly_climate_single <- function(coords = NULL,
   ###
 
   urls.vsicurl <- paste0("/vsicurl/", urls)
-  urls_NA.vsicurl <- paste0("/vsicurl/", urls_NA)
 
   #### Connect and combine all required rasters ####
 
   ras.list <- lapply(urls.vsicurl, terra::rast)
-  ras_NA.list <- lapply(urls_NA.vsicurl, terra::rast)
 
   ## Name raster layers with their dates
   for (i in seq_along(years)) {
@@ -170,8 +153,6 @@ get_monthly_climate_single <- function(coords = NULL,
                                      to = as.Date(paste0(years[i], "-12-01")),
                                      by = "month")
   names(ras.list[[i]]) <- ras.list.names
-  names(ras_NA.list[[i]]) <- ras.list.names
-
   }
 
   ## Combine all years
@@ -182,17 +163,8 @@ get_monthly_climate_single <- function(coords = NULL,
     }
   }
 
-  rasters_NA <- ras_NA.list[[1]]
-  if (length(ras_NA.list) > 1) {
-    for (i in 2:length(ras_NA.list)) {
-      terra::add(rasters_NA) <- ras_NA.list[[i]]
-    }
-  }
-
-
   ## Subset required dates only
   rasters.sub <- terra::subset(rasters, subset = as.character(months))
-  rasters_NA.sub <- terra::subset(rasters_NA, subset = as.character(months))
 
   #### Extract ####
 
@@ -202,14 +174,9 @@ get_monthly_climate_single <- function(coords = NULL,
   if (output == "df") {
 
     out <- terra::extract(rasters.sub, coords.spatvec, xy = TRUE)
-    out_NA <- terra::extract(rasters_NA.sub, coords.spatvec, xy = TRUE)
 
     ## Reshape to long format and join with coverage
     out <- reshape_terra_extract(out, climvar = climatic_var_single)
-    out_NA <- reshape_terra_extract(out_NA, climvar = climatic_var_single)
-    names(out_NA)[names(out_NA) == climatic_var_single] <- paste0("daily_", climatic_var_single, "_NA")
-
-    out <- merge(out, out_NA)
 
     ## Merge with original coords data
     if (terra::is.polygons(coords.spatvec)) {
@@ -239,17 +206,15 @@ get_monthly_climate_single <- function(coords = NULL,
 
     if (terra::geomtype(coords.spatvec) == "polygons") {
       out <- terra::crop(rasters.sub, coords.spatvec, mask = TRUE)
-      out_NA <- terra::crop(rasters_NA.sub, coords.spatvec, mask = TRUE)
     } else {
       out <- terra::crop(rasters.sub, coords.spatvec)
-      out_NA <- terra::crop(rasters_NA.sub, coords.spatvec)
     }
 
     ## Real climatic values
     out <- out/100
 
-    #invisible(list(out, out_NA))
-    return(list(value = out, daily_NA = out_NA))
+    #invisible(out)
+    return(out)
 
   }
 

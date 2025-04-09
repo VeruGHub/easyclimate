@@ -7,7 +7,7 @@ test_that("year below 1950 or above 2022 gives error", {
   expect_error(build_url("Tmin", 2030))
 })
 
-test_that("built url is correct", {
+test_that("built url is correct for daily climate", {
   expect_identical(build_url("Tmin", 2008),
                    "ftp://palantir.boku.ac.at/Public/ClimateData/v4_cogeo/AllDataRasters/tmin/DownscaledTmin2008_cogeo.tif")
 })
@@ -15,6 +15,12 @@ test_that("built url is correct", {
 test_that("built url is correct for v3", {
   expect_identical(build_url("Tmin", 2008, version = 3),
                    "ftp://palantir.boku.ac.at/Public/ClimateData/v3_cogeo/AllDataRasters/tmin/DownscaledTmin2008_cogeo.tif")
+})
+
+test_that("built url is correct for monthly climate", {
+  expect_identical(build_url("Tmin", 2008, temp_res = "month"),
+                   c("ftp://palantir.boku.ac.at/Public/ClimateData/v4_cogeo/MonthlyDataRasters/tmin/DownscaledTmin2008MonthlyAvg_cogeo.tif",
+                     "ftp://palantir.boku.ac.at/Public/ClimateData/v4_cogeo/MonthlyDataRasters/tmin/DownscaledTmin2008Monthly_NoDMissing_cogeo.tif"))
 })
 
 # Better to check server status differently than giving package error if server not working

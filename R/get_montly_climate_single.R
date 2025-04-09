@@ -1,17 +1,17 @@
 
-#' Get daily data for one climatic variable
+#' Get monthly data for one climatic variable
 #'
-#' Extract daily climate data (temperature or precipitation) for a given set of
+#' Extract monthly climate data (temperature or precipitation) for a given set of
 #' points or polygons within Europe.
 #'
 #' @param climatic_var_single Character. Climatic variable to be downloaded.
 #' One of 'Tmax', 'Tmin' or 'Prcp'.
-#' @param output Character. Either "df", which returns a dataframe with daily
+#' @param output Character. Either "df", which returns a dataframe with monthly
 #' climatic values for each point/polygon, or "raster", which returns a
 #' [terra::SpatRaster()] object.
 #' @param check_conn Logical. Check the connection to the server before
 #' attempting data download?
-#' @inheritParams get_daily_climate
+#' @inheritParams get_montly_climate
 #'
 #' @return A data.frame (if output = "df") or a [terra::SpatRaster()] object
 #' (if output = "raster").
@@ -30,21 +30,21 @@
 #' Adam Moreno, Hubert Hasenauer. 2016. Spatial downscaling of European climate data.
 #' International Journal of Climatology 36: 1444–1458.
 #'
-#' @author Francisco Rodriguez-Sanchez, Veronica Cruz-Alonso, Sophia Ratcliffe
+#' @author Veronica Cruz-Alonso, Francisco Rodriguez-Sanchez
 
 
-get_daily_climate_single <- function(coords = NULL,
-                                     climatic_var_single = "Prcp",
-                                     period = NULL,
-                                     output = "df",
-                                     version = 4,
-                                     check_conn = TRUE) {
+get_monthly_climate_single <- function(coords = NULL,
+                                       climatic_var_single = "Prcp",
+                                       period = NULL,
+                                       output = "df",
+                                       version = 4,
+                                       check_conn = TRUE) {
 
   #### Check arguments ####
 
   ## version
-  if (!version %in% c(4, 3)) {
-    stop("version must be 3 or 4")
+  if (!version %in% c(4)) {
+    stop("monthly values are only available for data version 4")
   }
 
 
@@ -96,14 +96,14 @@ get_daily_climate_single <- function(coords = NULL,
 
   ## Warn (or stop) if asking data for too many points or too large area
   # so as not to saturate FTP server
-  if (nrow(coords.spatvec) > 10000) {  # change limits if needed
-    stop("Asking for climate data for >10000 sites. Please reduce the number of sites or download original rasters directly from ftp://palantir.boku.ac.at/Public/ClimateData/ so as not to saturate the server")
+  if (nrow(coords.spatvec) > 100000) {  # change limits if needed
+    stop("Asking for climate data for >100000 sites. Please reduce the number of sites or download original rasters directly from ftp://palantir.boku.ac.at/Public/ClimateData/ so as not to saturate the server")
   }
 
   if (terra::geomtype(coords.spatvec) == "polygons") {
 
     if (sum(suppressWarnings(terra::expanse(coords.spatvec, unit = "km"))) >
-        10000) {  # change limits if needed
+        100000) {  # change limits if needed
       stop("Asking for climate data for too large area. Please reduce the polygon area or download original rasters directly from ftp://palantir.boku.ac.at/Public/ClimateData/ so as not to saturate the server")
     }
 
@@ -121,10 +121,10 @@ get_daily_climate_single <- function(coords = NULL,
   #### Period ####
 
   ## Convert to dates
-  days <- period_to_days(period)
+  months <- period_to_months(period)
 
   ## Extract years
-  years <- as.numeric(sort(unique(format(days, "%Y"))))
+  years <- as.numeric(sort(unique(format(months, "%Y"))))
 
   ## Check years are within bounds
   if (version == 3) {
@@ -141,7 +141,10 @@ get_daily_climate_single <- function(coords = NULL,
   urls <- unlist(lapply(years,
                         build_url,
                         climatic_var_single = climatic_var_single,
-                        version = version))
+                        version = version,
+                        temp_res = "month"))
+  urls_NA <- urls[seq(from = 2, to = length(urls), by = 2)]
+  urls <-  urls[seq(from = 1, to = length(urls), by = 2)]
 
   ## Check if the server is working
   if (isTRUE(check_conn)) {
@@ -154,16 +157,21 @@ get_daily_climate_single <- function(coords = NULL,
   ###
 
   urls.vsicurl <- paste0("/vsicurl/", urls)
+  urls_NA.vsicurl <- paste0("/vsicurl/", urls_NA)
 
   #### Connect and combine all required rasters ####
 
   ras.list <- lapply(urls.vsicurl, terra::rast)
+  ras_NA.list <- lapply(urls_NA.vsicurl, terra::rast)
 
   ## Name raster layers with their dates
   for (i in seq_along(years)) {
-    names(ras.list[[i]]) <- seq.Date(from = as.Date(paste0(years[i], "-01-01")),
-                                     to = as.Date(paste0(years[i], "-12-31")),
-                                     by = 1)
+     ras.list.names <- seq.Date(from = as.Date(paste0(years[i], "-01-01")),
+                                     to = as.Date(paste0(years[i], "-12-01")),
+                                     by = "month")
+  names(ras.list[[i]]) <- ras.list.names
+  names(ras_NA.list[[i]]) <- ras.list.names
+
   }
 
   ## Combine all years
@@ -174,8 +182,17 @@ get_daily_climate_single <- function(coords = NULL,
     }
   }
 
+  rasters_NA <- ras_NA.list[[1]]
+  if (length(ras_NA.list) > 1) {
+    for (i in 2:length(ras_NA.list)) {
+      terra::add(rasters_NA) <- ras_NA.list[[i]]
+    }
+  }
+
+
   ## Subset required dates only
-  rasters.sub <- terra::subset(rasters, subset = as.character(days))
+  rasters.sub <- terra::subset(rasters, subset = as.character(months))
+  rasters_NA.sub <- terra::subset(rasters_NA, subset = as.character(months))
 
   #### Extract ####
 
@@ -185,9 +202,14 @@ get_daily_climate_single <- function(coords = NULL,
   if (output == "df") {
 
     out <- terra::extract(rasters.sub, coords.spatvec, xy = TRUE)
+    out_NA <- terra::extract(rasters_NA.sub, coords.spatvec, xy = TRUE)
 
-    ## Reshape to long format
+    ## Reshape to long format and join with coverage
     out <- reshape_terra_extract(out, climvar = climatic_var_single)
+    out_NA <- reshape_terra_extract(out_NA, climvar = climatic_var_single)
+    names(out_NA)[names(out_NA) == climatic_var_single] <- paste0("daily_", climatic_var_single, "_NA")
+
+    out <- merge(out, out_NA)
 
     ## Merge with original coords data
     if (terra::is.polygons(coords.spatvec)) {
@@ -204,13 +226,11 @@ get_daily_climate_single <- function(coords = NULL,
 
     out <- merge(coords.spatvec.df, out, by.x =  "ID_coords", by.y = "ID", all = TRUE)
 
-    ## Rasters codify NA as very negative values (-32768).
-    # So, if value <-9000, it is NA
-    out[, climatic_var_single] <- ifelse(out[, climatic_var_single] < -9000, NA,
-                                         out[, climatic_var_single])
-
     ## Real climatic values
     out[,climatic_var_single] <- out[,climatic_var_single]/100
+
+    #invisible(out)
+    return(out)
 
   }
 
@@ -219,27 +239,26 @@ get_daily_climate_single <- function(coords = NULL,
 
     if (terra::geomtype(coords.spatvec) == "polygons") {
       out <- terra::crop(rasters.sub, coords.spatvec, mask = TRUE)
+      out_NA <- terra::crop(rasters_NA.sub, coords.spatvec, mask = TRUE)
     } else {
       out <- terra::crop(rasters.sub, coords.spatvec)
+      out_NA <- terra::crop(rasters_NA.sub, coords.spatvec)
     }
-
-    ## Rasters codify NA as very negative values (-32768).
-    # So, if value <-9000, it is NA
-    out <- terra::subst(out, -9000:-33000, NA)
 
     ## Real climatic values
     out <- out/100
 
-  }
+    #invisible(list(out, out_NA))
+    return(list(value = out, daily_NA = out_NA))
 
-  invisible(out)
+  }
 
 }
 
 
 
 
-period_to_days <- function(period) {
+period_to_months <- function(period) {
 
   stopifnot(length(period) >= 1)
 
@@ -250,19 +269,19 @@ period_to_days <- function(period) {
     ini <- period[c(TRUE, diff(period) != 1)]
     fin <- period[c(diff(period) != 1, TRUE)]
     ini.fin <- data.frame(ini = paste0(ini, "-01-01"),
-                          fin = paste0(fin, "-12-31"))
+                          fin = paste0(fin, "-12-01"))
 
-    days.list <- lapply(split(ini.fin, seq_len(nrow(ini.fin))),
+    months.list <- lapply(split(ini.fin, seq_len(nrow(ini.fin))),
                         function(x) {
                           seq.Date(from = as.Date(x$ini),
                                    to = as.Date(x$fin),
-                                   by = 1)})
-    days <- do.call("c", days.list)
-    names(days) <- NULL
+                                   by = "months")})
+    months <- do.call("c", months.list)
+    names(months) <- NULL
 
   }
 
-  ## period as character, e.g. "2005-01-06"
+  ## period as character, e.g. "2005-01"
 
   if (is.character(period)) {
 
@@ -278,30 +297,33 @@ period_to_days <- function(period) {
 
     }
 
-    ini.fin <- data.frame(ini = ini, fin = fin)
+    ini.fin <- data.frame(ini = paste0(ini, "-01"),
+                          fin = paste0(fin, "-01"))
 
     ## check correct format ("YYYY-MM-DD")
     apply(ini.fin, c(1, 2), function(x) {
 
-      if (!grepl("[0-9]{4}-[0-9]{2}-[0-9]{2}", x))
+      if (!grepl("[0-9]{4}-[0-9]{2}", x))
 
-        stop("Please provide dates as 'YYYY-MM-DD'")
+        stop("Please provide dates as 'YYYY-MM'")
 
     })
 
-
-    days.list <- lapply(split(ini.fin, seq_len(nrow(ini.fin))),
+    months.list <- lapply(split(ini.fin, seq_len(nrow(ini.fin))),
                         function(x) {
                           seq.Date(from = as.Date(x$ini),
                                    to = as.Date(x$fin),
-                                   by = 1)})
+                                   by = "month")})
 
-    days <- do.call("c", days.list)
+    months <- do.call("c", months.list)
 
-    names(days) <- NULL
+    names(months) <- NULL
 
   }
 
-  invisible(days)
+  invisible(months)
 
 }
+
+
+

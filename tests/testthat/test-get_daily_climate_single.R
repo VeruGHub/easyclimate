@@ -40,15 +40,18 @@ test_that("coordinates falling outside the bounding box give error", {
                                         period = 2010))
 })
 
+test_that("coordinates in a different coordinate sistem gives error", {
+  expect_error(get_daily_climate_single(coords = terra::vect(matrix(c(-5.36, 37.40), ncol = 2),
+                                                             crs = "epsg:4258"),
+                                        period = 1950))
+})
+
 test_that("year below 1950 or above 2022 gives error", {
   expect_error(get_daily_climate_single(coords = matrix(c(-5.36, 37.40), ncol = 2),
                                         period = 1949))
   expect_error(get_daily_climate_single(coords = matrix(c(-5.36, 37.40), ncol = 2),
                                         period = 2030))
 })
-
-
-
 
 ############################################################
 
@@ -153,8 +156,6 @@ test_that("different climatic_var_single give expected results for v4", {
               row.names = c(NA, -2L), class = "data.frame"))
 
 })
-
-
 
 
 ################################################################

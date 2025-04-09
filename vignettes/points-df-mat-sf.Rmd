@@ -58,6 +58,11 @@ daily <- get_daily_climate(
   period = 2008:2010, 
   climatic_var = c("Prcp","Tmin","Tmax"))
 
+monthly <- get_monthly_climate(
+  coords = coords, 
+  period = 2008:2010, 
+  climatic_var = c("Prcp","Tmin","Tmax"))
+
 Sys.time()
 
 kable(head(daily))

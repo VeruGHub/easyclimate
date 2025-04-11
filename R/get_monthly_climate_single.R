@@ -152,7 +152,7 @@ get_monthly_climate_single <- function(coords = NULL,
      ras.list.names <- seq.Date(from = as.Date(paste0(years[i], "-01-01")),
                                      to = as.Date(paste0(years[i], "-12-01")),
                                      by = "month")
-  names(ras.list[[i]]) <- ras.list.names
+  names(ras.list[[i]]) <- sub("-01$", "", ras.list.names)
   }
 
   ## Combine all years

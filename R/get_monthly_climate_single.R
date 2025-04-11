@@ -5,7 +5,7 @@
 #' points or polygons within Europe.
 #'
 #' @param climatic_var_single Character. Climatic variable to be downloaded.
-#' One of 'Tmax', 'Tmin' or 'Prcp'.
+#' One of 'Tmax', 'Tmin', 'Tavg' or 'Prcp'.
 #' @param output Character. Either "df", which returns a dataframe with monthly
 #' climatic values for each point/polygon, or "raster", which returns a
 #' [terra::SpatRaster()] object.
@@ -42,8 +42,8 @@ get_monthly_climate_single <- function(coords = NULL,
   #### Check arguments ####
 
   ## climatic_var_single
-  if (!climatic_var_single %in% c("Tmax", "Tmin", "Prcp")) {
-    stop("climatic_var_single must be one of 'Tmax', 'Tmin' or 'Prcp'")
+  if (!climatic_var_single %in% c("Tmax", "Tmin", "Tavg", "Prcp")) {
+    stop("climatic_var_single must be one of 'Tmax', 'Tmin', 'Tavg' or 'Prcp'")
   }
 
   if (climatic_var_single %in% names(coords)) {

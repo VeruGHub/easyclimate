@@ -7,7 +7,7 @@
 # 'Tmin' or 'Prcp'.
 # @param year Numeric. Year to download climatic information
 # @param version Numeric. Version of the climate data.
-# @param temp_res Character. One of "day" or "month"
+# @param temp_res Character. One of "day" , "month" or "year"
 #
 # @return text string with the url
 #
@@ -19,8 +19,8 @@ build_url <- function(climatic_var_single,
                       temp_res = "day") {
 
   ## Check arguments
-  if (!climatic_var_single %in% c("Tmax", "Tmin", "Prcp"))
-    stop("climatic_var_single must be one of 'Tmax', 'Tmin' or 'Prcp'")
+  if (!climatic_var_single %in% c("Tmax", "Tmin", "Tavg", "Prcp"))
+    stop("climatic_var_single must be one of 'Tmax', 'Tmin', 'Tavg' or 'Prcp'")
 
   if (version == 3) {
     if (year < 1950 | year > 2020)
@@ -35,6 +35,7 @@ build_url <- function(climatic_var_single,
   climvar <- switch(climatic_var_single,
                     "Tmax" = "tmax",
                     "Tmin" = "tmin",
+                    "Tavg" = "tavg",
                     "Prcp" = "prec")
 
   ## Build url
@@ -59,9 +60,7 @@ build_url <- function(climatic_var_single,
 
       aggr <- ifelse(climvar == "prec", "MonthlySum", "MonthlyAvg")
 
-  url <- paste("ftp://palantir.boku.ac.at/Public/ClimateData/v",
-               version,
-               "_cogeo/MonthlyDataRasters/",
+  url <- paste("ftp://palantir.boku.ac.at/Public/ClimateData/v31/cogeo/MonthlyDataRasters/",
                climvar,
                "/Downscaled",
                climatic_var_single,

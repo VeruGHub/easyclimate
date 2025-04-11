@@ -252,6 +252,10 @@ period_to_months <- function(period) {
 
     ini <- do.call(rbind, strsplit(period, split = ":"))[,1]
 
+    ## check correct format ("YYYY-MM")
+    if (!grepl("[0-9]{4}-[0-9]{2}$", ini))
+      stop("Please provide dates as 'YYYY-MM'")
+
     if (ncol(do.call(rbind, strsplit(period, split = ":"))) == 2) {
 
       fin <- do.call(rbind, strsplit(period, split = ":"))[,2]
@@ -262,13 +266,17 @@ period_to_months <- function(period) {
 
     }
 
+    ## check correct format ("YYYY-MM")
+    if (!grepl("[0-9]{4}-[0-9]{2}$", fin))
+      stop("Please provide dates as 'YYYY-MM'")
+
     ini.fin <- data.frame(ini = paste0(ini, "-01"),
                           fin = paste0(fin, "-01"))
 
-    ## check correct format ("YYYY-MM-DD")
+    ## check correct format ("YYYY-MM")
     apply(ini.fin, c(1, 2), function(x) {
 
-      if (!grepl("[0-9]{4}-[0-9]{2}", x))
+      if (!grepl("[0-9]{4}-[0-9]{2}-01", x))
 
         stop("Please provide dates as 'YYYY-MM'")
 

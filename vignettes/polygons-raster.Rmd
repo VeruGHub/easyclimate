@@ -12,11 +12,11 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE,
                       fig.width = 6, fig.height = 4, cache = TRUE)
 ```
 
-With `easyclimate` you can easily download daily climate data for a given set of points or polygons within Europe. To download and install the latest version of `easyclimate` from github follow the instructions in https://github.com/VeruGHub/easyclimate 
+With {easyclimate} you can easily download daily and monthly climate data for a given set of points or polygons within Europe. To download and install the latest version of {easyclimate} from GitHub follow the instructions in https://github.com/VeruGHub/easyclimate 
 
 <br>
 
-In this tutorial we will work through the basics of using `easyclimate` with a spatial polygon.
+In this tutorial we will work through the basics of using {easyclimate} with a spatial polygon.
 
 If you wish to download the climatic data of a specific region, you need to specify at least four corners of the polygon including the area and specify the type of output you want to obtain (i.e. a data frame - `df` or a raster - `raster`). You can also provide the polygons of interest in a `sf` object.
 
@@ -51,7 +51,7 @@ clim_df <- df_tmax |>
 
 ```
 
-Then, you can visualize the results and compare both dates
+Then, you can visualize the results and compare both dates:
 
 ```{r polygons-raster-3}
 
@@ -79,19 +79,44 @@ library(tidyterra)
 
 Sys.time()
 
-ras_tmax <- get_daily_climate(
+ras_tmin <- get_daily_climate(
   coords_t,
   period = c("2012-01-01", "2012-08-01"),
-  climatic_var = "Tmax",
+  climatic_var = "Tmin",
   output = "raster" # return raster
   )
 
 Sys.time()
 
-ras_tmax
+ras_tmin
 
 ggplot() +
-  geom_spatraster(data = ras_tmax, alpha = 0.9) +
+  geom_spatraster(data = ras_tmin, alpha = 0.9) +
+  facet_wrap(~lyr, ncol = 2) +
+  scale_fill_whitebox_c(name = "Minimum\ntemperature (ºC)", palette = "muted") +
+  theme_bw()
+
+```
+
+You can also get a raster of monthly climate data for an area:
+
+```{r polygons-raster-5}
+
+Sys.time()
+
+ras_monthly_tmin <- get_monthly_climate(
+  coords_t,
+  period = c("2012-01", "2012-08"),
+  climatic_var = "Tmin",
+  output = "raster" # return raster
+  )
+
+Sys.time()
+
+ras_monthly_tmin
+
+ggplot() +
+  geom_spatraster(data = ras_monthly_tmin, alpha = 0.9) +
   facet_wrap(~lyr, ncol = 2) +
   scale_fill_whitebox_c(name = "Minimum\ntemperature (ºC)", palette = "muted") +
   theme_bw()
@@ -102,4 +127,4 @@ ggplot() +
 
 ## Learn more
 
-Now you know how to extract climatic variables with `easyclimate`, for a specific area. Check out this [other vignette](https://verughub.github.io/easyclimate/articles/points-df-mat-sf.html) if you need to extract the data for specific points.
+Now you know how to extract climatic variables with {easyclimate}, for a specific area. Check out this [other vignette](https://verughub.github.io/easyclimate/articles/points-df-mat-sf.html) if you need to extract the data for specific points.

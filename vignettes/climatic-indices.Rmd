@@ -13,7 +13,7 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE,
                       fig.width = 6, fig.height = 4, cache = TRUE)
 ```
 
-First, let's download daily climatic data for a specific location and store it in a dataframe.
+First, let's download daily climatic data for a specific location and store it in a dataframe:
 
 ```{r climatic-indices-2}
 
@@ -25,10 +25,9 @@ coords <- matrix(c(-5.36, 37.40), ncol = 2)
 
 daily <- get_daily_climate(coords,
                            period = 2001:2005,
-                           climatic_var = c("Prcp","Tmin","Tmax"))  
+                           climatic_var = c("Prcp", "Tmin", "Tmax"))  
 
 ```
-
 
 Here we calculate the daily mean temperature:
 
@@ -62,16 +61,7 @@ daily |>
             Tmax.year = mean(Tmax)) |> 
   kable(digits = 1)
 
-daily |>  
-  group_by(month) |> 
-  summarise(Tmin.month = mean(Tmin),
-            Tmean.month = mean(Tmean),
-            Tmax.month = mean(Tmax)) |> 
-  kable(digits = 1)
-
-
 ```
-
 
 Similarly, you can calculate accumulated precipitation over different time periods: 
 
@@ -80,14 +70,7 @@ daily |>
   group_by(year) |>  
   summarise(sumPrec = sum(Prcp)) |> 
   kable(digits = 0)
-
-daily |> 
-  group_by(year, month) |> 
-  summarise(sumPrec = sum(Prcp)) |>  
-  pivot_wider(names_from = month, values_from = sumPrec) |> 
-  kable(digits = 0)
 ```
-
 
 <br>
 
@@ -101,7 +84,7 @@ daily |>
   group_by(ID_coords, year) |>  
   summarise(avgTm = mean(Tmean)) |>  
   group_by(ID_coords) |>  
-  mutate(refTm = mean(avgTm)) |>  #Reference mean temperature
+  mutate(refTm = mean(avgTm)) |>  # Reference mean temperature
   mutate(devTm = avgTm - refTm) |>  
   kable(digits = 1)
 
@@ -109,8 +92,8 @@ daily |>
   group_by(ID_coords, year) |>  
   summarise(sumPrec = sum(Prcp)) |> 
   group_by(ID_coords) |> 
-  mutate(refPrec = mean(sumPrec)) |>  #Reference precipitation
-  mutate(devPrec =sumPrec - refPrec) |>  
+  mutate(refPrec = mean(sumPrec)) |>  # Reference precipitation
+  mutate(devPrec = sumPrec - refPrec) |>  
   kable(digits = 0)
 
 ```
@@ -148,7 +131,8 @@ daily |>
 ```
 
 <br>
-To calculate the number of days with spring frosts (minimum temperatures below 0) we can use the next code:
+
+To calculate the number of days with spring frosts (i.e. minimum temperatures below 0 during spring months) we can use the next code:
 
 ```{r climatic-indices-8}
 
@@ -163,7 +147,7 @@ daily |>
   mutate(n_frost = sum(event)) |>  # No. of days with minimum temperature < 0 per year
   filter(event == 1) |>  
   group_by(ID_coords, year, n_frost) |>  
-  summarise(Tmin_frost_avg = mean(Tmin)/100) |>  # Mean minimum temperature of frost days
+  summarise(Tmin_frost_avg = mean(Tmin) / 100) |>  # Mean minimum temperature of frost days
   ungroup() |>  
   complete(ID_coords, year, fill = list(n_frost = 0, Tmin_frost_avg = NA)) |>  
   kable()
@@ -171,13 +155,14 @@ daily |>
 ```
 
 <br>
-A dry periods can be defined as a specific number of consecutive days with no precipitation. 
+
+A dry period can be defined as a specific number of consecutive days with no precipitation: 
 
 ```{r climatic-indices-9}
 
-threshold <- 30 #threshold in days to count extreme long events of no-rain
+threshold <- 30 # threshold in days to count extreme long events of no-rain
 
-daily %>%  
+daily |>  
   mutate(event = ifelse(Prcp < 0.01, 1, 0), # NAs will be 0 
          start = c(1, diff(event) != 0)) |>  
     group_by(ID_coords, year) |>  
@@ -196,14 +181,14 @@ daily %>%
 
 ```
 
-
 <br>
 
 ## Using ClimInd in combination with easyclimate
 
-The package [`climInd`](https://cran.r-project.org/package=ClimInd) can be used to calculate multiple climatic indices from data obtained through `easyclimate`. For example:
+The package [`climInd`](https://cran.r-project.org/package=ClimInd) can be used to calculate multiple climatic indices from data obtained through {easyclimate}. For example:
 
 <br>
+
 Number of days with maximum temperature > 32ºC in summer (June-August):
 
 ```{r climatic-indices-10}
@@ -215,8 +200,8 @@ names(Tmax) <- as.character(format(daily$date, format = "%m/%d/%Y"))
 d32(Tmax)
 ```
 
-
 <br>
+
 Growing degree days:
 
 ```{r climatic-indices-11}
@@ -227,6 +212,7 @@ gd4(data = Tmean, time.scale = "year")
 ```
 
 <br>
+
 Growing season length:
 
 ```{r climatic-indices-12}
@@ -234,6 +220,7 @@ gsl(data = Tmean, time.scale = "year")
 ```
 
 <br>
+
 Heavy precipitation days:
 
 ```{r climatic-indices-13}
@@ -247,7 +234,7 @@ d50mm(data = Prec, time.scale = "month")
 
 ## Learn more
 
-To learn more about downloading daily climatic data, please consult [this vignette](https://verughub.github.io/easyclimate/articles/points-df-mat-sf.html) for point coordinates, or [this other](https://verughub.github.io/easyclimate/articles/polygons-raster.html) if you need to extract data for several polygons or a region.
+To learn more about downloading daily and monthly climatic data, please consult [this vignette](https://verughub.github.io/easyclimate/articles/points-df-mat-sf.html) for point coordinates, or [this other](https://verughub.github.io/easyclimate/articles/polygons-raster.html) if you need to extract data for several polygons or a region.
 
 
 

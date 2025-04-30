@@ -13,7 +13,7 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE,
                       fig.width = 6, fig.height = 4, cache = TRUE)
 ```
 
-With `easyclimate` you can easily download daily climate data for a given set of points or polygons within Europe. To download and install the latest version of `easyclimate` from github follow the instructions in  https://github.com/VeruGHub/easyclimate 
+With {easyclimate} you can easily download daily and monthly climate data for a given set of points or polygons within Europe. To download and install the latest version of {easyclimate} from GitHub follow the instructions in  https://github.com/VeruGHub/easyclimate 
 
 <br>
 
@@ -23,7 +23,7 @@ In this tutorial we will work through the basics of using easyclimate with coord
 
 # Example 1: Introducing coordinates as a data frame
 
-First, specify longitude and latitude coordinates in a data frame with the column names `lon` and `lat`. Here we are simulating coordinates for three random sites in southern Spain
+First, specify longitude and latitude coordinates in a data frame with the column names `lon` and `lat`. Here we are simulating coordinates for three random sites in southern Spain:
 
 ```{r points-df-mat-sf-1}
 library(easyclimate)
@@ -47,29 +47,37 @@ ggplot() +
 
 <br>
 
-Now, download the climatic data for the selected locations. All you have to do is use the function `get_daily_climate`, specifying the period (e.g. `2008-05-25` for a single day or `2008:2010` for several years), and the variables to be downloaded (precipitation `Prcp`, minimum temperature `Tmin` or maximum temperature `Tmax`).
+Now, download the climatic data for the selected locations. All you have to do is use the function `get_daily_climate`, specifying the period (e.g. `2008-05-25` for a single day or `2008:2010` for several years), and the variables to be downloaded (precipitation `Prcp`, minimum temperature `Tmin` or maximum temperature `Tmax`). You can also use the function `get_monthly_climate` to download monthly data, specifying the period (e.g. `2008-05` for a single month or `2008:2010` for several years):
 
 ```{r points-df-mat-sf-2}
 
 Sys.time() # to know how much time it takes to download
 
-daily <- get_daily_climate(
+daily <- get_daily_climate( # daily data
   coords = coords, 
   period = 2008:2010, 
-  climatic_var = c("Prcp","Tmin","Tmax"))
-
-monthly <- get_monthly_climate(
-  coords = coords, 
-  period = 2008:2010, 
-  climatic_var = c("Prcp","Tmin","Tmax"))
+  climatic_var = c("Prcp", "Tmin", "Tmax")
+  )
 
 Sys.time()
 
 kable(head(daily))
 
+Sys.time()
+
+monthly <- get_monthly_climate( # monthly data
+  coords = coords, 
+  period = 2008:2010, 
+  climatic_var = c("Prcp", "Tmin", "Tmax")
+  )
+
+Sys.time()
+
+kable(head(monthly))
+
 ```
 
-Here we extract different components of the date. 
+Here we extract different components of the date if needed:
 
 ```{r points-df-mat-sf-3}
 
@@ -78,21 +86,29 @@ daily <- daily |>
     date = as.Date(date),
     month = months(date),
     year = format(date, format = "%y")
-    ) 
+  ) 
 
 ```
 
 <br>
 
-Finally, you can visualize the daily climate results. For example, let's plot the precipitation for one of the sites:
+Finally, you can visualize the daily and monthly climate results. For example, let's plot the precipitation for one of the sites:
 
 ```{r points-df-mat-sf-4}
-clim_site1 <- daily |> 
+clim_daily_site1 <- daily |> 
   filter(ID_coords == 1)
 
-ggplot(clim_site1) +
+ggplot(clim_daily_site1) +
   geom_line(aes(x = date, y = Prcp), colour = "steelblue") +
   labs(x = "Date", y = "Daily precipitation (mm)") +
+  theme_bw()
+
+clim_monthly_site1 <- monthly |> 
+  filter(ID_coords == 1)
+
+ggplot(clim_monthly_site1) +
+  geom_line(aes(x = date, y = Prcp), colour = "steelblue") +
+  labs(x = "Date", y = "Monthly precipitation (mm)") +
   theme_bw()
 ```
 
@@ -128,15 +144,14 @@ ggplot(temp_long, aes(x = date, y = temp_values, color = temp_vars)) +
 
 ```
 
-
 <br>
 <br>
 
 # Example 2: Introducing coordinates as a matrix
 
-`easyclimate` handles different input data, try now with matrices! 
+{easyclimate} handles different input data, try now with matrices! 
 
-Here we are retrieving daily precipitation data for a single year (2008).
+Here we are retrieving daily precipitation data for a single year (2008):
 
 ```{r points-df-mat-sf-6}
 
@@ -183,13 +198,54 @@ mat_prcp |>
 
 ```
 
+We can also retrieved monthly data using the same matrix of coordinates and add the average values to the previous plot:
+
+```{r points-df-mat-sf-7}
+
+Sys.time()
+
+mat_monthly_prcp <- get_monthly_climate( 
+  coords = coords_mat, 
+  period = 2008, # single year
+  climatic_var = "Prcp"
+)
+
+Sys.time()
+
+kable(head(mat_monthly_prcp))
+
+mat_monthly_prcp <- mat_monthly_prcp |> 
+  mutate(
+    month = months(date),
+    year = format(date, format = "%y")
+  ) |> 
+  relocate(lon, lat, year, month, Prcp)
+
+mat_monthly_prcp <- mat_monthly_prcp |>
+  mutate(month = factor(month, levels = rev(month_name)))
+
+mat_prcp |> 
+  mutate(month = factor(month, rev(month_name))) |> 
+  ggplot(aes(x = month, y = Prcp, color = month)) +
+  geom_jitter(size = 2, alpha = .3, width = .3, show.legend = FALSE) +
+  geom_point( # add monthly data
+    data = mat_monthly_prcp,
+    aes(x = month, y = Prcp),
+    color = "black", size = 3
+  ) +
+  scale_y_continuous(expand = c(0,0)) +
+  coord_flip(ylim = c(0, 60)) +
+  ylab("Daily precipitation (mm)") + xlab("Month") +
+  theme_bw()
+
+```
 
 <br>
 <br>
 
 # Example 3: Introducing coordinates as simple feature objects
 
-Here we introduce coordinates as a `sf` object, and retrieve minimum temperature for a single day (1 January 2001).
+Here we introduce coordinates as a `sf` object, and retrieve minimum temperature for a single day (1 January 2001):
 
 
 ```{r points-df-mat-sf-7}
@@ -222,4 +278,4 @@ ggplot() +
 
 ## Learn more
 
-Now you know how to obtain a data frame with different climatic variables with `easyclimate`, using point coordinates in different formats and downloading data for multiple locations and periods. Check out this [other vignette](https://verughub.github.io/easyclimate/articles/polygons-raster.html) if you need to extract the data of a complete area.
+Now you know how to obtain a data frame with different climatic variables with {easyclimate}, using point coordinates in different formats and downloading data for multiple locations and periods. Check out this [other vignette](https://verughub.github.io/easyclimate/articles/polygons-raster.html) if you need to extract the data of a complete area.

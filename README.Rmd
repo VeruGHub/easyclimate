@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 # `easyclimate` <a href='https://verughub.github.io/easyclimate/'><img src="man/figures/easyclimate_logo_small.png" align="right" height="139"/></a>
 
-# Easy access to high-resolution daily climate data for Europe
+# Easy access to high-resolution daily and monthly climate data for Europe
 
 <!-- badges: start -->
 
@@ -32,11 +32,11 @@ knitr::opts_chunk$set(
 
 <!-- badges: end -->
 
-Get high-resolution (1 km) daily climate data (precipitation, minimum and maximum temperatures) for Europe from the European climatic database hosted at [University of Natural Resources and Life Sciences, Vienna, Austria](https://boku.ac.at/en/wabo/waldbau/wir-ueber-uns/daten). Data are currently available from 1950 to 2022.
+Get high-resolution (1 km) daily and monthly climate data (precipitation, minimum and maximum temperatures) for Europe from the European climatic database hosted at [University of Natural Resources and Life Sciences, Vienna, Austria](https://boku.ac.at/en/wabo/waldbau/wir-ueber-uns/daten). Data are currently available from 1950 to 2022.
 
 This climatic dataset was originally built by [A. Moreno & H. Hasenauer](https://doi.org/10.1002/joc.4436) and further developed by W. Rammer, C. Pucher & M. Neumann (see [this document](https://github.com/VeruGHub/easyclimate/blob/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf) for more details on the development and characteristics of the climatic dataset, and [this document](https://doi.org/10.6084/m9.figshare.22962671.v1) for the updates of the last version - v4).
 
-In this R package we implemented [Cloud-Optimised Geotiffs](http://cogeo.org/) so that we can obtain daily climate data for thousands of sites/days within seconds/minutes, without having to download huge rasters. But if you need to obtain data for large areas, please download the rasters from the FTP server (<ftp://palantir.boku.ac.at/Public/ClimateData/>) and extract the values locally rather than using this package, so as not to saturate the file server. For that, you may use a FTP client such as [FileZilla](https://filezilla-project.org/).
+In this R package we implemented [Cloud-Optimised Geotiffs](http://cogeo.org/) so that we can obtain daily and monthly climate data for thousands of sites/days within seconds/minutes, without having to download huge rasters. But if you need to obtain data for large areas, please download the rasters from the FTP server (<ftp://palantir.boku.ac.at/Public/ClimateData/>) and extract the values locally rather than using this package, so as not to saturate the file server. For that, you may use a FTP client such as [FileZilla](https://filezilla-project.org/).
 
 For a detailed description of {easyclimate}, please read [this paper](https://doi.org/10.1016/j.envsoft.2023.105627) (open access version [here](https://doi.org/10.32942/osf.io/mc8uj)) or visit the package [website](https://verughub.github.io/easyclimate/).
 
@@ -58,21 +58,31 @@ remotes::install_github("VeruGHub/easyclimate")
 
 ### Obtain a data frame of climatic values
 
-To obtain a data frame of daily climatic values for point coordinates:
+To obtain a data frame of daily and monthly climatic values for point coordinates:
 
 ```{r example, message = FALSE}
 library(easyclimate)
 
 coords <- data.frame(lon = -5.36, lat = 37.40)
 
-prec <- get_daily_climate(coords, 
-                          period = "2001-01-01:2001-01-03", 
-                          climatic_var = "Prcp",
-                          version = 4) # default
+prec_daily <- get_daily_climate(coords, 
+                                period = "2001-01-01:2001-01-03", 
+                                climatic_var = "Prcp",
+                                version = 4) # default
 ```
 
-```{r echo=FALSE}
-kable(prec)
+```{r echo = FALSE}
+kable(prec_daily)
+```
+
+```{r example, message = FALSE}
+prec_monthly <- get_monthly_climate(coords,
+                                    period = "2001-01:2001-03",
+                                    climatic_var = "Prcp")
+```
+
+```{r echo = FALSE}
+kable(prec_monthly)
 ```
 
 <br>
@@ -81,7 +91,7 @@ kable(prec)
 
 To obtain a (multi-layer) raster of daily climatic values for an area:
 
-```{r message=FALSE, fig.width = 8, fig.height = 3}
+```{r message = FALSE, fig.width = 8, fig.height = 3}
 library(terra)
 
 ## Download the polygon contour of a region
@@ -107,7 +117,7 @@ sobrarbetemp
 
 Let's make a map. First using terra:
 
-```{r map_terra, eval=FALSE}
+```{r map_terra, eval = FALSE}
 plot(sobrarbetemp, col = rev(RColorBrewer::brewer.pal(9, "RdYlBu")), 
      smooth = TRUE, nc = 3)
 ```
@@ -116,7 +126,7 @@ plot(sobrarbetemp, col = rev(RColorBrewer::brewer.pal(9, "RdYlBu")),
 
 Now using ggplot2 and tidyterra:
 
-```{r map_ggplot, message=FALSE, fig.width = 8, fig.height = 3}
+```{r map_ggplot, message = FALSE, fig.width = 8, fig.height = 3}
 library(ggplot2)
 library(tidyterra)
 
@@ -137,8 +147,8 @@ ggplot() +
 
 ## CITATION
 
-If you use easyclimate, please cite both the appropriate data source and the package as:
+If you use {easyclimate}, please cite both the appropriate data source and the package as:
 
-```{r echo=FALSE, results='asis', cache = FALSE}
+```{r echo = FALSE, results = 'asis', cache = FALSE}
 print(citation("easyclimate"), style = "text")
 ```

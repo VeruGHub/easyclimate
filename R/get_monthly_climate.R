@@ -95,7 +95,23 @@ get_monthly_climate <- function(coords = NULL,
                               output = "df",
                               check_connection = TRUE) {
 
-  if (length(climatic_var) == 1) {
+  # Credentials for connecting to the server
+
+  s3 <- s3(
+    config = list(
+      credentials = list(
+        creds = list(
+          access_key_id = "NFKG4NAOIJ1H5QHJFBBD",
+          secret_access_key = "07XoO5wixfafcZ2tq7UJqsQfAI2C960OlVXjjKMH"
+        )
+      ),
+      endpoint = "https://s3.boku.ac.at",
+      region = "eu-central-1",
+      s3_force_path_style = TRUE
+    )
+  )
+
+    if (length(climatic_var) == 1) {
 
     out <- get_monthly_climate_single(
       coords = coords,

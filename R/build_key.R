@@ -61,7 +61,7 @@ build_key <- function(climatic_var_single,
 
   invisible(key)
 
-    }} else {
+    } else {
 
       if (temp_res == "year") {
 
@@ -80,6 +80,7 @@ build_key <- function(climatic_var_single,
 
       }
     }
-}
+  }
+  }
 
 

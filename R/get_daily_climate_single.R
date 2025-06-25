@@ -95,7 +95,7 @@ get_daily_climate_single <- function(coords = NULL,
   coords.spatvec$ID_coords <- seq(from = 1, to = nrow(coords.spatvec), by = 1)
 
   ## Warn (or stop) if asking data for too many points or too large area
-  # so as not to saturate FTP server
+  # so as not to saturate server
   if (nrow(coords.spatvec) > 10000) {  # change limits if needed
     stop("Asking for climate data for >10000 sites. Please reduce the number of sites or download original rasters directly from ftp://palantir.boku.ac.at/Public/ClimateData/ so as not to saturate the server")
   }

@@ -88,7 +88,7 @@ get_monthly_climate_single <- function(coords = NULL,
   coords.spatvec$ID_coords <- seq(from = 1, to = nrow(coords.spatvec), by = 1)
 
   ## Warn (or stop) if asking data for too many points or too large area
-  # so as not to saturate FTP server
+  # so as not to saturate server
   if (nrow(coords.spatvec) > 100000) {  # change limits if needed
     stop("Asking for climate data for >100000 sites. Please reduce the number of sites or download original rasters directly from ftp://palantir.boku.ac.at/Public/ClimateData/ so as not to saturate the server")
   }
@@ -127,25 +127,34 @@ get_monthly_climate_single <- function(coords = NULL,
   #### Build urls for all required years ####
 
   urls <- unlist(lapply(years,
-                        build_url,
+                        build_key,
                         climatic_var_single = climatic_var_single,
                         temp_res = "month"))
 
-  ## Check if the server is working
-  if (isTRUE(check_conn)) {
-    if (isTRUE(check_server(verbose = FALSE))) {
-      message("Connecting to the server...")
-    } else {
-      message("Problems retrieving the data. Please run 'check_server()' to diagnose the problems.\n")
-    }
-  }
-  ###
-
-  urls.vsicurl <- paste0("/vsicurl/", urls)
+  # ## Check if the server is working
+  # if (isTRUE(check_conn)) {
+  #   if (isTRUE(check_server(verbose = FALSE))) {
+  #     message("Connecting to the server...")
+  #   } else {
+  #     message("Problems retrieving the data. Please run 'check_server()' to diagnose the problems.\n")
+  #   }
+  # }
+  # ###
 
   #### Connect and combine all required rasters ####
 
-  ras.list <- lapply(urls.vsicurl, terra::rast)
+  obj.list <- lapply(urls,
+                     function (one_url) {s3$get_object(
+                       Bucket = "oekbwaldklimadaten",
+                       Key = one_url)
+                       })
+
+  ras.list <- lapply(obj.list,
+         function (one_obj) {
+           temp.file <- tempfile(fileext = ".tif")
+           writeBin(one_obj$Body, temp.file)
+           terra::rast(temp.file)
+         })
 
   ## Name raster layers with their dates
   for (i in seq_along(years)) {
@@ -250,7 +259,7 @@ period_to_months <- function(period) {
 
   if (is.character(period)) {
 
-    ini <- do.call(rbind, strsplit(period, split = ":"))[,1]
+    ini <- do.call(rbind, strsplit(period, split = ":"))[,1] #No funciona si la fecha es c("2000-01", "2000-07") porque se queda en formato matrix
 
     ## check correct format ("YYYY-MM")
     if (!grepl("[0-9]{4}-[0-9]{2}$", ini))
@@ -290,7 +299,7 @@ period_to_months <- function(period) {
 
     months <- do.call("c", months.list)
 
-    names(months) <- NULL
+    names(months) <- NULL #Quitar el -01
 
   }
 

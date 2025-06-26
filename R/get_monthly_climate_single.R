@@ -114,7 +114,7 @@ get_monthly_climate_single <- function(coords = NULL,
   months <- period_to_months(period)
 
   ## Extract years
-  years <- as.numeric(sort(unique(format(months, "%Y"))))
+  years <- as.numeric(sort(unique(format(as.Date(paste0(months, "-01")), "%Y"))))
 
   ## Check years are within bounds
   if (any(years < 1950 | years > 2024)) {

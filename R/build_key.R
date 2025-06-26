@@ -4,7 +4,7 @@
 # Build the key to download climatic data
 #
 # @param climatic_var Character. Climatic variable to be downloaded. One of 'Tmax',
-# 'Tmin' or 'Prcp'.
+# 'Tmin', 'Tavg' or 'Prcp'.
 # @param year Numeric. Year to download climatic information
 # @param temp_res Character. One of "day" , "month" or "year"
 #

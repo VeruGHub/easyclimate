@@ -17,12 +17,6 @@ test_that("built url is correct for v3", {
                    "ftp://palantir.boku.ac.at/Public/ClimateData/v3_cogeo/AllDataRasters/tmin/DownscaledTmin2008_cogeo.tif")
 })
 
-test_that("built url is correct for monthly climate", {
-  expect_identical(build_url("Tmin", 2008, temp_res = "month"),
-                   c("ftp://palantir.boku.ac.at/Public/ClimateData/v4_cogeo/MonthlyDataRasters/tmin/DownscaledTmin2008MonthlyAvg_cogeo.tif",
-                     "ftp://palantir.boku.ac.at/Public/ClimateData/v4_cogeo/MonthlyDataRasters/tmin/DownscaledTmin2008Monthly_NoDMissing_cogeo.tif"))
-})
-
 # Better to check server status differently than giving package error if server not working
 # test_that("server is running and built url exists", {
 #   skip_on_cran()

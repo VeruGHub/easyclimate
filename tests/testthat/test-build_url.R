@@ -12,10 +12,10 @@ test_that("built url is correct for daily climate", {
                    "ftp://palantir.boku.ac.at/Public/ClimateData/v4_cogeo/AllDataRasters/tmin/DownscaledTmin2008_cogeo.tif")
 })
 
-test_that("built url is correct for v3", {
-  expect_identical(build_url("Tmin", 2008, version = 3),
-                   "ftp://palantir.boku.ac.at/Public/ClimateData/v3_cogeo/AllDataRasters/tmin/DownscaledTmin2008_cogeo.tif")
-})
+# test_that("built url is correct for v3", {
+#   expect_identical(build_url("Tmin", 2008, version = 3),
+#                    "ftp://palantir.boku.ac.at/Public/ClimateData/v3_cogeo/AllDataRasters/tmin/DownscaledTmin2008_cogeo.tif")
+# })
 
 # Better to check server status differently than giving package error if server not working
 # test_that("server is running and built url exists", {

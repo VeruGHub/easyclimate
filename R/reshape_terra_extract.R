@@ -3,9 +3,9 @@
 #' Reshape terra output from get_montly_climate_single and get_daily_climate_single
 #' when output = "df"
 #'
-#' @param df.wide Character. Climatic variable to be downloaded.
-#' One of 'Tmax', 'Tmin' or 'Prcp'.
-#' @param climvar A data.frame with the output of terra::extract.
+#' @param df.wide A data.frame with the output of terra::extract.
+#' @param climvar Character. Climatic variable to be downloaded.
+#' One of 'Tmax', 'Tmin', 'Tavg' or 'Prcp'.
 #'
 #' @return A data.frame
 #'

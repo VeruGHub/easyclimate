@@ -9,8 +9,6 @@
 #' @param output Character. Either "df", which returns a dataframe with monthly
 #' climatic values for each point/polygon, or "raster", which returns a
 #' [terra::SpatRaster()] object.
-#' @param check_conn Logical. Check the connection to the server before
-#' attempting data download?
 #' @inheritParams get_montly_climate
 #'
 #' @return A data.frame (if output = "df") or a [terra::SpatRaster()] object
@@ -36,8 +34,7 @@
 get_monthly_climate_single <- function(coords = NULL,
                                        climatic_var_single = "Prcp",
                                        period = NULL,
-                                       output = "df",
-                                       check_conn = TRUE) {
+                                       output = "df") {
 
   #### Check arguments ####
 

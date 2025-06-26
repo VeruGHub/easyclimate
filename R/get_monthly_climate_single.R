@@ -131,16 +131,6 @@ get_monthly_climate_single <- function(coords = NULL,
                         climatic_var_single = climatic_var_single,
                         temp_res = "month"))
 
-  # ## Check if the server is working
-  # if (isTRUE(check_conn)) {
-  #   if (isTRUE(check_server(verbose = FALSE))) {
-  #     message("Connecting to the server...")
-  #   } else {
-  #     message("Problems retrieving the data. Please run 'check_server()' to diagnose the problems.\n")
-  #   }
-  # }
-  # ###
-
   #### Connect and combine all required rasters ####
 
   obj.list <- lapply(urls,
@@ -205,8 +195,7 @@ get_monthly_climate_single <- function(coords = NULL,
     ## Real climatic values
     out[,climatic_var_single] <- out[,climatic_var_single]/100
 
-    #invisible(out)
-    return(out)
+    invisible(out)
 
   }
 
@@ -222,8 +211,7 @@ get_monthly_climate_single <- function(coords = NULL,
     ## Real climatic values
     out <- out/100
 
-    #invisible(out)
-    return(out)
+    invisible(out)
 
   }
 
@@ -259,10 +247,10 @@ period_to_months <- function(period) {
 
   if (is.character(period)) {
 
-    ini <- do.call(rbind, strsplit(period, split = ":"))[,1] #No funciona si la fecha es c("2000-01", "2000-07") porque se queda en formato matrix
+    ini <- do.call(rbind, strsplit(period, split = ":"))[,1]
 
     ## check correct format ("YYYY-MM")
-    if (!grepl("[0-9]{4}-[0-9]{2}$", ini))
+    if (any(!grepl("[0-9]{4}-[0-9]{2}$", ini)))
       stop("Please provide dates as 'YYYY-MM'")
 
     if (ncol(do.call(rbind, strsplit(period, split = ":"))) == 2) {
@@ -276,7 +264,7 @@ period_to_months <- function(period) {
     }
 
     ## check correct format ("YYYY-MM")
-    if (!grepl("[0-9]{4}-[0-9]{2}$", fin))
+    if (any(!grepl("[0-9]{4}-[0-9]{2}$", fin)))
       stop("Please provide dates as 'YYYY-MM'")
 
     ini.fin <- data.frame(ini = paste0(ini, "-01"),
@@ -299,11 +287,11 @@ period_to_months <- function(period) {
 
     months <- do.call("c", months.list)
 
-    names(months) <- NULL #Quitar el -01
+    names(months) <- NULL
 
   }
 
-  invisible(months)
+  invisible(sub("-01$", "", months))
 
 }
 

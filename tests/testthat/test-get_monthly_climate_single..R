@@ -71,8 +71,7 @@ test_that("different climatic_var_single give expected results", {
   # climatic_var_single = "Tmin"
   expect_identical(
     get_monthly_climate_single(coords.mat, period = c("2001-01", "2001-06"),
-                             climatic_var_single = "Tmin",
-                             check_conn = FALSE),
+                             climatic_var_single = "Tmin"),
     structure(list(ID_coords = c(1, 1, 2, 2),
                    lon = c(-5.36, -5.36, -4.05, -4.05),
                    lat = c(37.4, 37.4, 38.1, 38.1),
@@ -84,8 +83,7 @@ test_that("different climatic_var_single give expected results", {
   ## climatic_var_single = "Tmax"
   expect_identical(
     get_monthly_climate_single(coords.mat, period = c("2001-01", "2001-06"),
-                             climatic_var_single = "Tmax",
-                             check_conn = FALSE),
+                             climatic_var_single = "Tmax"),
     structure(list(ID_coords = c(1, 1, 2, 2),
                    lon = c(-5.36, -5.36, -4.05, -4.05),
                    lat = c(37.4, 37.4, 38.1, 38.1),
@@ -97,8 +95,7 @@ test_that("different climatic_var_single give expected results", {
   ## climatic_var_single = "Prcp"
   expect_identical(
     get_monthly_climate_single(coords.mat, period = c("2001-01", "2001-06"),
-                             climatic_var_single = "Prcp",
-                             check_conn = FALSE),
+                             climatic_var_single = "Prcp"),
     structure(list(ID_coords = c(1, 1, 2, 2),
                    lon = c(-5.36, -5.36, -4.05, -4.05),
                    lat = c(37.4, 37.4, 38.1, 38.1),
@@ -132,24 +129,21 @@ test_that("different input formats (points) give expected results", {
   names(coords.df) <- c("lon", "lat")
   expect_identical(
     get_monthly_climate_single(coords.df, period = "2001-01",
-                             climatic_var_single = "Tmin",
-                             check_conn = FALSE),
+                             climatic_var_single = "Tmin"),
     output)
 
   #Input sf
   coords.sf <- sf::st_as_sf(coords.df, coords = c("lon", "lat"))
   expect_identical(
     get_monthly_climate_single(coords.sf, period = "2001-01",
-                             climatic_var_single = "Tmin",
-                             check_conn = FALSE),
+                             climatic_var_single = "Tmin"),
     output)
 
   #Input SpatVector
   coords.spv <- terra::vect(coords.sf)
   expect_identical(
     get_monthly_climate_single(coords.spv, period = "2001-01",
-                             climatic_var_single = "Tmin",
-                             check_conn = FALSE),
+                             climatic_var_single = "Tmin"),
     output)
 
 })
@@ -231,8 +225,7 @@ test_that("different period formats give expected results", {
   coords <- matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
 
   expect_identical(
-    get_monthly_climate_single(coords, period = c("2001-01:2001-03", "2005-01"),
-                               check_conn = FALSE),
+    get_monthly_climate_single(coords, period = c("2001-01:2001-03", "2005-01")),
     structure(list(ID_coords = c(1, 1, 1, 1, 2, 2, 2, 2),
                    lon = c(-5.36, -5.36, -5.36, -5.36, -4.05, -4.05, -4.05, -4.05),
                    lat = c(37.4, 37.4, 37.4, 37.4, 38.1, 38.1, 38.1, 38.1),
@@ -242,8 +235,7 @@ test_that("different period formats give expected results", {
               row.names = c(NA, -8L), class = "data.frame"))
 
 
-  out <- get_monthly_climate_single(coords, period = c(2001:2003, 2005),
-                                    check_conn = FALSE)
+  out <- get_monthly_climate_single(coords, period = c(2001:2003, 2005))
   expect_identical(head(out),
                    structure(list(ID_coords = c(1, 1, 1, 1, 1, 1),
                                   lon = c(-5.36, -5.36, -5.36, -5.36, -5.36, -5.36),

@@ -125,6 +125,21 @@ get_annual_climate_single <- function(coords = NULL,
                         temp_res = "year"))
 
   #### Connect and combine all required rasters ####
+  # Credentials for connecting to the server
+
+  s3 <- paws::s3(
+    config = list(
+      credentials = list(
+        creds = list(
+          access_key_id = "NFKG4NAOIJ1H5QHJFBBD",
+          secret_access_key = "07XoO5wixfafcZ2tq7UJqsQfAI2C960OlVXjjKMH"
+        )
+      ),
+      endpoint = "https://s3.boku.ac.at",
+      region = "eu-central-1",
+      s3_force_path_style = TRUE
+    )
+  )
 
   obj.list <- lapply(urls,
                      function (one_url) {s3$get_object(

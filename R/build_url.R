@@ -4,7 +4,7 @@
 # Build the url to download climatic data from ftp://palantir.boku.ac.at/Public/ClimateData/
 #
 # @param climatic_var Character. Climatic variable to be downloaded. One of 'Tmax',
-# 'Tmin' or 'Prcp'.
+# 'Tmin', 'Tavg' or 'Prcp'.
 # @param year Numeric. Year to download climatic information
 # @param version Numeric. Version of the climate data.
 # @param temp_res Character. One of "day" , "month" or "year"
@@ -15,18 +15,18 @@
 
 build_url <- function(climatic_var_single,
                       year,
-                      version = 4,
+                      version,
                       temp_res = "day") {
 
   ## Check arguments
   if (!climatic_var_single %in% c("Tmax", "Tmin", "Tavg", "Prcp"))
     stop("climatic_var_single must be one of 'Tmax', 'Tmin', 'Tavg' or 'Prcp'")
 
-  if (version == 3) {
+  if (version == "3") {
     if (year < 1950 | year > 2020)
       stop("Year (period) must be between 1950 and 2020")
   }
-  if (version == 4) {
+  if (version == "4") {
     if (year < 1950 | year > 2024)
       stop("Year (period) must be between 1950 and 2024")
   }

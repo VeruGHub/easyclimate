@@ -24,8 +24,8 @@
 #' @param output Character. Either "df", which returns a dataframe with daily
 #' climatic values for each point/polygon, or "raster", which returns [terra::SpatRaster()]
 #' objects (within a list when more than one climatic variable is downloaded).
-#' @param version Numeric. Version of the climate data. It uses the latest version (4)
-#' by default. The former version (3) is also available, for the sake of reproducibility.
+#' @param version Character. Version of the climate data. It uses the latest version
+#' by default. The former version (4) is also available, for the sake of reproducibility.
 #' See 'references' for details on the climatic data sets.
 #' @param check_connection Logical. Check the connection to the server before
 #' attempting data download?
@@ -96,7 +96,7 @@ get_daily_climate <- function(coords = NULL,
                               climatic_var = "Prcp",
                               period = NULL,
                               output = "df",
-                              version = 4,
+                              version = "last",
                               check_connection = TRUE) {
 
   if (length(climatic_var) == 1) {

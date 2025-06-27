@@ -37,14 +37,14 @@ get_daily_climate_single <- function(coords = NULL,
                                      climatic_var_single = "Prcp",
                                      period = NULL,
                                      output = "df",
-                                     version = 4,
+                                     version = "last",
                                      check_conn = TRUE) {
 
   #### Check arguments ####
 
   ## version
-  if (!version %in% c(4, 3)) {
-    stop("version must be 3 or 4")
+  if (!version %in% c("4", "last")) {
+    stop("version must be 4 or last for the most updated version")
   }
 
 
@@ -127,18 +127,20 @@ get_daily_climate_single <- function(coords = NULL,
   years <- as.numeric(sort(unique(format(days, "%Y"))))
 
   ## Check years are within bounds
-  if (version == 3) {
-    if (any(years < 1950 | years > 2020))
-      stop("Year (period) must be between 1950 and 2020")
-  }
-  if (version == 4) {
+  if (version == "4") {
     if (any(years < 1950 | years > 2022))
       stop("Year (period) must be between 1950 and 2022")
+  }
+  if (version == "last") {
+    if (any(years < 1950 | years > 2024))
+      stop("Year (period) must be between 1950 and 2024")
   }
 
   #### Build urls for all required years ####
 
-  urls <- unlist(lapply(years,
+  if (version == "4") {
+
+      urls <- unlist(lapply(years,
                         build_url,
                         climatic_var_single = climatic_var_single,
                         version = version))
@@ -151,13 +153,58 @@ get_daily_climate_single <- function(coords = NULL,
       message("Problems retrieving the data. Please run 'check_server()' to diagnose the problems.\n")
     }
   }
-  ###
 
-  urls.vsicurl <- paste0("/vsicurl/", urls)
+      urls.vsicurl <- paste0("/vsicurl/", urls)
 
-  #### Connect and combine all required rasters ####
+      #### Connect and combine all required rasters ####
 
-  ras.list <- lapply(urls.vsicurl, terra::rast)
+      ras.list <- lapply(urls.vsicurl, terra::rast)
+
+  } else {
+
+    if (version == "last") {
+
+    #### Build urls for all required years ####
+
+    urls <- unlist(lapply(years,
+                          build_key,
+                          climatic_var_single = climatic_var_single,
+                          temp_res = "month"))
+
+    #### Connect and combine all required rasters ####
+    # Credentials for connecting to the server
+
+    s3 <- paws::s3(
+      config = list(
+        credentials = list(
+          creds = list(
+            access_key_id = "NFKG4NAOIJ1H5QHJFBBD",
+            secret_access_key = "07XoO5wixfafcZ2tq7UJqsQfAI2C960OlVXjjKMH"
+          )
+        ),
+        endpoint = "https://s3.boku.ac.at",
+        region = "eu-central-1",
+        s3_force_path_style = TRUE
+      )
+    )
+
+    obj.list <- lapply(urls,
+                       function (one_url) {s3$get_object(
+                         Bucket = "oekbwaldklimadaten",
+                         Key = one_url)
+                       })
+
+    ras.list <- lapply(obj.list,
+                       function (one_obj) {
+                         temp.file <- tempfile(fileext = ".tif")
+                         writeBin(one_obj$Body, temp.file)
+                         terra::rast(temp.file)
+                       })
+    }
+  }
+
+
+###
 
   ## Name raster layers with their dates
   for (i in seq_along(years)) {

@@ -15,7 +15,7 @@
 
 build_url <- function(climatic_var_single,
                       year,
-                      version,
+                      version = 4,
                       temp_res = "day") {
 
   ## Check arguments

@@ -1,5 +1,5 @@
 
-test_that("coordinate input gives exopected result", {
+test_that("coordinate input gives expected result", {
 
   skip_on_cran()
   skip_on_ci()

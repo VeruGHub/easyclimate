@@ -135,8 +135,8 @@ get_monthly_climate_single <- function(coords = NULL,
     config = list(
       credentials = list(
         creds = list(
-          access_key_id = "NFKG4NAOIJ1H5QHJFBBD",
-          secret_access_key = "07XoO5wixfafcZ2tq7UJqsQfAI2C960OlVXjjKMH"
+          access_key_id ="1DF59HZBUVFT0SPZ6KBZ",
+          secret_access_key = "oLtTH27pNNH90vUlC13ppV7W5GlWUX1IHB3BVlNC"
         )
       ),
       endpoint = "https://s3.boku.ac.at",
@@ -207,8 +207,6 @@ get_monthly_climate_single <- function(coords = NULL,
     ## Real climatic values
     out[,climatic_var_single] <- out[,climatic_var_single]/100
 
-    invisible(out)
-
   }
 
   ## If output == "raster", return a cropped raster
@@ -223,9 +221,9 @@ get_monthly_climate_single <- function(coords = NULL,
     ## Real climatic values
     out <- out/100
 
-    invisible(out)
-
   }
+
+  invisible(out)
 
 }
 

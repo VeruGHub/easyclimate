@@ -18,14 +18,14 @@ test_that("downloading several variables gives expected results", {
                    lon = c(-5.36, -5.5),
                    lat = c(37.40, 37.5),
                    date = c(2012, 2012),
-                   Tmin = c(6.25, 6.51),
-                   Tmax = c(16.06, 15.65),
-                   Tavg = c(10, 10),
-                   Prcp = c(8.30, 8.72)),
+                   Tmin = c( 12.54, 11.88),
+                   Tmax = c(25.29, 25.08),
+                   Tavg = c(18.91, 18.48),
+                   Prcp = c(427.33, 463.85)),
               row.names = c(NA, -2L), class = "data.frame"))
 
   ## Output raster
-  output <- get_montly_climate(coords, period = 2012,
+  output <- get_annual_climate(coords, period = 2012,
                                climatic_var = c("Tmin", "Tmax", "Tavg", "Prcp"),
                                output = "raster")
 
@@ -33,16 +33,16 @@ test_that("downloading several variables gives expected results", {
   expect_true(inherits(output, "list"))
   expect_identical(names(output), structure(c("Tmin", "Tmax", "Tavg", "Prcp")))
   expect_identical(head(values(output[[1]])),
-                   structure(c(6.51, 6.49, 6.46, 6.44, 6.42, 6.40), dim = c(6L, 1L),
+                   structure(c(11.88, 11.90, 11.93, 11.95, 11.96, 11.99), dim = c(6L, 1L),
                              dimnames = list(NULL, "2012")))
   expect_identical(head(values(output[[2]])),
-                   structure(c(15.65, 15.64, 15.53, 15.53, 15.52, 15.51), dim = c(6L, 1L),
+                   structure(c(25.08, 25.08, 25.07, 25.08, 25.07, 25.08), dim = c(6L, 1L),
                              dimnames = list(NULL, "2012")))
   expect_identical(head(values(output[[3]])),
-                   structure(c(10, 10, 10, 10, 10, 10), dim = c(6L, 1L),
+                   structure(c(18.48, 18.49, 18.50, 18.51, 18.51, 18.53), dim = c(6L, 1L),
                              dimnames = list(NULL, "2012")))
   expect_identical(head(values(output[[4]])),
-                   structure(c(8.72, 8.70, 8.67, 8.65, 8.62, 8.59), dim = c(6L, 1L
+                   structure(c(463.85, 464.17, 465.77, 466.49,464.75, 461.11), dim = c(6L, 1L
                    ), dimnames = list(NULL, "2012")))
 
 })

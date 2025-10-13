@@ -53,58 +53,6 @@ test_that("year below 1950 or above 2022 gives error", {
                                         period = 2030))
 })
 
-############################################################
-
-# test_that("different climatic_var_single give expected results for v3", {
-#
-#   # Testing for 2 sites and a single day
-#
-#   skip_on_cran()
-#   skip_on_ci()
-#   skip_if_not(suppressWarnings(check_server(verbose = FALSE)))
-#
-#   ## Input matrix
-#   coords.mat <- matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
-#
-#   # climatic_var_single = "Tmin"
-#   expect_identical(
-#     get_daily_climate_single(coords.mat, period = "2001-01-01",
-#                              climatic_var_single = "Tmin", version = 3,
-#                              check_conn = FALSE),
-#     structure(list(ID_coords = c(1, 2),
-#                    lon = c(-5.36, -4.05),
-#                    lat = c(37.4, 38.1),
-#                    date = c("2001-01-01", "2001-01-01"),
-#                    Tmin = c(6.50, 6.64)),
-#               row.names = c(NA, -2L), class = "data.frame"))
-#
-#
-#   ## climatic_var_single = "Tmax"
-#   expect_identical(
-#     get_daily_climate_single(coords.mat, period = "2001-01-01",
-#                              climatic_var_single = "Tmax", version = 3,
-#                              check_conn = FALSE),
-#     structure(list(ID_coords = c(1, 2),
-#                    lon = c(-5.36, -4.05),
-#                    lat = c(37.4, 38.1),
-#                    date = c("2001-01-01", "2001-01-01"),
-#                    Tmax = c(15.93, 14.92)),
-#               row.names = c(NA, -2L), class = "data.frame"))
-#
-#
-#   ## climatic_var_single = "Prcp"
-#   expect_identical(
-#     get_daily_climate_single(coords.mat, period = "2001-01-01",
-#                              climatic_var_single = "Prcp", version = 3,
-#                              check_conn = FALSE),
-#     structure(list(ID_coords = c(1, 2),
-#                    lon = c(-5.36, -4.05),
-#                    lat = c(37.4, 38.1),
-#                    date = c("2001-01-01", "2001-01-01"),
-#                    Prcp = c(8.64, 6.64)),
-#               row.names = c(NA, -2L), class = "data.frame"))
-#
-# })
 
 test_that("different climatic_var_single give expected results for v4", {
 
@@ -112,7 +60,6 @@ test_that("different climatic_var_single give expected results for v4", {
 
   skip_on_cran()
   skip_on_ci()
-  skip_if_not(suppressWarnings(check_server(verbose = FALSE)))
 
   ## Input matrix
   coords.mat <- matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
@@ -120,7 +67,7 @@ test_that("different climatic_var_single give expected results for v4", {
   # climatic_var_single = "Tmin"
   expect_identical(
     get_daily_climate_single(coords.mat, period = "2001-01-01",
-                             climatic_var_single = "Tmin",
+                             climatic_var_single = "Tmin", version = 4,
                              check_conn = FALSE),
     structure(list(ID_coords = c(1, 2),
                    lon = c(-5.36, -4.05),
@@ -133,7 +80,7 @@ test_that("different climatic_var_single give expected results for v4", {
   ## climatic_var_single = "Tmax"
   expect_identical(
     get_daily_climate_single(coords.mat, period = "2001-01-01",
-                             climatic_var_single = "Tmax",
+                             climatic_var_single = "Tmax", version = 4,
                              check_conn = FALSE),
     structure(list(ID_coords = c(1, 2),
                    lon = c(-5.36, -4.05),
@@ -146,7 +93,7 @@ test_that("different climatic_var_single give expected results for v4", {
   ## climatic_var_single = "Prcp"
   expect_identical(
     get_daily_climate_single(coords.mat, period = "2001-01-01",
-                             climatic_var_single = "Prcp",
+                             climatic_var_single = "Prcp", version = 4,
                              check_conn = FALSE),
     structure(list(ID_coords = c(1, 2),
                    lon = c(-5.36, -4.05),
@@ -164,7 +111,6 @@ test_that("different input formats (points) give expected results", {
 
   skip_on_cran()
   skip_on_ci()
-  skip_if_not(suppressWarnings(check_server(verbose = FALSE)))
 
   ## Input matrix (tested above)
   coords.mat <- matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
@@ -212,7 +158,6 @@ test_that("polygon input give expected results", {
 
   skip_on_cran()
   skip_on_ci()
-  skip_if_not(suppressWarnings(check_server(verbose = FALSE)))
 
   coords <- terra::vect("POLYGON ((-5 38, -5 37.95, -4.95 37.95, -4.95 38, -5 38))")
 
@@ -244,45 +189,16 @@ test_that("polygon input give expected results", {
 
 ############################################################################
 
-# test_that("output raster is correct for v3", {
-#
-#   skip_on_cran()
-#   skip_on_ci()
-#   skip_if_not(suppressWarnings(check_server(verbose = FALSE)))
-#
-#   library(terra)
-#
-#   coords <- terra::vect("POLYGON ((-5 38, -5 37.95, -4.95 37.95, -4.95 38, -5 38))")
-#
-#   output <- get_daily_climate_single(coords, period = "2001-01-01",
-#                                      climatic_var_single = "Tmin", output = "raster",
-#                                      version = 3, check_conn = FALSE)
-#
-#   expect_true(inherits(output, "SpatRaster"))
-#   expect_identical(dim(output), c(6,6,1))
-#   expect_identical(round(res(output), digits = 4), c(0.0083, 0.0083))
-#   expect_identical(as.vector(ext(output)), c(xmin = -5, xmax = -4.95, ymin = 37.95, ymax = 38))
-#   expect_identical(names(output), "2001-01-01")
-#   expect_identical(values(output), structure(c(5.35, 5.25, 5.24, 5.54, 5.43, 5.23, 5.42, 5.42, 5.51, 5.41,
-#                                                5.10, 5.00, 5.39, 5.69, 5.48, 5.28, 5.08, 5.17, 5.56, 5.76, 5.55, 5.45, 5.45,
-#                                                5.34, 5.83, 5.53, 5.32, 5.42, 5.72, 5.81, 5.80, 5.60, 5.79, 5.69, 5.89, 5.68
-#   ), .Dim = c(36L, 1L), .Dimnames = list(NULL, "2001-01-01")))
-#
-# })
-
 test_that("output raster is correct for v4", {
 
   skip_on_cran()
   skip_on_ci()
-  skip_if_not(suppressWarnings(check_server(verbose = FALSE)))
-
-  library(terra)
 
   coords <- terra::vect("POLYGON ((-5 38, -5 37.95, -4.95 37.95, -4.95 38, -5 38))")
 
   output <- get_daily_climate_single(coords, period = "2001-01-01",
                                      climatic_var_single = "Tmin", output = "raster",
-                                     check_conn = FALSE)
+                                     version = 4, check_conn = FALSE)
 
   expect_true(inherits(output, "SpatRaster"))
   expect_identical(dim(output), c(6,6,1))
@@ -303,7 +219,6 @@ test_that("different period formats give expected results", {
 
   skip_on_cran()
   skip_on_ci()
-  skip_if_not(suppressWarnings(check_server(verbose = FALSE)))
 
   coords <- matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
 

@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  run-s3-script:
+    runs-on: ubuntu-latest
+    env:
+      ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+      SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+
+      - name: Install packages
+        run: Rscript -e 'install.packages(c("paws", "aws.s3"))'
+
+      - name: Load credentials
+        run: Rscript R/load_credentials.R

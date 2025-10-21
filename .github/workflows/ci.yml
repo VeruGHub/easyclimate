@@ -8,9 +8,9 @@ jobs:
   run-s3-script:
     runs-on: ubuntu-latest
     env:
-      ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
-      SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
-
+      AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: eu-central-1
 
     steps:
       - name: Checkout repo
@@ -25,7 +25,7 @@ jobs:
       - name: Check environment variables
         run: |
           echo "Checking environment variables..."
-          echo "MY_API_KEY is set? ${{ env.MY_API_KEY != '' }}"
+          echo "MY_API_KEY is set? ${{ env.ACCESS_KEY_ID != '' }}"
           echo "SECRET_ACCESS_KEY is set? ${{ env.SECRET_ACCESS_KEY != '' }}"
 
       - name: Load credentials

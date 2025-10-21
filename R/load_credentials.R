@@ -1,6 +1,4 @@
-api_key <- Sys.getenv("secrets.ACCESS_KEY_ID")
-password <- Sys.getenv("secrets.SECRET_ACCESS_KEY")
+AWS_ACCESS_KEY_ID <- Sys.getenv("ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY <- Sys.getenv("SECRET_ACCESS_KEY")
 
-# Ejemplo de uso:
-cat("La clave API tiene longitud:", nchar(api_key), "\n")
 

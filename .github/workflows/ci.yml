@@ -11,6 +11,7 @@ jobs:
       ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
       SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
 
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -20,6 +21,12 @@ jobs:
 
       - name: Install packages
         run: Rscript -e 'install.packages(c("paws", "aws.s3"))'
+
+      - name: Check environment variables
+        run: |
+          echo "Checking environment variables..."
+          echo "MY_API_KEY is set? ${{ env.MY_API_KEY != '' }}"
+          echo "SECRET_ACCESS_KEY is set? ${{ env.SECRET_ACCESS_KEY != '' }}"
 
       - name: Load credentials
         run: Rscript R/load_credentials.R

@@ -8,18 +8,12 @@ test_that("year below 1950 or above 2022 gives error", {
 })
 
 test_that("built url is correct for daily climate", {
-  expect_identical(build_url("Tmin", 2008),
+  expect_identical(build_url("Tmin", 2008, version = "4"),
                    "ftp://palantir.boku.ac.at/Public/ClimateData/v4_cogeo/AllDataRasters/tmin/DownscaledTmin2008_cogeo.tif")
 })
 
-# test_that("built url is correct for v3", {
-#   expect_identical(build_url("Tmin", 2008, version = 3),
-#                    "ftp://palantir.boku.ac.at/Public/ClimateData/v3_cogeo/AllDataRasters/tmin/DownscaledTmin2008_cogeo.tif")
-# })
+test_that("built url is correct for daily climate", {
+  expect_identical(build_url("Tmin", 2008, version = "last"),
+                   "https://s3.boku.ac.at/oekbwaldklimadaten/v31_cogeo/DailyDataRasters/tmin/DownscaledTmin2008_cogeo.tif")
+})
 
-# Better to check server status differently than giving package error if server not working
-# test_that("server is running and built url exists", {
-#   skip_on_cran()
-#   skip_on_ci()
-#   expect_true(check_server())
-# })

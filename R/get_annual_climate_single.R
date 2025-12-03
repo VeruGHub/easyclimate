@@ -120,39 +120,14 @@ get_annual_climate_single <- function(coords = NULL,
   #### Build urls for all required years ####
 
   urls <- unlist(lapply(years,
-                        build_key,
+                        build_url,
                         climatic_var_single = climatic_var_single,
                         temp_res = "year"))
 
   #### Connect and combine all required rasters ####
-  # Credentials for connecting to the server
+  urls.vsicurl <- paste0("/vsicurl/", urls)
 
-  s3 <- paws::s3(
-    config = list(
-      credentials = list(
-        creds = list(
-          access_key_id = "1DF59HZBUVFT0SPZ6KBZ",
-          secret_access_key = "oLtTH27pNNH90vUlC13ppV7W5GlWUX1IHB3BVlNC"
-        )
-      ),
-      endpoint = "https://s3.boku.ac.at",
-      region = "eu-central-1",
-      s3_force_path_style = TRUE
-    )
-  )
-
-  obj.list <- lapply(urls,
-                     function (one_url) {s3$get_object(
-                       Bucket = "oekbwaldklimadaten",
-                       Key = one_url)
-                     })
-
-  ras.list <- lapply(obj.list,
-                     function (one_obj) {
-                       temp.file <- tempfile(fileext = ".tif")
-                       writeBin(one_obj$Body, temp.file)
-                       terra::rast(temp.file)
-                     })
+  ras.list <- lapply(urls.vsicurl, terra::rast)
 
   ## Combine all years
   rasters <- ras.list[[1]]
@@ -165,7 +140,7 @@ get_annual_climate_single <- function(coords = NULL,
   ## Name raster layers with their dates
   names(rasters) <- years
 
-  ## Subset required dates only - SMR COMPROBAR CAMBIO ¿es necesario? creo que no porque ya seleccionamos el año
+  ## Subset required dates only - SMR creo que esto ya no es necesario aqui, porque ya seleccionamos el año
   # rasters.sub <- terra::subset(rasters, subset = as.character(years))
 
   #### Extract ####
@@ -175,7 +150,7 @@ get_annual_climate_single <- function(coords = NULL,
 
   if (output == "df") {
 
-    out <- terra::extract(rasters, coords.spatvec, xy = TRUE)
+    out <- terra::extract(rasters, coords.spatvec, xy = TRUE, na.rm=TRUE)
 
     ## Reshape to long format and join with coverage
     out <- reshape_terra_extract(out, climvar = climatic_var_single)
@@ -239,8 +214,9 @@ period_to_years <- function(period) {
                                 by = 1)})
     years <- do.call("c", years.list)
     names(years) <- NULL
-    #invisible(years)
-    years
+
+    invisible(years)
+
 }
 
 

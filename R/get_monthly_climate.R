@@ -95,6 +95,7 @@ get_monthly_climate <- function(coords = NULL,
                               output = "df",
                               check_connection = TRUE) {
 
+
     if (length(climatic_var) == 1) {
 
     out <- get_monthly_climate_single(

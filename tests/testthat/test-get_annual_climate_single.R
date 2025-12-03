@@ -1,3 +1,4 @@
+library(terra)
 
 test_that("coordinate input gives expected result", {
 

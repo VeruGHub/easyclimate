@@ -1,4 +1,4 @@
-
+library(terra)
 
 test_that("wrong climatic_var_single gives error", {
   expect_error(get_monthly_climate_single(coords = matrix(c(-5.36, 37.40), ncol = 2),
@@ -99,7 +99,7 @@ test_that("different climatic_var_single give expected results", {
                    lon = c(-5.36, -5.36, -4.05, -4.05),
                    lat = c(37.4, 37.4, 38.1, 38.1),
                    date = c("2001-01", "2001-06", "2001-01", "2001-06"),
-                   Prcp = c(128.6, 2.1, 112.5, 4.6)),
+                   Prcp = c( 128.56, 2.13, 112.47, 4.56)),
               row.names = c(NA, -4L), class = "data.frame"))
 
 })
@@ -191,7 +191,6 @@ test_that("output raster is correct", {
   skip_on_cran()
   skip_on_ci()
 
-  library(terra)
 
   coords <- terra::vect("POLYGON ((-5 38, -5 37.95, -4.95 37.95, -4.95 38, -5 38))")
 
@@ -202,7 +201,7 @@ test_that("output raster is correct", {
   expect_true(inherits(output, "SpatRaster"))
   expect_identical(dim(output), c(6,6,1))
   expect_identical(round(res(output), digits = 4), c(0.0083, 0.0083))
-  expect_identical(as.vector(ext(output)), c(xmin = -5.00, xmax = -4.95, ymin = 37.95, ymax = 38.00))
+  expect_identical(as.vector(round(ext(output), digits = 2)), c(xmin = -5.00, xmax = -4.95, ymin = 37.95, ymax = 38.00))
   expect_identical(names(output), "2001-01")
 
   expect_identical(values(output), structure(c( 4.85, 4.75, 4.76, 5.06, 4.96,
@@ -254,7 +253,7 @@ test_that("different period formats give expected results", {
                                   lat = c(38.1, 38.1, 38.1, 38.1, 38.1, 38.1),
                                   date = c("2005-07", "2005-08", "2005-09",
                                            "2005-10", "2005-11", "2005-12"),
-                                  Prcp = c(0.0, 0.0, 23.6, 117.8, 12.8, 63.4)),
+                                  Prcp = c(0.00, 0.00, 23.64, 117.77, 12.83, 63.44)),
                              row.names = 91:96, class = "data.frame"))
 
 })

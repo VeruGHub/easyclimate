@@ -1,3 +1,4 @@
+library(terra)
 
 test_that("downloading several variables gives expected results", {
 
@@ -28,7 +29,6 @@ test_that("downloading several variables gives expected results", {
                               climatic_var = c("Tmin", "Tmax", "Tavg", "Prcp"),
                               output = "raster")
 
-  library(terra)
   expect_true(inherits(output, "list"))
   expect_identical(names(output), structure(c("Tmin", "Tmax", "Tavg", "Prcp")))
   expect_identical(head(values(output[[1]])),

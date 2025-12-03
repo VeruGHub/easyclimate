@@ -35,3 +35,4 @@ test_that("period_to_months works with character input", {
                      "2008-06","2008-07","2008-08","2008-09","2008-10",
                      "2008-11","2008-12"))
 })
+

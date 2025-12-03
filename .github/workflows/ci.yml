@@ -25,8 +25,8 @@ jobs:
       - name: Check environment variables
         run: |
           echo "Checking environment variables..."
-          echo "MY_API_KEY is set? ${{ env.ACCESS_KEY_ID != '' }}"
-          echo "SECRET_ACCESS_KEY is set? ${{ env.SECRET_ACCESS_KEY != '' }}"
+          echo "MY_API_KEY is set? ${{ env.AWS_ACCESS_KEY_ID != '' }}"
+          echo "SECRET_ACCESS_KEY is set? ${{ env.AWS_SECRET_ACCESS_KEY != '' }}"
 
       - name: Load credentials
         run: Rscript R/load_credentials.R

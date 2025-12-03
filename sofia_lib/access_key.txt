@@ -1,2 +1,0 @@
-"access_key": "1DF59HZBUVFT0SPZ6KBZ"
-"secret_key": "oLtTH27pNNH90vUlC13ppV7W5GlWUX1IHB3BVlNC"

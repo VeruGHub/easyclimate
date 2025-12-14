@@ -34,7 +34,7 @@ Here we calculate the daily mean temperature:
 ```{r climatic-indices-3}
 
 daily <- daily |> 
-  mutate(Tmean = (Tmin + Tmax) / 2, #Daily mean temperature
+  mutate(Tmean = (Tmin + Tmax) / 2, # Daily mean temperature
          date = as.Date(date),
          month = format(date, format = "%m"),
          year = format(date, format = "%Y"))
@@ -173,7 +173,7 @@ daily |>
     ungroup(run) |> 
     summarise(max_days_norain = max(length), # Maximum length of periods of consecutive days without rain per year
               mean_days_norain = mean(length), 
-              nextreme_events = sum(length > threshold)) %>% # No. of events per year
+              nextreme_events = sum(length > threshold)) |> # No. of events per year
   ungroup() |>  
   complete(ID_coords, year, 
            fill = list(max_days_norain = NA, mean_days_norain = NA, nevents = 0))  |>  

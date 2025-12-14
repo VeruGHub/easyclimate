@@ -77,9 +77,10 @@ kable(head(monthly))
 
 ```
 
-Here we extract different components of the date if needed:
+Here we extract different components of the date:
 
 ```{r points-df-mat-sf-3}
+library(lubridate)
 
 daily <- daily |> 
   mutate(
@@ -87,6 +88,9 @@ daily <- daily |>
     month = months(date),
     year = format(date, format = "%y")
   ) 
+
+monthly <- monthly |> 
+  mutate(date = ym(date))
 
 ```
 
@@ -182,7 +186,8 @@ ggplot(mat_prcp, aes(x = date, y = Prcp, color = Prcp)) +
   scale_color_continuous(name = "Precipitation (mm)") +
   scale_y_continuous(expand = c(0, 0)) +
   coord_cartesian(ylim = c(0, 60)) +
-  ylab("Daily precipitation (mm)") + xlab("Date") +
+  ylab("Daily precipitation (mm)") +
+  xlab("Date") +
   theme_bw()
 
 month_name <- format(ISOdate(2021, 1:12, 1), "%B")
@@ -191,7 +196,7 @@ mat_prcp |>
   mutate(month = factor(month, rev(month_name))) |> 
   ggplot(aes(x = month, y = Prcp, color = month)) +
   geom_jitter(size = 2, alpha = .3, width = .3, show.legend = FALSE) +
-  scale_y_continuous(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0, 0)) +
   coord_flip(ylim = c(0, 60)) +
   ylab("Daily precipitation (mm)") + xlab("Month") +
   theme_bw()
@@ -214,29 +219,37 @@ Sys.time()
 
 kable(head(mat_monthly_prcp))
 
-mat_monthly_prcp <- mat_monthly_prcp |> 
+mat_monthly_prcp <- mat_monthly_prcp |>
   mutate(
-    month = months(date),
-    year = format(date, format = "%y")
-  ) |> 
+    date = ym(date),
+    month = month(date, label = TRUE),
+    year = year(date)
+  ) |>
   relocate(lon, lat, year, month, Prcp)
 
 mat_monthly_prcp <- mat_monthly_prcp |>
-  mutate(month = factor(month, levels = rev(month_name)))
+  mutate(
+    month = recode(
+      month,
+      "Sept" = "Sep"
+      )
+  ) |>
+  mutate(
+    month = factor(month, levels = rev(month.abb))
+  )
 
-mat_prcp |> 
-  mutate(month = factor(month, rev(month_name))) |> 
+mat_monthly_prcp |> 
   ggplot(aes(x = month, y = Prcp, color = month)) +
   geom_jitter(size = 2, alpha = .3, width = .3, show.legend = FALSE) +
-  geom_point( # add monthly data
-    data = mat_monthly_prcp,
+  geom_point(
     aes(x = month, y = Prcp),
-    color = "black", size = 3
+    size = 2
   ) +
-  scale_y_continuous(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0, 0)) +
   coord_flip(ylim = c(0, 60)) +
-  ylab("Daily precipitation (mm)") + xlab("Month") +
-  theme_bw()
+  ylab("Monthly precipitation (mm)") + xlab("Month") +
+  theme_bw() +
+  theme(legend.position = "none")
 
 ```
 
@@ -248,7 +261,7 @@ mat_prcp |>
 Here we introduce coordinates as a `sf` object, and retrieve minimum temperature for a single day (1 January 2001):
 
 
-```{r points-df-mat-sf-7}
+```{r points-df-mat-sf-8}
 library(sf)
 
 coords_sf <- st_as_sf(
@@ -269,7 +282,8 @@ ggplot() +
   scale_color_gradient2(name = "Minimum\ntemperature (ºC)",
                         low = "#4B8AB8", mid = "#FAFBC5", high = "#C54A52",
                         midpoint = mean(sf_tmin$Tmin)) +
-	ylab("Latitude") + xlab("Longitude") +
+	ylab("Latitude") +
+  xlab("Longitude") +
   theme_bw()
 
 ```

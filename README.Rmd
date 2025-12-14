@@ -44,12 +44,12 @@ For a detailed description of {easyclimate}, please read [this paper](https://do
 
 Stable version from CRAN:
 
-``` r
+```{r, eval = FALSE}
 install.packages("easyclimate")
 ```
 
 Development version from GitHub:
-``` r
+```{r, eval = FALSE}
 # install.packages("remotes")
 remotes::install_github("VeruGHub/easyclimate")
 ```
@@ -60,7 +60,7 @@ remotes::install_github("VeruGHub/easyclimate")
 
 To obtain a data frame of daily and monthly climatic values for point coordinates:
 
-```{r example, message = FALSE}
+```{r example_daily, message = FALSE}
 library(easyclimate)
 
 coords <- data.frame(lon = -5.36, lat = 37.40)
@@ -75,7 +75,7 @@ prec_daily <- get_daily_climate(coords,
 kable(prec_daily)
 ```
 
-```{r example, message = FALSE}
+```{r example_monthly, message = FALSE}
 prec_monthly <- get_monthly_climate(coords,
                                     period = "2001-01:2001-03",
                                     climatic_var = "Prcp")

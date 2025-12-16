@@ -97,7 +97,7 @@ get_daily_climate <- function(coords = NULL,
                               period = NULL,
                               output = "df",
                               version = "last",
-                              check_connection = TRUE) {
+                              check_connection = FALSE) {
 
   if (length(climatic_var) == 1) {
 

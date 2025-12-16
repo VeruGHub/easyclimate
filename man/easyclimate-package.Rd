@@ -6,7 +6,7 @@
 \alias{easyclimate-package}
 \title{easyclimate: Easy Access to High-Resolution Daily Climate Data for Europe}
 \description{
-Get high-resolution (1 km) daily climate data (precipitation, minimum and maximum temperatures) for points and polygons within Europe.
+Get high-resolution (1 km) daily, monthly and annual climate data (precipitation, and average, minimum and maximum temperatures) for points and polygons within Europe.
 }
 \seealso{
 Useful links:
@@ -17,10 +17,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Verónica Cruz-Alonso \email{veronica.cral@gmail.com} (\href{https://orcid.org/0000-0002-0642-036X}{ORCID}) [copyright holder]
+\strong{Maintainer}: Sofía Miguel \email{sofia.miromero@gmail.com} (\href{https://orcid.org/0000-0002-1341-8022}{ORCID})
 
 Authors:
 \itemize{
+  \item Verónica Cruz-Alonso \email{veronica.cral@gmail.com} (\href{https://orcid.org/0000-0002-0642-036X}{ORCID}) [copyright holder]
   \item Francisco Rodríguez-Sánchez (\href{https://orcid.org/0000-0002-7981-1599}{ORCID}) [copyright holder]
   \item Christoph Pucher (\href{https://orcid.org/0000-0002-9269-1907}{ORCID})
   \item Paloma Ruiz-Benito (\href{https://orcid.org/0000-0002-2781-5870}{ORCID})

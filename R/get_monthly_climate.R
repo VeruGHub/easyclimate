@@ -25,8 +25,6 @@
 #' climatic values for each point/polygon,
 #' or "raster", which returns a [terra::SpatRaster()] object (within a list when
 #' more than one climatic variable is downloaded).
-#' @param check_connection Logical. Check the connection to the server before
-#' attempting data download?
 #'
 #' @return Either:
 #' - A data.frame (if output = "df")
@@ -82,7 +80,8 @@
 #'
 #' # Return raster
 #' ex <- get_monthly_climate(coords, period = "2001-01", output = "raster")
-#' ex <- get_monthly_climate(coords, climatic_var = c("Tmin", "Tmax"), period = "2001-01", output = "raster") # Multiple climatic variables
+#' ex <- get_monthly_climate(coords, climatic_var = c("Tmin", "Tmax"), period = "2001-01",
+#' output = "raster") # Multiple climatic variables
 #'
 #' # Return dataframe for polygon
 #' ex <- get_monthly_climate(coords, period = "2001-01")
@@ -92,8 +91,7 @@
 get_monthly_climate <- function(coords = NULL,
                               climatic_var = "Prcp",
                               period = NULL,
-                              output = "df",
-                              check_connection = TRUE) {
+                              output = "df") {
 
 
     if (length(climatic_var) == 1) {

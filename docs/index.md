@@ -1,24 +1,6 @@
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
-# `easyclimate` <a href='https://verughub.github.io/easyclimate/'><img src="man/figures/easyclimate_logo_small.png" align="right" height="139"/></a>
+# `easyclimate` [![](reference/figures/easyclimate_logo_small.png)](https://verughub.github.io/easyclimate/)
 
 # Easy access to high-resolution daily, monthly and annual climate data for Europe
-
-<!-- badges: start -->
-
-[![](https://www.r-pkg.org/badges/version/easyclimate)](https://cran.r-project.org/package=easyclimate)
-![Badge CRAN
-release](https://img.shields.io/github/r-package/v/VeruGHub/easyclimate)
-<a href="https://diffify.com/R/easyclimate" target="_blank"><img src="https://diffify.com/diffify-badge.svg" alt="The diffify page for the R package easyclimate" style="width: 100px; max-width: 100%;"/></a>
-[![Project Status: Active – The project has reached a stable, usable
-state and is being actively
-developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![R-CMD-check](https://github.com/VeruGHub/easyclimate/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/VeruGHub/easyclimate/actions/workflows/R-CMD-check.yaml)
-[![Badge CRAN
-logs](https://cranlogs.r-pkg.org/badges/grand-total/easyclimate)](https://cran.r-project.org/package=easyclimate)
-
-<!-- badges: end -->
 
 Get high-resolution (1 km) daily, monthly and annual climate data
 (precipitation, and average, minimum and maximum temperatures) for
@@ -45,11 +27,6 @@ for large areas, please download the rasters from the FTP server
 locally rather than using this package, so as not to saturate the file
 server. For that, you may use a FTP client such as
 [FileZilla](https://filezilla-project.org/).
-
-Please, be aware that data will be updated in an annual basis being
-possible to have small adjustments of values for past years according to
-the annual spring releases of [E-OBS
-data](https://surfobs.climate.copernicus.eu/dataaccess/access_eobs.php#datafiles).
 
 For a detailed description of {easyclimate}, please read [this
 paper](https://doi.org/10.1016/j.envsoft.2023.105627) (open access
@@ -107,7 +84,7 @@ prec_monthly <- get_monthly_climate(coords,
 |         1 | -5.36 | 37.4 | 2001-02 |  16.24 |
 |         1 | -5.36 | 37.4 | 2001-03 | 119.71 |
 
-<br>
+  
 
 ### Obtain a raster of climatic values
 
@@ -155,7 +132,7 @@ plot(sobrarbetemp, col = rev(RColorBrewer::brewer.pal(9, "RdYlBu")),
      smooth = TRUE, nc = 3)
 ```
 
-![](man/figures/README-map_terra.png)
+![](reference/figures/README-map_terra.png)
 
 Now using ggplot2 and tidyterra:
 
@@ -175,13 +152,14 @@ ggplot() +
   theme_minimal()
 ```
 
-![](man/figures/README-map_ggplot-1.png)<!-- -->
+![](reference/figures/README-map_ggplot-1.png)
 
-<br> Visit the articles of the [package
+  
+Visit the articles of the [package
 website](https://verughub.github.io/easyclimate/) for more extended
 tutorials!
 
-<br>
+  
 
 ## CITATION
 

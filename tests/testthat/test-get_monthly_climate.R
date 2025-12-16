@@ -1,4 +1,3 @@
-library(terra)
 
 test_that("downloading several variables gives expected results", {
 
@@ -22,13 +21,14 @@ test_that("downloading several variables gives expected results", {
                    Tmax = c(14.83, 14.52),
                    Tavg = c(10.81, 10.60),
                    Prcp = c(128.56, 138.22)),
-              row.names = c(NA, -2L), class = "data.frame"))
+              row.names = c(NA, -2L),
+              class = "data.frame"))
 
   ## Output raster
   output <- get_monthly_climate(coords, period = "2001-01",
                               climatic_var = c("Tmin", "Tmax", "Tavg", "Prcp"),
                               output = "raster")
-
+  library(terra)
   expect_true(inherits(output, "list"))
   expect_identical(names(output), structure(c("Tmin", "Tmax", "Tavg", "Prcp")))
   expect_identical(head(values(output[[1]])),

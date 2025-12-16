@@ -12,7 +12,7 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE,
                       fig.width = 6, fig.height = 4, cache = TRUE)
 ```
 
-With {easyclimate} you can easily download daily and monthly climate data for a given set of points or polygons within Europe. To download and install the latest version of {easyclimate} from GitHub follow the instructions in https://github.com/VeruGHub/easyclimate 
+With {easyclimate} you can easily download daily, monthly and annual climate data for a given set of points or polygons within Europe. To download and install the latest version of {easyclimate} from GitHub follow the instructions in https://github.com/VeruGHub/easyclimate 
 
 <br>
 
@@ -98,7 +98,7 @@ ggplot() +
 
 ```
 
-You can also get a raster of monthly climate data for an area:
+You can also get a raster of monthly and annual climate data for an area:
 
 ```{r polygons-raster-5}
 
@@ -118,8 +118,29 @@ ras_monthly_tmin
 ggplot() +
   geom_spatraster(data = ras_monthly_tmin, alpha = 0.9) +
   facet_wrap(~lyr, ncol = 2) +
-  scale_fill_whitebox_c(name = "Minimum\ntemperature (ºC)", palette = "muted") +
+  scale_fill_whitebox_c(name = "Minimum montly\ntemperature (ºC)", palette = "muted") +
   theme_bw()
+
+
+Sys.time()
+
+ras_annual_tmin <- get_annual_climate(
+  coords_t,
+  period = c(2012),
+  climatic_var = "Tmin",
+  output = "raster" # return raster
+  )
+
+Sys.time()
+
+ras_annual_tmin
+
+ggplot() +
+  geom_spatraster(data = ras_annual_tmin, alpha = 0.9) +
+  facet_wrap(~lyr, ncol = 2) +
+  scale_fill_whitebox_c(name = "Minimum annual\ntemperature (ºC)", palette = "muted") +
+  theme_bw()
+
 
 ```
 

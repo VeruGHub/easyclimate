@@ -13,7 +13,7 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE,
                       fig.width = 6, fig.height = 4, cache = TRUE)
 ```
 
-With {easyclimate} you can easily download daily and monthly climate data for a given set of points or polygons within Europe. To download and install the latest version of {easyclimate} from GitHub follow the instructions in  https://github.com/VeruGHub/easyclimate 
+With {easyclimate} you can easily download daily, monthly and annual climate data for a given set of points or polygons within Europe. To download and install the latest version of {easyclimate} from GitHub follow the instructions in  https://github.com/VeruGHub/easyclimate 
 
 <br>
 
@@ -47,7 +47,8 @@ ggplot() +
 
 <br>
 
-Now, download the climatic data for the selected locations. All you have to do is use the function `get_daily_climate`, specifying the period (e.g. `2008-05-25` for a single day or `2008:2010` for several years), and the variables to be downloaded (precipitation `Prcp`, minimum temperature `Tmin` or maximum temperature `Tmax`). You can also use the function `get_monthly_climate` to download monthly data, specifying the period (e.g. `2008-05` for a single month or `2008:2010` for several years):
+Now, download the climatic data for the selected locations. To get daily data, all you have to do is use the function `get_daily_climate`, specifying the period (e.g. `2008-05-25` for a single day or `2008:2010` for several years), and the variables to be downloaded (precipitation `Prcp`, minimum temperature `Tmin` or maximum temperature `Tmax`).You can also use the function `get_monthly_climate`and
+`get_annual_climate`to download monthly and annual data, specifying the period (e.g. `2008-05`for a single month, `2008` for a single year, or `2008:2010` for several years):
 
 ```{r points-df-mat-sf-2}
 
@@ -68,12 +69,23 @@ Sys.time()
 monthly <- get_monthly_climate( # monthly data
   coords = coords, 
   period = 2008:2010, 
-  climatic_var = c("Prcp", "Tmin", "Tmax")
+  climatic_var = c("Prcp", "Tmin", "Tavg", "Tmax")
   )
 
 Sys.time()
 
 kable(head(monthly))
+
+
+annual <- get_annual_climate( # annual data
+  coords = coords, 
+  period = 2008:2010, 
+  climatic_var = c("Prcp", "Tmin", "Tavg", "Tmax")
+  )
+
+Sys.time()
+
+kable(head(annual))
 
 ```
 
@@ -92,11 +104,12 @@ daily <- daily |>
 monthly <- monthly |> 
   mutate(date = ym(date))
 
+
 ```
 
 <br>
 
-Finally, you can visualize the daily and monthly climate results. For example, let's plot the precipitation for one of the sites:
+Finally, you can visualize the daily, monthly and annual climate results. For example, let's plot the precipitation for one of the sites:
 
 ```{r points-df-mat-sf-4}
 clim_daily_site1 <- daily |> 
@@ -114,6 +127,16 @@ ggplot(clim_monthly_site1) +
   geom_line(aes(x = date, y = Prcp), colour = "steelblue") +
   labs(x = "Date", y = "Monthly precipitation (mm)") +
   theme_bw()
+
+clim_annual_site1 <- annual |> 
+  filter(ID_coords == 1)
+
+ggplot(clim_annual_site1) +
+  geom_line(aes(x = date, y = Prcp), colour = "steelblue") +
+  labs(x = "Date", y = "Annual precipitation (mm)") +
+  scale_x_continuous(breaks = scales::breaks_width(1)) +
+  theme_bw()
+
 ```
 
 <br>
@@ -227,16 +250,6 @@ mat_monthly_prcp <- mat_monthly_prcp |>
   ) |>
   relocate(lon, lat, year, month, Prcp)
 
-mat_monthly_prcp <- mat_monthly_prcp |>
-  mutate(
-    month = recode(
-      month,
-      "Sept" = "Sep"
-      )
-  ) |>
-  mutate(
-    month = factor(month, levels = rev(month.abb))
-  )
 
 mat_monthly_prcp |> 
   ggplot(aes(x = month, y = Prcp, color = month)) +
@@ -258,7 +271,7 @@ mat_monthly_prcp |>
 
 # Example 3: Introducing coordinates as simple feature objects
 
-Here we introduce coordinates as a `sf` object, and retrieve minimum temperature for a single day (1 January 2001):
+Here we introduce coordinates as a `sf` object, and retrieve minimum temperature for a single day (1 January 2001) and mean temperature of a single year (2001):
 
 
 ```{r points-df-mat-sf-8}
@@ -282,6 +295,25 @@ ggplot() +
   scale_color_gradient2(name = "Minimum\ntemperature (ºC)",
                         low = "#4B8AB8", mid = "#FAFBC5", high = "#C54A52",
                         midpoint = mean(sf_tmin$Tmin)) +
+	ylab("Latitude") +
+  xlab("Longitude") +
+  theme_bw()
+
+
+
+sf_tavg <- get_annual_climate(
+  coords = coords_sf, 
+  period = 2001, # single year
+  climatic_var = "Tavg"
+  ) 
+
+ggplot() +
+  borders(regions = c("Spain", "Portugal", "France")) +
+	geom_point(data = sf_tavg, aes(x = lon, y = lat, color = Tavg), size = 2) + 
+  coord_fixed(xlim = c(-10, 2), ylim = c(36, 44), ratio = 1.3) +  
+  scale_color_gradient2(name = "Mean\ntemperature (ºC)",
+                        low = "#4B8AB8", mid = "#FAFBC5", high = "#C54A52",
+                        midpoint = mean(sf_tavg$Tavg)) +
 	ylab("Latitude") +
   xlab("Longitude") +
   theme_bw()

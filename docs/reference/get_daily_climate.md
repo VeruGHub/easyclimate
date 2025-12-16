@@ -12,7 +12,7 @@ get_daily_climate(
   period = NULL,
   output = "df",
   version = "last",
-  check_connection = TRUE
+  check_connection = FALSE
 )
 ```
 

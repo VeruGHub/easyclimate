@@ -78,7 +78,8 @@ coords <- terra::vect("POLYGON ((-5 38, -5 37.5, -4.5 37.5, -4.5 38, -5 38))")
 
 # Return raster
 ex <- get_monthly_climate(coords, period = 2008, output = "raster")
-ex <- get_monthly_climate(coords, climatic_var = c("Tmin", "Tmax"), period = 2008, output = "raster") # Multiple climatic variables
+ex <- get_monthly_climate(coords, climatic_var = c("Tmin", "Tmax"),
+period = 2008, output = "raster") # Multiple climatic variables
 
 # Return dataframe for polygon
 ex <- get_monthly_climate(coords, period = 2008)

@@ -1,9 +1,9 @@
 # Analysing the climate of an area for a given period
 
-With {easyclimate} you can easily download daily and monthly climate
-data for a given set of points or polygons within Europe. To download
-and install the latest version of {easyclimate} from GitHub follow the
-instructions in <https://github.com/VeruGHub/easyclimate>
+With {easyclimate} you can easily download daily, monthly and annual
+climate data for a given set of points or polygons within Europe. To
+download and install the latest version of {easyclimate} from GitHub
+follow the instructions in <https://github.com/VeruGHub/easyclimate>
 
   
 
@@ -23,7 +23,7 @@ library(terra)
 coords_t <- vect("POLYGON ((-4.5 41, -4.5 40.5, -5 40.5, -5 41))")
 
 Sys.time() # to know how much it takes to download
-## [1] "2025-12-16 18:22:53 CET"
+## [1] "2025-12-16 20:07:54 CET"
 
 df_tmax <- get_daily_climate(
   coords_t,
@@ -33,7 +33,7 @@ df_tmax <- get_daily_climate(
   )
 
 Sys.time()
-## [1] "2025-12-16 18:26:08 CET"
+## [1] "2025-12-16 20:11:16 CET"
 
 head(df_tmax)
 ##   ID_coords       lon      lat       date Tmax
@@ -90,7 +90,7 @@ You can get a (multi-layer) raster directly as output, if you specify
 library(tidyterra)
 
 Sys.time()
-## [1] "2025-12-16 18:26:16 CET"
+## [1] "2025-12-16 20:11:23 CET"
 
 ras_tmin <- get_daily_climate(
   coords_t,
@@ -100,7 +100,7 @@ ras_tmin <- get_daily_climate(
   )
 
 Sys.time()
-## [1] "2025-12-16 18:26:30 CET"
+## [1] "2025-12-16 20:11:38 CET"
 
 ras_tmin
 ## class       : SpatRaster 
@@ -123,12 +123,13 @@ ggplot() +
 
 ![](polygons-raster_files/figure-html/polygons-raster-4-1.png)
 
-You can also get a raster of monthly climate data for an area:
+You can also get a raster of monthly and annual climate data for an
+area:
 
 ``` r
 
 Sys.time()
-## [1] "2025-12-16 18:26:37 CET"
+## [1] "2025-12-16 20:11:45 CET"
 
 ras_monthly_tmin <- get_monthly_climate(
   coords_t,
@@ -138,7 +139,7 @@ ras_monthly_tmin <- get_monthly_climate(
   )
 
 Sys.time()
-## [1] "2025-12-16 18:26:38 CET"
+## [1] "2025-12-16 20:11:46 CET"
 
 ras_monthly_tmin
 ## class       : SpatRaster 
@@ -155,7 +156,7 @@ ras_monthly_tmin
 ggplot() +
   geom_spatraster(data = ras_monthly_tmin, alpha = 0.9) +
   facet_wrap(~lyr, ncol = 2) +
-  scale_fill_whitebox_c(name = "Minimum\ntemperature (ºC)", palette = "muted") +
+  scale_fill_whitebox_c(name = "Minimum montly\ntemperature (ºC)", palette = "muted") +
   theme_bw()
 ```
 

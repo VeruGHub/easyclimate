@@ -122,26 +122,6 @@ ggplot() +
   theme_bw()
 
 
-Sys.time()
-
-ras_annual_tmin <- get_annual_climate(
-  coords_t,
-  period = c(2012),
-  climatic_var = "Tmin",
-  output = "raster" # return raster
-  )
-
-Sys.time()
-
-ras_annual_tmin
-
-ggplot() +
-  geom_spatraster(data = ras_annual_tmin, alpha = 0.9) +
-  facet_wrap(~lyr, ncol = 2) +
-  scale_fill_whitebox_c(name = "Minimum annual\ntemperature (ºC)", palette = "muted") +
-  theme_bw()
-
-
 ```
 
 <br>

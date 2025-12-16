@@ -8,6 +8,8 @@ points and polygons within Europe.
 
 Useful links:
 
+- <https://verughub.github.io/easyclimate>
+
 - <https://github.com/VeruGHub/easyclimate>
 
 - Report bugs at <https://github.com/VeruGHub/easyclimate/issues>

@@ -28,6 +28,11 @@ locally rather than using this package, so as not to saturate the file
 server. For that, you may use a FTP client such as
 [FileZilla](https://filezilla-project.org/).
 
+Please, be aware that data will be updated in an annual basis being
+possible to have small adjustments of values for past years according to
+the annual spring releases of [E-OBS
+data](https://surfobs.climate.copernicus.eu/dataaccess/access_eobs.php#datafiles).
+
 For a detailed description of {easyclimate}, please read [this
 paper](https://doi.org/10.1016/j.envsoft.2023.105627) (open access
 version [here](https://doi.org/10.32942/osf.io/mc8uj)) or visit the

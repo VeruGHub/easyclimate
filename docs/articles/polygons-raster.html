@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">easyclimate</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,10 +67,10 @@
 
     
     
-<p>With {easyclimate} you can easily download daily and monthly climate
-data for a given set of points or polygons within Europe. To download
-and install the latest version of {easyclimate} from GitHub follow the
-instructions in <a href="https://github.com/VeruGHub/easyclimate" class="external-link uri">https://github.com/VeruGHub/easyclimate</a></p>
+<p>With {easyclimate} you can easily download daily, monthly and annual
+climate data for a given set of points or polygons within Europe. To
+download and install the latest version of {easyclimate} from GitHub
+follow the instructions in <a href="https://github.com/VeruGHub/easyclimate" class="external-link uri">https://github.com/VeruGHub/easyclimate</a></p>
 <p><br></p>
 <p>In this tutorial we will work through the basics of using
 {easyclimate} with a spatial polygon.</p>
@@ -86,7 +86,7 @@ the polygons of interest in a <code>sf</code> object.</p>
 <span><span class="va">coords_t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/vect.html" class="external-link">vect</a></span><span class="op">(</span><span class="st">"POLYGON ((-4.5 41, -4.5 40.5, -5 40.5, -5 41))"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># to know how much it takes to download</span></span>
-<span><span class="co">## [1] "2025-12-16 18:22:53 CET"</span></span>
+<span><span class="co">## [1] "2025-12-16 20:07:54 CET"</span></span>
 <span></span>
 <span><span class="va">df_tmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span></span>
 <span>  <span class="va">coords_t</span>,</span>
@@ -96,7 +96,7 @@ the polygons of interest in a <code>sf</code> object.</p>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">## [1] "2025-12-16 18:26:08 CET"</span></span>
+<span><span class="co">## [1] "2025-12-16 20:11:16 CET"</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/headtail.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df_tmax</span><span class="op">)</span></span>
 <span><span class="co">##   ID_coords       lon      lat       date Tmax</span></span>
@@ -144,7 +144,7 @@ the polygons of interest in a <code>sf</code> object.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dieghernan.github.io/tidyterra/" class="external-link">tidyterra</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">## [1] "2025-12-16 18:26:16 CET"</span></span>
+<span><span class="co">## [1] "2025-12-16 20:11:23 CET"</span></span>
 <span></span>
 <span><span class="va">ras_tmin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span></span>
 <span>  <span class="va">coords_t</span>,</span>
@@ -154,7 +154,7 @@ the polygons of interest in a <code>sf</code> object.</p>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">## [1] "2025-12-16 18:26:30 CET"</span></span>
+<span><span class="co">## [1] "2025-12-16 20:11:38 CET"</span></span>
 <span></span>
 <span><span class="va">ras_tmin</span></span>
 <span><span class="co">## class       : SpatRaster </span></span>
@@ -174,11 +174,12 @@ the polygons of interest in a <code>sf</code> object.</p>
 <span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/scale_whitebox.html" class="external-link">scale_fill_whitebox_c</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Minimum\ntemperature (ºC)"</span>, palette <span class="op">=</span> <span class="st">"muted"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="polygons-raster_files/figure-html/polygons-raster-4-1.png" class="r-plt" width="576"></p>
-<p>You can also get a raster of monthly climate data for an area:</p>
+<p>You can also get a raster of monthly and annual climate data for an
+area:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">## [1] "2025-12-16 18:26:37 CET"</span></span>
+<span><span class="co">## [1] "2025-12-16 20:11:45 CET"</span></span>
 <span></span>
 <span><span class="va">ras_monthly_tmin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_monthly_climate.html">get_monthly_climate</a></span><span class="op">(</span></span>
 <span>  <span class="va">coords_t</span>,</span>
@@ -188,7 +189,7 @@ the polygons of interest in a <code>sf</code> object.</p>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">## [1] "2025-12-16 18:26:38 CET"</span></span>
+<span><span class="co">## [1] "2025-12-16 20:11:46 CET"</span></span>
 <span></span>
 <span><span class="va">ras_monthly_tmin</span></span>
 <span><span class="co">## class       : SpatRaster </span></span>
@@ -205,7 +206,7 @@ the polygons of interest in a <code>sf</code> object.</p>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/geom_spatraster.html" class="external-link">geom_spatraster</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">ras_monthly_tmin</span>, alpha <span class="op">=</span> <span class="fl">0.9</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">lyr</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/scale_whitebox.html" class="external-link">scale_fill_whitebox_c</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Minimum\ntemperature (ºC)"</span>, palette <span class="op">=</span> <span class="st">"muted"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/scale_whitebox.html" class="external-link">scale_fill_whitebox_c</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Minimum montly\ntemperature (ºC)"</span>, palette <span class="op">=</span> <span class="st">"muted"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="polygons-raster_files/figure-html/polygons-raster-5-1.png" class="r-plt" width="576"></p>
 <p><br></p>

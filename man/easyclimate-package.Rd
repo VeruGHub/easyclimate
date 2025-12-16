@@ -11,6 +11,7 @@ Get high-resolution (1 km) daily, monthly and annual climate data (precipitation
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://verughub.github.io/easyclimate}
   \item \url{https://github.com/VeruGHub/easyclimate}
   \item Report bugs at \url{https://github.com/VeruGHub/easyclimate/issues}
 }

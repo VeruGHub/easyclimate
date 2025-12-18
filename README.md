@@ -22,10 +22,10 @@ logs](https://cranlogs.r-pkg.org/badges/grand-total/easyclimate)](https://cran.r
 
 Get high-resolution (1 km) daily, monthly and annual climate data
 (precipitation, and average, minimum and maximum temperatures) for
-Europe from the European climatic database hosted at [University of
-Natural Resources and Life Sciences, Vienna,
-Austria](https://boku.ac.at/en/wabo/waldbau/wir-ueber-uns/daten). Data
-are currently available from 1950 to 2024.
+Europe from the European climatic database hosted at the [Institute of
+Silviculture, University of Natural Resources and Life Sciences, Vienna,
+Austria](https://boku.ac.at/en/oekb/wald). Data are currently available
+from 1950 to 2024.
 
 This climatic dataset was originally built by [A. Moreno & H.
 Hasenauer](https://doi.org/10.1002/joc.4436) and further developed by W.
@@ -46,10 +46,13 @@ locally rather than using this package, so as not to saturate the file
 server. For that, you may use a FTP client such as
 [FileZilla](https://filezilla-project.org/).
 
-Please, be aware that data will be updated in an annual basis being
-possible to have small adjustments of values for past years according to
-the annual spring releases of [E-OBS
+Please, be aware that data will be updated in an annual basis and values
+for past years might have small adjustments according to the annual
+spring releases of [E-OBS
 data](https://surfobs.climate.copernicus.eu/dataaccess/access_eobs.php#datafiles).
+If you need to guarantee reproducibility of your analyses, please save
+the data locally as some data might change without notice after such
+updates.
 
 For a detailed description of {easyclimate}, please read [this
 paper](https://doi.org/10.1016/j.envsoft.2023.105627) (open access
@@ -58,17 +61,27 @@ package [website](https://verughub.github.io/easyclimate/).
 
 ## Installation
 
-Stable version from CRAN:
+Stable version from
+[CRAN](https://cran.r-project.org/package=easyclimate):
 
 ``` r
 install.packages("easyclimate")
 ```
 
-Development version from GitHub:
+Development version from
+[GitHub](https://github.com/VeruGHub/easyclimate):
 
 ``` r
 # install.packages("remotes")
 remotes::install_github("VeruGHub/easyclimate")
+```
+
+Development version from
+[R-universe](https://verughub.r-universe.dev/easyclimate):
+
+``` r
+install.packages('easyclimate', 
+                 repos = c('https://verughub.r-universe.dev', 'https://cloud.r-project.org'))
 ```
 
 ## Examples
@@ -85,15 +98,14 @@ coords <- data.frame(lon = -5.36, lat = 37.40)
 
 prec_daily <- get_daily_climate(coords, 
                                 period = "2001-01-01:2001-01-03", 
-                                climatic_var = "Prcp",
-                                version = 4) # default
+                                climatic_var = "Prcp")
 ```
 
 | ID_coords |   lon |  lat | date       | Prcp |
 |----------:|------:|-----:|:-----------|-----:|
-|         1 | -5.36 | 37.4 | 2001-01-01 | 8.30 |
-|         1 | -5.36 | 37.4 | 2001-01-02 | 0.00 |
-|         1 | -5.36 | 37.4 | 2001-01-03 | 3.38 |
+|         1 | -5.36 | 37.4 | 2001-01-01 | 8.24 |
+|         1 | -5.36 | 37.4 | 2001-01-02 | 1.12 |
+|         1 | -5.36 | 37.4 | 2001-01-03 | 2.40 |
 
 ``` r
 prec_monthly <- get_monthly_climate(coords,
@@ -162,7 +174,6 @@ Now using ggplot2 and tidyterra:
 ``` r
 library(ggplot2)
 library(tidyterra)
-#> Warning: package 'tidyterra' was built under R version 4.4.3
 
 ggplot() +
   geom_spatraster(data = sobrarbetemp) +
@@ -191,10 +202,6 @@ and the package as:
 Moreno A, Hasenauer H (2016). “Spatial downscaling of European climate
 data.” *International Journal of Climatology*, 1444–1458.
 <https://doi.org/10.1002/joc.4436>.
-
-Pucher C, Neumann M (2022). *Description and Evaluation of Downscaled
-Daily Climate Data Version 3*.
-<https://doi.org/10.6084/m9.figshare.19070162.v1>.
 
 Pucher C (2023). *Description and Evaluation of Downscaled Daily Climate
 Data Version 4*. <https://doi.org/10.6084/m9.figshare.22962671.v1>.

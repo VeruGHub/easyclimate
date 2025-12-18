@@ -16,16 +16,6 @@ bibentry(
 
 bibentry(
   bibtype = "Manual",
-  title = "Description and Evaluation of Downscaled Daily Climate Data Version 3",
-  author = c(
-    person("Christoph", "Pucher"),
-    person("Mathias", "Neumann")),
-    year = "2022",
-    url = "https://doi.org/10.6084/m9.figshare.19070162.v1"
-)
-
-bibentry(
-  bibtype = "Manual",
   title = "Description and Evaluation of Downscaled Daily Climate Data Version 4",
   author = person("Christoph", "Pucher"),
   year = "2023",

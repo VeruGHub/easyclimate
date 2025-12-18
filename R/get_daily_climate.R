@@ -27,6 +27,8 @@
 #' @param version Character. Version of the climate data. It uses the latest version
 #' ('last') by default. The former version (4) is also available, for the sake of reproducibility.
 #' See 'references' for details on the climatic data sets.
+#' @param check_connection Logical. Check the connection to the server before
+#' attempting data download? Only used if `version` = 4.
 #'
 #' @return Either:
 #' - A data.frame (if output = "df")
@@ -94,7 +96,8 @@ get_daily_climate <- function(coords = NULL,
                               climatic_var = "Prcp",
                               period = NULL,
                               output = "df",
-                              version = "last") {
+                              version = "last",
+                              check_connection = FALSE) {
 
   if (length(climatic_var) == 1) {
 
@@ -103,7 +106,8 @@ get_daily_climate <- function(coords = NULL,
       climatic_var_single = climatic_var,
       period = period,
       output = output,
-      version = version)
+      version = version,
+      check_conn = check_connection)
 
   } else {
 
@@ -114,7 +118,8 @@ get_daily_climate <- function(coords = NULL,
                            climatic_var_single = x,
                            period = period,
                            output = output,
-                           version = version) })
+                           version = version,
+                           check_conn = check_connection)})
 
     if (output == "df") {
 

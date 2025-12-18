@@ -36,7 +36,8 @@ get_daily_climate_single <- function(coords = NULL,
                                      climatic_var_single = "Prcp",
                                      period = NULL,
                                      output = "df",
-                                     version = "last") {
+                                     version = "last",
+                                     check_conn = FALSE) {
 
   #### Check arguments ####
 
@@ -141,6 +142,18 @@ get_daily_climate_single <- function(coords = NULL,
                         climatic_var_single = climatic_var_single,
                         version = version,
                         temp_res = "day"))
+
+
+  if (version == "4") {
+    ## Check if the server is working
+    if (isTRUE(check_conn)) {
+      if (isTRUE(check_server(verbose = FALSE))) {
+        message("Connecting to the server...")
+      } else {
+        message("Problems retrieving the data. Please run 'check_server()' to diagnose the problems.\n")
+      }
+    }
+  }
 
 
   #### Connect and combine all required rasters ####

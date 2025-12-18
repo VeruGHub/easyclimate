@@ -9,8 +9,7 @@
 #' @param output Character. Either "df", which returns a dataframe with daily
 #' climatic values for each point/polygon, or "raster", which returns a
 #' [terra::SpatRaster()] object.
-#' @param check_conn Logical. Check the connection to the server before
-#' attempting data download?
+
 #' @inheritParams get_daily_climate
 #'
 #' @return A data.frame (if output = "df") or a [terra::SpatRaster()] object
@@ -37,8 +36,7 @@ get_daily_climate_single <- function(coords = NULL,
                                      climatic_var_single = "Prcp",
                                      period = NULL,
                                      output = "df",
-                                     version = "last",
-                                     check_conn = TRUE) { # SMR : Aqui habria que poner que check connection solo aplica si es version == 4
+                                     version = "last") {
 
   #### Check arguments ####
 
@@ -84,10 +82,10 @@ get_daily_climate_single <- function(coords = NULL,
   }
 
   # If missing CRS, assume lonlat (EPSG:4326)
-  if (terra::crs(coords.spatvec) == "") {
+  crs.now <- terra::crs(coords.spatvec, describe = TRUE)$code
+  if (crs.now == "" | is.na(crs.now)) {
     terra::crs(coords.spatvec) <- "epsg:4326"
   }
-
   stopifnot(terra::crs(coords.spatvec, describe = TRUE)$code == "4326")
 
 
@@ -97,14 +95,14 @@ get_daily_climate_single <- function(coords = NULL,
   ## Warn (or stop) if asking data for too many points or too large area
   # so as not to saturate server
   if (nrow(coords.spatvec) > 10000) {  # change limits if needed
-    stop("Asking for climate data for >10000 sites. Please reduce the number of sites or download original rasters directly from ftp://palantir.boku.ac.at/Public/ClimateData/ so as not to saturate the server")
+    stop("Asking for climate data for >10000 sites. Please reduce the number of sites or download original rasters directly from the server")
   }
 
   if (terra::geomtype(coords.spatvec) == "polygons") {
 
     if (sum(suppressWarnings(terra::expanse(coords.spatvec, unit = "km"))) >
         10000) {  # change limits if needed
-      stop("Asking for climate data for too large area. Please reduce the polygon area or download original rasters directly from ftp://palantir.boku.ac.at/Public/ClimateData/ so as not to saturate the server")
+      stop("Asking for climate data for too large area. Please reduce the polygon area or download original rasters directly from the server")
     }
 
   }
@@ -144,16 +142,6 @@ get_daily_climate_single <- function(coords = NULL,
                         version = version,
                         temp_res = "day"))
 
-  if (version == "4") {
-    ## Check if the server is working
-    if (isTRUE(check_conn)) {
-      if (isTRUE(check_server(verbose = FALSE))) {
-        message("Connecting to the server...")
-      } else {
-        message("Problems retrieving the data. Please run 'check_server()' to diagnose the problems.\n")
-      }
-    }
-  }
 
   #### Connect and combine all required rasters ####
   urls.vsicurl <- paste0("/vsicurl/", urls)

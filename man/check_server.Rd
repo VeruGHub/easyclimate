@@ -18,13 +18,14 @@ TRUE if the server seems available, FALSE otherwise.
 }
 \description{
 Check that the online climate data server is available and working correctly.
+Only works for version 4 of the climate dataset.
 }
 \details{
 This function checks access to the latest version of the climatic
 dataset (version 4).
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 check_server()
 \dontshow{\}) # examplesIf}
 }

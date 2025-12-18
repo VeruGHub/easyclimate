@@ -1,6 +1,7 @@
 #' Check climate data server
 #'
 #' Check that the online climate data server is available and working correctly.
+#' Only works for version 4 of the climate dataset.
 #'
 #' @param climatic_var Optional. One of "Prcp", "Tmin", or "Tmax".
 #' @param year Optional. Year between 1950 and 2022.

@@ -1,11 +1,11 @@
-pandoc: '3.2'
+pandoc: 3.6.3
 pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   climatic-indices: climatic-indices.html
   points-df-mat-sf: points-df-mat-sf.html
   polygons-raster: polygons-raster.html
-last_built: 2025-12-16T19:07Z
+last_built: 2025-12-18T20:26Z
 urls:
   reference: https://verughub.github.io/easyclimate/reference
   article: https://verughub.github.io/easyclimate/articles

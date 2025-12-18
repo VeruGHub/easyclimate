@@ -23,7 +23,7 @@ library(terra)
 coords_t <- vect("POLYGON ((-4.5 41, -4.5 40.5, -5 40.5, -5 41))")
 
 Sys.time() # to know how much it takes to download
-## [1] "2025-12-16 20:07:54 CET"
+## [1] "2025-12-18 21:36:17 CET"
 
 df_tmax <- get_daily_climate(
   coords_t,
@@ -33,7 +33,7 @@ df_tmax <- get_daily_climate(
   )
 
 Sys.time()
-## [1] "2025-12-16 20:11:16 CET"
+## [1] "2025-12-18 21:40:32 CET"
 
 head(df_tmax)
 ##   ID_coords       lon      lat       date Tmax
@@ -90,7 +90,7 @@ You can get a (multi-layer) raster directly as output, if you specify
 library(tidyterra)
 
 Sys.time()
-## [1] "2025-12-16 20:11:23 CET"
+## [1] "2025-12-18 21:40:34 CET"
 
 ras_tmin <- get_daily_climate(
   coords_t,
@@ -100,7 +100,7 @@ ras_tmin <- get_daily_climate(
   )
 
 Sys.time()
-## [1] "2025-12-16 20:11:38 CET"
+## [1] "2025-12-18 21:40:52 CET"
 
 ras_tmin
 ## class       : SpatRaster 
@@ -129,7 +129,7 @@ area:
 ``` r
 
 Sys.time()
-## [1] "2025-12-16 20:11:45 CET"
+## [1] "2025-12-18 21:40:54 CET"
 
 ras_monthly_tmin <- get_monthly_climate(
   coords_t,
@@ -139,7 +139,7 @@ ras_monthly_tmin <- get_monthly_climate(
   )
 
 Sys.time()
-## [1] "2025-12-16 20:11:46 CET"
+## [1] "2025-12-18 21:40:55 CET"
 
 ras_monthly_tmin
 ## class       : SpatRaster 

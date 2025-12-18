@@ -1,7 +1,5 @@
 # Analysing the climate at spatial points for a given period
 
-    ## Warning: package 'knitr' was built under R version 4.4.3
-
 With {easyclimate} you can easily download daily, monthly and annual
 climate data for a given set of points or polygons within Europe. To
 download and install the latest version of {easyclimate} from GitHub
@@ -58,7 +56,7 @@ period (e.g. `2008-05`for a single month, `2008` for a single year, or
 ``` r
 
 Sys.time() # to know how much time it takes to download
-## [1] "2025-12-16 19:28:52 CET"
+## [1] "2025-12-18 21:30:13 CET"
 
 daily <- get_daily_climate( # daily data
   coords = coords, 
@@ -67,7 +65,7 @@ daily <- get_daily_climate( # daily data
   )
 
 Sys.time()
-## [1] "2025-12-16 19:32:14 CET"
+## [1] "2025-12-18 21:34:40 CET"
 
 kable(head(daily))
 ```
@@ -84,7 +82,7 @@ kable(head(daily))
 ``` r
 
 Sys.time()
-## [1] "2025-12-16 19:32:14 CET"
+## [1] "2025-12-18 21:34:40 CET"
 
 monthly <- get_monthly_climate( # monthly data
   coords = coords, 
@@ -93,7 +91,7 @@ monthly <- get_monthly_climate( # monthly data
   )
 
 Sys.time()
-## [1] "2025-12-16 19:32:29 CET"
+## [1] "2025-12-18 21:35:04 CET"
 
 kable(head(monthly))
 ```
@@ -117,7 +115,7 @@ annual <- get_annual_climate( # annual data
   )
 
 Sys.time()
-## [1] "2025-12-16 19:32:36 CET"
+## [1] "2025-12-18 21:35:14 CET"
 
 kable(head(annual))
 ```
@@ -245,7 +243,7 @@ Here we are retrieving daily precipitation data for a single year
 coords_mat <- as.matrix(coords)
 
 Sys.time()
-## [1] "2025-12-16 18:22:07 CET"
+## [1] "2025-12-18 21:35:17 CET"
 
 mat_prcp <- get_daily_climate( 
   coords = coords_mat, 
@@ -254,7 +252,7 @@ mat_prcp <- get_daily_climate(
 )
 
 Sys.time()
-## [1] "2025-12-16 18:22:14 CET"
+## [1] "2025-12-18 21:35:26 CET"
 
 kable(head(mat_prcp))
 ```
@@ -312,7 +310,7 @@ and add the average values to the previous plot:
 ``` r
 
 Sys.time()
-## [1] "2025-12-16 19:32:38 CET"
+## [1] "2025-12-18 21:35:27 CET"
 
 mat_monthly_prcp <- get_monthly_climate( 
   coords = coords_mat, 
@@ -321,7 +319,7 @@ mat_monthly_prcp <- get_monthly_climate(
 )
 
 Sys.time()
-## [1] "2025-12-16 19:32:39 CET"
+## [1] "2025-12-18 21:35:28 CET"
 
 kable(head(mat_monthly_prcp))
 ```

@@ -44,17 +44,6 @@ data.” *International Journal of Climatology*, 1444–1458.
       url = {https://doi.org/10.1002/joc.4436},
     }
 
-Pucher C, Neumann M (2022). *Description and Evaluation of Downscaled
-Daily Climate Data Version 3*.
-<https://doi.org/10.6084/m9.figshare.19070162.v1>.
-
-    @Manual{,
-      title = {Description and Evaluation of Downscaled Daily Climate Data Version 3},
-      author = {Christoph Pucher and Mathias Neumann},
-      year = {2022},
-      url = {https://doi.org/10.6084/m9.figshare.19070162.v1},
-    }
-
 Pucher C (2023). *Description and Evaluation of Downscaled Daily Climate
 Data Version 4*. <https://doi.org/10.6084/m9.figshare.22962671.v1>.
 

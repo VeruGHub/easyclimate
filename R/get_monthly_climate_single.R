@@ -74,10 +74,10 @@ get_monthly_climate_single <- function(coords = NULL,
   }
 
   # If missing CRS, assume lonlat (EPSG:4326)
-  if (terra::crs(coords.spatvec) == "") {
+  crs.now <- terra::crs(coords.spatvec, describe = TRUE)$code
+  if (crs.now == "" | is.na(crs.now)) {
     terra::crs(coords.spatvec) <- "epsg:4326"
   }
-
   stopifnot(terra::crs(coords.spatvec, describe = TRUE)$code == "4326")
 
 
@@ -91,12 +91,10 @@ get_monthly_climate_single <- function(coords = NULL,
   }
 
   if (terra::geomtype(coords.spatvec) == "polygons") {
-
     if (sum(suppressWarnings(terra::expanse(coords.spatvec, unit = "km"))) >
         100000) {  # change limits if needed
       stop("Asking for climate data for too large area. Please reduce the polygon area or download original rasters directly from ftp://palantir.boku.ac.at/Public/ClimateData/ so as not to saturate the server")
     }
-
   }
 
   ## Check that SpatVector extent is within bounds
@@ -118,7 +116,7 @@ get_monthly_climate_single <- function(coords = NULL,
 
   ## Check years are within bounds
   if (any(years < 1950 | years > 2024)) {
-      stop("Year (period) must be between 1950 and 2024")
+    stop("Year (period) must be between 1950 and 2024")
   }
 
   #### Build urls for all required years ####
@@ -136,10 +134,10 @@ get_monthly_climate_single <- function(coords = NULL,
 
   ## Name raster layers with their dates
   for (i in seq_along(years)) {
-     ras.list.names <- seq.Date(from = as.Date(paste0(years[i], "-01-01")),
-                                     to = as.Date(paste0(years[i], "-12-01")),
-                                     by = "month")
-  names(ras.list[[i]]) <- sub("-01$", "", ras.list.names)
+    ras.list.names <- seq.Date(from = as.Date(paste0(years[i], "-01-01")),
+                               to = as.Date(paste0(years[i], "-12-01")),
+                               by = "month")
+    names(ras.list[[i]]) <- sub("-01$", "", ras.list.names)
   }
 
   ## Combine all years
@@ -220,10 +218,10 @@ period_to_months <- function(period) {
                           fin = paste0(fin, "-12-01"))
 
     months.list <- lapply(split(ini.fin, seq_len(nrow(ini.fin))),
-                        function(x) {
-                          seq.Date(from = as.Date(x$ini),
-                                   to = as.Date(x$fin),
-                                   by = "months")})
+                          function(x) {
+                            seq.Date(from = as.Date(x$ini),
+                                     to = as.Date(x$fin),
+                                     by = "months")})
     months <- do.call("c", months.list)
     names(months) <- NULL
 
@@ -266,10 +264,10 @@ period_to_months <- function(period) {
     })
 
     months.list <- lapply(split(ini.fin, seq_len(nrow(ini.fin))),
-                        function(x) {
-                          seq.Date(from = as.Date(x$ini),
-                                   to = as.Date(x$fin),
-                                   by = "month")})
+                          function(x) {
+                            seq.Date(from = as.Date(x$ini),
+                                     to = as.Date(x$fin),
+                                     by = "month")})
 
     months <- do.call("c", months.list)
 

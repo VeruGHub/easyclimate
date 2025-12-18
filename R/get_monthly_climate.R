@@ -4,15 +4,8 @@
 #' Extract monthly climate data (temperature and precipitation) for a given set of
 #' points or polygons within Europe.
 #'
+#' @inheritParams get_daily_climate
 #'
-#' @param coords A [matrix], [data.frame], [tibble::tbl_df-class], [sf::sf()], or
-#' [terra::SpatVector()] object containing point or polygon coordinates in decimal
-#' degrees (lonlat/geographic format). Longitude must fall between -40.5 and 75.5
-#' degrees, and latitude between 25.5 and 75.5 degrees.
-#' If `coords` is a matrix, it must have only two columns: the first with longitude
-#' and the second with latitude data.
-#' If `coords` is a data.frame or a tbl_df, it must contain at least two columns
-#' called `lon` and `lat` with longitude and latitude coordinates, respectively.
 #' @param climatic_var Character. Climatic variables to be downloaded ('Tmax',
 #' 'Tmin', 'Tavg' or 'Prcp'). Various elements can be concatenated in the vector.
 #' @param period Either numbers (representing years between 1950 and 2024),
@@ -21,14 +14,15 @@
 #' (e.g. YYYY:YYYY or "YYYY-MM:YYYY-MM", see examples). Various elements
 #' can be concatenated in the vector (e.g. c(2000:2005, 2010:2015, 2020),
 #' c("2000-01:2000-06", "2001-01"))
-#' @param output Character. Either "df", which returns a dataframe with monthly
-#' climatic values for each point/polygon,
-#' or "raster", which returns a [terra::SpatRaster()] object (within a list when
-#' more than one climatic variable is downloaded).
 #'
 #' @return Either:
 #' - A data.frame (if output = "df")
 #' - A list of [terra::SpatRaster()] object (if output = "raster")
+#'
+#' For precipitation, the function returns total (accumulated) precipitation per month.
+#' For temperature variables ('Tmin', 'Tmax', 'Tavg') the function returns the average
+#' (i.e. the monthly average of minimum and maximum daily temperatures, or the average
+#' monthly temperature).
 #'
 #' @export
 #'
@@ -89,12 +83,12 @@
 
 
 get_monthly_climate <- function(coords = NULL,
-                              climatic_var = "Prcp",
-                              period = NULL,
-                              output = "df") {
+                                climatic_var = "Prcp",
+                                period = NULL,
+                                output = "df") {
 
 
-    if (length(climatic_var) == 1) {
+  if (length(climatic_var) == 1) {
 
     out <- get_monthly_climate_single(
       coords = coords,

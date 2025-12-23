@@ -1,7 +1,7 @@
 # Check climate data server
 
 Check that the online climate data server is available and working
-correctly.
+correctly. Only works for version 4 of the climate dataset.
 
 ## Usage
 

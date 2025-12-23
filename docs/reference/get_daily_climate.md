@@ -40,11 +40,11 @@ get_daily_climate(
 
 - period:
 
-  Either numbers (representing years between 1950 and 2022), or dates in
-  "YYYY-MM-DD" format (to obtain data for specific days). To specify a
-  sequence of years or dates use the format 'start:end' (e.g. YYYY:YYYY
-  or "YYYY-MM-DD:YYYY-MM-DD", see examples). Various elements can be
-  concatenated in the vector (e.g. c(2000:2005, 2010:2015, 2020),
+  Either integer numbers (representing years between 1950 and 2024), or
+  dates in "YYYY-MM-DD" format (to obtain data for specific days). To
+  specify a sequence of years or dates use the format 'start:end' (e.g.
+  YYYY:YYYY or "YYYY-MM-DD:YYYY-MM-DD", see examples). Various elements
+  can be concatenated in the vector (e.g. c(2000:2005, 2010:2015, 2020),
   c("2000-01-01:2000-01-15", "2000-02-01"))
 
 - output:
@@ -57,15 +57,15 @@ get_daily_climate(
 
 - version:
 
-  Character. Version of the climate data. It uses the latest version by
-  default. The former version (4) is also available, for the sake of
-  reproducibility. See 'references' for details on the climatic data
-  sets.
+  Character. Version of the climate data. It uses the latest version
+  ('last') by default. The former version (4) is also available, for the
+  sake of reproducibility. See 'references' for details on the climatic
+  data sets.
 
 - check_connection:
 
   Logical. Check the connection to the server before attempting data
-  download?
+  download? Only used if `version` = 4.
 
 ## Value
 

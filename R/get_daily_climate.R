@@ -15,7 +15,7 @@
 #' called `lon` and `lat` with longitude and latitude coordinates, respectively.
 #' @param climatic_var Character. Climatic variables to be downloaded ('Tmax',
 #' 'Tmin' or 'Prcp'). Various elements can be concatenated in the vector.
-#' @param period Either numbers (representing years between 1950 and 2022),
+#' @param period Either integer numbers (representing years between 1950 and 2024),
 #' or dates in "YYYY-MM-DD" format (to obtain data for specific days).
 #' To specify a sequence of years or dates use the format 'start:end'
 #' (e.g. YYYY:YYYY or "YYYY-MM-DD:YYYY-MM-DD", see examples). Various elements
@@ -25,10 +25,10 @@
 #' climatic values for each point/polygon, or "raster", which returns [terra::SpatRaster()]
 #' objects (within a list when more than one climatic variable is downloaded).
 #' @param version Character. Version of the climate data. It uses the latest version
-#' by default. The former version (4) is also available, for the sake of reproducibility.
+#' ('last') by default. The former version (4) is also available, for the sake of reproducibility.
 #' See 'references' for details on the climatic data sets.
 #' @param check_connection Logical. Check the connection to the server before
-#' attempting data download?
+#' attempting data download? Only used if `version` = 4.
 #'
 #' @return Either:
 #' - A data.frame (if output = "df")
@@ -119,7 +119,7 @@ get_daily_climate <- function(coords = NULL,
                            period = period,
                            output = output,
                            version = version,
-                           check_conn = check_connection) })
+                           check_conn = check_connection)})
 
     if (output == "df") {
 

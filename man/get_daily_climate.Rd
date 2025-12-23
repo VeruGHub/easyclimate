@@ -26,7 +26,7 @@ called \code{lon} and \code{lat} with longitude and latitude coordinates, respec
 \item{climatic_var}{Character. Climatic variables to be downloaded ('Tmax',
 'Tmin' or 'Prcp'). Various elements can be concatenated in the vector.}
 
-\item{period}{Either numbers (representing years between 1950 and 2022),
+\item{period}{Either integer numbers (representing years between 1950 and 2024),
 or dates in "YYYY-MM-DD" format (to obtain data for specific days).
 To specify a sequence of years or dates use the format 'start:end'
 (e.g. YYYY:YYYY or "YYYY-MM-DD:YYYY-MM-DD", see examples). Various elements
@@ -38,11 +38,11 @@ climatic values for each point/polygon, or "raster", which returns \code{\link[t
 objects (within a list when more than one climatic variable is downloaded).}
 
 \item{version}{Character. Version of the climate data. It uses the latest version
-by default. The former version (4) is also available, for the sake of reproducibility.
+('last') by default. The former version (4) is also available, for the sake of reproducibility.
 See 'references' for details on the climatic data sets.}
 
 \item{check_connection}{Logical. Check the connection to the server before
-attempting data download?}
+attempting data download? Only used if \code{version} = 4.}
 }
 \value{
 Either:
@@ -58,7 +58,7 @@ Extract daily climate data (temperature and precipitation) for a given set of
 points or polygons within Europe.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 
 # Coords as matrix
 coords <- matrix(c(-5.36, 37.40), ncol = 2)

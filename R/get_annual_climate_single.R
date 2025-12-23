@@ -31,9 +31,9 @@
 
 
 get_annual_climate_single <- function(coords = NULL,
-                                       climatic_var_single = "Prcp",
-                                       period = NULL,
-                                       output = "df") {
+                                      climatic_var_single = "Prcp",
+                                      period = NULL,
+                                      output = "df") {
 
   #### Check arguments ####
 
@@ -73,10 +73,10 @@ get_annual_climate_single <- function(coords = NULL,
   }
 
   # If missing CRS, assume lonlat (EPSG:4326)
-  if (terra::crs(coords.spatvec) == "") {
+  crs.now <- terra::crs(coords.spatvec, describe = TRUE)$code
+  if (crs.now == "" | is.na(crs.now)) {
     terra::crs(coords.spatvec) <- "epsg:4326"
   }
-
   stopifnot(terra::crs(coords.spatvec, describe = TRUE)$code == "4326")
 
 
@@ -90,12 +90,10 @@ get_annual_climate_single <- function(coords = NULL,
   }
 
   if (terra::geomtype(coords.spatvec) == "polygons") {
-
     if (sum(suppressWarnings(terra::expanse(coords.spatvec, unit = "km"))) >
         100000) {  # change limits if needed
       stop("Asking for climate data for too large area. Please reduce the polygon area or download original rasters directly from ftp://palantir.boku.ac.at/Public/ClimateData/ so as not to saturate the server")
     }
-
   }
 
   ## Check that SpatVector extent is within bounds
@@ -204,18 +202,18 @@ period_to_years <- function(period) {
   if (!inherits(period, c("numeric", "integer")))
     stop("Period must be a number")
 
-    ini.fin <- data.frame(ini = period[c(TRUE, diff(period) != 1)],
-                          fin = period[c(diff(period) != 1, TRUE)])
+  ini.fin <- data.frame(ini = period[c(TRUE, diff(period) != 1)],
+                        fin = period[c(diff(period) != 1, TRUE)])
 
-    years.list <- lapply(split(ini.fin, seq_len(nrow(ini.fin))),
-                          function(x) {
-                            seq(from = x$ini,
-                                to = x$fin,
-                                by = 1)})
-    years <- do.call("c", years.list)
-    names(years) <- NULL
+  years.list <- lapply(split(ini.fin, seq_len(nrow(ini.fin))),
+                       function(x) {
+                         seq(from = x$ini,
+                             to = x$fin,
+                             by = 1)})
+  years <- do.call("c", years.list)
+  names(years) <- NULL
 
-    invisible(years)
+  invisible(years)
 
 }
 

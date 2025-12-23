@@ -12,9 +12,9 @@ get_annual_climate(
 )
 }
 \arguments{
-\item{coords}{A \link{matrix}, \link{data.frame}, \link[tibble:tbl_df-class]{tibble::tbl_df}, \code{\link[sf:sf]{sf::sf()}}, or
+\item{coords}{A \link{matrix}, \link{data.frame}, \code{tibble::tbl_df-class}, \code{\link[sf:sf]{sf::sf()}}, or
 \code{\link[terra:SpatVector-class]{terra::SpatVector()}} object containing point or polygon coordinates in decimal
-degrees (lonlat/geographic format). Longitude must fall between -40.5 and 75.5
+degrees (lonlat/geographic format, EPSG 4326). Longitude must fall between -40.5 and 75.5
 degrees, and latitude between 25.5 and 75.5 degrees.
 If \code{coords} is a matrix, it must have only two columns: the first with longitude
 and the second with latitude data.
@@ -29,10 +29,9 @@ To specify a sequence of years use the format 'start:end'
 (e.g. YYYY:YYYY, see examples). Various elements
 can be concatenated in the vector (e.g. c(2000:2005, 2010:2015, 2020))}
 
-\item{output}{Character. Either "df", which returns a dataframe with monthly
-climatic values for each point/polygon,
-or "raster", which returns a \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}} object (within a list when
-more than one climatic variable is downloaded).}
+\item{output}{Character. Either "df", which returns a dataframe with daily
+climatic values for each point/polygon, or "raster", which returns \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}}
+objects (within a list when more than one climatic variable is downloaded).}
 }
 \value{
 Either:
@@ -40,49 +39,54 @@ Either:
 \item A data.frame (if output = "df")
 \item A list of \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}} object (if output = "raster")
 }
+
+For precipitation, the function returns total (accumulated) precipitation per year.
+For temperature variables ('Tmin', 'Tmax', 'Tavg') the function returns the average
+(i.e. the annual average of minimum and maximum daily temperatures, or the average
+annual temperature).
 }
 \description{
 Extract annual climate data (temperature and precipitation) for a given set of
 points or polygons within Europe.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 
 # Coords as matrix
 coords <- matrix(c(-5.36, 37.40), ncol = 2)
-ex <- get_monthly_climate(coords, period = 2008)  # 2008
-ex <- get_monthly_climate(coords, period = c(2008, 2010))  # 2008 AND 2010
-ex <- get_monthly_climate(coords, period = 2008:2010)  # 2008 TO 2010
+ex <- get_annual_climate(coords, period = 2008)  # 2008
+ex <- get_annual_climate(coords, period = c(2008, 2010))  # 2008 AND 2010
+ex <- get_annual_climate(coords, period = 2008:2010)  # 2008 TO 2010
 
-ex <- get_monthly_climate(coords, period = 2008, climatic_var = "Tmin")
+ex <- get_annual_climate(coords, period = 2008, climatic_var = "Tmin")
 
 # Coords as data.frame or tbl_df
 coords <- as.data.frame(coords) #coords <- tibble::as_tibble(coords)
 names(coords) <- c("lon", "lat")  # must have these columns
-ex <- get_monthly_climate(coords, period = 2008)  # single month
+ex <- get_annual_climate(coords, period = 2008)  # single month
 
 # Coords as sf
 coords <- sf::st_as_sf(coords, coords = c("lon", "lat"))
-ex <- get_monthly_climate(coords, period = 2008)  # single month
+ex <- get_annual_climate(coords, period = 2008)  # single month
 
 # Several points
 coords <- matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
-ex <- get_monthly_climate(coords, period = 2008, output = "raster")  # raster output
+ex <- get_annual_climate(coords, period = 2008, output = "raster")  # raster output
 
 # Multiple climatic variables
 coords <- matrix(c(-5.36, 37.40), ncol = 2)
-ex <- get_monthly_climate(coords, climatic_var = c("Tmin", "Tmax"), period = 2008)
+ex <- get_annual_climate(coords, climatic_var = c("Tmin", "Tmax"), period = 2008)
 
 ## Polygons
 coords <- terra::vect("POLYGON ((-5 38, -5 37.5, -4.5 37.5, -4.5 38, -5 38))")
 
 # Return raster
-ex <- get_monthly_climate(coords, period = 2008, output = "raster")
-ex <- get_monthly_climate(coords, climatic_var = c("Tmin", "Tmax"),
+ex <- get_annual_climate(coords, period = 2008, output = "raster")
+ex <- get_annual_climate(coords, climatic_var = c("Tmin", "Tmax"),
 period = 2008, output = "raster") # Multiple climatic variables
 
 # Return dataframe for polygon
-ex <- get_monthly_climate(coords, period = 2008)
+ex <- get_annual_climate(coords, period = 2008)
 \dontshow{\}) # examplesIf}
 }
 \references{

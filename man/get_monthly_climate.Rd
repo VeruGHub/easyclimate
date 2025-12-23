@@ -12,9 +12,9 @@ get_monthly_climate(
 )
 }
 \arguments{
-\item{coords}{A \link{matrix}, \link{data.frame}, \link[tibble:tbl_df-class]{tibble::tbl_df}, \code{\link[sf:sf]{sf::sf()}}, or
+\item{coords}{A \link{matrix}, \link{data.frame}, \code{tibble::tbl_df-class}, \code{\link[sf:sf]{sf::sf()}}, or
 \code{\link[terra:SpatVector-class]{terra::SpatVector()}} object containing point or polygon coordinates in decimal
-degrees (lonlat/geographic format). Longitude must fall between -40.5 and 75.5
+degrees (lonlat/geographic format, EPSG 4326). Longitude must fall between -40.5 and 75.5
 degrees, and latitude between 25.5 and 75.5 degrees.
 If \code{coords} is a matrix, it must have only two columns: the first with longitude
 and the second with latitude data.
@@ -31,10 +31,9 @@ To specify a sequence of years or months use the format 'start:end'
 can be concatenated in the vector (e.g. c(2000:2005, 2010:2015, 2020),
 c("2000-01:2000-06", "2001-01"))}
 
-\item{output}{Character. Either "df", which returns a dataframe with monthly
-climatic values for each point/polygon,
-or "raster", which returns a \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}} object (within a list when
-more than one climatic variable is downloaded).}
+\item{output}{Character. Either "df", which returns a dataframe with daily
+climatic values for each point/polygon, or "raster", which returns \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}}
+objects (within a list when more than one climatic variable is downloaded).}
 }
 \value{
 Either:
@@ -42,13 +41,18 @@ Either:
 \item A data.frame (if output = "df")
 \item A list of \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}} object (if output = "raster")
 }
+
+For precipitation, the function returns total (accumulated) precipitation per month.
+For temperature variables ('Tmin', 'Tmax', 'Tavg') the function returns the average
+(i.e. the monthly average of minimum and maximum daily temperatures, or the average
+monthly temperature).
 }
 \description{
 Extract monthly climate data (temperature and precipitation) for a given set of
 points or polygons within Europe.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
 
 # Coords as matrix
 coords <- matrix(c(-5.36, 37.40), ncol = 2)

@@ -20,16 +20,16 @@ get_monthly_climate(
 
   A [matrix](https://rdrr.io/r/base/matrix.html),
   [data.frame](https://rdrr.io/r/base/data.frame.html),
-  [tibble::tbl_df](https://tibble.tidyverse.org/reference/tbl_df-class.html),
+  `tibble::tbl_df-class`,
   [`sf::sf()`](https://r-spatial.github.io/sf/reference/sf.html), or
   [`terra::SpatVector()`](https://rspatial.github.io/terra/reference/SpatVector-class.html)
   object containing point or polygon coordinates in decimal degrees
-  (lonlat/geographic format). Longitude must fall between -40.5 and 75.5
-  degrees, and latitude between 25.5 and 75.5 degrees. If `coords` is a
-  matrix, it must have only two columns: the first with longitude and
-  the second with latitude data. If `coords` is a data.frame or a
-  tbl_df, it must contain at least two columns called `lon` and `lat`
-  with longitude and latitude coordinates, respectively.
+  (lonlat/geographic format, EPSG 4326). Longitude must fall between
+  -40.5 and 75.5 degrees, and latitude between 25.5 and 75.5 degrees. If
+  `coords` is a matrix, it must have only two columns: the first with
+  longitude and the second with latitude data. If `coords` is a
+  data.frame or a tbl_df, it must contain at least two columns called
+  `lon` and `lat` with longitude and latitude coordinates, respectively.
 
 - climatic_var:
 
@@ -47,10 +47,10 @@ get_monthly_climate(
 
 - output:
 
-  Character. Either "df", which returns a dataframe with monthly
-  climatic values for each point/polygon, or "raster", which returns a
+  Character. Either "df", which returns a dataframe with daily climatic
+  values for each point/polygon, or "raster", which returns
   [`terra::SpatRaster()`](https://rspatial.github.io/terra/reference/SpatRaster-class.html)
-  object (within a list when more than one climatic variable is
+  objects (within a list when more than one climatic variable is
   downloaded).
 
 ## Value
@@ -62,6 +62,12 @@ Either:
 - A list of
   [`terra::SpatRaster()`](https://rspatial.github.io/terra/reference/SpatRaster-class.html)
   object (if output = "raster")
+
+For precipitation, the function returns total (accumulated)
+precipitation per month. For temperature variables ('Tmin', 'Tmax',
+'Tavg') the function returns the average (i.e. the monthly average of
+minimum and maximum daily temperatures, or the average monthly
+temperature).
 
 ## References
 

@@ -25,29 +25,36 @@ knitr::opts_chunk$set(
 
 <!-- badges: end -->
 
-Get high-resolution (1 km) daily, monthly and annual climate data (precipitation, and average, minimum and maximum temperatures) for Europe from the European climatic database hosted at [University of Natural Resources and Life Sciences, Vienna, Austria](https://boku.ac.at/en/wabo/waldbau/wir-ueber-uns/daten). Data are currently available from 1950 to 2024.
+Get high-resolution (1 km) daily, monthly and annual climate data (precipitation, and average, minimum and maximum temperatures) for Europe from the European climatic database hosted at the [Institute of Silviculture, University of Natural Resources and Life Sciences, Vienna, Austria](https://boku.ac.at/en/oekb/wald). Data are currently available from 1950 to 2024.
 
 This climatic dataset was originally built by [A. Moreno & H. Hasenauer](https://doi.org/10.1002/joc.4436) and further developed by W. Rammer, C. Pucher & M. Neumann (see [this document](https://github.com/VeruGHub/easyclimate/blob/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf) for more details on the development and characteristics of the climatic dataset, and [this document](https://doi.org/10.6084/m9.figshare.22962671.v1) for the updates of the last version - v4).
 
 In this R package we implemented [Cloud-Optimised Geotiffs](http://cogeo.org/) so that we can obtain daily, monthly and climate data for thousands of sites/dates within seconds/minutes, without having to download huge rasters. But if you need to obtain data for large areas, please download the rasters from the FTP server (<ftp://palantir.boku.ac.at/Public/ClimateData/>) and extract the values locally rather than using this package, so as not to saturate the file server. For that, you may use a FTP client such as [FileZilla](https://filezilla-project.org/).
 
-Please, be aware that data will be updated in an annual basis being possible to have small adjustments of values for past years according to the annual spring releases of [E-OBS data](https://surfobs.climate.copernicus.eu/dataaccess/access_eobs.php#datafiles).
+Please, be aware that data will be updated in an annual basis and values for past years might have small adjustments according to the annual spring releases of [E-OBS data](https://surfobs.climate.copernicus.eu/dataaccess/access_eobs.php#datafiles). If you need to guarantee reproducibility of your analyses, please save the data locally as some data might change without notice after such updates.
 
 For a detailed description of {easyclimate}, please read [this paper](https://doi.org/10.1016/j.envsoft.2023.105627) (open access version [here](https://doi.org/10.32942/osf.io/mc8uj)) or visit the package [website](https://verughub.github.io/easyclimate/).
 
 ## Installation
 
-Stable version from CRAN:
+Stable version from [CRAN](https://cran.r-project.org/package=easyclimate):
 
 ```{r, eval = FALSE}
 install.packages("easyclimate")
 ```
 
-Development version from GitHub:
+Development version from [GitHub](https://github.com/VeruGHub/easyclimate):
 
 ```{r, eval = FALSE}
 # install.packages("remotes")
 remotes::install_github("VeruGHub/easyclimate")
+```
+
+Development version from [R-universe](https://verughub.r-universe.dev/easyclimate):
+
+```{r, eval = FALSE}
+install.packages('easyclimate', 
+                 repos = c('https://verughub.r-universe.dev', 'https://cloud.r-project.org'))
 ```
 
 ## Examples
@@ -63,8 +70,7 @@ coords <- data.frame(lon = -5.36, lat = 37.40)
 
 prec_daily <- get_daily_climate(coords, 
                                 period = "2001-01-01:2001-01-03", 
-                                climatic_var = "Prcp",
-                                version = 4) # default
+                                climatic_var = "Prcp")
 ```
 
 ```{r echo = FALSE}
@@ -87,7 +93,7 @@ kable(prec_monthly)
 
 To obtain a (multi-layer) raster of daily climatic values for an area:
 
-```{r message = FALSE, fig.width = 8, fig.height = 3}
+```{r message = FALSE, warning = FALSE, fig.width = 8, fig.height = 3}
 library(terra)
 
 ## Download the polygon contour of a region

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Analysing the climate of an area for a given period • easyclimate</title>
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="../deps/jquery-3.6.1/jquery-3.6.1.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">easyclimate</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,13 +80,13 @@ and specify the type of output you want to obtain (i.e. a data frame -
 <code>df</code> or a raster - <code>raster</code>). You can also provide
 the polygons of interest in a <code>sf</code> object.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/VeruGHub/easyclimate" class="external-link">easyclimate</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://verughub.github.io/easyclimate">easyclimate</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/" class="external-link">terra</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">coords_t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/vect.html" class="external-link">vect</a></span><span class="op">(</span><span class="st">"POLYGON ((-4.5 41, -4.5 40.5, -5 40.5, -5 41))"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># to know how much it takes to download</span></span>
-<span><span class="co">## [1] "2025-12-16 20:07:54 CET"</span></span>
+<span><span class="co">## [1] "2025-12-18 21:36:17 CET"</span></span>
 <span></span>
 <span><span class="va">df_tmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span></span>
 <span>  <span class="va">coords_t</span>,</span>
@@ -96,7 +96,7 @@ the polygons of interest in a <code>sf</code> object.</p>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">## [1] "2025-12-16 20:11:16 CET"</span></span>
+<span><span class="co">## [1] "2025-12-18 21:40:32 CET"</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/headtail.html" class="external-link">head</a></span><span class="op">(</span><span class="va">df_tmax</span><span class="op">)</span></span>
 <span><span class="co">##   ID_coords       lon      lat       date Tmax</span></span>
@@ -144,7 +144,7 @@ the polygons of interest in a <code>sf</code> object.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dieghernan.github.io/tidyterra/" class="external-link">tidyterra</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">## [1] "2025-12-16 20:11:23 CET"</span></span>
+<span><span class="co">## [1] "2025-12-18 21:40:34 CET"</span></span>
 <span></span>
 <span><span class="va">ras_tmin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span></span>
 <span>  <span class="va">coords_t</span>,</span>
@@ -154,7 +154,7 @@ the polygons of interest in a <code>sf</code> object.</p>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">## [1] "2025-12-16 20:11:38 CET"</span></span>
+<span><span class="co">## [1] "2025-12-18 21:40:52 CET"</span></span>
 <span></span>
 <span><span class="va">ras_tmin</span></span>
 <span><span class="co">## class       : SpatRaster </span></span>
@@ -179,7 +179,7 @@ area:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">## [1] "2025-12-16 20:11:45 CET"</span></span>
+<span><span class="co">## [1] "2025-12-18 21:40:54 CET"</span></span>
 <span></span>
 <span><span class="va">ras_monthly_tmin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_monthly_climate.html">get_monthly_climate</a></span><span class="op">(</span></span>
 <span>  <span class="va">coords_t</span>,</span>
@@ -189,7 +189,7 @@ area:</p>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">## [1] "2025-12-16 20:11:46 CET"</span></span>
+<span><span class="co">## [1] "2025-12-18 21:40:55 CET"</span></span>
 <span></span>
 <span><span class="va">ras_monthly_tmin</span></span>
 <span><span class="co">## class       : SpatRaster </span></span>

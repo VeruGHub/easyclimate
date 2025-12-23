@@ -7,7 +7,7 @@
 # @param climatic_var Character. Climatic variable to be downloaded. One of 'Tmax',
 # 'Tmin', 'Tavg' or 'Prcp'.
 # @param year Numeric. Year to download climatic information
-# @param version Numeric. Version of the climate data.
+# @param version Version of the climate data ('last' by default; version 4 still available).
 # @param temp_res Character. One of "day" , "month" or "year"
 #
 # @return text string with the url

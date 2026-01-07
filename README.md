@@ -36,8 +36,11 @@ dataset, and [this
 document](https://doi.org/10.6084/m9.figshare.22962671.v1) for the
 updates of the last version - v4).
 
+Please note that the data are updated on an annual basis, and values for previous years may undergo minor adjustments following the annual spring releases of the [E-OBS
+dataset](https://surfobs.climate.copernicus.eu/dataaccess/access_eobs.php#datafiles). If reproducibility of your analyses is required, we strongly recommend saving the data locally, as some values may change without prior notice after these updates. During update periods (see the schedule in [Discussions](https://github.com/VeruGHub/easyclimate/discussions/58)), data downloads may be temporarily unavailable; therefore, we encourage planning data requests in advance.
+
 In this R package we implemented [Cloud-Optimised
-Geotiffs](http://cogeo.org/) so that we can obtain daily, monthly and
+Geotiffs](http://cogeo.org/) so that we can obtain daily, monthly and annual
 climate data for thousands of sites/dates within seconds/minutes,
 without having to download huge rasters. But if you need to obtain data
 for large areas, please download the rasters from the FTP server
@@ -45,14 +48,6 @@ for large areas, please download the rasters from the FTP server
 locally rather than using this package, so as not to saturate the file
 server. For that, you may use a FTP client such as
 [FileZilla](https://filezilla-project.org/).
-
-Please, be aware that data will be updated in an annual basis and values
-for past years might have small adjustments according to the annual
-spring releases of [E-OBS
-data](https://surfobs.climate.copernicus.eu/dataaccess/access_eobs.php#datafiles).
-If you need to guarantee reproducibility of your analyses, please save
-the data locally as some data might change without notice after such
-updates.
 
 For a detailed description of {easyclimate}, please read [this
 paper](https://doi.org/10.1016/j.envsoft.2023.105627) (open access

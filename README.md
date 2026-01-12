@@ -34,7 +34,7 @@ document](https://github.com/VeruGHub/easyclimate/blob/master/inst/Description_E
 for more details on the development and characteristics of the climatic
 dataset, and [this
 document](https://doi.org/10.6084/m9.figshare.22962671.v1) for the
-updates of the last version - v4).
+updates of version 4).
 
 Please note that the data are updated on an annual basis, and values for previous years may undergo minor adjustments following the annual spring releases of the [E-OBS
 dataset](https://surfobs.climate.copernicus.eu/dataaccess/access_eobs.php#datafiles). If reproducibility of your analyses is required, we strongly recommend saving the data locally, as some values may change without prior notice after these updates. During update periods (see the schedule in [Discussions](https://github.com/VeruGHub/easyclimate/discussions/58)), data downloads may be temporarily unavailable; therefore, we encourage planning data requests in advance.

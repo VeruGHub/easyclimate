@@ -22,7 +22,8 @@ test_that("downloading several variables gives expected results", {
                    Tmax = c(25.29, 25.08),
                    Tavg = c(18.91, 18.48),
                    Prcp = c(427.33, 463.85)),
-              row.names = c(NA, -2L), class = "data.frame"))
+              row.names = c(NA, -2L),
+              class = "data.frame"))
 
   ## Output raster
   output <- get_annual_climate(coords, period = 2012,

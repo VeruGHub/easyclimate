@@ -31,9 +31,9 @@
 
 
 get_annual_climate_single <- function(coords = NULL,
-                                       climatic_var_single = "Prcp",
-                                       period = NULL,
-                                       output = "df") {
+                                      climatic_var_single = "Prcp",
+                                      period = NULL,
+                                      output = "df") {
 
   #### Check arguments ####
 
@@ -140,9 +140,6 @@ get_annual_climate_single <- function(coords = NULL,
   ## Name raster layers with their dates
   names(rasters) <- years
 
-  ## Subset required dates only - SMR creo que esto ya no es necesario aqui, porque ya seleccionamos el año
-  # rasters.sub <- terra::subset(rasters, subset = as.character(years))
-
   #### Extract ####
 
   message(paste0("\nDownloading ", climatic_var_single,
@@ -173,7 +170,6 @@ get_annual_climate_single <- function(coords = NULL,
     ## Real climatic values
     out[,climatic_var_single] <- out[,climatic_var_single]/100
 
-
   }
 
   ## If output == "raster", return a cropped raster
@@ -188,13 +184,12 @@ get_annual_climate_single <- function(coords = NULL,
     ## Real climatic values
     out <- out/100
 
+
   }
 
   invisible(out)
 
 }
-
-
 
 
 period_to_years <- function(period) {
@@ -204,18 +199,17 @@ period_to_years <- function(period) {
   if (!inherits(period, c("numeric", "integer")))
     stop("Period must be a number")
 
-    ini.fin <- data.frame(ini = period[c(TRUE, diff(period) != 1)],
-                          fin = period[c(diff(period) != 1, TRUE)])
+  ini.fin <- data.frame(ini = period[c(TRUE, diff(period) != 1)],
+                        fin = period[c(diff(period) != 1, TRUE)])
+  years.list <- lapply(split(ini.fin, seq_len(nrow(ini.fin))),
+                       function(x) {
+                         seq(from = x$ini,
+                             to = x$fin,
+                             by = 1)})
+  years <- do.call("c", years.list)
+  names(years) <- NULL
 
-    years.list <- lapply(split(ini.fin, seq_len(nrow(ini.fin))),
-                          function(x) {
-                            seq(from = x$ini,
-                                to = x$fin,
-                                by = 1)})
-    years <- do.call("c", years.list)
-    names(years) <- NULL
-
-    invisible(years)
+  invisible(years)
 
 }
 

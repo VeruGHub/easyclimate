@@ -1,5 +1,3 @@
-
-
 #' Reshape terra output from get_montly_climate_single and get_daily_climate_single
 #' when output = "df"
 #'

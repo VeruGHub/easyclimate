@@ -92,8 +92,7 @@
 get_monthly_climate <- function(coords = NULL,
                               climatic_var = "Prcp",
                               period = NULL,
-                              output = "df",
-                              check_connection = TRUE) {
+                              output = "df") {
 
 
     if (length(climatic_var) == 1) {

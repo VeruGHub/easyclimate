@@ -155,7 +155,7 @@ test_that("different climatic_var_single give expected results for last version"
 
 ################################################################
 
-test_that("different input formats (points) give expected results", {
+test_that("different input formats (points) give expected results in v4", {
 
   skip_on_cran()
   skip_on_ci()
@@ -163,65 +163,86 @@ test_that("different input formats (points) give expected results", {
   ## Input matrix (tested above)
   coords.mat <- matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
 
-  output.v4 <- structure(list(ID_coords = c(1, 2),
+  output <- structure(list(ID_coords = c(1, 2),
                            lon = c(-5.36, -4.05),
                            lat = c(37.4, 38.1),
                            date = c("2001-01-01", "2001-01-01"),
                            Tmin = c(6.25, 6.96)),
                       row.names = c(NA, -2L),
                       class = "data.frame")
-  output.last <- structure(list(ID_coords = c(1, 2),
-                              lon = c(-5.36, -4.05),
-                              lat = c(37.4, 38.1),
-                              date = c("2001-01-01", "2001-01-01"),
-                              Tmin = c(6.55, 3.81)),
-                         row.names = c(NA, -2L),
-                         class = "data.frame")
 
 
   #Input data.frame
   coords.df <- as.data.frame(coords.mat)
   names(coords.df) <- c("lon", "lat")
-  expect_identical(
+
+   expect_identical(
     get_daily_climate_single(coords.df, period = "2001-01-01",
                              climatic_var_single = "Tmin", version = 4,
-                             check_conn = FALSE),
-    output.v4)
+                             check_conn = FALSE), output)
 
-  expect_identical(
-    get_daily_climate_single(coords.df, period = "2001-01-01",
-                             climatic_var_single = "Tmin", version = "last",
-                             check_conn = FALSE),
-    output.last)
 
   #Input sf
   coords.sf <- sf::st_as_sf(coords.df, coords = c("lon", "lat"))
   expect_identical(
     get_daily_climate_single(coords.sf, period = "2001-01-01",
                              climatic_var_single = "Tmin", version = 4,
-                             check_conn = FALSE),
-    output.v4)
-  expect_identical(
-    get_daily_climate_single(coords.sf, period = "2001-01-01",
-                             climatic_var_single = "Tmin", version = "last",
-                             check_conn = FALSE),
-    output.last)
+                             check_conn = FALSE), output)
 
   #Input SpatVector
   coords.spv <- terra::vect(coords.sf)
   expect_identical(
     get_daily_climate_single(coords.spv, period = "2001-01-01",
                              climatic_var_single = "Tmin", version = 4,
-                             check_conn = FALSE),
-    output.v4)
-  expect_identical(
-    get_daily_climate_single(coords.spv, period = "2001-01-01",
-                             climatic_var_single = "Tmin", version = "last",
-                             check_conn = FALSE),
-    output.last)
+                             check_conn = FALSE), output)
 
 })
 
+test_that("different input formats (points) give expected results in last version", {
+
+  skip_on_cran()
+  skip_on_ci()
+
+  ## Input matrix (tested above)
+  coords.mat <- matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
+
+  output <- structure(list(ID_coords = c(1, 2),
+                                lon = c(-5.36, -4.05),
+                                lat = c(37.4, 38.1),
+                                date = c("2001-01-01", "2001-01-01"),
+                                Tmin = c(6.55, 3.81)),
+                           row.names = c(NA, -2L),
+                           class = "data.frame")
+
+
+  #Input data.frame
+  coords.df <- as.data.frame(coords.mat)
+  names(coords.df) <- c("lon", "lat")
+
+  expect_identical(
+    get_daily_climate_single(coords.df, period = "2001-01-01",
+                             climatic_var_single = "Tmin",
+                             check_conn = FALSE),
+    output)
+
+  #Input sf
+  coords.sf <- sf::st_as_sf(coords.df, coords = c("lon", "lat"))
+
+  expect_identical(
+    get_daily_climate_single(coords.sf, period = "2001-01-01",
+                             climatic_var_single = "Tmin",
+                             check_conn = FALSE),
+    output)
+
+  #Input SpatVector
+  coords.spv <- terra::vect(coords.sf)
+  expect_identical(
+    get_daily_climate_single(coords.spv, period = "2001-01-01",
+                             climatic_var_single = "Tmin",
+                             check_conn = FALSE),
+    output)
+
+})
 
 
 ############################################################################

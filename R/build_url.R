@@ -1,5 +1,3 @@
-
-
 # Build url address for a given request
 #
 # Build the url to download climatic data from ftp://palantir.boku.ac.at/Public/ClimateData/
@@ -12,7 +10,7 @@
 #
 # @return text string with the url
 #
-# @author Veronica Cruz-Alonso, Francisco Rodríguez-Sánchez, Sophia Ratcliffe
+# @author Veronica Cruz-Alonso, Francisco Rodríguez-Sánchez, Sophia Ratcliffe, Sofia Miguel
 
 build_url <- function(climatic_var_single,
                       year,
@@ -22,10 +20,6 @@ build_url <- function(climatic_var_single,
   if (!climatic_var_single %in% c("Tmax", "Tmin", "Tavg", "Prcp"))
     stop("climatic_var_single must be one of 'Tmax', 'Tmin', 'Tavg' or 'Prcp'")
 
-  if (year < 1950 | year > 2024)
-    stop("Year (period) must be between 1950 and 2024") ## SMR: Creo que se puede eliminar estoporque ya esta en get_X_climate_single
-                                                        ## aunque si se eliminara, deberia de ser tambien en test_build_url
-
   ## Build url
   if (version  == "last") {
     ## Adjust climvar to file names in FTP server
@@ -34,7 +28,7 @@ build_url <- function(climatic_var_single,
       "Tmax" = "tmax",
       "Tmin" = "tmin",
       "Tavg" = "tavg",
-      "Prcp" = "prcp" ## SMR: dado que la abreviatura para v4 y v_last es distinta, prec y prcp, hacemos el switch dentro de cada if
+      "Prcp" = "prcp"
     )
 
     if (temp_res == "day") {
@@ -48,9 +42,10 @@ build_url <- function(climatic_var_single,
         sep = ""
       )
 
-      #invisible(url)
+      invisible(url)
+    }
 
-    } else if (temp_res == "month") {
+    if (temp_res == "month") {
 
       aggr <- ifelse(climvar == "prcp", "MonthlySum", "MonthlyAvg")
 
@@ -65,9 +60,10 @@ build_url <- function(climatic_var_single,
         sep = ""
       )
 
-    #  invisible(url)
+      invisible(url)
+    }
 
-    }  else if (temp_res == "year") {
+    if (temp_res == "year") {
       aggr <- ifelse(climvar == "prcp", "YearlySum", "YearlyAvg")
 
       url <- paste(
@@ -81,17 +77,18 @@ build_url <- function(climatic_var_single,
         sep = ""
       )
 
-    #  invisible(url)
-    }
-  } else if (version  == "4") {
+      invisible(url)
+    }}
+
+  if (version  == "4") {
     ## Adjust climvar to file names in FTP server
     climvar <- switch(
       climatic_var_single,
       "Tmax" = "tmax",
       "Tmin" = "tmin",
       "Tavg" = "tavg",
-      "Prcp" = "prec"
-    )
+      "Prcp" = "prec")
+
     if (temp_res == "day") {
       url <- paste(
         "ftp://palantir.boku.ac.at/Public/ClimateData/v",
@@ -105,13 +102,9 @@ build_url <- function(climatic_var_single,
         sep = ""
       )
 
-    #  invisible(url)
+    invisible(url)
 
-    } else {
-      stop("Version 4 is only avaliable for daily data")
-
-      }
+    }
   }
-
- invisible(url)
+  invisible(url)
 }

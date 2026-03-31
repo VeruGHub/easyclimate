@@ -38,15 +38,13 @@ get_daily_climate_single <- function(coords = NULL,
                                      period = NULL,
                                      output = "df",
                                      version = "last",
-                                     check_conn = TRUE) { # SMR : Aqui habria que poner que check connection solo aplica si es version == 4
-
+                                     check_conn = TRUE) {
   #### Check arguments ####
 
   ## version
   if (!version %in% c("4", "last")) {
     stop("version must be 4 or last for the most updated version")
   }
-
 
   ## climatic_var_single
   if (!climatic_var_single %in% c("Tmax", "Tmin", "Prcp")) {
@@ -237,8 +235,6 @@ get_daily_climate_single <- function(coords = NULL,
   invisible(out)
 
 }
-
-
 
 
 period_to_days <- function(period) {

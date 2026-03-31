@@ -118,7 +118,7 @@ ras_monthly_tmin
 ggplot() +
   geom_spatraster(data = ras_monthly_tmin, alpha = 0.9) +
   facet_wrap(~lyr, ncol = 2) +
-  scale_fill_whitebox_c(name = "Minimum montly\ntemperature (ºC)", palette = "muted") +
+  scale_fill_whitebox_c(name = "Minimum monthly\ntemperature (ºC)", palette = "muted") +
   theme_bw()
 
 

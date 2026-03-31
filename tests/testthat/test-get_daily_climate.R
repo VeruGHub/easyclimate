@@ -1,4 +1,3 @@
-library(terra)
 
 test_that("downloading several variables gives expected results from v4", {
 
@@ -13,7 +12,8 @@ test_that("downloading several variables gives expected results from v4", {
   # ## Output data.frame
   expect_identical(
     get_daily_climate(coords.mat, period = "2001-01-01",
-                      climatic_var = c("Tmin", "Tmax", "Prcp"), version = 4,
+                      climatic_var = c("Tmin", "Tmax", "Prcp"),
+                      version = 4,
                       check_connection = FALSE),
     structure(list(ID_coords = as.double(1:2),
                    lon = c(-5.36, -5.5),
@@ -24,13 +24,15 @@ test_that("downloading several variables gives expected results from v4", {
                    Prcp = c(8.30, 8.72)),
               row.names = c(NA, -2L), class = "data.frame"))
 
+
   # Output raster
   output <- get_daily_climate(coords.mat, period = "2001-01-01",
                               climatic_var = c("Tmin", "Tmax", "Prcp"),
-                              output = "raster", version = 4,
+                              output = "raster",
+                              version = 4,
                               check_connection = FALSE)
 
-
+  library(terra)
   expect_true(inherits(output, "list"))
   expect_identical(names(output), structure(c("Tmin", "Tmax", "Prcp")))
   expect_identical(head(values(output[[1]])),
@@ -46,8 +48,6 @@ test_that("downloading several variables gives expected results from v4", {
 })
 
 
-
-
 test_that("downloading several variables gives expected results from last version", {
 
   # Testing for 2 sites and a single day
@@ -57,11 +57,11 @@ test_that("downloading several variables gives expected results from last versio
 
   ## Input matrix
   coords.mat <- matrix(c(-5.36, 37.40, -5.5, 37.5), ncol = 2, byrow = TRUE)
-
   # ## Output data.frame
   expect_identical(
     get_daily_climate(coords.mat, period = "2001-01-01",
-                      climatic_var = c("Tmin", "Tmax", "Prcp"), version = "last"),
+                      climatic_var = c("Tmin", "Tmax", "Prcp"),
+                      version = "last"),
     structure(list(ID_coords = as.double(1:2),
                    lon = c(-5.36, -5.5),
                    lat = c(37.40, 37.5),
@@ -74,7 +74,8 @@ test_that("downloading several variables gives expected results from last versio
   # Output raster
   output <- get_daily_climate(coords.mat, period = "2001-01-01",
                               climatic_var = c("Tmin", "Tmax", "Prcp"),
-                              output = "raster", version = 4,
+                              output = "raster",
+                              version = 4,
                               check_connection = FALSE)
 
   expect_true(inherits(output, "list"))

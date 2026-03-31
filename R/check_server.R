@@ -95,3 +95,4 @@ check_server <- function(climatic_var = NULL,
 
   return(server.ok)
 }
+

@@ -3,8 +3,9 @@ test_that("wrong climatic_var gives error", {
 })
 
 test_that("year below 1950 or above last year gives error", {
+  get_latest_year()
   expect_error(build_url("Tmin", 1949))
-  expect_error(build_url("Tmin", 2030))
+  expect_error(build_url("Tmin", latest_year + 1))
 })
 
 test_that("built url is correct for daily climate", {

@@ -8,8 +8,8 @@
 #'
 #' @param climatic_var Character. Climatic variables to be downloaded ('Tmax',
 #' 'Tmin', 'Tavg' or 'Prcp'). Various elements can be concatenated in the vector.
-#' @param period Numbers representing years between 1950 and 2024.
-#' To specify a sequence of years use the format 'start:end'
+#' @param period Numbers representing years between 1950 and the latest year
+#' available. To specify a sequence of years use the format 'start:end'
 #' (e.g. YYYY:YYYY, see examples). Various elements
 #' can be concatenated in the vector (e.g. c(2000:2005, 2010:2015, 2020))
 #'
@@ -80,7 +80,8 @@
 get_annual_climate <- function(coords = NULL,
                                climatic_var = "Prcp",
                                period = NULL,
-                               output = "df") {
+                               output = "df",
+                               check_connection = FALSE) {
 
   if (length(climatic_var) == 1) {
 

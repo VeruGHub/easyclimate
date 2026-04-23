@@ -46,11 +46,15 @@ test_that("coordinates in a different coordinate sistem gives error", {
                                         period = 1950))
 })
 
-test_that("year below 1950 or above 2022 gives error", {
+
+
+test_that("year below 1950 or above the year of the latest version gives error", {
+  get_latest_year()
+
   expect_error(get_daily_climate_single(coords = matrix(c(-5.36, 37.40), ncol = 2),
                                         period = 1949))
   expect_error(get_daily_climate_single(coords = matrix(c(-5.36, 37.40), ncol = 2),
-                                        period = 2030))
+                                        period = latest_year + 1 ))
 })
 
 

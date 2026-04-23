@@ -19,18 +19,23 @@
 
 check_server <- function(climatic_var = NULL,
                          year = NULL,
-                         verbose = TRUE) {
+                         version = 'last',
+                         verbose = TRUE,
+                         time_unit = "daily") {
 
   if (is.null(climatic_var)) {
     climatic_var <- sample(c("Prcp", "Tmin", "Tmax"), size = 1)
   }
 
+  ## Load last year of data
+  get_latest_year()
+
   if (is.null(year)) {
-    year <- sample(1950:2022, size = 1)
+    year <- sample(1950:latest_year, size = 1)
   }
 
   cog.url <- build_url(climatic_var_single = climatic_var,
-                       version = 4,
+                       version = version,
                        year = year)
 
   # Can we see the raster file?
@@ -51,7 +56,9 @@ check_server <- function(climatic_var = NULL,
   } else {
     # Server is reachable, but can we download a single data point?
     coords <- data.frame(lon = -5, lat = 37)
-    data.ok <- try(
+
+    if (time_unit == 'daily'){
+      data.ok <- try(
       R.utils::withTimeout({
         suppressMessages(
           get_daily_climate_single(coords, climatic_var, paste0(year, "-01-01"),
@@ -60,6 +67,30 @@ check_server <- function(climatic_var = NULL,
       timeout = 30,   # allow 30 seconds to download this single data point
       onTimeout = "silent"),  # if time out, return NULL
       silent = TRUE)
+    }
+    if (time_unit == 'monthly'){
+      data.ok <- try(
+        R.utils::withTimeout({
+          suppressMessages(
+            get_monthly_climate_single(coords, climatic_var, paste0(year, "-01"),
+                                     check_conn = FALSE))
+        },
+        timeout = 30,   # allow 30 seconds to download this single data point
+        onTimeout = "silent"),  # if time out, return NULL
+        silent = TRUE)
+    }
+
+    if (time_unit == 'annual'){
+      data.ok <- try(
+        R.utils::withTimeout({
+          suppressMessages(
+            get_annual_climate_single(coords, climatic_var, year,
+                                       check_conn = FALSE))
+        },
+        timeout = 30,   # allow 30 seconds to download this single data point
+        onTimeout = "silent"),  # if time out, return NULL
+        silent = TRUE)
+    }
 
     if (inherits(data.ok, "data.frame")) {
       server.ok <- TRUE

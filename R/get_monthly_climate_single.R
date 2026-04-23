@@ -34,7 +34,11 @@
 get_monthly_climate_single <- function(coords = NULL,
                                        climatic_var_single = "Prcp",
                                        period = NULL,
-                                       output = "df") {
+                                       output = "df",
+                                       check_conn = FALSE) {
+
+  ## Load last year of data
+  get_latest_year()
 
   #### Check arguments ####
 
@@ -115,8 +119,8 @@ get_monthly_climate_single <- function(coords = NULL,
   years <- as.numeric(sort(unique(format(as.Date(paste0(months, "-01")), "%Y"))))
 
   ## Check years are within bounds
-  if (any(years < 1950 | years > 2024)) {
-    stop("Year (period) must be between 1950 and 2024")
+  if (any(years < 1950 | years > latest_year)) {
+    stop("Year (period) must be between 1950 and the latest_year")
   }
 
   #### Build urls for all required years ####
@@ -126,6 +130,16 @@ get_monthly_climate_single <- function(coords = NULL,
                         climatic_var_single = climatic_var_single,
                         temp_res = "month"))
 
+  ## Check if the server is working
+  if (isTRUE(check_conn)) {
+    if (isTRUE(check_server(year = years,
+                            time_unit = "monthly",
+                            verbose = FALSE))) {
+      message("Connecting to the server...")
+    } else {
+      message("Problems retrieving the data. Please run 'check_server()' to diagnose the problems.\n")
+    }
+  }
 
   #### Connect and combine all required rasters ####
   urls.vsicurl <- paste0("/vsicurl/", urls)

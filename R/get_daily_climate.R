@@ -15,8 +15,8 @@
 #' called `lon` and `lat` with longitude and latitude coordinates, respectively.
 #' @param climatic_var Character. Climatic variables to be downloaded ('Tmax',
 #' 'Tmin' or 'Prcp'). Various elements can be concatenated in the vector.
-#' @param period Either integer numbers (representing years between 1950 and 2024),
-#' or dates in "YYYY-MM-DD" format (to obtain data for specific days).
+#' @param period Either integer numbers (representing years between 1950 and the latest
+#' year available), or dates in "YYYY-MM-DD" format (to obtain data for specific days).
 #' To specify a sequence of years or dates use the format 'start:end'
 #' (e.g. YYYY:YYYY or "YYYY-MM-DD:YYYY-MM-DD", see examples). Various elements
 #' can be concatenated in the vector (e.g. c(2000:2005, 2010:2015, 2020),

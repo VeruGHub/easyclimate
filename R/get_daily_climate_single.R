@@ -39,6 +39,9 @@ get_daily_climate_single <- function(coords = NULL,
                                      version = "last",
                                      check_conn = FALSE) {
 
+  ## Load last year of data
+  get_latest_year()
+
   #### Check arguments ####
 
   ## version
@@ -131,8 +134,8 @@ get_daily_climate_single <- function(coords = NULL,
       stop("Year (period) must be between 1950 and 2022")
   }
   if (version == "last") {
-    if (any(years < 1950 | years > 2024))
-      stop("Year (period) must be between 1950 and 2024")
+    if (any(years < 1950 | years > latest_year))
+      stop("Year (period) must be between 1950 and the latest year")
   }
 
   #### Build urls for all required years ####
@@ -144,16 +147,18 @@ get_daily_climate_single <- function(coords = NULL,
                         temp_res = "day"))
 
 
-  if (version == "4") {
+
     ## Check if the server is working
     if (isTRUE(check_conn)) {
-      if (isTRUE(check_server(verbose = FALSE))) {
+      if (isTRUE(check_server(year = years,
+                              version = version,
+                              time_unit = "daily",
+                              verbose = FALSE))) {
         message("Connecting to the server...")
       } else {
         message("Problems retrieving the data. Please run 'check_server()' to diagnose the problems.\n")
       }
     }
-  }
 
 
   #### Connect and combine all required rasters ####

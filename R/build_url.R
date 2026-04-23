@@ -22,9 +22,11 @@ build_url <- function(climatic_var_single,
   if (!climatic_var_single %in% c("Tmax", "Tmin", "Tavg", "Prcp"))
     stop("climatic_var_single must be one of 'Tmax', 'Tmin', 'Tavg' or 'Prcp'")
 
-  if (year < 1950 | year > 2024)
-    stop("Year (period) must be between 1950 and 2024") ## SMR: Creo que se puede eliminar estoporque ya esta en get_X_climate_single
-                                                        ## aunque si se eliminara, deberia de ser tambien en test_build_url
+  ## Load last year of data
+  get_latest_year()
+
+  if (year < 1950 | year > latest_year)
+    stop("Year (period) must be between 1950 and the latest_year")
 
   ## Build url
   if (version  == "last") {

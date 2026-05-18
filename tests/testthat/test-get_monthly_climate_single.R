@@ -47,8 +47,9 @@ test_that("coordinates in a different coordinate sistem gives error", {
                                         period = 1950))
 })
 
-test_that("year below 1950 or above the year of the latest version  gives error", {
-  get_latest_year()
+latest_year <- get_latest_year()
+
+test_that(sprintf("year below 1950 or above %d gives error", latest_year), {
   expect_error(get_monthly_climate_single(coords = matrix(c(-5.36, 37.40), ncol = 2),
                                         period = 1949))
   expect_error(get_monthly_climate_single(coords = matrix(c(-5.36, 37.40), ncol = 2),

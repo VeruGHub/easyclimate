@@ -23,10 +23,10 @@ build_url <- function(climatic_var_single,
     stop("climatic_var_single must be one of 'Tmax', 'Tmin', 'Tavg' or 'Prcp'")
 
   ## Load last year of data
-  get_latest_year()
+  latest_year <- get_latest_year()
 
   if (year < 1950 | year > latest_year)
-    stop("Year (period) must be between 1950 and the latest_year")
+    stop(sprintf("Year (period) must be between 1950 and %d", latest_year))
 
   ## Build url
   if (version  == "last") {

@@ -38,7 +38,7 @@ get_monthly_climate_single <- function(coords = NULL,
                                        check_conn = FALSE) {
 
   ## Load last year of data
-  get_latest_year()
+  latest_year <- get_latest_year()
 
   #### Check arguments ####
 
@@ -120,7 +120,7 @@ get_monthly_climate_single <- function(coords = NULL,
 
   ## Check years are within bounds
   if (any(years < 1950 | years > latest_year)) {
-    stop("Year (period) must be between 1950 and the latest_year")
+    stop(sprintf("Year (period) must be between 1950 and  %d", latest_year))
   }
 
   #### Build urls for all required years ####

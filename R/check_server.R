@@ -28,10 +28,10 @@ check_server <- function(climatic_var = NULL,
   }
 
   ## Load last year of data
-  get_latest_year()
+  latest_year <- get_latest_year()
 
   if (is.null(year)) {
-    year <- sample(1950:latest_year, size = 1)
+    year <- sample( 1950:latest_year, size = 1)
   }
 
   cog.url <- build_url(climatic_var_single = climatic_var,

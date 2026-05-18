@@ -2,8 +2,9 @@ test_that("wrong climatic_var gives error", {
   expect_error(build_url("precip", 2010))
 })
 
-test_that("year below 1950 or above last year gives error", {
-  get_latest_year()
+latest_year <- get_latest_year()
+
+test_that(sprintf("year below 1950 or above %d gives error", latest_year), {
   expect_error(build_url("Tmin", 1949))
   expect_error(build_url("Tmin", latest_year + 1))
 })

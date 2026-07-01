@@ -5,8 +5,9 @@
 #'
 #' @param climatic_var Optional. One of "Prcp", "Tmin", or "Tmax".
 #' @param year Optional. Year between 1950 and the latest year available.
+#' @param version Character. Version of the climate data. Either 'last' or "4" version.
 #' @param verbose Logical. Print diagnostic messages, or just return TRUE/FALSE?
-#' @param time_unit Character. One of "Day", "Month", or "Year.
+#' @param time_unit Character. One of "Day", "Month", or "Year".
 #'
 #' @return TRUE if the server seems available, FALSE otherwise.
 #'

@@ -4,14 +4,24 @@
 \alias{check_server}
 \title{Check climate data server}
 \usage{
-check_server(climatic_var = NULL, year = NULL, verbose = TRUE)
+check_server(
+  climatic_var = NULL,
+  year = NULL,
+  version = "last",
+  verbose = TRUE,
+  time_unit = "day"
+)
 }
 \arguments{
 \item{climatic_var}{Optional. One of "Prcp", "Tmin", or "Tmax".}
 
-\item{year}{Optional. Year between 1950 and 2022.}
+\item{year}{Optional. Year between 1950 and the latest year available.}
+
+\item{version}{Character. Version of the climate data. Either 'last' or "4" version.}
 
 \item{verbose}{Logical. Print diagnostic messages, or just return TRUE/FALSE?}
+
+\item{time_unit}{Character. One of "Day", "Month", or "Year".}
 }
 \value{
 TRUE if the server seems available, FALSE otherwise.

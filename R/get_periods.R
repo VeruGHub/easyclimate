@@ -4,7 +4,6 @@
 #' Returns a data frame describing the available data versions and their
 #' corresponding temporal coverage (initial and latest available years).
 #'
-#' @param none
 #' @return A data.frame with the available versions and their initial and
 #' latest year of data available.
 #'

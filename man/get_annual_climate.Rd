@@ -8,7 +8,8 @@ get_annual_climate(
   coords = NULL,
   climatic_var = "Prcp",
   period = NULL,
-  output = "df"
+  output = "df",
+  check_connection = FALSE
 )
 }
 \arguments{
@@ -24,14 +25,17 @@ called \code{lon} and \code{lat} with longitude and latitude coordinates, respec
 \item{climatic_var}{Character. Climatic variables to be downloaded ('Tmax',
 'Tmin', 'Tavg' or 'Prcp'). Various elements can be concatenated in the vector.}
 
-\item{period}{Numbers representing years between 1950 and 2024.
-To specify a sequence of years use the format 'start:end'
+\item{period}{Numbers representing years between 1950 and the latest year
+available. To specify a sequence of years use the format 'start:end'
 (e.g. YYYY:YYYY, see examples). Various elements
 can be concatenated in the vector (e.g. c(2000:2005, 2010:2015, 2020))}
 
 \item{output}{Character. Either "df", which returns a dataframe with daily
 climatic values for each point/polygon, or "raster", which returns \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}}
 objects (within a list when more than one climatic variable is downloaded).}
+
+\item{check_connection}{Logical. Check the connection to the server before
+attempting data download?}
 }
 \value{
 Either:

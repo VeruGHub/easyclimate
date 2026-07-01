@@ -12,7 +12,8 @@
 #' available. To specify a sequence of years use the format 'start:end'
 #' (e.g. YYYY:YYYY, see examples). Various elements
 #' can be concatenated in the vector (e.g. c(2000:2005, 2010:2015, 2020))
-#'
+#' @param check_connection Logical. Check the connection to the server before
+#' attempting data download?
 #' @return Either:
 #' - A data.frame (if output = "df")
 #' - A list of [terra::SpatRaster()] object (if output = "raster")

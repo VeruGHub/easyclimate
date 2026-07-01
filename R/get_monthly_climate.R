@@ -14,6 +14,8 @@
 #' (e.g. YYYY:YYYY or "YYYY-MM:YYYY-MM", see examples). Various elements
 #' can be concatenated in the vector (e.g. c(2000:2005, 2010:2015, 2020),
 #' c("2000-01:2000-06", "2001-01"))
+#' @param check_connection Logical. Check the connection to the server before
+#' attempting data download?
 #'
 #' @return Either:
 #' - A data.frame (if output = "df")

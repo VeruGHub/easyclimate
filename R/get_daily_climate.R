@@ -28,7 +28,7 @@
 #' ('last') by default. The former version (4) is also available, for the sake of reproducibility.
 #' See 'references' for details on the climatic data sets.
 #' @param check_connection Logical. Check the connection to the server before
-#' attempting data download? Only used if `version` = 4.
+#' attempting data download?
 #'
 #' @return Either:
 #' - A data.frame (if output = "df")

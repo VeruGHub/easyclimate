@@ -133,7 +133,7 @@ get_monthly_climate_single <- function(coords = NULL,
   ## Check if the server is working
   if (isTRUE(check_conn)) {
     if (isTRUE(check_server(year = years,
-                            time_unit = "monthly",
+                            time_unit = "month",
                             verbose = FALSE))) {
       message("Connecting to the server...")
     } else {

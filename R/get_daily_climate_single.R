@@ -152,7 +152,7 @@ get_daily_climate_single <- function(coords = NULL,
     if (isTRUE(check_conn)) {
       if (isTRUE(check_server(year = years,
                               version = version,
-                              time_unit = "daily",
+                              time_unit = "day",
                               verbose = FALSE))) {
         message("Connecting to the server...")
       } else {

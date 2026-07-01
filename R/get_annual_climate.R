@@ -89,7 +89,8 @@ get_annual_climate <- function(coords = NULL,
       coords = coords,
       climatic_var_single = climatic_var,
       period = period,
-      output = output)
+      output = output,
+      check_conn = check_connection)
 
   } else {
 
@@ -99,7 +100,8 @@ get_annual_climate <- function(coords = NULL,
                            coords = coords,
                            climatic_var_single = x,
                            period = period,
-                           output = output) })
+                           output = output,
+                           check_conn = check_connection) })
 
     if (output == "df") {
 

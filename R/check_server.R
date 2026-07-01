@@ -4,8 +4,9 @@
 #' Only works for version 4 of the climate dataset.
 #'
 #' @param climatic_var Optional. One of "Prcp", "Tmin", or "Tmax".
-#' @param year Optional. Year between 1950 and 2022.
+#' @param year Optional. Year between 1950 and the latest year available.
 #' @param verbose Logical. Print diagnostic messages, or just return TRUE/FALSE?
+#' @param time_unit Character. One of "Day", "Month", or "Year.
 #'
 #' @return TRUE if the server seems available, FALSE otherwise.
 #'
@@ -21,7 +22,7 @@ check_server <- function(climatic_var = NULL,
                          year = NULL,
                          version = 'last',
                          verbose = TRUE,
-                         time_unit = "daily") {
+                         time_unit = "day") {
 
   if (is.null(climatic_var)) {
     climatic_var <- sample(c("Prcp", "Tmin", "Tmax"), size = 1)
@@ -43,7 +44,7 @@ check_server <- function(climatic_var = NULL,
 
   if (!isTRUE(url.ok)) {
     server.ok <- FALSE
-    if (verbose) {
+    if (isTRUE(verbose)) {
       message(paste(
         "Cannot connect to the server.",
         "Please, make sure that you have internet connection.",
@@ -57,7 +58,7 @@ check_server <- function(climatic_var = NULL,
     # Server is reachable, but can we download a single data point?
     coords <- data.frame(lon = -5, lat = 37)
 
-    if (time_unit == 'daily'){
+    if (time_unit == 'day'){
       data.ok <- try(
       R.utils::withTimeout({
         suppressMessages(
@@ -68,7 +69,7 @@ check_server <- function(climatic_var = NULL,
       onTimeout = "silent"),  # if time out, return NULL
       silent = TRUE)
     }
-    if (time_unit == 'monthly'){
+    if (time_unit == 'month'){
       data.ok <- try(
         R.utils::withTimeout({
           suppressMessages(
@@ -94,12 +95,12 @@ check_server <- function(climatic_var = NULL,
 
     if (inherits(data.ok, "data.frame")) {
       server.ok <- TRUE
-      if (verbose) {
+      if (isTRUE(verbose)) {
         message("The server seems to be running correctly.")
       }
     } else {
       server.ok <- FALSE
-      if (verbose) {
+      if (isTRUE(verbose)) {
         if (is.null(data.ok)) {
           message(paste(
             "The server has been reached, but data transfer seems too slow.",

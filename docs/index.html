@@ -98,11 +98,12 @@
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>Stable version from <a href="https://cran.r-project.org/package=easyclimate" class="external-link">CRAN</a>:</p>
-<p><code>{r, eval = FALSE} install.packages("easyclimate")</code></p>
-<p>Development version from <a href="https://github.com/VeruGHub/easyclimate" class="external-link">GitHub</a>:</p>
-<p><code>{r, eval = FALSE} # install.packages("remotes") remotes::install_github("VeruGHub/easyclimate")</code></p>
-<p>Development version from <a href="https://verughub.r-universe.dev/easyclimate" class="external-link">R-universe</a>:</p>
-<p><code>{r, eval = FALSE} install.packages('easyclimate',                   repos = c('https://verughub.r-universe.dev', 'https://cloud.r-project.org'))</code></p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"easyclimate"</span><span class="op">)</span></span></code></pre></div>
+<p>Development version from GitHub:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"VeruGHub/easyclimate"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
@@ -110,64 +111,114 @@
 <div class="section level3">
 <h3 id="obtain-a-data-frame-of-climatic-values">Obtain a data frame of climatic values<a class="anchor" aria-label="anchor" href="#obtain-a-data-frame-of-climatic-values"></a>
 </h3>
-<p>To obtain a data frame of daily and monthly climatic values for point coordinates:</p>
-<p>```{r example_daily, message = FALSE} library(easyclimate)</p>
-<p>coords &lt;- data.frame(lon = -5.36, lat = 37.40)</p>
-<p>prec_daily &lt;- get_daily_climate(coords, period = “2001-01-01:2001-01-03”, climatic_var = “Prcp”)</p>
-<pre><code>
-```{r echo = FALSE}
-kable(prec_daily)</code></pre>
-<p><code>{r example_monthly, message = FALSE} prec_monthly &lt;- get_monthly_climate(coords,                                     period = "2001-01:2001-03",                                     climatic_var = "Prcp")</code></p>
-<p><code>{r echo = FALSE} kable(prec_monthly)</code></p>
+<p>To obtain a data frame of daily climatic values for point coordinates:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://verughub.github.io/easyclimate">easyclimate</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">coords</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>lon <span class="op">=</span> <span class="op">-</span><span class="fl">5.36</span>, lat <span class="op">=</span> <span class="fl">37.40</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">prec</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span><span class="va">coords</span>, </span>
+<span>                          period <span class="op">=</span> <span class="st">"2001-01-01:2001-01-03"</span>, </span>
+<span>                          climatic_var <span class="op">=</span> <span class="st">"Prcp"</span>,</span>
+<span>                          version <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="co"># default</span></span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="right">ID_coords</th>
+<th align="right">lon</th>
+<th align="right">lat</th>
+<th align="left">date</th>
+<th align="right">Prcp</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">-5.36</td>
+<td align="right">37.4</td>
+<td align="left">2001-01-01</td>
+<td align="right">8.30</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="right">-5.36</td>
+<td align="right">37.4</td>
+<td align="left">2001-01-02</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">-5.36</td>
+<td align="right">37.4</td>
+<td align="left">2001-01-03</td>
+<td align="right">3.38</td>
+</tr>
+</tbody>
+</table>
 <p><br></p>
 </div>
 <div class="section level3">
 <h3 id="obtain-a-raster-of-climatic-values">Obtain a raster of climatic values<a class="anchor" aria-label="anchor" href="#obtain-a-raster-of-climatic-values"></a>
 </h3>
 <p>To obtain a (multi-layer) raster of daily climatic values for an area:</p>
-<p>```{r message = FALSE, warning = FALSE, fig.width = 8, fig.height = 3} library(terra)</p>
-</div>
-</div>
-<div class="section level2">
-<h2 id="download-the-polygon-contour-of-a-region">Download the polygon contour of a region<a class="anchor" aria-label="anchor" href="#download-the-polygon-contour-of-a-region"></a>
-</h2>
-<p>sobrarbe &lt;- mapSpain::esp_get_comarca(comarca = “Sobrarbe”)</p>
-</div>
-<div class="section level2">
-<h2 id="coordinates-must-be-in-lonlat">Coordinates must be in lonlat<a class="anchor" aria-label="anchor" href="#coordinates-must-be-in-lonlat"></a>
-</h2>
-<p>sobrarbe &lt;- project(vect(sobrarbe), “EPSG:4326”)</p>
-</div>
-<div class="section level2">
-<h2 id="download-tmax-values-for-that-region-between-1st-and-3rd-may-2020">Download Tmax values for that region between 1st and 3rd May 2020<a class="anchor" aria-label="anchor" href="#download-tmax-values-for-that-region-between-1st-and-3rd-may-2020"></a>
-</h2>
-<p>sobrarbetemp &lt;- get_daily_climate( coords = sobrarbe, climatic_var = “Tmax”, period = “2020-05-01:2020-05-03”, output = “raster” )</p>
-<pre><code>
-The output (`sobrarbetemp`) is a SpatRaster with 3 layers (for each of 3
-days):
-
-```{r}
-sobrarbetemp</code></pre>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/" class="external-link">terra</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Download the polygon contour of a region</span></span>
+<span><span class="va">sobrarbe</span> <span class="op">&lt;-</span> <span class="fu">mapSpain</span><span class="fu">::</span><span class="fu"><a href="https://ropenspain.github.io/mapSpain/reference/esp_get_comarca.html" class="external-link">esp_get_comarca</a></span><span class="op">(</span>comarca <span class="op">=</span> <span class="st">"Sobrarbe"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Coordinates must be in lonlat </span></span>
+<span><span class="va">sobrarbe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/project.html" class="external-link">project</a></span><span class="op">(</span><span class="fu"><a href="https://rspatial.github.io/terra/reference/vect.html" class="external-link">vect</a></span><span class="op">(</span><span class="va">sobrarbe</span><span class="op">)</span>, <span class="st">"EPSG:4326"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Download Tmax values for that region between 1st and 3rd May 2020</span></span>
+<span><span class="va">sobrarbetemp</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_daily_climate.html">get_daily_climate</a></span><span class="op">(</span></span>
+<span>  coords <span class="op">=</span> <span class="va">sobrarbe</span>,</span>
+<span>  climatic_var <span class="op">=</span> <span class="st">"Tmax"</span>,</span>
+<span>  period <span class="op">=</span> <span class="st">"2020-05-01:2020-05-03"</span>,</span>
+<span>  output <span class="op">=</span> <span class="st">"raster"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>The output (<code>sobrarbetemp</code>) is a SpatRaster with 3 layers (for each of 3 days):</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sobrarbetemp</span></span>
+<span><span class="co">#&gt; class       : SpatRaster </span></span>
+<span><span class="co">#&gt; dimensions  : 70, 82, 3  (nrow, ncol, nlyr)</span></span>
+<span><span class="co">#&gt; resolution  : 0.008333333, 0.008333333  (x, y)</span></span>
+<span><span class="co">#&gt; extent      : -0.2416667, 0.4416667, 42.21667, 42.8  (xmin, xmax, ymin, ymax)</span></span>
+<span><span class="co">#&gt; coord. ref. : lon/lat WGS 84 (EPSG:4326) </span></span>
+<span><span class="co">#&gt; source(s)   : memory</span></span>
+<span><span class="co">#&gt; names       : 2020-05-01, 2020-05-02, 2020-05-03 </span></span>
+<span><span class="co">#&gt; min values  :       2.34,       4.42,       6.91 </span></span>
+<span><span class="co">#&gt; max values  :      22.89,      25.03,      26.87</span></span></code></pre></div>
 <p>Let’s make a map. First using terra:</p>
-<p><code>{r map_terra, eval = FALSE} plot(sobrarbetemp, col = rev(RColorBrewer::brewer.pal(9, "RdYlBu")),       smooth = TRUE, nc = 3)</code></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rspatial.github.io/terra/reference/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sobrarbetemp</span>, col <span class="op">=</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/flip.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu">RColorBrewer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html" class="external-link">brewer.pal</a></span><span class="op">(</span><span class="fl">9</span>, <span class="st">"RdYlBu"</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>     smooth <span class="op">=</span> <span class="cn">TRUE</span>, nc <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-map_terra.png"></p>
 <p>Now using ggplot2 and tidyterra:</p>
-<p>```{r map_ggplot, message = FALSE, fig.width = 8, fig.height = 3} library(ggplot2) library(tidyterra)</p>
-<p>ggplot() + geom_spatraster(data = sobrarbetemp) + facet_wrap(~lyr, ncol = 3) + scale_fill_distiller(palette = “RdYlBu”, na.value = “transparent”) + geom_spatvector(data = sobrarbe, fill = NA) + labs(fill = “Maximum(ºC)”) + scale_x_continuous(breaks = c(-0.25, 0, 0.25)) + scale_y_continuous(breaks = seq(42.2, 42.8, by = 0.2)) + theme_minimal()</p>
-<pre><code>
-&lt;br&gt; Visit the articles of the [package
-website](https://verughub.github.io/easyclimate/) for more extended
-tutorials!
-
-&lt;br&gt;
-
-## CITATION
-
-If you use {easyclimate}, please cite both the appropriate data source
-and the package as:
-
-```{r echo = FALSE, results = 'asis', cache = FALSE}
-print(citation("easyclimate"), style = "text")</code></pre>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dieghernan.github.io/tidyterra/" class="external-link">tidyterra</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/geom_spatraster.html" class="external-link">geom_spatraster</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">sobrarbetemp</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">lyr</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_distiller</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"RdYlBu"</span>, na.value <span class="op">=</span> <span class="st">"transparent"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://dieghernan.github.io/tidyterra/reference/ggspatvector.html" class="external-link">geom_spatvector</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">sobrarbe</span>, fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"Maximum\ntemperature (ºC)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.25</span>, <span class="fl">0</span>, <span class="fl">0.25</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">42.2</span>, <span class="fl">42.8</span>, by <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-map_ggplot-1.png"><!-- --></p>
+<p><br> Visit the articles of the <a href="https://verughub.github.io/easyclimate/">package website</a> for more extended tutorials!</p>
+<p><br></p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="citation">CITATION<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h2>
+<p>If you use easyclimate, please cite both the appropriate data source and the package as:</p>
+<p>Moreno A, Hasenauer H (2016). “Spatial downscaling of European climate data.” <em>International Journal of Climatology</em>, 1444–1458. <a href="https://doi.org/10.1002/joc.4436" class="external-link uri">https://doi.org/10.1002/joc.4436</a>.</p>
+<p>Pucher, Christoph (2026). Description of Downscaled European Climate Data. figshare. Online resource. <a href="https://doi.org/10.6084/m9.figshare.33078053.v1" class="external-link uri">https://doi.org/10.6084/m9.figshare.33078053.v1</a>.</p>
+<p>Pucher C (2023). <em>Description and Evaluation of Downscaled Daily Climate Data Version 4</em>. <a href="https://doi.org/10.6084/m9.figshare.22962671.v1" class="external-link uri">https://doi.org/10.6084/m9.figshare.22962671.v1</a>.</p>
+<p>Cruz-Alonso V, Pucher C, Ratcliffe S, Ruiz-Benito P, Astigarraga J, Neumann M, Hasenauer H, Rodríguez-Sánchez F (2023). “The easyclimate R package: Easy access to high-resolution daily climate data for Europe.” <em>Environmental Modelling &amp; Software</em>, 105627. <a href="https://doi.org/10.1016/j.envsoft.2023.105627" class="external-link uri">https://doi.org/10.1016/j.envsoft.2023.105627</a>.</p>
 </div>
 </div>
 

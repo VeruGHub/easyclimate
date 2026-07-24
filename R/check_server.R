@@ -1,22 +1,21 @@
-#' Check climate data server
+#' Check climatic data server
 #'
-#' Check that the online climate data server is available and working correctly.
-#' Only works for version 4 of the climate dataset.
+#' Checks that the online climatic data server is available and working correctly.
 #'
 #' @param climatic_var Optional. One of "Prcp", "Tmin", or "Tmax".
-#' @param year Optional. Year between 1950 and the latest year available.
-#' @param version Character. Version of the climate data. Either 'last' or "4" version.
-#' @param verbose Logical. Print diagnostic messages, or just return TRUE/FALSE?
-#' @param time_unit Character. One of "Day", "Month", or "Year".
+#' @param year Optional. Year between 1950 and the latest year available on the
+#' server. Use `get_periods()` to obtain the available data versions and years available.
+#' @param version Character. Climatic data version. Either "last" (default) or
+#' "4" (version 4).
+#' @param verbose Logical. If TRUE, prints diagnostic messages; otherwise,
+#' returns only TRUE/FALSE.
+#' @param time_unit Character. One of "day" , "month" or "year".
 #'
-#' @return TRUE if the server seems available, FALSE otherwise.
-#'
-#' @details This function checks access to the latest version of the climatic
-#' dataset (version 4).
+#' @return TRUE if the server is available; FALSE otherwise.
 #'
 #' @export
 #'
-#' @examplesIf interactive()
+#' @examples interactive()
 #' check_server()
 
 check_server <- function(climatic_var = NULL,

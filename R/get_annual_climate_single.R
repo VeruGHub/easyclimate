@@ -1,12 +1,12 @@
 #' Get annual data for one climatic variable
 #'
-#' Extract annual climate data (temperature or precipitation) for a given set of
+#' Extracts annual climatic data (temperature or precipitation) for a given set of
 #' points or polygons within Europe.
 #'
-#' @param climatic_var_single Character. Climatic variable to be downloaded.
-#' One of 'Tmax', 'Tmin', 'Tavg' or 'Prcp'.
-#' @param output Character. Either "df", which returns a dataframe with annual
-#' climatic values for each point/polygon, or "raster", which returns a
+#' @param climatic_var_single Character. Climatic variable to download. One of
+#' "Tmax", "Tmin", "Tavg", or "Prcp".
+#' @param output Character. Either "df", which returns a data.frame with annual
+#' climatic values for each point or polygon, or "raster", which returns a
 #' [terra::SpatRaster()] object.
 #' @inheritParams get_annual_climate
 #'
@@ -17,17 +17,17 @@
 #' @noRd
 #'
 #' @references
+#' Pucher, Christoph (2026). Description of Downscaled European Climate Data. figshare.
+#' Online resource. https://doi.org/10.6084/m9.figshare.33078053.v1
+#'
 #' Pucher C. 2023. Description and Evaluation of Downscaled Daily Climate Data Version 4.
 #' https://doi.org/10.6084/m9.figshare.22962671.v1
-#'
-#' Werner Rammer, Christoph Pucher, Mathias Neumann. 2018.
-#' Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2.
 #' ftp://palantir.boku.ac.at/Public/ClimateData/
 #'
 #' Adam Moreno, Hubert Hasenauer. 2016. Spatial downscaling of European climate data.
 #' International Journal of Climatology 36: 1444–1458.
 #'
-#' @author Veronica Cruz-Alonso, Francisco Rodriguez-Sanchez
+#' @author Veronica Cruz-Alonso, Francisco Rodriguez-Sanchez, Sofía Miguel
 
 
 get_annual_climate_single <- function(coords = NULL,
@@ -154,8 +154,6 @@ get_annual_climate_single <- function(coords = NULL,
   ## Name raster layers with their dates
   names(rasters) <- years
 
-  ## Subset required dates only - SMR creo que esto ya no es necesario aqui, porque ya seleccionamos el año
-  # rasters.sub <- terra::subset(rasters, subset = as.character(years))
 
   #### Extract ####
 

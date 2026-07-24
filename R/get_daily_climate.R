@@ -1,34 +1,35 @@
 
 #' Get daily data for multiple climatic variables
 #'
-#' Extract daily climate data (temperature and precipitation) for a given set of
+#' Extracts daily climatic data (temperature and precipitation) for a given set of
 #' points or polygons within Europe.
-#'
 #'
 #' @param coords A [matrix], [data.frame], `tibble::tbl_df-class`, [sf::sf()], or
 #' [terra::SpatVector()] object containing point or polygon coordinates in decimal
 #' degrees (lonlat/geographic format, EPSG 4326). Longitude must fall between -40.5 and 75.5
 #' degrees, and latitude between 25.5 and 75.5 degrees.
-#' If `coords` is a matrix, it must have only two columns: the first with longitude
-#' and the second with latitude data.
+#' If `coords` is a matrix, it must have exactly two columns: the first
+#' containing longitude and the second containing latitude.
 #' If `coords` is a data.frame or a tbl_df, it must contain at least two columns
 #' called `lon` and `lat` with longitude and latitude coordinates, respectively.
-#' @param climatic_var Character. Climatic variables to be downloaded ('Tmax',
-#' 'Tmin' or 'Prcp'). Various elements can be concatenated in the vector.
-#' @param period Either integer numbers (representing years between 1950 and the latest
-#' year available), or dates in "YYYY-MM-DD" format (to obtain data for specific days).
-#' To specify a sequence of years or dates use the format 'start:end'
-#' (e.g. YYYY:YYYY or "YYYY-MM-DD:YYYY-MM-DD", see examples). Various elements
+#' @param climatic_var Character. One or more climatic variables to download ("Tmax", "Tmin",
+#' "Tavg", or "Prcp"). Various elements can be concatenated in the vector.
+#' @param period Either numeric vector of years (between 1950 and the latest available
+#' year) or character vector of dates in "YYYY-MM-DD" format (to obtain data for
+#' specific days). To specify a sequence of years or dates, use the format 'start:end'
+#' (e.g. YYYY:YYYY or "YYYY-MM-DD:YYYY-MM-DD", see examples). Multiple dates or years
 #' can be concatenated in the vector (e.g. c(2000:2005, 2010:2015, 2020),
-#' c("2000-01-01:2000-01-15", "2000-02-01"))
-#' @param output Character. Either "df", which returns a dataframe with daily
-#' climatic values for each point/polygon, or "raster", which returns [terra::SpatRaster()]
+#' c("2000-01-01:2000-01-15", "2000-02-01")).
+#' Use `get_periods()` to obtain the available data versions and years available.
+#' @param output Character. Either "df", which returns a data.frame with daily
+#' climatic values for each point or polygon, or "raster", which returns [terra::SpatRaster()]
 #' objects (within a list when more than one climatic variable is downloaded).
-#' @param version Character. Version of the climate data. It uses the latest version
-#' ('last') by default. The former version (4) is also available, for the sake of reproducibility.
-#' See 'references' for details on the climatic data sets.
-#' @param check_connection Logical. Check the connection to the server before
-#' attempting data download?
+#' @param version Character. Climate data version. Uses the latest version ("last") by default.
+#' Version "4" is also available for reproducibility. See References for details about
+#' the climate datasets.
+#'
+#' @param check_connection Logical. Default is FALSE. If TRUE, checks the connection to the server
+#' before attempting to download the data.
 #'
 #' @return Either:
 #' - A data.frame (if output = "df")
@@ -39,11 +40,13 @@
 #' @export
 #'
 #' @references
+#' For details on the latest version of the climatic data, see:
+#' Pucher, Christoph (2026). Description of Downscaled European Climate Data. figshare.
+#' Online resource. https://doi.org/10.6084/m9.figshare.33078053.v1
+#'
+#' For details on version 4, see:
 #' Pucher C. 2023. Description and Evaluation of Downscaled Daily Climate Data Version 4.
 #' https://doi.org/10.6084/m9.figshare.22962671.v1
-#'
-#' Werner Rammer, Christoph Pucher, Mathias Neumann. 2018.
-#' Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2.
 #' ftp://palantir.boku.ac.at/Public/ClimateData/
 #'
 #' Adam Moreno, Hubert Hasenauer. 2016. Spatial downscaling of European climate data.

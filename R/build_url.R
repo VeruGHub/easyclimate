@@ -36,7 +36,7 @@ build_url <- function(climatic_var_single,
       "Tmax" = "tmax",
       "Tmin" = "tmin",
       "Tavg" = "tavg",
-      "Prcp" = "prcp" ## SMR: dado que la abreviatura para v4 y v_last es distinta, prec y prcp, hacemos el switch dentro de cada if
+      "Prcp" = "prcp"
     )
 
     if (temp_res == "day") {

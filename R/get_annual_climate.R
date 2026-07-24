@@ -6,8 +6,8 @@
 #'
 #' @inheritParams get_daily_climate
 #'
-#' @param climatic_var Character. Climatic variables to be downloaded ('Tmax',
-#' 'Tmin', 'Tavg' or 'Prcp'). Various elements can be concatenated in the vector.
+#' @param climatic_var Character. Climate variables to download ("Tmax",
+#' "Tmin", "Tavg", or "Prcp"). Various elements can be concatenated in the vector.
 #' @param period Numbers representing years between 1950 and the latest year
 #' available. To specify a sequence of years use the format 'start:end'
 #' (e.g. YYYY:YYYY, see examples). Various elements
@@ -26,11 +26,11 @@
 #' @export
 #'
 #' @references
+#' Pucher, Christoph (2026). Description of Downscaled European Climate Data. figshare.
+#' Online resource. https://doi.org/10.6084/m9.figshare.33078053.v1
+#'
 #' Pucher C. 2023. Description and Evaluation of Downscaled Daily Climate Data Version 4.
 #' https://doi.org/10.6084/m9.figshare.22962671.v1
-#'
-#' Werner Rammer, Christoph Pucher, Mathias Neumann. 2018.
-#' Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2.
 #' ftp://palantir.boku.ac.at/Public/ClimateData/
 #'
 #' Adam Moreno, Hubert Hasenauer. 2016. Spatial downscaling of European climate data.

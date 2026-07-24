@@ -6,34 +6,38 @@
 #'
 #' @inheritParams get_daily_climate
 #'
-#' @param climatic_var Character. Climatic variables to be downloaded ('Tmax',
-#' 'Tmin', 'Tavg' or 'Prcp'). Various elements can be concatenated in the vector.
+#' @param climatic_var Character. One or more climatic variables to download ("Tmax", "Tmin",
+#' "Tavg", or "Prcp"). Various elements can be concatenated in the vector.
 #' @param period Either numbers (representing years between 1950 and the latest year
 #'  available), or dates in "YYYY-MM" format (to obtain data for specific months).
 #' To specify a sequence of years or months use the format 'start:end'
 #' (e.g. YYYY:YYYY or "YYYY-MM:YYYY-MM", see examples). Various elements
 #' can be concatenated in the vector (e.g. c(2000:2005, 2010:2015, 2020),
-#' c("2000-01:2000-06", "2001-01"))
-#' @param check_connection Logical. Check the connection to the server before
-#' attempting data download?
+#' c("2000-01:2000-06", "2001-01")).
+#' Use `get_periods()` to obtain the available data versions and years available.
+#'
+#' @param check_connection Logical. Default is FALSE. If TRUE, checks the connection to the server
+#' before attempting to download the data.
 #'
 #' @return Either:
 #' - A data.frame (if output = "df")
 #' - A list of [terra::SpatRaster()] object (if output = "raster")
 #'
 #' For precipitation, the function returns total (accumulated) precipitation per month.
-#' For temperature variables ('Tmin', 'Tmax', 'Tavg') the function returns the average
+#' For temperature variables ("Tmin", "Tmax", "Tavg") the function returns the average
 #' (i.e. the monthly average of minimum and maximum daily temperatures, or the average
 #' monthly temperature).
 #'
 #' @export
 #'
 #' @references
+#' For details on the latest version of the climatic data, see:
+#' Pucher, Christoph (2026). Description of Downscaled European Climate Data. figshare.
+#' Online resource. https://doi.org/10.6084/m9.figshare.33078053.v1
+#'
+#' For details on version 4, see:
 #' Pucher C. 2023. Description and Evaluation of Downscaled Daily Climate Data Version 4.
 #' https://doi.org/10.6084/m9.figshare.22962671.v1
-#'
-#' Werner Rammer, Christoph Pucher, Mathias Neumann. 2018.
-#' Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2.
 #' ftp://palantir.boku.ac.at/Public/ClimateData/
 #'
 #' Adam Moreno, Hubert Hasenauer. 2016. Spatial downscaling of European climate data.

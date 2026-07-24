@@ -1,6 +1,6 @@
 # easyclimate 1.0.0
 
-* Now access to annual and monthly data. Now using latest version of climatic data by default (until 2025).
+* Now access to annual and monthly data. Now using latest version of climatic data by default (until 202).
 
 # easyclimate 0.2.2
 

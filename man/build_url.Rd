@@ -7,15 +7,15 @@
 build_url(climatic_var_single, year, version = "last", temp_res = "day")
 }
 \arguments{
+\item{climatic_var_single}{Character. Climatic variable to download.
+One of "Tmax","Tmin", "Tavg", or "Prcp".}
+
 \item{year}{Numeric. Year for which climatic data will be downloaded.}
 
 \item{version}{Character. Climate data version. Either "last" (default) or
 "4" (version 4).}
 
 \item{temp_res}{Character. One of "day" , "month" or "year".}
-
-\item{climatic_var}{Character. Climatic variable to download.
-One of "Tmax","Tmin", "Tavg", or "Prcp".}
 }
 \value{
 Character string with the URL.

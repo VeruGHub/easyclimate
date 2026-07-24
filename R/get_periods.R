@@ -23,7 +23,6 @@
 #'
 #' @author Sofia Miguel
 
-
 get_periods <- function() {
 
   ## Load last year of data

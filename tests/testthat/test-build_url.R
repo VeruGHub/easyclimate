@@ -16,6 +16,6 @@ test_that("built url is correct for daily climate", {
 
 test_that("built url is correct for daily climate", {
   expect_identical(build_url("Tmin", 2008, version = "last"),
-                   "https://s3.boku.ac.at/oekbwaldklimadaten/v31_cogeo/DailyDataRasters/tmin/DownscaledTmin2008_cogeo.tif")
+                   "https://s3.boku.ac.at/oekbwaldklimadaten/cogeo/DailyDataRasters/tmin/DownscaledTmin2008_cogeo.tif")
 })
 

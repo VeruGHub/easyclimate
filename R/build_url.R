@@ -1,18 +1,18 @@
-
-
-# Build url address for a given request
-#
-# Build the url to download climatic data from ftp://palantir.boku.ac.at/Public/ClimateData/
-#
-# @param climatic_var Character. Climatic variable to be downloaded. One of 'Tmax',
-# 'Tmin', 'Tavg' or 'Prcp'.
-# @param year Numeric. Year to download climatic information
-# @param version Version of the climate data ('last' by default; version 4 still available).
-# @param temp_res Character. One of "day" , "month" or "year"
-#
-# @return text string with the url
-#
-# @author Veronica Cruz-Alonso, Francisco Rodríguez-Sánchez, Sophia Ratcliffe
+#' Build the URL for a given request
+#'
+#' Build the URL to download climate data from
+#' ftp://palantir.boku.ac.at/Public/ClimateData/
+#'
+#' @param climatic_var Character. Climatic variable to download.
+#' One of "Tmax","Tmin", "Tavg", or "Prcp".
+#' @param year Numeric. Year for which climatic data will be downloaded.
+#' @param version Character. Climate data version. Either "last" (default) or
+#' "4" (version 4).
+#' @param temp_res Character. One of "day" , "month" or "year".
+#'
+#' @return Character string with the URL.
+#'
+#' @author Veronica Cruz-Alonso, Francisco Rodríguez-Sánchez, Sophia Ratcliffe, Sofía Miguel
 
 build_url <- function(climatic_var_single,
                       year,
@@ -41,7 +41,7 @@ build_url <- function(climatic_var_single,
 
     if (temp_res == "day") {
       url <- paste(
-        "https://s3.boku.ac.at/oekbwaldklimadaten/v31_cogeo/DailyDataRasters/",
+        "https://s3.boku.ac.at/oekbwaldklimadaten/cogeo/DailyDataRasters/",
         climvar,
         "/Downscaled",
         climatic_var_single,
@@ -50,14 +50,11 @@ build_url <- function(climatic_var_single,
         sep = ""
       )
 
-      #invisible(url)
-
     } else if (temp_res == "month") {
-
       aggr <- ifelse(climvar == "prcp", "MonthlySum", "MonthlyAvg")
 
       url <- paste(
-        "https://s3.boku.ac.at/oekbwaldklimadaten/v31_cogeo/MonthlyDataRasters/",
+        "https://s3.boku.ac.at/oekbwaldklimadaten/cogeo/MonthlyDataRasters/",
         climvar,
         "/Downscaled",
         climatic_var_single,
@@ -66,14 +63,12 @@ build_url <- function(climatic_var_single,
         "_cogeo.tif",
         sep = ""
       )
-
-    #  invisible(url)
 
     }  else if (temp_res == "year") {
       aggr <- ifelse(climvar == "prcp", "YearlySum", "YearlyAvg")
 
       url <- paste(
-        "https://s3.boku.ac.at/oekbwaldklimadaten/v31_cogeo/YearlyDataRasters/",
+        "https://s3.boku.ac.at/oekbwaldklimadaten/cogeo/YearlyDataRasters/",
         climvar,
         "/Downscaled",
         climatic_var_single,
@@ -82,9 +77,8 @@ build_url <- function(climatic_var_single,
         "_cogeo.tif",
         sep = ""
       )
-
-    #  invisible(url)
     }
+
   } else if (version  == "4") {
     ## Adjust climvar to file names in FTP server
     climvar <- switch(
@@ -107,13 +101,11 @@ build_url <- function(climatic_var_single,
         sep = ""
       )
 
-    #  invisible(url)
 
     } else {
       stop("Version 4 is only avaliable for daily data")
 
-      }
+    }
   }
-
- invisible(url)
+  invisible(url)
 }

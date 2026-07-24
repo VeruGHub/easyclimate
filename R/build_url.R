@@ -28,6 +28,7 @@ build_url <- function(climatic_var_single,
   if (year < 1950 | year > latest_year)
     stop(sprintf("Year (period) must be between 1950 and %d", latest_year))
 
+
   ## Build url
   if (version  == "last") {
     ## Adjust climvar to file names in FTP server
@@ -79,7 +80,7 @@ build_url <- function(climatic_var_single,
       )
     }
 
-  } else if (version  == "4") {
+  } else if (version  == "4" | version == 4) {
     ## Adjust climvar to file names in FTP server
     climvar <- switch(
       climatic_var_single,
@@ -91,8 +92,8 @@ build_url <- function(climatic_var_single,
     if (temp_res == "day") {
       url <- paste(
         "ftp://palantir.boku.ac.at/Public/ClimateData/v",
-        version,
-        "_cogeo/AllDataRasters/",
+        latest_year,
+        "_cogeo/DailyDataRasters/",
         climvar,
         "/Downscaled",
         climatic_var_single,

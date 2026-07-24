@@ -13,7 +13,7 @@ test_that("downloading several variables gives expected results from v4", {
   # ## Output data.frame
   expect_identical(
     get_daily_climate(coords.mat, period = "2001-01-01",
-                      climatic_var = c("Tmin", "Tmax", "Prcp"), version = 4,
+                      climatic_var = c("Tmin", "Tmax", "Prcp"), version = "4",
                       check_connection = FALSE),
     structure(list(ID_coords = as.double(1:2),
                    lon = c(-5.36, -5.5),

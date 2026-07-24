@@ -11,8 +11,12 @@ test_that(sprintf("year below 1950 or above %d gives error", latest_year), {
 
 test_that("built url is correct for daily climate", {
   expect_identical(build_url("Tmin", 2008, version = "4"),
-                   "ftp://palantir.boku.ac.at/Public/ClimateData/v4_cogeo/AllDataRasters/tmin/DownscaledTmin2008_cogeo.tif")
+                   paste0(
+                     "ftp://palantir.boku.ac.at/Public/ClimateData/v",
+                     latest_year,
+                     "_cogeo/DailyDataRasters/tmin/DownscaledTmin2008_cogeo.tif"))
 })
+
 
 test_that("built url is correct for daily climate", {
   expect_identical(build_url("Tmin", 2008, version = "last"),

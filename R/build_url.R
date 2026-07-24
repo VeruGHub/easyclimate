@@ -3,7 +3,7 @@
 #' Build the URL to download climate data from
 #' ftp://palantir.boku.ac.at/Public/ClimateData/
 #'
-#' @param climatic_var Character. Climatic variable to download.
+#' @param climatic_var_single Character. Climatic variable to download.
 #' One of "Tmax","Tmin", "Tavg", or "Prcp".
 #' @param year Numeric. Year for which climatic data will be downloaded.
 #' @param version Character. Climate data version. Either "last" (default) or

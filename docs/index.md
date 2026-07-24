@@ -18,7 +18,7 @@ Stable version from [CRAN](https://cran.r-project.org/package=easyclimate):
 
 ``` r
 install.packages("easyclimate")
-```
+``` 
 
 Development version from GitHub:
 

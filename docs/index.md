@@ -20,53 +20,37 @@ Stable version from [CRAN](https://cran.r-project.org/package=easyclimate):
 install.packages("easyclimate")
 ```
 
-Development version from [GitHub](https://github.com/VeruGHub/easyclimate):
+Development version from GitHub:
 
 ``` r
 # install.packages("remotes")
 remotes::install_github("VeruGHub/easyclimate")
 ```
 
-Development version from [R-universe](https://verughub.r-universe.dev/easyclimate):
-
-``` r
-install.packages('easyclimate', 
-                 repos = c('https://verughub.r-universe.dev', 'https://cloud.r-project.org'))
-```
-
 ## Examples
 
 ### Obtain a data frame of climatic values
 
-To obtain a data frame of daily and monthly climatic values for point coordinates:
+To obtain a data frame of daily climatic values for point coordinates:
 
 ``` r
 library(easyclimate)
 
 coords <- data.frame(lon = -5.36, lat = 37.40)
 
-prec_daily <- get_daily_climate(coords, 
-                                period = "2001-01-01:2001-01-03", 
-                                climatic_var = "Prcp")
+prec <- get_daily_climate(coords, 
+                          period = "2001-01-01:2001-01-03", 
+                          climatic_var = "Prcp",
+                          version = 4) # default
 ```
 
 | ID_coords |   lon |  lat | date       | Prcp |
 |----------:|------:|-----:|:-----------|-----:|
-|         1 | -5.36 | 37.4 | 2001-01-01 | 8.24 |
-|         1 | -5.36 | 37.4 | 2001-01-02 | 1.12 |
-|         1 | -5.36 | 37.4 | 2001-01-03 | 2.40 |
+|         1 | -5.36 | 37.4 | 2001-01-01 | 8.30 |
+|         1 | -5.36 | 37.4 | 2001-01-02 | 0.00 |
+|         1 | -5.36 | 37.4 | 2001-01-03 | 3.38 |
 
-``` r
-prec_monthly <- get_monthly_climate(coords,
-                                    period = "2001-01:2001-03",
-                                    climatic_var = "Prcp")
-```
-
-| ID_coords |   lon |  lat | date    |   Prcp |
-|----------:|------:|-----:|:--------|-------:|
-|         1 | -5.36 | 37.4 | 2001-01 | 128.56 |
-|         1 | -5.36 | 37.4 | 2001-02 |  16.24 |
-|         1 | -5.36 | 37.4 | 2001-03 | 119.71 |
+<br>
 
 ### Obtain a raster of climatic values
 
@@ -95,15 +79,14 @@ The output (`sobrarbetemp`) is a SpatRaster with 3 layers (for each of 3 days):
 ``` r
 sobrarbetemp
 #> class       : SpatRaster 
-#> size        : 70, 82, 3  (nrow, ncol, nlyr)
+#> dimensions  : 70, 82, 3  (nrow, ncol, nlyr)
 #> resolution  : 0.008333333, 0.008333333  (x, y)
 #> extent      : -0.2416667, 0.4416667, 42.21667, 42.8  (xmin, xmax, ymin, ymax)
 #> coord. ref. : lon/lat WGS 84 (EPSG:4326) 
 #> source(s)   : memory
-#> varname     : DownscaledTmax2020_cogeo 
 #> names       : 2020-05-01, 2020-05-02, 2020-05-03 
-#> min values  :       1.61,       5.47,       7.58 
-#> max values  :      22.71,      26.86,      28.14
+#> min values  :       2.34,       4.42,       6.91 
+#> max values  :      22.89,      25.03,      26.87
 ```
 
 Let’s make a map. First using terra:
@@ -113,7 +96,7 @@ plot(sobrarbetemp, col = rev(RColorBrewer::brewer.pal(9, "RdYlBu")),
      smooth = TRUE, nc = 3)
 ```
 
-![](reference/figures/README-map_terra.png)
+![](man/figures/README-map_terra.png)
 
 Now using ggplot2 and tidyterra:
 
@@ -132,14 +115,20 @@ ggplot() +
   theme_minimal()
 ```
 
-![](reference/figures/README-map_ggplot-1.png)
+![](man/figures/README-map_ggplot-1.png)<!-- -->
 
-Visit the articles of the [package website](https://verughub.github.io/easyclimate/) for more extended tutorials!
+<br> Visit the articles of the [package website](https://verughub.github.io/easyclimate/) for more extended tutorials!
+
+<br>
 
 ## CITATION
 
-If you use {easyclimate}, please cite both the appropriate data source and the package as:
+If you use easyclimate, please cite both the appropriate data source and the package as:
 
-``` r
-print(citation("easyclimate"), style = "text")
-```
+Moreno A, Hasenauer H (2016). “Spatial downscaling of European climate data.” *International Journal of Climatology*, 1444–1458. <https://doi.org/10.1002/joc.4436>.
+
+Pucher, Christoph (2026). Description of Downscaled European Climate Data. figshare. Online resource. <https://doi.org/10.6084/m9.figshare.33078053.v1>.
+
+Pucher C (2023). *Description and Evaluation of Downscaled Daily Climate Data Version 4*. <https://doi.org/10.6084/m9.figshare.22962671.v1>.
+
+Cruz-Alonso V, Pucher C, Ratcliffe S, Ruiz-Benito P, Astigarraga J, Neumann M, Hasenauer H, Rodríguez-Sánchez F (2023). “The easyclimate R package: Easy access to high-resolution daily climate data for Europe.” *Environmental Modelling & Software*, 105627. <https://doi.org/10.1016/j.envsoft.2023.105627>.

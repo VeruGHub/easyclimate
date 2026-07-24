@@ -1,8 +1,3 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -38,7 +33,7 @@ This climate dataset was originally built by [A. Moreno & H.
 Hasenauer](https://doi.org/10.1002/joc.4436) and further developed by W.
 Rammer, C. Pucher & M. Neumann.
 
--    See [this
+-   See [this
     document](https://eur03.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgithub.com%2FVeruGHub%2Feasyclimate%2Fblob%2Fmaster%2Finst%2FDescription_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf&data=05%7C02%7Csofia.miguelr%40uah.es%7C84b8bb0fe5f1419f565208dee979d02b%7Cced2c5527d1f4731aa3a2f0ec9629e26%7C1%7C0%7C639204906875340483%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=iHEu0gkEv8H2w72eE4iHVOe67R8HRRu32dI1MyJySdk%3D&reserved=0 "Original URL: https://github.com/VeruGHub/easyclimate/blob/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf. Click or tap if you trust this link.") for
     more details on the initial development and characteristics of the
     climatic dataset.

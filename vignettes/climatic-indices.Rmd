@@ -13,7 +13,7 @@ knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE,
                       fig.width = 6, fig.height = 4, cache = TRUE)
 ```
 
-First, let's download daily climatic data for a specific location and store it in a dataframe:
+First, let's download daily climatic data for a specific location and store it in a data.frame:
 
 ```{r climatic-indices-2}
 
@@ -24,8 +24,11 @@ library(dplyr)
 coords <- matrix(c(-5.36, 37.40), ncol = 2)
 
 daily <- get_daily_climate(coords,
-                           period = 2001:2005,
-                           climatic_var = c("Prcp", "Tmin", "Tmax"))  
+                           period = 2001,
+                           climatic_var = c("Prcp", "Tmin",
+                                            "Tmax"),
+                           output = "df",
+                           version = "last")  
 
 ```
 
@@ -44,7 +47,7 @@ daily <- daily |>
 
 ## Average climatic values per site or time period
 
-To calculate average temperatures by site or time period we can use `group_by` and `summarise` from `dplyr`, or `by` and `aggregate` from base R: 
+To calculate average temperatures by site or time period we can use `group_by` and `summarise` from `dplyr`, or `by` and `aggregate` from base R:
 
 ```{r climatic-indices-4}
 
@@ -63,7 +66,7 @@ daily |>
 
 ```
 
-Similarly, you can calculate accumulated precipitation over different time periods: 
+Similarly, you can calculate accumulated precipitation over different time periods:
 
 ```{r climatic-indices-5}
 daily |> 
@@ -156,7 +159,7 @@ daily |>
 
 <br>
 
-A dry period can be defined as a specific number of consecutive days with no precipitation: 
+A dry period can be defined as a specific number of consecutive days with no precipitation:
 
 ```{r climatic-indices-9}
 
@@ -189,7 +192,7 @@ The package [`climInd`](https://cran.r-project.org/package=ClimInd) can be used 
 
 <br>
 
-Number of days with maximum temperature > 32ºC in summer (June-August):
+Number of days with maximum temperature \> 32ºC in summer (June-August):
 
 ```{r climatic-indices-10}
 library(ClimInd)
@@ -235,7 +238,3 @@ d50mm(data = Prec, time.scale = "month")
 ## Learn more
 
 To learn more about downloading daily and monthly climatic data, please consult [this vignette](https://verughub.github.io/easyclimate/articles/points-df-mat-sf.html) for point coordinates, or [this other](https://verughub.github.io/easyclimate/articles/polygons-raster.html) if you need to extract data for several polygons or a region.
-
-
-
-

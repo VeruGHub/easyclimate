@@ -17,21 +17,21 @@ get_annual_climate(
 \code{\link[terra:SpatVector-class]{terra::SpatVector()}} object containing point or polygon coordinates in decimal
 degrees (lonlat/geographic format, EPSG 4326). Longitude must fall between -40.5 and 75.5
 degrees, and latitude between 25.5 and 75.5 degrees.
-If \code{coords} is a matrix, it must have only two columns: the first with longitude
-and the second with latitude data.
+If \code{coords} is a matrix, it must have exactly two columns: the first
+containing longitude and the second containing latitude.
 If \code{coords} is a data.frame or a tbl_df, it must contain at least two columns
 called \code{lon} and \code{lat} with longitude and latitude coordinates, respectively.}
 
-\item{climatic_var}{Character. Climatic variables to be downloaded ('Tmax',
-'Tmin', 'Tavg' or 'Prcp'). Various elements can be concatenated in the vector.}
+\item{climatic_var}{Character. Climate variables to download ("Tmax",
+"Tmin", "Tavg", or "Prcp"). Various elements can be concatenated in the vector.}
 
 \item{period}{Numbers representing years between 1950 and the latest year
 available. To specify a sequence of years use the format 'start:end'
 (e.g. YYYY:YYYY, see examples). Various elements
 can be concatenated in the vector (e.g. c(2000:2005, 2010:2015, 2020))}
 
-\item{output}{Character. Either "df", which returns a dataframe with daily
-climatic values for each point/polygon, or "raster", which returns \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}}
+\item{output}{Character. Either "df", which returns a data.frame with daily
+climatic values for each point or polygon, or "raster", which returns \code{\link[terra:SpatRaster-class]{terra::SpatRaster()}}
 objects (within a list when more than one climatic variable is downloaded).}
 
 \item{check_connection}{Logical. Check the connection to the server before
@@ -54,7 +54,7 @@ Extract annual climate data (temperature and precipitation) for a given set of
 points or polygons within Europe.
 }
 \examples{
-\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
 # Coords as matrix
 coords <- matrix(c(-5.36, 37.40), ncol = 2)
@@ -94,12 +94,11 @@ ex <- get_annual_climate(coords, period = 2008)
 \dontshow{\}) # examplesIf}
 }
 \references{
+Pucher, Christoph (2026). Description of Downscaled European Climate Data. figshare.
+Online resource. https://doi.org/10.6084/m9.figshare.33078053.v1
+
 Pucher C. 2023. Description and Evaluation of Downscaled Daily Climate Data Version 4.
 https://doi.org/10.6084/m9.figshare.22962671.v1
-
-Werner Rammer, Christoph Pucher, Mathias Neumann. 2018.
-Description, Evaluation and Validation of Downscaled Daily Climate Data Version 2.
-ftp://palantir.boku.ac.at/Public/ClimateData/
 
 Adam Moreno, Hubert Hasenauer. 2016. Spatial downscaling of European climate data.
 International Journal of Climatology 36: 1444–1458.

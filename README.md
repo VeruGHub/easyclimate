@@ -1,3 +1,8 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -24,23 +29,30 @@ Get high-resolution (1 km) daily, monthly and annual climate data
 (precipitation, and average, minimum and maximum temperatures) for
 Europe from the European climatic database hosted at the [Institute of
 Silviculture, University of Natural Resources and Life Sciences, Vienna,
-Austria](https://boku.ac.at/en/oekb/wald). Data are currently available
-from 1950 to 2024.
+Austria](https://boku.ac.at/en/oekb/wald). Climate data are available
+from 1950 onwards. These data are updated annually (generally in July)
+to include information up to the previous year (e.g., the July 2026
+update includes new data up to the end of 2025).
 
-This climatic dataset was originally built by [A. Moreno & H.
+This climate dataset was originally built by [A. Moreno & H.
 Hasenauer](https://doi.org/10.1002/joc.4436) and further developed by W.
-Rammer, C. Pucher & M. Neumann (see [this
-document](https://github.com/VeruGHub/easyclimate/blob/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf)
-for more details on the development and characteristics of the climatic
-dataset, and [this
-document](https://doi.org/10.6084/m9.figshare.22962671.v1) for the
-updates of version 4).
+Rammer, C. Pucher & M. Neumann.
 
-Please note that the data are updated on an annual basis, and values for previous years may undergo minor adjustments following the annual spring releases of the [E-OBS
-dataset](https://surfobs.climate.copernicus.eu/dataaccess/access_eobs.php#datafiles). If reproducibility of your analyses is required, we strongly recommend saving the data locally, as some values may change without prior notice after these updates. During update periods (see the schedule in [Discussions](https://github.com/VeruGHub/easyclimate/discussions/58)), data downloads may be temporarily unavailable; therefore, we encourage planning data requests in advance.
+-    See [this
+    document](https://eur03.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgithub.com%2FVeruGHub%2Feasyclimate%2Fblob%2Fmaster%2Finst%2FDescription_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf&data=05%7C02%7Csofia.miguelr%40uah.es%7C84b8bb0fe5f1419f565208dee979d02b%7Cced2c5527d1f4731aa3a2f0ec9629e26%7C1%7C0%7C639204906875340483%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=iHEu0gkEv8H2w72eE4iHVOe67R8HRRu32dI1MyJySdk%3D&reserved=0 "Original URL: https://github.com/VeruGHub/easyclimate/blob/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf. Click or tap if you trust this link.") for
+    more details on the initial development and characteristics of the
+    climatic dataset.
+
+-   See [this
+    document](https://eur03.safelinks.protection.outlook.com/?url=https%3A%2F%2Ffigshare.com%2Farticles%2Fonline_resource%2FDescription_of_Downscaled_European_Climate_Data%2F33078053&data=05%7C02%7Csofia.miguelr%40uah.es%7C84b8bb0fe5f1419f565208dee979d02b%7Cced2c5527d1f4731aa3a2f0ec9629e26%7C1%7C0%7C639204906875398194%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=vna5GjW%2FmsHuFf0HMuNsCjpCXD%2F3C98mlrfskxf7toE%3D&reserved=0 "Original URL: https://figshare.com/articles/online_resource/Description_of_Downscaled_European_Climate_Data/33078053. Click or tap if you trust this link.") for
+    the updates of the last version which includes annual updates.
+
+-   See [this
+    document](https://eur03.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdoi.org%2F10.6084%2Fm9.figshare.22962671.v1&data=05%7C02%7Csofia.miguelr%40uah.es%7C84b8bb0fe5f1419f565208dee979d02b%7Cced2c5527d1f4731aa3a2f0ec9629e26%7C1%7C0%7C639204906875453250%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=1uvC%2FV4mOCuPU0wvrPlzWDkHMQI7zw6NH%2Fr0YSz9X3I%3D&reserved=0 "Original URL: https://doi.org/10.6084/m9.figshare.22962671.v1. Click or tap if you trust this link.") for
+    details on previous version (v4) of the dataset.
 
 In this R package we implemented [Cloud-Optimised
-Geotiffs](http://cogeo.org/) so that we can obtain daily, monthly and annual
+Geotiffs](http://cogeo.org/) so that we can obtain daily, monthly and
 climate data for thousands of sites/dates within seconds/minutes,
 without having to download huge rasters. But if you need to obtain data
 for large areas, please download the rasters from the FTP server
@@ -49,7 +61,13 @@ locally rather than using this package, so as not to saturate the file
 server. For that, you may use a FTP client such as
 [FileZilla](https://filezilla-project.org/).
 
-Note that the FTP server currently provides access to version 4, which includes data up to 2022. We are currently working on enabling direct downloads of rasters from the latest version, which includes data up to 2024. This will be available soon.
+Please, be aware that data will be updated in an annual basis and values
+for past years might have small adjustments according to the annual
+spring releases of [E-OBS
+data](https://surfobs.climate.copernicus.eu/dataaccess/access_eobs.php#datafiles).
+If you need to guarantee reproducibility of your analyses, please save
+the data locally as some data might change without notice after such
+updates.
 
 For a detailed description of {easyclimate}, please read [this
 paper](https://doi.org/10.1016/j.envsoft.2023.105627) (open access
@@ -61,14 +79,14 @@ package [website](https://verughub.github.io/easyclimate/).
 Stable version from
 [CRAN](https://cran.r-project.org/package=easyclimate):
 
-``` r
+```{r, eval = FALSE}
 install.packages("easyclimate")
 ```
 
 Development version from
 [GitHub](https://github.com/VeruGHub/easyclimate):
 
-``` r
+```{r, eval = FALSE}
 # install.packages("remotes")
 remotes::install_github("VeruGHub/easyclimate")
 ```
@@ -76,7 +94,7 @@ remotes::install_github("VeruGHub/easyclimate")
 Development version from
 [R-universe](https://verughub.r-universe.dev/easyclimate):
 
-``` r
+```{r, eval = FALSE}
 install.packages('easyclimate', 
                  repos = c('https://verughub.r-universe.dev', 'https://cloud.r-project.org'))
 ```
@@ -88,7 +106,7 @@ install.packages('easyclimate',
 To obtain a data frame of daily and monthly climatic values for point
 coordinates:
 
-``` r
+```{r example_daily, message = FALSE}
 library(easyclimate)
 
 coords <- data.frame(lon = -5.36, lat = 37.40)
@@ -98,23 +116,19 @@ prec_daily <- get_daily_climate(coords,
                                 climatic_var = "Prcp")
 ```
 
-| ID_coords |   lon |  lat | date       | Prcp |
-|----------:|------:|-----:|:-----------|-----:|
-|         1 | -5.36 | 37.4 | 2001-01-01 | 8.24 |
-|         1 | -5.36 | 37.4 | 2001-01-02 | 1.12 |
-|         1 | -5.36 | 37.4 | 2001-01-03 | 2.40 |
+```{r echo = FALSE}
+kable(prec_daily)
+```
 
-``` r
+```{r example_monthly, message = FALSE}
 prec_monthly <- get_monthly_climate(coords,
                                     period = "2001-01:2001-03",
                                     climatic_var = "Prcp")
 ```
 
-| ID_coords |   lon |  lat | date    |   Prcp |
-|----------:|------:|-----:|:--------|-------:|
-|         1 | -5.36 | 37.4 | 2001-01 | 128.56 |
-|         1 | -5.36 | 37.4 | 2001-02 |  16.24 |
-|         1 | -5.36 | 37.4 | 2001-03 | 119.71 |
+```{r echo = FALSE}
+kable(prec_monthly)
+```
 
 <br>
 
@@ -122,7 +136,7 @@ prec_monthly <- get_monthly_climate(coords,
 
 To obtain a (multi-layer) raster of daily climatic values for an area:
 
-``` r
+```{r message = FALSE, warning = FALSE, fig.width = 8, fig.height = 3}
 library(terra)
 
 ## Download the polygon contour of a region
@@ -143,23 +157,13 @@ sobrarbetemp <- get_daily_climate(
 The output (`sobrarbetemp`) is a SpatRaster with 3 layers (for each of 3
 days):
 
-``` r
+```{r}
 sobrarbetemp
-#> class       : SpatRaster 
-#> size        : 70, 82, 3  (nrow, ncol, nlyr)
-#> resolution  : 0.008333333, 0.008333333  (x, y)
-#> extent      : -0.2416667, 0.4416667, 42.21667, 42.8  (xmin, xmax, ymin, ymax)
-#> coord. ref. : lon/lat WGS 84 (EPSG:4326) 
-#> source(s)   : memory
-#> varname     : DownscaledTmax2020_cogeo 
-#> names       : 2020-05-01, 2020-05-02, 2020-05-03 
-#> min values  :       1.61,       5.47,       7.58 
-#> max values  :      22.71,      26.86,      28.14
 ```
 
-Let’s make a map. First using terra:
+Let's make a map. First using terra:
 
-``` r
+```{r map_terra, eval = FALSE}
 plot(sobrarbetemp, col = rev(RColorBrewer::brewer.pal(9, "RdYlBu")), 
      smooth = TRUE, nc = 3)
 ```
@@ -168,7 +172,7 @@ plot(sobrarbetemp, col = rev(RColorBrewer::brewer.pal(9, "RdYlBu")),
 
 Now using ggplot2 and tidyterra:
 
-``` r
+```{r map_ggplot, message = FALSE, fig.width = 8, fig.height = 3}
 library(ggplot2)
 library(tidyterra)
 
@@ -183,8 +187,6 @@ ggplot() +
   theme_minimal()
 ```
 
-![](man/figures/README-map_ggplot-1.png)<!-- -->
-
 <br> Visit the articles of the [package
 website](https://verughub.github.io/easyclimate/) for more extended
 tutorials!
@@ -196,15 +198,6 @@ tutorials!
 If you use {easyclimate}, please cite both the appropriate data source
 and the package as:
 
-Moreno A, Hasenauer H (2016). “Spatial downscaling of European climate
-data.” *International Journal of Climatology*, 1444–1458.
-<https://doi.org/10.1002/joc.4436>.
-
-Pucher C (2023). *Description and Evaluation of Downscaled Daily Climate
-Data Version 4*. <https://doi.org/10.6084/m9.figshare.22962671.v1>.
-
-Cruz-Alonso V, Pucher C, Ratcliffe S, Ruiz-Benito P, Astigarraga J,
-Neumann M, Hasenauer H, Rodríguez-Sánchez F (2023). “The easyclimate R
-package: Easy access to high-resolution daily climate data for Europe.”
-*Environmental Modelling & Software*, 105627.
-<https://doi.org/10.1016/j.envsoft.2023.105627>.
+```{r echo = FALSE, results = 'asis', cache = FALSE}
+print(citation("easyclimate"), style = "text")
+```

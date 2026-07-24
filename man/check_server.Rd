@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_server.R
 \name{check_server}
 \alias{check_server}
-\title{Check climate data server}
+\title{Check climatic data server}
 \usage{
 check_server(
   climatic_var = NULL,
@@ -15,27 +15,24 @@ check_server(
 \arguments{
 \item{climatic_var}{Optional. One of "Prcp", "Tmin", or "Tmax".}
 
-\item{year}{Optional. Year between 1950 and the latest year available.}
+\item{year}{Optional. Year between 1950 and the latest year available on the
+server. Use \code{get_periods()} to obtain the available data versions and years available.}
 
-\item{version}{Character. Version of the climate data. Either 'last' or "4" version.}
+\item{version}{Character. Climatic data version. Either "last" (default) or
+"4" (version 4).}
 
-\item{verbose}{Logical. Print diagnostic messages, or just return TRUE/FALSE?}
+\item{verbose}{Logical. If TRUE, prints diagnostic messages; otherwise,
+returns only TRUE/FALSE.}
 
-\item{time_unit}{Character. One of "Day", "Month", or "Year".}
+\item{time_unit}{Character. One of "day" , "month" or "year".}
 }
 \value{
-TRUE if the server seems available, FALSE otherwise.
+TRUE if the server is available; FALSE otherwise.
 }
 \description{
-Check that the online climate data server is available and working correctly.
-Only works for version 4 of the climate dataset.
-}
-\details{
-This function checks access to the latest version of the climatic
-dataset (version 4).
+Checks that the online climatic data server is available and working correctly.
 }
 \examples{
-\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
+interactive()
 check_server()
-\dontshow{\}) # examplesIf}
 }

@@ -16,10 +16,10 @@ bibentry(
 
 bibentry(
   bibtype = "Manual",
-  title = "Description and Evaluation of Downscaled Daily Climate Data Version 4",
+  title = "Description of Downscaled European Climate Data",
   author = person("Christoph", "Pucher"),
-  year = "2023",
-  url = "https://doi.org/10.6084/m9.figshare.22962671.v1"
+  year = "2026",
+  url = "https://doi.org/10.6084/m9.figshare.33078053"
 )
 
 

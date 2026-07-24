@@ -2,64 +2,32 @@
 
 # Easy access to high-resolution daily, monthly and annual climate data for Europe
 
-Get high-resolution (1 km) daily, monthly and annual climate data
-(precipitation, and average, minimum and maximum temperatures) for
-Europe from the European climatic database hosted at the [Institute of
-Silviculture, University of Natural Resources and Life Sciences, Vienna,
-Austria](https://boku.ac.at/en/oekb/wald). Data are currently available
-from 1950 to 2024.
+Get high-resolution (1 km) daily, monthly and annual climate data (precipitation, and average, minimum and maximum temperatures) for Europe from the European climatic database hosted at the [Institute of Silviculture, University of Natural Resources and Life Sciences, Vienna, Austria](https://boku.ac.at/en/oekb/wald). Data are currently available from 1950 to 2024.
 
-This climatic dataset was originally built by [A. Moreno & H.
-Hasenauer](https://doi.org/10.1002/joc.4436) and further developed by W.
-Rammer, C. Pucher & M. Neumann (see [this
-document](https://github.com/VeruGHub/easyclimate/blob/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf)
-for more details on the development and characteristics of the climatic
-dataset, and [this
-document](https://doi.org/10.6084/m9.figshare.22962671.v1) for the
-updates of the last version - v4).
+This climatic dataset was originally built by [A. Moreno & H. Hasenauer](https://doi.org/10.1002/joc.4436) and further developed by W. Rammer, C. Pucher & M. Neumann (see [this document](https://github.com/VeruGHub/easyclimate/blob/master/inst/Description_Evaluation_Validation_Downscaled_Climate_Data_v2.pdf) for more details on the development and characteristics of the climatic dataset, and [this document](https://doi.org/10.6084/m9.figshare.22962671.v1) for the updates of the last version - v4).
 
-In this R package we implemented [Cloud-Optimised
-Geotiffs](http://cogeo.org/) so that we can obtain daily, monthly and
-climate data for thousands of sites/dates within seconds/minutes,
-without having to download huge rasters. But if you need to obtain data
-for large areas, please download the rasters from the FTP server
-(<ftp://palantir.boku.ac.at/Public/ClimateData/>) and extract the values
-locally rather than using this package, so as not to saturate the file
-server. For that, you may use a FTP client such as
-[FileZilla](https://filezilla-project.org/).
+In this R package we implemented [Cloud-Optimised Geotiffs](http://cogeo.org/) so that we can obtain daily, monthly and climate data for thousands of sites/dates within seconds/minutes, without having to download huge rasters. But if you need to obtain data for large areas, please download the rasters from the FTP server (<ftp://palantir.boku.ac.at/Public/ClimateData/>) and extract the values locally rather than using this package, so as not to saturate the file server. For that, you may use a FTP client such as [FileZilla](https://filezilla-project.org/).
 
-Please, be aware that data will be updated in an annual basis and values
-for past years might have small adjustments according to the annual
-spring releases of [E-OBS
-data](https://surfobs.climate.copernicus.eu/dataaccess/access_eobs.php#datafiles).
-If you need to guarantee reproducibility of your analyses, please save
-the data locally as some data might change without notice after such
-updates.
+Please, be aware that data will be updated in an annual basis and values for past years might have small adjustments according to the annual spring releases of [E-OBS data](https://surfobs.climate.copernicus.eu/dataaccess/access_eobs.php#datafiles). If you need to guarantee reproducibility of your analyses, please save the data locally as some data might change without notice after such updates.
 
-For a detailed description of {easyclimate}, please read [this
-paper](https://doi.org/10.1016/j.envsoft.2023.105627) (open access
-version [here](https://doi.org/10.32942/osf.io/mc8uj)) or visit the
-package [website](https://verughub.github.io/easyclimate/).
+For a detailed description of {easyclimate}, please read [this paper](https://doi.org/10.1016/j.envsoft.2023.105627) (open access version [here](https://doi.org/10.32942/osf.io/mc8uj)) or visit the package [website](https://verughub.github.io/easyclimate/).
 
 ## Installation
 
-Stable version from
-[CRAN](https://cran.r-project.org/package=easyclimate):
+Stable version from [CRAN](https://cran.r-project.org/package=easyclimate):
 
 ``` r
 install.packages("easyclimate")
 ```
 
-Development version from
-[GitHub](https://github.com/VeruGHub/easyclimate):
+Development version from [GitHub](https://github.com/VeruGHub/easyclimate):
 
 ``` r
 # install.packages("remotes")
 remotes::install_github("VeruGHub/easyclimate")
 ```
 
-Development version from
-[R-universe](https://verughub.r-universe.dev/easyclimate):
+Development version from [R-universe](https://verughub.r-universe.dev/easyclimate):
 
 ``` r
 install.packages('easyclimate', 
@@ -70,8 +38,7 @@ install.packages('easyclimate',
 
 ### Obtain a data frame of climatic values
 
-To obtain a data frame of daily and monthly climatic values for point
-coordinates:
+To obtain a data frame of daily and monthly climatic values for point coordinates:
 
 ``` r
 library(easyclimate)
@@ -101,8 +68,6 @@ prec_monthly <- get_monthly_climate(coords,
 |         1 | -5.36 | 37.4 | 2001-02 |  16.24 |
 |         1 | -5.36 | 37.4 | 2001-03 | 119.71 |
 
-  
-
 ### Obtain a raster of climatic values
 
 To obtain a (multi-layer) raster of daily climatic values for an area:
@@ -125,8 +90,7 @@ sobrarbetemp <- get_daily_climate(
 )
 ```
 
-The output (`sobrarbetemp`) is a SpatRaster with 3 layers (for each of 3
-days):
+The output (`sobrarbetemp`) is a SpatRaster with 3 layers (for each of 3 days):
 
 ``` r
 sobrarbetemp
@@ -170,27 +134,12 @@ ggplot() +
 
 ![](reference/figures/README-map_ggplot-1.png)
 
-  
-Visit the articles of the [package
-website](https://verughub.github.io/easyclimate/) for more extended
-tutorials!
-
-  
+Visit the articles of the [package website](https://verughub.github.io/easyclimate/) for more extended tutorials!
 
 ## CITATION
 
-If you use {easyclimate}, please cite both the appropriate data source
-and the package as:
+If you use {easyclimate}, please cite both the appropriate data source and the package as:
 
-Moreno A, Hasenauer H (2016). “Spatial downscaling of European climate
-data.” *International Journal of Climatology*, 1444–1458.
-<https://doi.org/10.1002/joc.4436>.
-
-Pucher C (2023). *Description and Evaluation of Downscaled Daily Climate
-Data Version 4*. <https://doi.org/10.6084/m9.figshare.22962671.v1>.
-
-Cruz-Alonso V, Pucher C, Ratcliffe S, Ruiz-Benito P, Astigarraga J,
-Neumann M, Hasenauer H, Rodríguez-Sánchez F (2023). “The easyclimate R
-package: Easy access to high-resolution daily climate data for Europe.”
-*Environmental Modelling & Software*, 105627.
-<https://doi.org/10.1016/j.envsoft.2023.105627>.
+``` r
+print(citation("easyclimate"), style = "text")
+```

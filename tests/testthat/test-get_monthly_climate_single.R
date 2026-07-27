@@ -214,7 +214,7 @@ test_that("output raster is correct", {
                                                 5.15, 4.96, 5.06, 5.37, 5.48,
                                                 5.45, 5.25, 5.46, 5.37, 5.57,
                                                 5.38),
-                                             .Dim = c(36L, 1L), .Dimnames = list(NULL, "2001-01")), tolerance = 4)
+                                             dim = c(36L, 1L), dimnames = list(NULL, "2001-01")), tolerance = 4)
 
 })
 

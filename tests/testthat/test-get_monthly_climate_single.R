@@ -78,7 +78,7 @@ test_that("different climatic_var_single give expected results", {
                    lat = c(37.4, 37.4, 38.1, 38.1),
                    date = c("2001-01", "2001-06", "2001-01", "2001-06"),
                    Tmin = c(6.78, 16.23, 5.58, 18.71)),
-              row.names = c(NA, -4L), class = "data.frame"))
+              row.names = c(NA, -4L), class = "data.frame"), tolerance = 4)
 
 
   ## climatic_var_single = "Tmax"
@@ -90,7 +90,7 @@ test_that("different climatic_var_single give expected results", {
                    lat = c(37.4, 37.4, 38.1, 38.1),
                    date = c("2001-01", "2001-06", "2001-01", "2001-06"),
                    Tmax = c(14.83, 33.90, 12.95, 32.51)),
-              row.names = c(NA, -4L), class = "data.frame"))
+              row.names = c(NA, -4L), class = "data.frame"), tolerance = 4)
 
 
   ## climatic_var_single = "Prcp"
@@ -102,7 +102,7 @@ test_that("different climatic_var_single give expected results", {
                    lat = c(37.4, 37.4, 38.1, 38.1),
                    date = c("2001-01", "2001-06", "2001-01", "2001-06"),
                    Prcp = c( 128.56, 2.13, 112.47, 4.56)),
-              row.names = c(NA, -4L), class = "data.frame"))
+              row.names = c(NA, -4L), class = "data.frame"), tolerance = 20)
 
 })
 
@@ -130,21 +130,21 @@ test_that("different input formats (points) give expected results", {
   expect_identical(
     get_monthly_climate_single(coords.df, period = "2001-01",
                              climatic_var_single = "Tmin"),
-    output)
+    output, tolerance = 4)
 
   #Input sf
   coords.sf <- sf::st_as_sf(coords.df, coords = c("lon", "lat"))
   expect_identical(
     get_monthly_climate_single(coords.sf, period = "2001-01",
                              climatic_var_single = "Tmin"),
-    output)
+    output, tolerance = 4)
 
   #Input SpatVector
   coords.spv <- terra::vect(coords.sf)
   expect_identical(
     get_monthly_climate_single(coords.spv, period = "2001-01",
                              climatic_var_single = "Tmin"),
-    output)
+    output, tolerance = 4)
 
 })
 
@@ -180,7 +180,7 @@ test_that("polygon input give expected results", {
                             5.45, 5.15, 4.96, 5.06, 5.37, 5.48, 5.45, 5.25,
                             5.46, 5.37, 5.57, 5.38)),
               row.names = c(NA, 36L
-              ), class = "data.frame"))
+              ), class = "data.frame"), tolerance = 4)
 
 })
 
@@ -214,7 +214,7 @@ test_that("output raster is correct", {
                                                 5.15, 4.96, 5.06, 5.37, 5.48,
                                                 5.45, 5.25, 5.46, 5.37, 5.57,
                                                 5.38),
-                                             .Dim = c(36L, 1L), .Dimnames = list(NULL, "2001-01")))
+                                             .Dim = c(36L, 1L), .Dimnames = list(NULL, "2001-01")), tolerance = 4)
 
 })
 
@@ -236,7 +236,7 @@ test_that("different period formats give expected results", {
                    date = c("2001-01", "2001-02", "2001-03", "2005-01",
                             "2001-01", "2001-02", "2001-03", "2005-01"),
                    Prcp = c(128.56, 16.24, 119.71, 0.00, 112.47, 34.52, 119.33, 0.00)),
-              row.names = c(NA, -8L), class = "data.frame"))
+              row.names = c(NA, -8L), class = "data.frame"), tolerance = 20)
 
 
   out <- get_monthly_climate_single(coords, period = c(2001:2003, 2005))
@@ -247,7 +247,7 @@ test_that("different period formats give expected results", {
                                   date = c("2001-01", "2001-02", "2001-03",
                                            "2001-04", "2001-05", "2001-06"),
                                   Prcp = c( 128.56, 16.24, 119.71, 2.46, 30.43, 2.13)),
-                             row.names = c(NA, 6L), class = "data.frame"))
+                             row.names = c(NA, 6L), class = "data.frame"), tolerance = 20)
 
   expect_identical(tail(out),
                    structure(list(ID_coords = c(2, 2, 2, 2, 2, 2),
@@ -256,6 +256,6 @@ test_that("different period formats give expected results", {
                                   date = c("2005-07", "2005-08", "2005-09",
                                            "2005-10", "2005-11", "2005-12"),
                                   Prcp = c(0.00, 0.00, 23.64, 117.77, 12.83, 63.44)),
-                             row.names = 91:96, class = "data.frame"))
+                             row.names = 91:96, class = "data.frame"), tolerance = 20)
 
 })

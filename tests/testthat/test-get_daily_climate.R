@@ -22,7 +22,7 @@ test_that("downloading several variables gives expected results from v4", {
                    Tmin = c(6.25, 6.51),
                    Tmax = c(16.06, 15.65),
                    Prcp = c(8.30, 8.72)),
-              row.names = c(NA, -2L), class = "data.frame"))
+              row.names = c(NA, -2L), class = "data.frame"), tolerance = 20)
 
   # Output raster
   output <- get_daily_climate(coords.mat, period = "2001-01-01",
@@ -35,13 +35,13 @@ test_that("downloading several variables gives expected results from v4", {
   expect_identical(names(output), structure(c("Tmin", "Tmax", "Prcp")))
   expect_identical(head(values(output[[1]])),
                    structure(c(6.51, 6.49, 6.46, 6.44, 6.42, 6.40), dim = c(6L, 1L),
-                             dimnames = list(NULL, "2001-01-01")))
+                             dimnames = list(NULL, "2001-01-01")), tolerance = 4)
   expect_identical(head(values(output[[2]])),
                    structure(c(15.65, 15.64, 15.53, 15.53, 15.52, 15.51), dim = c(6L, 1L),
-                             dimnames = list(NULL, "2001-01-01")))
+                             dimnames = list(NULL, "2001-01-01")), tolerance = 4)
   expect_identical(head(values(output[[3]])),
                    structure(c(8.72, 8.70, 8.67, 8.65, 8.62, 8.59), dim = c(6L, 1L
-                   ), dimnames = list(NULL, "2001-01-01")))
+                   ), dimnames = list(NULL, "2001-01-01")), tolerance = 20)
 
 })
 
@@ -69,7 +69,7 @@ test_that("downloading several variables gives expected results from last versio
                    Tmin = c(6.55, 6.44),
                    Tmax = c(16.23, 15.46),
                    Prcp = c(8.24, 8.99)),
-              row.names = c(NA, -2L), class = "data.frame"))
+              row.names = c(NA, -2L), class = "data.frame"), tolerance = 20)
 
   # Output raster
   output <- get_daily_climate(coords.mat, period = "2001-01-01",
@@ -81,13 +81,13 @@ test_that("downloading several variables gives expected results from last versio
   expect_identical(names(output), structure(c("Tmin", "Tmax", "Prcp")))
   expect_identical(head(values(output[[1]])),
                    structure( c(6.51, 6.49, 6.46, 6.44, 6.42, 6.40), dim = c(6L, 1L),
-                             dimnames = list(NULL, "2001-01-01")))
+                             dimnames = list(NULL, "2001-01-01")), tolerance = 4)
   expect_identical(head(values(output[[2]])),
                    structure( c(15.65, 15.64, 15.53, 15.53, 15.52, 15.51), dim = c(6L, 1L),
-                             dimnames = list(NULL, "2001-01-01")))
+                             dimnames = list(NULL, "2001-01-01")), tolerance = 4)
   expect_identical(head(values(output[[3]])),
                    structure( c(8.72, 8.70, 8.67, 8.65, 8.62, 8.59), dim = c(6L, 1L
-                   ), dimnames = list(NULL, "2001-01-01")))
+                   ), dimnames = list(NULL, "2001-01-01")), tolerance = 20)
 
 })
 

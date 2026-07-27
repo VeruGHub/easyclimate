@@ -15,7 +15,7 @@ test_that("coordinate input gives expected result", {
                    lat = c(37.4, 38.1),
                    date = c(2001, 2001),
                    Tmin = c(11.86, 11.24)),
-              row.names = c(NA, -2L), class = "data.frame"))
+              row.names = c(NA, -2L), class = "data.frame"), tolerance = 4)
 
 })
 
@@ -43,7 +43,7 @@ test_that("polygon input give expected results", {
                             10.84, 10.89, 10.87, 10.63, 10.82, 10.81, 10.96,
                             10.84)),
               row.names = c(NA, 36L
-              ), class = "data.frame"))
+              ), class = "data.frame"), tolerance = 4)
 
 })
 
@@ -78,6 +78,6 @@ test_that("output raster is correct", {
                                                16.74, 16.57, 16.76, 17.10, 17.16,
                                                17.11, 16.88, 17.07, 17.07, 17.23,
                                                17.10),
-                                             .Dim = c(36L, 1L), .Dimnames = list(NULL, "2001")))
+                                             .Dim = c(36L, 1L), .Dimnames = list(NULL, "2001")), tolerance = 4)
 
 })

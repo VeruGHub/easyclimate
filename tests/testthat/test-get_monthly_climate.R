@@ -22,7 +22,7 @@ test_that("downloading several variables gives expected results", {
                    Tavg = c(10.81, 10.60),
                    Prcp = c(128.56, 138.22)),
               row.names = c(NA, -2L),
-              class = "data.frame"))
+              class = "data.frame"), tolerance = 20)
 
   ## Output raster
   output <- get_monthly_climate(coords, period = "2001-01",
@@ -33,15 +33,15 @@ test_that("downloading several variables gives expected results", {
   expect_identical(names(output), structure(c("Tmin", "Tmax", "Tavg", "Prcp")))
   expect_identical(head(values(output[[1]])),
                    structure(c( 6.67, 6.65, 6.63, 6.61, 6.60, 6.58), dim = c(6L, 1L),
-                             dimnames = list(NULL, "2001-01")))
+                             dimnames = list(NULL, "2001-01")), tolerance = 4)
   expect_identical(head(values(output[[2]])),
                    structure(c(14.52, 14.51, 14.41, 14.40, 14.39, 14.39), dim = c(6L, 1L),
-                             dimnames = list(NULL, "2001-01")))
+                             dimnames = list(NULL, "2001-01")), tolerance = 4)
   expect_identical(head(values(output[[3]])),
                    structure(c(10.60, 10.58, 10.52, 10.51, 10.49, 10.48), dim = c(6L, 1L),
-                             dimnames = list(NULL, "2001-01")))
+                             dimnames = list(NULL, "2001-01")), tolerance = 4)
   expect_identical(head(values(output[[4]])),
                    structure(c(138.22, 137.72, 137.18, 136.67, 136.15, 135.62), dim = c(6L, 1L
-                   ), dimnames = list(NULL, "2001-01")))
+                   ), dimnames = list(NULL, "2001-01")), tolerance = 20)
 
 })

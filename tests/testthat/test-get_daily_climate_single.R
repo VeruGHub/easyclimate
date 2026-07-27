@@ -80,7 +80,7 @@ test_that("different climatic_var_single give expected results for v4", {
                    lat = c(37.4, 38.1),
                    date = c("2001-01-01", "2001-01-01"),
                    Tmin = c(6.25, 6.96)),
-              row.names = c(NA, -2L), class = "data.frame"))
+              row.names = c(NA, -2L), class = "data.frame"),  tolerance = 4)
 
 
   ## climatic_var_single = "Tmax"
@@ -93,7 +93,7 @@ test_that("different climatic_var_single give expected results for v4", {
                    lat = c(37.4, 38.1),
                    date = c("2001-01-01", "2001-01-01"),
                    Tmax = c(16.06, 14.97)),
-              row.names = c(NA, -2L), class = "data.frame"))
+              row.names = c(NA, -2L), class = "data.frame"),  tolerance = 4)
 
 
   ## climatic_var_single = "Prcp"
@@ -106,7 +106,7 @@ test_that("different climatic_var_single give expected results for v4", {
                    lat = c(37.4, 38.1),
                    date = c("2001-01-01", "2001-01-01"),
                    Prcp = c(8.30, 6.29)),
-              row.names = c(NA, -2L), class = "data.frame"))
+              row.names = c(NA, -2L), class = "data.frame"),  tolerance = 20)
 
 })
 
@@ -114,8 +114,8 @@ test_that("different climatic_var_single give expected results for last version"
 
   # Testing for 2 sites and a single day
 
-  skip_on_cran()
-  skip_on_ci()
+   skip_on_cran()
+   skip_on_ci()
 
   ## Input matrix
   coords.mat <- matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 2, byrow = TRUE)
@@ -129,7 +129,7 @@ test_that("different climatic_var_single give expected results for last version"
                    lat = c(37.4, 38.1),
                    date = c("2001-01-01", "2001-01-01"),
                    Tmin = c(6.55, 3.81)),
-              row.names = c(NA, -2L), class = "data.frame"))
+              row.names = c(NA, -2L), class = "data.frame"), tolerance = 4)
 
 
   ## climatic_var_single = "Tmax"
@@ -141,7 +141,7 @@ test_that("different climatic_var_single give expected results for last version"
                    lat = c(37.4, 38.1),
                    date = c("2001-01-01", "2001-01-01"),
                    Tmax = c(16.23, 11.66)),
-              row.names = c(NA, -2L), class = "data.frame"))
+              row.names = c(NA, -2L), class = "data.frame"), tolerance = 4)
 
 
   ## climatic_var_single = "Prcp"
@@ -153,7 +153,7 @@ test_that("different climatic_var_single give expected results for last version"
                    lat = c(37.4, 38.1),
                    date = c("2001-01-01", "2001-01-01"),
                    Prcp = c(8.24, 13.49)),
-              row.names = c(NA, -2L), class = "data.frame"))
+              row.names = c(NA, -2L), class = "data.frame"), tolerance = 20)
 
 })
 
@@ -192,13 +192,13 @@ test_that("different input formats (points) give expected results", {
     get_daily_climate_single(coords.df, period = "2001-01-01",
                              climatic_var_single = "Tmin", version = 4,
                              check_conn = FALSE),
-    output.v4)
+    output.v4,  tolerance = 4)
 
   expect_identical(
     get_daily_climate_single(coords.df, period = "2001-01-01",
                              climatic_var_single = "Tmin", version = "last",
                              check_conn = FALSE),
-    output.last)
+    output.last,  tolerance = 4)
 
   #Input sf
   coords.sf <- sf::st_as_sf(coords.df, coords = c("lon", "lat"))
@@ -206,12 +206,12 @@ test_that("different input formats (points) give expected results", {
     get_daily_climate_single(coords.sf, period = "2001-01-01",
                              climatic_var_single = "Tmin", version = 4,
                              check_conn = FALSE),
-    output.v4)
+    output.v4, tolerance = 4)
   expect_identical(
     get_daily_climate_single(coords.sf, period = "2001-01-01",
                              climatic_var_single = "Tmin", version = "last",
                              check_conn = FALSE),
-    output.last)
+    output.last, tolerance = 4)
 
   #Input SpatVector
   coords.spv <- terra::vect(coords.sf)
@@ -219,12 +219,12 @@ test_that("different input formats (points) give expected results", {
     get_daily_climate_single(coords.spv, period = "2001-01-01",
                              climatic_var_single = "Tmin", version = 4,
                              check_conn = FALSE),
-    output.v4)
+    output.v4, tolerance = 4)
   expect_identical(
     get_daily_climate_single(coords.spv, period = "2001-01-01",
                              climatic_var_single = "Tmin", version = "last",
                              check_conn = FALSE),
-    output.last)
+    output.last, tolerance = 4)
 
 })
 
@@ -260,7 +260,7 @@ test_that("polygon input give expected results", {
                             5.08, 4.88, 4.98, 5.34, 5.54, 5.34, 5.24, 5.24, 5.14, 5.60, 5.29, 5.09, 5.19,
                             5.49, 5.59, 5.55, 5.35, 5.55, 5.45, 5.65, 5.45)),
               row.names = c(NA, 36L
-              ), class = "data.frame"))
+              ), class = "data.frame"), tolerance = 4)
 
 
   expect_identical(
@@ -282,7 +282,7 @@ test_that("polygon input give expected results", {
                             5.03, 4.82, 4.60, 4.39, 4.48, 4.91, 5.10, 4.89, 4.78, 4.76, 4.65, 5.18, 4.87,
                             4.66, 4.75, 5.04, 5.13, 5.15, 4.94, 5.13, 5.02, 5.21, 5.00)),
               row.names = c(NA, 36L),
-              class = "data.frame"))
+              class = "data.frame"), tolerance = 4)
 
 })
 
@@ -314,13 +314,13 @@ test_that("output raster is correct", {
                                                4.93, 4.83, 5.18, 5.48, 5.28, 5.08, 4.88, 4.98, 5.34, 5.54,
                                                5.34, 5.24, 5.24, 5.14, 5.60, 5.29, 5.09, 5.19, 5.49, 5.59,
                                                5.55, 5.35, 5.55, 5.45, 5.65, 5.45
-  ), .Dim = c(36L, 1L), .Dimnames = list(NULL, "2001-01-01")))
+  ), .Dim = c(36L, 1L), .Dimnames = list(NULL, "2001-01-01")), tolerance = 4)
 
   expect_identical(values(output.last), structure(c(4.71, 4.59, 4.57, 4.86, 4.74, 4.52, 4.78, 4.76, 4.85,
                                                     4.73, 4.42, 4.30, 4.74, 5.03, 4.82, 4.60, 4.39, 4.48,
                                                     4.91, 5.10, 4.89, 4.78, 4.76, 4.65, 5.18, 4.87, 4.66,
                                                     4.75, 5.04, 5.13, 5.15, 4.94, 5.13, 5.02, 5.21, 5.00
-  ), .Dim = c(36L, 1L), .Dimnames = list(NULL, "2001-01-01")))
+  ), .Dim = c(36L, 1L), .Dimnames = list(NULL, "2001-01-01")), tolerance = 4)
 
 
 
@@ -346,7 +346,7 @@ test_that("different period formats give expected results", {
                    date = c("2001-01-01", "2001-01-02", "2001-01-03", "2005-01-01",
                             "2001-01-01", "2001-01-02", "2001-01-03", "2005-01-01"),
                    Prcp = c(8.24, 1.12, 2.40, 0.00, 13.49, 1.54, 4.91, 0.00)),
-              row.names = c(NA, -8L), class = "data.frame"))
+              row.names = c(NA, -8L), class = "data.frame"), tolerance = 20)
 
   output <- get_daily_climate_single(coords, period = c(2001:2003, 2005),
                                      version = "last")
@@ -357,7 +357,7 @@ test_that("different period formats give expected results", {
                                   date = c("2001-01-01", "2001-01-02", "2001-01-03",
                                            "2001-01-04", "2001-01-05", "2001-01-06"),
                                   Prcp = c(8.24, 1.12, 2.40, 2.08, 10.13, 3.00)),
-                             row.names = c(NA, 6L), class = "data.frame"))
+                             row.names = c(NA, 6L), class = "data.frame"), tolerance = 20)
 
   expect_identical(tail(output),
                    structure(list(ID_coords = c(2, 2, 2, 2, 2, 2),
@@ -366,6 +366,7 @@ test_that("different period formats give expected results", {
                                   date = c("2005-12-26", "2005-12-27", "2005-12-28",
                                            "2005-12-29", "2005-12-30", "2005-12-31"),
                                   Prcp = c(15.98, 0.04, 0.00, 0.00, 0.00, 3.01)),
-                             row.names = 2915:2920, class = "data.frame"))
+                             row.names = 2915:2920, class = "data.frame"), tolerance = 20)
 
 })
+

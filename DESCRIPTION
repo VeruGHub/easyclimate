@@ -25,7 +25,7 @@ Description: Get high-resolution (1 km) daily, monthly and annual climate data (
     and average, minimum and maximum temperatures) for points and polygons within
     Europe.
 License: GPL (>= 3)
-URL: https://verughub.github.io/easyclimate, https://github.com/VeruGHub/easyclimate
+URL: https://verughub.github.io/easyclimate/, https://github.com/VeruGHub/easyclimate
 BugReports: https://github.com/VeruGHub/easyclimate/issues
 Depends: 
     R (>= 3.5.0)

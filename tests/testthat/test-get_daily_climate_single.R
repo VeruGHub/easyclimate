@@ -1,21 +1,29 @@
 
 test_that("wrong climatic_var_single gives error", {
+  skip_on_cran()
+  skip_on_ci()
   expect_error(get_daily_climate_single(coords = matrix(c(-5.36, 37.40), ncol = 2),
                                         climatic_var_single = "precip",
                                         period = 2010))
 })
 
 test_that("wrong coords format gives error", {
+  skip_on_cran()
+  skip_on_ci()
   expect_error(get_daily_climate_single(coords = c(-5.36, 37.40),
                                         period = 2010))
 })
 
 test_that("wrong number of matrix columns gives error", {
+  skip_on_cran()
+  skip_on_ci()
   expect_error(get_daily_climate_single(coords = matrix(c(-5.36, 37.40, -4.05, 38.10), ncol = 1),
                                         period = 2010))
 })
 
 test_that("wrong names of dataframe columns gives error", {
+  skip_on_cran()
+  skip_on_ci()
   expect_error(get_daily_climate_single(coords = data.frame(longitude = c(-5.36, -4.05),
                                                             latitude = c(37.40, 38.10)),
                                         period = 2010))
@@ -23,6 +31,8 @@ test_that("wrong names of dataframe columns gives error", {
 
 
 test_that("dataframe with reserved column names gives error", {
+  skip_on_cran()
+  skip_on_ci()
   expect_error(get_daily_climate_single(coords = data.frame(long = c(-5.36, -4.05),
                                                             lat = c(37.40, 38.10),
                                                             Tmax = c(20, 20)),
@@ -30,6 +40,8 @@ test_that("dataframe with reserved column names gives error", {
 })
 
 test_that("coordinates falling outside the bounding box give error", {
+  skip_on_cran()
+  skip_on_ci()
   expect_error(get_daily_climate_single(coords = matrix(c(-41, 37.40), ncol = 2),
                                         period = 2010))
   expect_error(get_daily_climate_single(coords = matrix(c(76, 37.40), ncol = 2),
@@ -50,6 +62,8 @@ test_that("coordinates in a different coordinate sistem gives error", {
 latest_year <- get_latest_year()
 
 test_that(sprintf("year below 1950 or above %d gives error", latest_year), {
+  skip_on_cran()
+  skip_on_ci()
 
   expect_error(get_daily_climate_single(coords = matrix(c(-5.36, 37.40), ncol = 2),
                                         period = 1949))

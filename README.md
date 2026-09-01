@@ -143,6 +143,6 @@ Moreno A, Hasenauer H (2016). “Spatial downscaling of European climate data.�
 
 Pucher, Christoph (2023). Description and Evaluation of Downscaled Daily Climate Data Version 4. figshare. Online resource. <https://doi.org/10.6084/m9.figshare.22962671.v1>.
 
-Pucher, Christoph (2026). Description of Downscaled European Climate Data. figshare. Online resource. <https://doi.org/10.6084/m9.figshare.33078053.v1>.
+Pucher, Christoph (2026). Description of Downscaled European Climate Data. figshare. Online resource. <https://doi.org/10.6084/m9.figshare.33078053>.
 
 Cruz-Alonso V, Pucher C, Ratcliffe S, Ruiz-Benito P, Astigarraga J, Neumann M, Hasenauer H, Rodríguez-Sánchez F (2023). “The easyclimate R package: Easy access to high-resolution daily climate data for Europe.” *Environmental Modelling & Software*, 105627. <https://doi.org/10.1016/j.envsoft.2023.105627>.

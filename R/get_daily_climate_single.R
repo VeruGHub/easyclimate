@@ -5,7 +5,7 @@
 #' points or polygons within Europe.
 #'
 #' @param climatic_var_single Character. Climatic variable to download. One of
-#' "Tmax", "Tmin", "Tavg", or "Prcp".
+#' "Tmax", "Tmin" or "Prcp".
 #' @param output Character. Either "df", which returns a dataframe with daily
 #' climatic values for each point/polygon, or "raster", which returns a
 #' [terra::SpatRaster()] object.

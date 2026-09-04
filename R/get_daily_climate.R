@@ -13,7 +13,7 @@
 #' If `coords` is a data.frame or a tbl_df, it must contain at least two columns
 #' called `lon` and `lat` with longitude and latitude coordinates, respectively.
 #' @param climatic_var Character. One or more climatic variables to download ("Tmax", "Tmin",
-#' "Tavg", or "Prcp"). Various elements can be concatenated in the vector.
+#' or "Prcp"). Various elements can be concatenated in the vector.
 #' @param period Either numeric vector of years (between 1950 and the latest available
 #' year) or character vector of dates in "YYYY-MM-DD" format (to obtain data for
 #' specific days). To specify a sequence of years or dates, use the format 'start:end'
